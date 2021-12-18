@@ -1,0 +1,12 @@
+{
+    "name": "ma",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "execa": "^6.0.0",
+        "frida": "^15.1.12",
+        "fs-extra": "^10.0.0",
+        "glob": "^7.2.0"
+    }
+}

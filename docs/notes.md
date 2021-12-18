@@ -10,11 +10,12 @@
     * https://github.com/akemin-dayo/AppSync/tree/master/appinst
     * Removing `iTunesMetadata.plist` from the IPA.
     * Changing the Apple ID listed in `iTunesMetadata.plist`.
+* Interestingly, if I _do_ sign in with the other Apple ID in the prompt, that doesn't seem to change the Apple ID associated with the phone. I seem to then be able to use apps purchased from _both_ accounts.
 
 ## Instrumentation
 
 * Appium
-    * iOS: XCUITest driver only runs on macOS, might (?) need paid developer account (http://appium.io/docs/en/drivers/ios-xcuitest-real-devices/, https://github.com/appium/appium-xcuitest-driver#requirements)
+    * iOS: XCUITest driver does work with free account and jailbroken device. Had to use manual configuration (https://appium.io/docs/en/drivers/ios-xcuitest-real-devices/#full-manual-configuration) and additionally pass `-allowProvisioningUpdates` to `xcodebuild`. Problem: Developer certificate will expire after six days and has to be reissued, then I have to go through these steps again.
     * Android: Works just fine with the Emulator.
     * [Appium Inspector](https://github.com/appium/appium-inspector) very helpful for… inspecting apps and finding IDs, etc.
     * Might even be possible to use a real device cloud like BrowserStack.
@@ -152,10 +153,32 @@
     * TikTok Wall Picture: not in prefs
     * Zalando privé: not in prefs
 
+* `IABUSPrivacy_String` is used by some US apps (https://developers.google.com/admob/android/ccpa).
+
+* Very basic analysis of ~800 Android apps
+    * 181/823 (22%) apps have any reference at all to privacy on the screen after 5s.
+    * For 744/823 apps (90%), reading the prefs succeeded, 377/823 (46%) apps have non-empty prefs after running for 5s without any input.
+    * 21/823 apps (3%) have privacy-related prefs without any user input.
+
+## Detecting CMPs statically
+
+* Exodus does `dexdump my.apk | grep "Class descriptor" | sort | uniq` to statically list class (and thus libraries) in an APK ([1](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/)).
+    * Can find things like `com/iabtcf` or `io/didomi`.
+    * Of 3270 apps, 38 use `com.iabtcf`, 221 use class matching `/appconsent|BEDROCK|CommandersAct|consentdesk|consentmanager|didomi|Easybrain|FundingChoices|iubenda|madvertise|next14|ogury|onetrust|sibboventures|sourcepoint|uniconsent|TXGroup|usercentrics/i`.
+    * Seems to only be detectable in rather small subset of apps => motivation for dynamic analysis.
+* No prior art on iOS (that I found, anyway…) but can use `otool -L <binary_file_in_ipa>` to list shared libraries and `nm <binary_file_in_ipa>` or `symbols -w -noSources <binary_file_in_ipa>` to list symbol table (see https://stackoverflow.com/a/39668318, https://stackoverflow.com/a/32053076).
+    * Neither of those works on Linux. [jtool2](http://newosxbook.com/tools/jtool.html) is an alternative that sometimes crashes, though.
+    * For our purposes, this can easily be replicated on Linux: The only `otool` lines we are interested in, are the ones starting with `@rpath` (like `@rpath/AdjustSdk.framework/AdjustSdk`), the other ones (like `/usr/lib/swift/libswiftos.dylib`) are system libs.
+    * The former seem to be a subset of the directories in `Payload/<app_name>.app/Frameworks` in the IPA.
+    * Results (for old dataset from proj-ios): `with iabtcf: 0, with any cerifified CMP: 28, total: 1001`
+
 ## TODO
 
 * [x] Try Appium on Android.
-* [ ] Start many apps and make screenshot for initial manual analysis.
+* [x] Try Appium on iOS.
+* [x] Start many apps and make screenshot for initial manual analysis.
 * [x] Explore app frameworks/libraries to check for CMPs.
     * If we do find them, try to interact with them using Frida.
 * [ ] Find out how to get element style properties (to answer questions like "which button is more prominent?").
+* [ ] Automate 3u with Frida?
+* [ ] Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.
