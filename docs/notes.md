@@ -172,6 +172,97 @@
     * The former seem to be a subset of the directories in `Payload/<app_name>.app/Frameworks` in the IPA.
     * Results (for old dataset from proj-ios): `with iabtcf: 0, with any cerifified CMP: 28, total: 1001`
 
+## Criteria for compliant consent dialogs
+
+* Limited to EU and German sources of law.
+
+### Legal framework
+
+* Art. 5(3) ePD delegates to Directive 95/46/EC (superseded by GDPR)
+* BDSG only talks about consent in the context of law enforcement and is thus not relevant here.
+* § 25(1) TTDSG delegates directly to the GDPR.
+
+* guidelines: (Art. 4(11) GDPR)
+    * freely given
+    * specific
+        * When the processing has multiple purposes, consent should be given for all of them. (Recital 32 GDPR)
+    * informed
+        * For consent to be informed, the data subject should be aware at least of the identity of the controller and the purposes of the processing for which the personal data are intended. (Recital 42 GDPR)
+        * clear and comprehensive information […], inter alia, about the purposes of the processing (Art. 5(3) ePD)
+    * unambiguous
+    * statement or clear affirmative action
+        * "This could include ticking a box when visiting an internet website, choosing technical settings for information society services or another statement or conduct which clearly indicates in this context the data subject’s acceptance of the proposed processing of his or her personal data." (Recital 32 GDPR)
+        * Silence, pre-ticked boxes or inactivity are not consent (Recital 32 GDPR)
+* controller needs to be able to demonstrate user has given consent (Art. 7(1) GDPR)
+* in the case of written declaration which also concerns other matters (like TOS): (Art. 7(2) GDPR)
+    * clearly distinguishable from the other matters
+    * intelligible and easily accessible form
+    * using clear and plain language
+* right to withdraw consent at any time (Art. 7(3) GDPR)
+* Prior to giving consent, the data subject shall be informed thereof. (Art. 7(3) GDPR)
+* It shall be as easy to withdraw as to give consent. (Art. 7(3) GDPR)
+* not freely given if performance of contract/provision of service is conditional on consent that is not necessary for the performance thereof (Art. 7(4) GDPR)
+    * Consent should not be regarded as freely given if the data subject has no genuine or free choice or is unable to refuse or withdraw consent without detriment. (Recital 42 GDPR)
+    * Consent is presumed not to be freely given if it does not allow separate consent to be given to different personal data processing operations despite it being appropriate in the individual case, or if the performance of a contract, including the provision of a service, is dependent on the consent despite such consent not being necessary for such performance. (Recital 43 GDPR)
+* If the data subject’s consent is to be given following a request by electronic means, the request must be clear, concise and not unnecessarily disruptive to the use of the service for which it is provided. (Recital 32 GDPR)
+* Cookies that need consent may only be set _after_ consent has been given (Art. 6(1) GDPR).
+
+* TODO: Explicit consent for special categories (Art. 9 GDPR), third-country transfer without adequacy decision (Art. 49 GDPR)
+
+### DPA recommendations
+
+* Active action is necessary, preticked boxes or mere use of app don't constitute consent (https://www.datenschutzkonferenz-online.de/media/kp/dsk_kpnr_20.pdf; https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 86.).
+* Consent has to be voluntary, i.e. it needs to be possible to use app without consenting (https://www.datenschutzkonferenz-online.de/media/kp/dsk_kpnr_20.pdf).
+* Notice has to inform about the possibility to withdraw consent at any time without detriment (https://www.datenschutzkonferenz-online.de/media/kp/dsk_kpnr_20.pdf; https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 64.; https://www.baden-wuerttemberg.datenschutz.de/zum-einsatz-von-cookies-und-cookie-bannern-was-gilt-es-bei-einwilligungen-zu-tun-eugh-urteil-planet49/; https://www.ldi.nrw.de/mainmenu_Datenschutz/Inhalt/FAQ/EinwilligungDaten.php; https://lfd.niedersachsen.de/download/161158).
+* A consent banner that only mentions cookies can only receive consent under the ePD, not the GDPR (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 9).
+* Necessary information for TTDSG: controller, purpose of access, cookie duration, access for third parties? (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 12)
+* "Okay" is not consent (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 14; https://lfd.niedersachsen.de/download/161158).
+* Even "Agree" is not consent if details are hidden behind another link (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 14; https://lfd.niedersachsen.de/download/161158).
+* Refusing consent has to be possible either through inaction or with the same number of clicks as consenting (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 14; https://www.lda.bayern.de/media/pm/pm2021_06.pdf; https://lfd.niedersachsen.de/download/161158; https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 114.).
+* Concrete purposes need to be listed, "to improve user experience" is not sufficient (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 16; https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/; https://lfd.niedersachsen.de/download/161158).
+* It needs to be possible to only consent to (adequate) subpurposes (https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 16; https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 42.).
+* The "consent" button cannot be highlighted compared to the "refuse" button (https://www.lda.bayern.de/media/pm/pm2021_06.pdf; https://lfd.niedersachsen.de/startseite/infothek/faqs_zur_ds_gvo/faq-telekommunikations-telemediendatenschutz-gesetz-ttdsg-206449.html#10._Welche_Anforderungen_werden_an_die_Einwilligung_gemaess_25_Abs._1_TTDSG_gestellt_die_grundsaetzlich_beim_Einsatz_von_Cookies_und_bei_der_Einbindung_von_Drittdiensten_einzuholen_ist_; https://lfd.niedersachsen.de/download/161158).
+* Consent dialog may not make it impossible to access other required legal notices (https://www.baden-wuerttemberg.datenschutz.de/zum-einsatz-von-cookies-und-cookie-bannern-was-gilt-es-bei-einwilligungen-zu-tun-eugh-urteil-planet49/).
+* No purposes may be pre-selected (https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/).
+* Third-party recipients have to be mentioned explicitly (https://lfd.niedersachsen.de/download/161158).
+* "Accept all" may not toggle additional, previously unselected, purposes (https://lfd.niedersachsen.de/download/161158).
+
+### What can be checked automatically?
+
+* [x] Processing that needs consent may only be performed after it was given.
+* [x] Giving consent for subpurposes is possible.
+* [~] Consent notice includes at least of the identity of the controller, the purposes, storage duration, access for third parties (explicitly listed).
+* [~] Consent is clearly distiguishable from other declarations (like TOS acceptance).
+* [x] Refusing consent takes the same number of clicks as giving it or no action at all.
+* [x] Using app needs to be possible after refusing/withdrawing consent.
+* [x] Consent notice informs of right to withdrawal.
+* [x] Unambiguous "agree" button (not "okay").
+* [x] Details may not be hidden after another link if consenting is possible on that screen.
+* [x] Concrete purposes are listed.
+* [x] "Consent" button is not highlighted compared to "refuse" button.
+* [ ] Accessing other legal notices is still possible.
+* [x] No purposes are pre-selected.
+* [x] "Accept all" may not toggle additional, previously unselected, purposes.
+
+## Detecting CMPs automatically
+
+* Existing research for the web
+    * Many purely manual approaches (https://www.researchgate.net/publication/332888923_4_Years_of_EU_Cookie_Law_Results_and_Lessons_Learned, https://sci-hub.se/https://dl.acm.org/doi/abs/10.1145/3321705.3329806, https://www.researchgate.net/profile/Martin-Degeling/publication/334965379_Uninformed_Consent_Studying_GDPR_Consent_Notices_in_the_Field/links/5d638e6c458515d610253bb1/Uninformed-Consent-Studying-GDPR-Consent-Notices-in-the-Field.pdf)
+    * Some with CMP-specific adapters: https://sci-hub.se/https://dl.acm.org/doi/abs/10.1145/3442381.3450056
+        * Uses: https://github.com/cavi-au/Consent-O-Matic
+    * Via TCF: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9152617
+    * Noyb (https://noyb.eu/en/noyb-aims-end-cookie-banner-terror-and-issues-more-500-gdpr-complaints) don't explain their approach but based on available details (esp. https://wecomply.noyb.eu/en/app/faq#how-can-i-make-my-banner-compliant) likely use CMP-specific adapters, maybe in combination with TCF.
+    * Privacy policy detection tends to be keyword-based: https://www.ndss-symposium.org/wp-content/uploads/2019/02/ndss2019_04B-2_Degeling_paper.pdf, https://dl.acm.org/doi/pdf/10.1145/3178876.3186087
+        * Keyword list: https://github.com/RUB-SysSec/we-value-your-privacy/blob/master/privacy_wording.json
+    * https://www.open.ou.nl/hjo/supervision/2021-koen-aerts-msc-thesis.pdf and https://pure.tudelft.nl/ws/files/57080768/vaneijk_conpro19.pdf rely on adblock filter lists (like https://secure.fanboy.co.nz/fanboy-cookiemonster.txt), which are _very_ broad, e.g. detecting any element with `CNIL` or `Cookie` in its ID. Manual check revealed error margin of ~15%, interestingly skewed towards false-negatives.
+* Idea: Use similar approach based on element names (maybe also include text?) but define more stringent requirements, e.g. to have button that looks like "Accept" in the same hierarchy.
+* Idea: Image-based?
+* Quick test: Run adblock lists on Android.
+
+## Complaints about illegal practices
+
+* § 25 TTDSG (the German implementation of Art. 5(3) ePD) is very powerful and violations can easily be detected automatically. The regular German DPAs are responsible for enforcing it (§ 1(1)(8) TTDSG).
+
 ## TODO
 
 * [x] Try Appium on Android.
@@ -182,3 +273,7 @@
 * [ ] Find out how to get element style properties (to answer questions like "which button is more prominent?").
 * [ ] Automate 3u with Frida?
 * [ ] Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.
+* [ ] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
+    * Will also be helpful for complaint generator.
+* [ ] After CMP detection: Do violation detection next, then interaction.
+* [ ] Save raw mitmproxy flows/logs.
