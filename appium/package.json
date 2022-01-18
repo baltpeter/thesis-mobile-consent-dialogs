@@ -1,9 +1,0 @@
-{
-    "name": "appium",
-    "version": "1.0.0",
-    "main": "index.js",
-    "license": "MIT",
-    "dependencies": {
-        "webdriverio": "^7.16.8"
-    }
-}

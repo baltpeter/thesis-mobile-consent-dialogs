@@ -259,6 +259,22 @@
 * Idea: Image-based?
 * Quick test: Run adblock lists on Android.
 
+* Observations
+    * Games tend to not be machine-readable (`android.view.View` that Appium can't look inside). Some apps also have machine-readable and non-machine-readable elements (e.g. Glitter Live). -.-
+    * In quite a few apps, the privacy notice is in an element that is called `terms` or `eula`, which means we cannot distinguish this from actual TOS by the ID. Sometimes, that is even the heading and it is only possible from reading the text (if that!) to recognize the notice as privacy-related (e.g. `com.fast.free.unblock.secure.vpn`).
+    * The line between a consent notice and dialog is fairly blurry (e.g. Flightradar, Pinterest). I have used to following distinction: A dialog prompts an interaction from the user (a button, checkbox, etc., though pre-checked boxes are also included), while a notice is only informational. The interaction needs to be specifically privacy-related. A notice that is included in a sign-up form for example would not count as a dialog.
+    * Descriptive IDs (or any IDs at all) are not that common. We really need to do text-based matching.
+* Ideas
+    * To be a dialog, app needs to match `dialog`, at least one `button` and at least one `keyword`. To be notice, app has to match `notice` and at least one `keyword`.
+    * Check for dialog first. If app doesn't meet conditions, check for notice. Finally, check for link. The additional `keyword` matching is necessary to weed out the odd TOS only dialog/notice.
+    * TODO: Maybe have different "classes" of keywords, where e.g. `store cookies` would yield one point but `European Court of Justice` would only yield half a point, and then require some score.
+    * TODO: Maybe it really isn't such a good idea to distinguish between notice and dialog. I genuinely often struggle to do this manually even.
+    * Include IAB labels?
+* Cases where I'm unclear:
+    * Lomeda ("Dating App"): Text is split across multiple elements, so not detected. Appium doesn't seem to have an `innerText()`-type function. Manually concat all child texts? But then we could also just use the root element, couldn't we?
+    * Should we distinguish between dialog and notice texts? Would it not be smarter to just use the button as the distinguishing feature?
+    * For Pinterest case: Require that the dialog text comes _before_ the button?
+
 ## Complaints about illegal practices
 
 * § 25 TTDSG (the German implementation of Art. 5(3) ePD) is very powerful and violations can easily be detected automatically. The regular German DPAs are responsible for enforcing it (§ 1(1)(8) TTDSG).

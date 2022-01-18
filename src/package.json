@@ -4,9 +4,11 @@
     "main": "index.js",
     "license": "MIT",
     "dependencies": {
+        "chalk": "4.1.1",
         "execa": "^6.0.0",
         "frida": "^15.1.12",
         "fs-extra": "^10.0.0",
-        "glob": "^7.2.0"
+        "glob": "^7.2.0",
+        "webdriverio": "^7.16.13"
     }
 }
