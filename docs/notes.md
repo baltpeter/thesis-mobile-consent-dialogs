@@ -270,6 +270,7 @@
     * TODO: Maybe have different "classes" of keywords, where e.g. `store cookies` would yield one point but `European Court of Justice` would only yield half a point, and then require some score.
     * TODO: Maybe it really isn't such a good idea to distinguish between notice and dialog. I genuinely often struggle to do this manually even.
     * Include IAB labels?
+    * TODO: Problem with webviews. Only have correct element data on the second try?!
 * Cases where I'm unclear:
     * Lomeda ("Dating App"): Text is split across multiple elements, so not detected. Appium doesn't seem to have an `innerText()`-type function. Manually concat all child texts? But then we could also just use the root element, couldn't we?
     * Should we distinguish between dialog and notice texts? Would it not be smarter to just use the button as the distinguishing feature?
@@ -288,7 +289,7 @@
     * If we do find them, try to interact with them using Frida.
 * [ ] Find out how to get element style properties (to answer questions like "which button is more prominent?").
 * [ ] Automate 3u with Frida?
-* [ ] Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.
+* [ ] ~~Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.~~
 * [ ] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
     * Will also be helpful for complaint generator.
 * [ ] After CMP detection: Do violation detection next, then interaction.
