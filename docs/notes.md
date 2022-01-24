@@ -267,14 +267,24 @@
 * Ideas
     * To be a dialog, app needs to match `dialog`, at least one `button` and at least one `keyword`. To be notice, app has to match `notice` and at least one `keyword`.
     * Check for dialog first. If app doesn't meet conditions, check for notice. Finally, check for link. The additional `keyword` matching is necessary to weed out the odd TOS only dialog/notice.
-    * TODO: Maybe have different "classes" of keywords, where e.g. `store cookies` would yield one point but `European Court of Justice` would only yield half a point, and then require some score.
+    * We use different "classes" of keywords, where e.g. `store cookies` yields one point but `European Court of Justice` only yields half a point, and then require some score.
     * TODO: Maybe it really isn't such a good idea to distinguish between notice and dialog. I genuinely often struggle to do this manually even.
+        * -> We do still distinguish but only by whether there is a button. The other criteria are identical for dialogs and notices.
     * Include IAB labels?
     * TODO: Problem with webviews. Only have correct element data on the second try?!
 * Cases where I'm unclear:
     * Lomeda ("Dating App"): Text is split across multiple elements, so not detected. Appium doesn't seem to have an `innerText()`-type function. Manually concat all child texts? But then we could also just use the root element, couldn't we?
     * Should we distinguish between dialog and notice texts? Would it not be smarter to just use the button as the distinguishing feature?
+        * -> Yes, we do that now.
     * For Pinterest case: Require that the dialog text comes _before_ the button?
+        * -> No, there are other cases where this would lead to a false-negative.
+
+* Notes from meeting
+    * For the concat thing: Maybe move up divs and calculate keywords/text, repeat until that doesn't go up anymore (smart ascent). But only if necessary, ok to leave those cases out.
+    * To find href, an idea might be: Statically grep app for button ID? Might not work/be worth it, though.
+    * For the warnings before the complaints: Include a questionaire? (IRB approval?)
+        * -> No warnings and complaints. Only privately.
+    * Document how free Apple dev cert works (with Appium)
 
 ## Complaints about illegal practices
 

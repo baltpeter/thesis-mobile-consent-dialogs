@@ -10,13 +10,14 @@ import {
     dialog_id_fragments,
     button_text_fragments,
     dialog_text_fragments,
-    notice_text_fragments,
     link_text_fragments,
     keywords_regular,
     keywords_half,
 } from './indicators.mjs';
 
 const REQUIRED_SCORE = 1;
+
+const run_for_open_app_only = process.argv.includes('--dev');
 
 const apps_dir = '/media/benni/storage2/tmp/apks';
 const out_dir = join('..', 'data.tmp', 'labelling');
@@ -37,11 +38,13 @@ const testAndLog = (frags, val, msg, length_factor = false, multiple_matches = f
     }
     return res;
 };
-const decide = (keyword_score, has_dialog, button_count, has_notice, has_link) => {
+const decide = (keyword_score, has_dialog, button_count, has_link) => {
     if (keyword_score < REQUIRED_SCORE && !has_link) return 'neither';
 
-    if (has_dialog && button_count >= 1) return 'dialog';
-    if (has_notice) return 'notice';
+    if (has_dialog) {
+        if (button_count >= 1) return 'dialog';
+        return 'notice';
+    }
     if (keyword_score + (has_link ? 1 : 0) >= 3) {
         if (button_count >= 1) return 'maybe_dialog';
         return 'maybe_notice';
@@ -52,22 +55,24 @@ const decide = (keyword_score, has_dialog, button_count, has_notice, has_link) =
 };
 
 async function main() {
-    const app_ids = glob.sync(`*`, { absolute: false, cwd: apps_dir });
+    const app_ids = run_for_open_app_only ? ['n/a'] : glob.sync(`*`, { absolute: false, cwd: apps_dir });
 
     for (const app_id of app_ids) {
         let client;
         try {
             const out_prefix = join(out_dir, app_id);
-            if (fs.existsSync(`${out_prefix}.json`)) continue;
+            if (!run_for_open_app_only) {
+                if (fs.existsSync(`${out_prefix}.json`)) continue;
 
-            console.log(chalk.bgWhite.black(app_id));
+                console.log(chalk.bgWhite.black(app_id));
 
-            // Install app.
-            await execa('adb', ['install-multiple', '-g', join(apps_dir, app_id, '*.apk')], { shell: true });
+                // Install app.
+                await execa('adb', ['install-multiple', '-g', join(apps_dir, app_id, '*.apk')], { shell: true });
 
-            // Start app.
-            await execa('adb', ['shell', 'monkey', '-p', app_id, '-v', 1, '--dbg-no-events']);
-            await pause(20000);
+                // Start app.
+                await execa('adb', ['shell', 'monkey', '-p', app_id, '-v', 1, '--dbg-no-events']);
+                await pause(20000);
+            }
 
             // Create Appium session and set geolocation.
             client = await wdRemote({
@@ -85,7 +90,6 @@ async function main() {
             // Collect indicators.
             let has_dialog = false;
             let button_count = 0;
-            let has_notice = false;
             let has_link = false;
             let keyword_score = 0;
 
@@ -104,7 +108,6 @@ async function main() {
 
                         if (testAndLog(button_text_fragments, text, 'has button text', 2)) button_count++;
                         if (testAndLog(dialog_text_fragments, text, 'has dialog text')) has_dialog = true;
-                        if (testAndLog(notice_text_fragments, text, 'has notice text')) has_notice = true;
                         if (testAndLog(link_text_fragments, text, 'has privacy policy link')) has_link = true;
 
                         const regular_keywords = testAndLog(keywords_regular, text, 'has 1p keyword', false, true);
@@ -117,30 +120,36 @@ async function main() {
             }
 
             // Take screenshot and save result.
-            const verdict = decide(keyword_score, has_dialog, button_count, has_notice, has_link);
+            const verdict = decide(keyword_score, has_dialog, button_count, has_link);
 
-            await client.saveScreenshot(`${out_prefix}.png`);
-            fs.writeFileSync(
-                `${out_prefix}.json`,
-                JSON.stringify({ verdict, keyword_score, has_dialog, button_count, has_notice, has_link }, null, 4)
-            );
+            if (!run_for_open_app_only) {
+                await client.saveScreenshot(`${out_prefix}.png`);
+                fs.writeFileSync(
+                    `${out_prefix}.json`,
+                    JSON.stringify({ verdict, keyword_score, has_dialog, button_count, has_link }, null, 4)
+                );
+            }
 
             console.log(
-                `has_dialog=${has_dialog}, button_count=${button_count}, has_notice=${has_notice}, has_link=${has_link}, keyword_score=${keyword_score}`
+                `has_dialog=${has_dialog}, button_count=${button_count}, has_link=${has_link}, keyword_score=${keyword_score}`
             );
             console.log(chalk.redBright('Verdict:'), verdict);
 
             if (process.argv.includes('--debug-tree')) console.log(await client.getPageSource());
 
-            // Clean up.
-            await client.deleteSession();
-            await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]);
+            if (!run_for_open_app_only) {
+                // Clean up.
+                await client.deleteSession();
+                await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]);
+            }
             console.log();
         } catch (err) {
             console.error(err);
 
-            if (client) await client.deleteSession();
-            await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]).catch(() => {});
+            if (!run_for_open_app_only) {
+                if (client) await client.deleteSession();
+                await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]).catch(() => {});
+            }
 
             console.log();
         }

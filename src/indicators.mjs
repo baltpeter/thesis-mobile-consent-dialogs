@@ -26,10 +26,10 @@ export const dialog_text_fragments = normalizeFragments([
     /(privacy|data protection) [^.]{0,35} important/,
     /can( always| later)? revoke[^.]{0,15} consent ?(at any time|later)?/,
     /(use|utilise|need|have|set|collect|ask)[^.]{0,25} (cookie|consent|tracking)/,
-    /by (tapp|click|select|choos)ing [^.]{0,75},? (you|I) (agree|accept|consent|acknowledge|confirm)/,
+    /by (sign|logg|continu|creat|us|tapp|click|select|choos)ing [^.]{0,75},? (you|I) (agree|accept|consent|acknowledge|confirm)/,
     /(accept|agree|consent) [^.]{3,35} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/,
     /(accept|agree|consent) [^.]{3,35} processing [^.]{3,20} data/,
-    /(learn|read|more) [^.]{3,30} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/,
+    /(learn|read|more|acknowledge) [^.]{2,40} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/,
     /have read( and understood)? [^.]{3,35} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/,
 
     /(Datenschutz|Privatsphäre) (ist uns wichtig|liegt uns am Herzen)/,
@@ -43,12 +43,9 @@ export const dialog_text_fragments = normalizeFragments([
     /((Verarbeit(ung|en) [^.]{3,20} Daten)|(Daten(-| )?[^.]{0,10}Verarbeit(ung|en))) [^.]{3,35} (akzeptier|stimm|nimm|nehm)/,
     /(Informationen|mehr)( dazu)? [^.]{0,25}in [^.]{0,20} (Datenschutz|Cookie|DSGVO|Privatsphäre)-?(hinweis|erklärung|information)/,
     /(Datenschutz|Cookie|DSGVO|Privatsphäre)-?(hinweis|erklärung|information) [^.]{3,35} (gelesen|Kenntnis)/,
-]);
-
-// prettier-ignore
-export const notice_text_fragments = normalizeFragments([
-    /(learn|read) [^.]{3,30} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/, /acknowledge [^.]{2,40} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/, /by (sign|continu|creat|us|tapp|click|select|choos)ing[^.]{0,75},? (you|I) (agree|accept|consent|acknowledge|confirm)/,
-    /(Informationen|mehr)( dazu)? [^.]{0,30}in [^.]{0,25} (Datenschutz|Cookie|DSGVO|Privatsphäre)-?(hinweis|erklärung|information)/, /(Datenschutz|Cookie|DSGVO|Privatsphäre)-?(hinweis|erklärung|information) (gelesen|Kenntnis)/, /(mit|durch|bei|wenn) [^.]{2,30} (fortf(a|ä)hr|weitermach|anmeld|registrier|erstell|nutz|tipp|klick|(aus)?wähl)[^.]{2,65} (akzeptier|stimm|nimm|nehm|bestätig)/
+    /(Informationen|mehr)( dazu)? [^.]{0,30}in [^.]{0,25} (Datenschutz|Cookie|DSGVO|Privatsphäre)-?(hinweis|erklärung|information)/,
+    /(Datenschutz|Cookie|DSGVO|Privatsphäre)-?(hinweis|erklärung|information) (gelesen|Kenntnis)/,
+    /(mit|durch|bei|wenn) [^.]{2,30} (fortf(a|ä)hr|weitermach|anmeld|registrier|erstell|nutz|tipp|klick|(aus)?wähl)[^.]{2,65} (akzeptier|stimm|nimm|nehm|bestätig)/,
 ]);
 
 // prettier-ignore
