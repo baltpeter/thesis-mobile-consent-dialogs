@@ -16,10 +16,14 @@ export const button_id_fragments = normalizeFragments(['decline', 'reject', 'acc
 export const dialog_id_fragments = normalizeFragments(['gdpr', 'consent', /cookie_settings/, 'iab', 'opt_in', 'user_choice', 'vendors?_list'], true);
 
 // prettier-ignore
-export const button_text_fragments = normalizeFragments([
-    'ok', 'okay', 'decline', 'reject', 'refuse', 'accept', 'agree', 'next', 'continue', /customi(z|s)e/, 'more choices', 'yes', 'no', 'exit',
-    'widersprechen', 'ablehnen', 'verweigern', 'akzeptieren', 'zustimmen', 'annehmen', 'weiter', 'fortfahren', 'einstellungen', 'anpassen', 'ja', 'nein', /schlie(ß|ss)en/, 'beenden'
-], true);
+export const button_text_fragments = {
+    clear_affirmative: normalizeFragments(['accept', 'agree', 'yes', 'akzeptieren', 'zustimmen', 'annehmen', 'ja'], true),
+    hidden_affirmative: normalizeFragments(['ok', 'okay', 'next', 'continue', 'weiter', 'fortfahren', 'nein'], true),
+    clear_negative: normalizeFragments(['decline', 'reject', 'refuse', 'no', 'widersprechen', 'ablehnen', 'verweigern'], true),
+    hidden_negative: normalizeFragments([/customi(z|s)e/, 'more choices', 'exit', 'einstellungen', 'anpassen', /schlie(ß|ss)en/, 'beenden'], true),
+};
+
+export const button_text_fragments_all = Object.values(button_text_fragments).flat();
 // TODO: Continue the list.
 export const dialog_text_fragments = normalizeFragments([
     /(we care about|comitted)[^.]{0,10} (privacy|data protection)/,

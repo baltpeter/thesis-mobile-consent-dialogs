@@ -6,7 +6,7 @@ import { remote as wdRemote } from 'webdriverio';
 import chalk from 'chalk';
 import { timeout } from 'promise-timeout';
 import {
-    button_id_fragments,
+    // button_id_fragments,
     dialog_id_fragments,
     button_text_fragments,
     dialog_text_fragments,
@@ -89,7 +89,12 @@ async function main() {
 
             // Collect indicators.
             let has_dialog = false;
-            let button_count = 0;
+            const button_counts = {
+                clear_affirmative: 0,
+                clear_negative: 0,
+                hidden_affirmative: 0,
+                hidden_negative: 0,
+            };
             let has_link = false;
             let keyword_score = 0;
 
@@ -98,7 +103,7 @@ async function main() {
                 for (const el of elements) {
                     const id = await timeout(client.getElementAttribute(el.ELEMENT, 'resource-id'), 5000);
                     if (id) {
-                        if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
+                        // if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
                         if (testAndLog(dialog_id_fragments, id, 'has dialog ID')) has_dialog = true;
                     }
 
@@ -106,7 +111,15 @@ async function main() {
                     if (text) {
                         if (process.argv.includes('--debug-text')) console.log(text);
 
-                        if (testAndLog(button_text_fragments, text, 'has button text', 2)) button_count++;
+                        if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
+                            button_counts.clear_affirmative++;
+                        if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
+                            button_counts.clear_negative++;
+                        if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2))
+                            button_counts.hidden_affirmative++;
+                        if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
+                            button_counts.hidden_negative++;
+
                         if (testAndLog(dialog_text_fragments, text, 'has dialog text')) has_dialog = true;
                         if (testAndLog(link_text_fragments, text, 'has privacy policy link')) has_link = true;
 
@@ -119,21 +132,49 @@ async function main() {
                 console.error(err);
             }
 
-            // Take screenshot and save result.
-            const verdict = decide(keyword_score, has_dialog, button_count, has_link);
+            const button_count = Object.values(button_counts).reduce((acc, cur) => acc + cur, 0);
 
-            if (!run_for_open_app_only) {
-                await client.saveScreenshot(`${out_prefix}.png`);
-                fs.writeFileSync(
-                    `${out_prefix}.json`,
-                    JSON.stringify({ verdict, keyword_score, has_dialog, button_count, has_link }, null, 4)
-                );
-            }
+            const verdict = decide(keyword_score, has_dialog, button_count, has_link);
 
             console.log(
                 `has_dialog=${has_dialog}, button_count=${button_count}, has_link=${has_link}, keyword_score=${keyword_score}`
             );
             console.log(chalk.redBright('Verdict:'), verdict);
+
+            // Detect violations.
+            const violations = {
+                ambiguous_accept_button: false,
+                accept_button_without_reject_button: false,
+                ambiguous_reject_button: false,
+            };
+            if (['dialog', 'maybe_dialog'].includes(verdict)) {
+                // Unambiguous "accept" button (not "okay").
+                if (button_counts.clear_affirmative < 1) violations.ambiguous_accept_button = true;
+
+                // Unambiguous "reject" button if there is an "accept" button.
+                if (button_counts.clear_affirmative + button_counts.hidden_affirmative > 0) {
+                    if (button_counts.clear_negative + button_counts.hidden_negative < 1)
+                        violations.accept_button_without_reject_button = true;
+                    else if (button_counts.clear_negative < 1) violations.ambiguous_reject_button = true;
+                }
+            }
+
+            console.log();
+            console.log(chalk.redBright('Violations:'));
+            console.log(violations);
+
+            // Take screenshot and save result.
+            if (!run_for_open_app_only) {
+                await client.saveScreenshot(`${out_prefix}.png`);
+                fs.writeFileSync(
+                    `${out_prefix}.json`,
+                    JSON.stringify(
+                        { verdict, keyword_score, has_dialog, button_counts, button_count, has_link, violations },
+                        null,
+                        4
+                    )
+                );
+            }
 
             if (process.argv.includes('--debug-tree')) console.log(await client.getPageSource());
 
