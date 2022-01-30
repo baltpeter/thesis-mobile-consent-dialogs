@@ -57,7 +57,7 @@ const decide = (keyword_score, has_dialog, button_count, has_link) => {
 async function main() {
     const app_ids = run_for_open_app_only ? ['n/a'] : glob.sync(`*`, { absolute: false, cwd: apps_dir });
 
-    for (const app_id of app_ids) {
+    for (let app_id of app_ids) {
         let client;
         try {
             const out_prefix = join(out_dir, app_id);
@@ -68,6 +68,8 @@ async function main() {
 
                 // Install app.
                 await execa('adb', ['install-multiple', '-g', join(apps_dir, app_id, '*.apk')], { shell: true });
+                // Clear app data just in case.
+                await execa('adb', ['shell', 'clear', app_id]);
 
                 // Start app.
                 await execa('adb', ['shell', 'monkey', '-p', app_id, '-v', 1, '--dbg-no-events']);
@@ -86,14 +88,15 @@ async function main() {
                 logLevel: 'warn',
             });
             await client.setGeoLocation({ latitude: '52.2734031', longitude: '10.5251192', altitude: '77.23' });
+            if (run_for_open_app_only) app_id = await client.getCurrentPackage();
 
             // Collect indicators.
             let has_dialog = false;
-            const button_counts = {
-                clear_affirmative: 0,
-                clear_negative: 0,
-                hidden_affirmative: 0,
-                hidden_negative: 0,
+            const buttons = {
+                clear_affirmative: [],
+                clear_negative: [],
+                hidden_affirmative: [],
+                hidden_negative: [],
             };
             let has_link = false;
             let keyword_score = 0;
@@ -112,13 +115,13 @@ async function main() {
                         if (process.argv.includes('--debug-text')) console.log(text);
 
                         if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
-                            button_counts.clear_affirmative++;
-                        if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
-                            button_counts.clear_negative++;
-                        if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2))
-                            button_counts.hidden_affirmative++;
-                        if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
-                            button_counts.hidden_negative++;
+                            buttons.clear_affirmative.push(el);
+                        else if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
+                            buttons.clear_negative.push(el);
+                        else if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2))
+                            buttons.hidden_affirmative.push(el);
+                        else if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
+                            buttons.hidden_negative.push(el);
 
                         if (testAndLog(dialog_text_fragments, text, 'has dialog text')) has_dialog = true;
                         if (testAndLog(link_text_fragments, text, 'has privacy policy link')) has_link = true;
@@ -132,7 +135,7 @@ async function main() {
                 console.error(err);
             }
 
-            const button_count = Object.values(button_counts).reduce((acc, cur) => acc + cur, 0);
+            const button_count = Object.values(buttons).reduce((acc, cur) => acc + cur.length, 0);
 
             const verdict = decide(keyword_score, has_dialog, button_count, has_link);
 
@@ -146,16 +149,46 @@ async function main() {
                 ambiguous_accept_button: false,
                 accept_button_without_reject_button: false,
                 ambiguous_reject_button: false,
+                accept_larger_than_reject: false,
+                stops_after_reject: false,
             };
             if (['dialog', 'maybe_dialog'].includes(verdict)) {
                 // Unambiguous "accept" button (not "okay").
-                if (button_counts.clear_affirmative < 1) violations.ambiguous_accept_button = true;
+                if (buttons.clear_affirmative.length < 1) violations.ambiguous_accept_button = true;
 
                 // Unambiguous "reject" button if there is an "accept" button.
-                if (button_counts.clear_affirmative + button_counts.hidden_affirmative > 0) {
-                    if (button_counts.clear_negative + button_counts.hidden_negative < 1)
+                if (buttons.clear_affirmative.length + buttons.hidden_affirmative.length > 0) {
+                    if (buttons.clear_negative.length + buttons.hidden_negative.length < 1)
                         violations.accept_button_without_reject_button = true;
-                    else if (button_counts.clear_negative < 1) violations.ambiguous_reject_button = true;
+                    else if (buttons.clear_negative.length < 1) violations.ambiguous_reject_button = true;
+                }
+
+                // "Accept" button not highlighted compared to "reject" button.
+                // * Colorfulness: https://github.com/piercus/colorfulness
+                // * Prominent colors: http://jariz.github.io/vibrant.js/
+                // BUT: Needs to be compared to background (e.g. Esso).
+                const affirmative_buttons = [...buttons.clear_affirmative, ...buttons.hidden_affirmative];
+                const negative_buttons = [...buttons.clear_negative, ...buttons.hidden_negative];
+                // TODO: What if there is more than one of each button type?
+                if (affirmative_buttons.length === 1 && negative_buttons.length === 1) {
+                    // Compare button sizes.
+                    const affirmative_rect = await timeout(client.getElementRect(affirmative_buttons[0].ELEMENT), 5000);
+                    const negative_rect = await timeout(client.getElementRect(negative_buttons[0].ELEMENT), 5000);
+                    const affirmative_size = affirmative_rect.width * affirmative_rect.height;
+                    const negative_size = negative_rect.width * negative_rect.height;
+                    if (affirmative_size / negative_size > 1.5) violations.accept_larger_than_reject = true;
+                    console.log('button size factor:', affirmative_size / negative_size);
+                }
+
+                // Using app needs to be possible after refusing/withdrawing consent.
+                if (negative_buttons.length === 1) {
+                    // Ensure the app is still running in the foreground (4), see: http://appium.io/docs/en/commands/device/app/app-state/
+                    if ((await client.queryAppState(app_id)) === 4) {
+                        await client.elementClick(negative_buttons[0].ELEMENT);
+                        await pause(5000);
+
+                        if ((await client.queryAppState(app_id)) !== 4) violations.stops_after_reject = true;
+                    }
                 }
             }
 
@@ -169,7 +202,15 @@ async function main() {
                 fs.writeFileSync(
                     `${out_prefix}.json`,
                     JSON.stringify(
-                        { verdict, keyword_score, has_dialog, button_counts, button_count, has_link, violations },
+                        {
+                            verdict,
+                            keyword_score,
+                            has_dialog,
+                            button_counts: buttons,
+                            button_count,
+                            has_link,
+                            violations,
+                        },
                         null,
                         4
                     )
@@ -182,7 +223,7 @@ async function main() {
                 // Clean up.
                 await client.deleteSession();
                 await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]);
-            }
+            } else await execa('adb', ['shell', 'clear', app_id]);
             console.log();
         } catch (err) {
             console.error(err);
@@ -190,7 +231,7 @@ async function main() {
             if (!run_for_open_app_only) {
                 if (client) await client.deleteSession();
                 await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]).catch(() => {});
-            }
+            } else await execa('adb', ['shell', 'clear', app_id]);
 
             console.log();
         }

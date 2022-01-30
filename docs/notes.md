@@ -229,20 +229,20 @@
 
 ### What can be checked automatically?
 
-* [x] Processing that needs consent may only be performed after it was given.
-* [x] Giving consent for subpurposes is possible.
-* [~] Consent notice includes at least of the identity of the controller, the purposes, storage duration, access for third parties (explicitly listed).
-* [~] Consent is clearly distiguishable from other declarations (like TOS acceptance).
-* [x] Refusing consent takes the same number of clicks as giving it or no action at all.
-* [x] Using app needs to be possible after refusing/withdrawing consent.
-* [x] Consent notice informs of right to withdrawal.
+* [W] Processing that needs consent may only be performed after it was given.
 * [x] Unambiguous "agree" button (not "okay").
-* [x] Details may not be hidden after another link if consenting is possible on that screen.
-* [x] Concrete purposes are listed.
-* [x] "Consent" button is not highlighted compared to "refuse" button.
+* [ ] Concrete purposes are listed.
+* [ ] Consent notice includes at least of the identity of the controller, the purposes, storage duration, access for third parties (explicitly listed).
+* [x] Refusing consent takes the same number of clicks as giving it or no action at all.
+* [ ] No purposes are pre-selected.
+* [ ] Details may not be hidden after another link if consenting is possible on that screen.
+* [ ] Giving consent for subpurposes is possible.
+* [~] "Consent" button is not highlighted compared to "refuse" button.
+* [x] Using app needs to be possible after refusing/withdrawing consent.
+* [ ] Consent is clearly distiguishable from other declarations (like TOS acceptance).
+* [ ] Consent notice informs of right to withdrawal.
 * [ ] Accessing other legal notices is still possible.
-* [x] No purposes are pre-selected.
-* [x] "Accept all" may not toggle additional, previously unselected, purposes.
+* [ ] "Accept all" may not toggle additional, previously unselected, purposes.
 
 ## Detecting CMPs automatically
 
@@ -271,7 +271,7 @@
     * TODO: Maybe it really isn't such a good idea to distinguish between notice and dialog. I genuinely often struggle to do this manually even.
         * -> We do still distinguish but only by whether there is a button. The other criteria are identical for dialogs and notices.
     * Include IAB labels?
-    * TODO: Problem with webviews. Only have correct element data on the second try?!
+    * TODO: Problem with webviews. Only have correct element data on the second try?! (e.g. "Lecker")
 * Cases where I'm unclear:
     * Lomeda ("Dating App"): Text is split across multiple elements, so not detected. Appium doesn't seem to have an `innerText()`-type function. Manually concat all child texts? But then we could also just use the root element, couldn't we?
     * Should we distinguish between dialog and notice texts? Would it not be smarter to just use the button as the distinguishing feature?
