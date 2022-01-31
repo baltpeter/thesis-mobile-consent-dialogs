@@ -5,6 +5,8 @@ import { execa } from 'execa';
 import { remote as wdRemote } from 'webdriverio';
 import chalk from 'chalk';
 import { timeout } from 'promise-timeout';
+import getImageColors from 'get-image-colors';
+import chroma from 'chroma-js';
 import {
     // button_id_fragments,
     dialog_id_fragments,
@@ -150,6 +152,7 @@ async function main() {
                 accept_button_without_reject_button: false,
                 ambiguous_reject_button: false,
                 accept_larger_than_reject: false,
+                accept_color_highlight: false,
                 stops_after_reject: false,
             };
             if (['dialog', 'maybe_dialog'].includes(verdict)) {
@@ -164,9 +167,6 @@ async function main() {
                 }
 
                 // "Accept" button not highlighted compared to "reject" button.
-                // * Colorfulness: https://github.com/piercus/colorfulness
-                // * Prominent colors: http://jariz.github.io/vibrant.js/
-                // BUT: Needs to be compared to background (e.g. Esso).
                 const affirmative_buttons = [...buttons.clear_affirmative, ...buttons.hidden_affirmative];
                 const negative_buttons = [...buttons.clear_negative, ...buttons.hidden_negative];
                 // TODO: What if there is more than one of each button type?
@@ -178,6 +178,26 @@ async function main() {
                     const negative_size = negative_rect.width * negative_rect.height;
                     if (affirmative_size / negative_size > 1.5) violations.accept_larger_than_reject = true;
                     console.log('button size factor:', affirmative_size / negative_size);
+
+                    // Compare button colors.
+                    const affirmative_screenshot = Buffer.from(
+                        await client.takeElementScreenshot(affirmative_buttons[0].ELEMENT),
+                        'base64'
+                    );
+                    const negative_screenshot = Buffer.from(
+                        await client.takeElementScreenshot(negative_buttons[0].ELEMENT),
+                        'base64'
+                    );
+
+                    const affirmative_color = (
+                        await getImageColors(affirmative_screenshot, { count: 1, type: 'image/png' })
+                    )[0];
+                    const negative_color = (
+                        await getImageColors(negative_screenshot, { count: 1, type: 'image/png' })
+                    )[0];
+                    const color_difference = chroma.deltaE(affirmative_color, negative_color);
+                    console.log('color difference:', color_difference);
+                    if (color_difference > 30) violations.accept_color_highlight = true;
                 }
 
                 // Using app needs to be possible after refusing/withdrawing consent.

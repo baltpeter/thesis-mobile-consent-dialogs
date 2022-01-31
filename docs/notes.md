@@ -237,7 +237,7 @@
 * [ ] No purposes are pre-selected.
 * [ ] Details may not be hidden after another link if consenting is possible on that screen.
 * [ ] Giving consent for subpurposes is possible.
-* [~] "Consent" button is not highlighted compared to "refuse" button.
+* [x] "Consent" button is not highlighted compared to "refuse" button.
 * [x] Using app needs to be possible after refusing/withdrawing consent.
 * [ ] Consent is clearly distiguishable from other declarations (like TOS acceptance).
 * [ ] Consent notice informs of right to withdrawal.
@@ -297,7 +297,8 @@
 * [x] Start many apps and make screenshot for initial manual analysis.
 * [x] Explore app frameworks/libraries to check for CMPs.
     * If we do find them, try to interact with them using Frida.
-* [ ] Find out how to get element style properties (to answer questions like "which button is more prominent?").
+* [x] Find out how to get element style properties (to answer questions like "which button is more prominent?").
+    * Not possible.
 * [ ] Automate 3u with Frida?
 * [ ] ~~Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.~~
 * [ ] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
