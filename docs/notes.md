@@ -302,6 +302,7 @@
     * Will also be helpful for complaint generator.
 * [ ] After CMP detection: Do violation detection next, then interaction.
 * [ ] Save raw mitmproxy flows/logs.
+* [ ] Look for SDK indicators in prefs?
 
 ### Promises from proposal
 
@@ -310,5 +311,5 @@
 * [ ] Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
 * [~] Identify consent dialogs as well as their frameworks and settings in apps. Compare results with research for the web.
 * [~] Identify violations in consent dialogs (dark patterns, nudging).
-* [ ] Interact with consent dialogs and measure effect of the choices on the tracking going on.
+* [~] Interact with consent dialogs and measure effect of the choices on the tracking going on.
 * [ ] Evaluate results and compare with privacy labels on iOS.
