@@ -229,19 +229,16 @@
 
 ### What can be checked automatically?
 
-* [W] Processing that needs consent may only be performed after it was given.
+* [W] Processing that needs consent (active action) may only be performed after it was given.
 * [x] Unambiguous "agree" button (not "okay").
-* [ ] Concrete purposes are listed.
-* [ ] Consent notice includes at least of the identity of the controller, the purposes, storage duration, access for third parties (explicitly listed).
 * [x] Refusing consent takes the same number of clicks as giving it or no action at all.
-* [ ] No purposes are pre-selected.
-* [ ] Details may not be hidden after another link if consenting is possible on that screen.
-* [ ] Giving consent for subpurposes is possible.
 * [x] "Consent" button is not highlighted compared to "refuse" button.
 * [x] Using app needs to be possible after refusing/withdrawing consent.
-* [ ] Consent is clearly distiguishable from other declarations (like TOS acceptance).
+* [ ] Consent notice includes at least the identity of the controller, the concrete purposes, storage duration, access for third parties (explicitly listed).
 * [ ] Consent notice informs of right to withdrawal.
-* [ ] Accessing other legal notices is still possible.
+* [ ] Details may not be hidden after another link if consenting is possible on that screen.
+* [ ] Giving consent for subpurposes is possible.
+* [ ] No purposes are pre-selected.
 * [ ] "Accept all" may not toggle additional, previously unselected, purposes.
 
 ## Detecting CMPs automatically
@@ -271,7 +268,7 @@
     * TODO: Maybe it really isn't such a good idea to distinguish between notice and dialog. I genuinely often struggle to do this manually even.
         * -> We do still distinguish but only by whether there is a button. The other criteria are identical for dialogs and notices.
     * Include IAB labels?
-    * TODO: Problem with webviews. Only have correct element data on the second try?! (e.g. "Lecker")
+    * [x] Problem with webviews. Only have correct element data on the second try?! (e.g. "Lecker") The first `findElements()` call doesn't find 
 * Cases where I'm unclear:
     * Lomeda ("Dating App"): Text is split across multiple elements, so not detected. Appium doesn't seem to have an `innerText()`-type function. Manually concat all child texts? But then we could also just use the root element, couldn't we?
     * Should we distinguish between dialog and notice texts? Would it not be smarter to just use the button as the distinguishing feature?
@@ -305,3 +302,13 @@
     * Will also be helpful for complaint generator.
 * [ ] After CMP detection: Do violation detection next, then interaction.
 * [ ] Save raw mitmproxy flows/logs.
+
+### Promises from proposal
+
+* [x] Compile list of criteria for compliant consent dialogs, based on applicable legislation, court rulings, supervisory authority recommendations, and previous work.
+* [x] Extend existing analysis framework to allow extraction of elements on screen and interaction with apps.
+* [ ] Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
+* [~] Identify consent dialogs as well as their frameworks and settings in apps. Compare results with research for the web.
+* [~] Identify violations in consent dialogs (dark patterns, nudging).
+* [ ] Interact with consent dialogs and measure effect of the choices on the tracking going on.
+* [ ] Evaluate results and compare with privacy labels on iOS.

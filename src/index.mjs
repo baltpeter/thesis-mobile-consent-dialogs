@@ -84,13 +84,17 @@ async function main() {
                 port: 4723,
                 capabilities: {
                     platformName: 'Android',
-                    platformVersion: '11',
-                    deviceName: 'ignored-on-android',
+                    'appium:automationName': 'UiAutomator2',
+                    'appium:platformVersion': '11',
+                    'appium:deviceName': 'ignored-on-android',
                 },
                 logLevel: 'warn',
             });
             await client.setGeoLocation({ latitude: '52.2734031', longitude: '10.5251192', altitude: '77.23' });
             if (run_for_open_app_only) app_id = await client.getCurrentPackage();
+            // For some reason, the first `findElements()` call in a session doesn't find elements inside webviews. As a
+            // workaround, we can just do any `findElements()` call with results we don't care about first.
+            await timeout(client.findElements('xpath', '/invalid/webview-workaround-hack'), 15000);
 
             // Collect indicators.
             let has_dialog = false;
@@ -239,11 +243,10 @@ async function main() {
 
             if (process.argv.includes('--debug-tree')) console.log(await client.getPageSource());
 
-            if (!run_for_open_app_only) {
-                // Clean up.
-                await client.deleteSession();
-                await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]);
-            } else await execa('adb', ['shell', 'clear', app_id]);
+            await client.deleteSession();
+            // Clean up.
+            if (!run_for_open_app_only) execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]);
+            else await execa('adb', ['shell', 'clear', app_id]);
             console.log();
         } catch (err) {
             console.error(err);
