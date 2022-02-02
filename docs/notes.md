@@ -24,7 +24,8 @@
 
 * IAB TCF
     * Has mobile version: <https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/Mobile In-App Consent APIs v1.0 Final.md>
-        * Unclear: Relationship with TCFv2. Does that replace the mobile one as well? Seems to be obsolete (https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/pull/302)?
+        * ~~Unclear: Relationship with TCFv2. Does that replace the mobile one as well? Seems to be obsolete (https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/pull/302)?~~
+        * Superseded by: <https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details> (no important changes)
     * CMP data can be accessed via `NSUserDefaults` on iOS or `SharedPreferences` on Android (https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/Mobile%20In-App%20Consent%20APIs%20v1.0%20Final.md#how-do-third-party-sdks-vendors-access-the-consent-information-)
         * Docs by Usercentrics: https://docs.usercentrics.com/cmp_in_app_sdk/latest/apply_consent/apply-iab-consent/
         * Frida:
@@ -303,6 +304,7 @@
 * [ ] After CMP detection: Do violation detection next, then interaction.
 * [ ] Save raw mitmproxy flows/logs.
 * [ ] Look for SDK indicators in prefs?
+* [ ] Change geolocation.
 
 ### Promises from proposal
 

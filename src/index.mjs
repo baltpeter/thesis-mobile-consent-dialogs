@@ -17,7 +17,7 @@ import {
     keywords_regular,
     keywords_half,
 } from './indicators.mjs';
-import { adb_get_foreground_app_id, adb_get_pid_for_app_id } from './util.mjs';
+import { adb_get_foreground_app_id, adb_get_pid_for_app_id, shuffle } from './util.mjs';
 
 const REQUIRED_SCORE = 1;
 
@@ -88,7 +88,7 @@ async function main() {
 
     await ensure_frida();
 
-    for (const app_id of app_ids) {
+    for (const app_id of shuffle(app_ids)) {
         let client;
         let out_prefix;
         try {

@@ -12,3 +12,5 @@ export const adb_get_pid_for_app_id = async (app_id) => {
     const { stdout } = await execa('adb', ['shell', 'pidof', '-s', app_id]);
     return parseInt(stdout, 10);
 };
+
+export const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
