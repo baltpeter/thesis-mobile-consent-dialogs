@@ -284,6 +284,44 @@
         * -> No warnings and complaints. Only privately.
     * Document how free Apple dev cert works (with Appium)
 
+## IAB TCF decision (https://www.iccl.ie/news/gdpr-enforcer-rules-that-iab-europes-consent-popups-are-unlawful/)
+
+* Broad definition of "personal data":
+    * identifi_able_: "As soon as a CMP stores or reads the TC String on a user's device using a euconsent-v2 cookie, [it] can be linked to the IP address of the user's device. In other words, CMPs have the technical means to collect IP addresses (as indicated in their pop-up) and to combine all information relating to an identifiable person. The possibility of combining the TC String and the IP address means that this is information about an identifiable user." (para. 304)
+    * PD assumed as purpose is explicitly to single out person: "In other words, if the purpose of the processing is the singling out of persons, it may be assumed that the controller or another party has or will have at their disposal the means by which the data subject may reasonably be expected to be identified" (para. 310)
+* Broad definition of "controller":
+    * Processing of data not necessary: "It is therefore clear to the Litigation Chamber that the defendant does not necessarily have to process the personal data concerned itself, nor does it have to be able to grant itself any access to the personal data, in order for IAB Europe to be considered a data controller, as in relation to a framework for which the defendant moreover charges an annual fee of 1.200 EUR to participating organisations." (para. 328)
+    * Impact on others' processing:
+        * "If it appears that an organisation plays a decisive role in the dissemination of  personal data or that the processing operations carried out under the influence of the organisation may substantially affect the fundamental rights to privacy and to the  protection of personal data, that organisation should be regarded as a data controller." (para. 329)
+        * "CMPs are obliged to register with IAB Europe in order to be able to generate a TC String and must follow the technical specifications developed by IAB Europe in cooperation with IAB Tech Lab regarding the API with which CMPs can generate the TC String and adtech vendors and publishers can read it." (para. 344)
+* Legal basis for TC string processing: only legitimate interest potentially applicable (para. 409)
+    * Balance between interests not met due to no opt-out (para. 421) and lack of information (para. 422).
+* TCF doesn't capture valid consent for OpenRTB
+    * not informed:
+        * Purposes "Measure content performance" and "Apply market research to generate audience insights" not sufficiently clearly described (para. 433)
+        * No overview of categories of data collected in CMP interfaces (para. 434)
+        * "the recipients for whom consent is obtained are so numerous that users would need a disproportionate amount of time to read [information about the identity of all controllers], which means that their consent can rarely be sufficiently informed." (para. 435)
+        * information "too general to reflect the specific processing operations of each vendor" (para. 436)
+        * enrichment of data in bid requests but orgs cannot indicate what data they already hold => not informed (para. 437)
+    * consent cannot be withdrawn as easily as given (para. 438)
+* OpenRTB processing via TCF cannot rely on legitimate interest
+    * no explanation of legitimate interests pursued (para. 448)
+    * no measures for data minimisation => necessity bar not met (para. 455, 456) (does not apply to TCF itself, para. 497)
+    * users cannot expect processing due to large number of TCF partners (para. 459)
+    * EDPB: legitimate interest not valid for direct markting involving behavioural advertising (para. 460)
+* OpenRTB processing via TCF cannot rely on contractual necessity
+    * EDPB: (pre)contractual necessity of the processing is not a legal ground applicable to behavioural advertising (para. 462)
+    * lit. b not mentioned anywhere as possible legal basis (para. 463)
+* Transparency requirements not met (para. 467)
+    * IAB Europe can claim "records of consent" from CMP but doesn't inform data subjects of that (para. 468)
+    * information fatigue, surprises after consent (para. 469)
+    * users cannot identify "the processing purposes associated with the authorisation of a particular vendor or which adtech vendors will process their data for a specific purpose" (para. 471)
+    * large number of third parties fundamentally incompatible with sufficiently informed consent (para. 472)
+* Lack of appropriate measures on behalf of IAB Europe
+    * IAB Europe forsees possible falsification of TC strings (para. 485, 486)
+    * Compliance programs not sufficient, no dissuasive measures (para. 488)
+    * TC string has no measures for transfering data outside the EU (para. 491)
+
 ## Complaints about illegal practices
 
 * § 25 TTDSG (the German implementation of Art. 5(3) ePD) is very powerful and violations can easily be detected automatically. The regular German DPAs are responsible for enforcing it (§ 1(1)(8) TTDSG).
@@ -305,6 +343,7 @@
 * [ ] Save raw mitmproxy flows/logs.
 * [ ] Look for SDK indicators in prefs?
 * [ ] Change geolocation.
+* [ ] For button color highlight: Also compare with background.
 
 ### Promises from proposal
 
