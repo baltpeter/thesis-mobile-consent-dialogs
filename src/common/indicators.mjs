@@ -26,7 +26,7 @@ export const button_text_fragments = {
 export const button_text_fragments_all = Object.values(button_text_fragments).flat();
 // TODO: Continue the list.
 export const dialog_text_fragments = normalizeFragments([
-    /(we care about|comitted)[^.]{0,10} (privacy|data protection)/,
+    /(we care about|comitted|respect)[^.]{0,10} (privacy|data protection)/,
     /(privacy|data protection) [^.]{0,35} important/,
     /can( always| later)? revoke[^.]{0,15} consent ?(at any time|later)?/,
     /(use|utilise|need|have|set|collect|ask)[^.]{0,25} (cookie|consent|tracking)/,
@@ -37,6 +37,7 @@ export const dialog_text_fragments = normalizeFragments([
     /have read( and understood)? [^.]{3,35} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/,
 
     /(Datenschutz|Privatsphäre) (ist uns wichtig|liegt uns am Herzen)/,
+    /respektier[^.]{0,20} (Datenschutz|Privatsphäre)/,
     /wir nehmen[^.]{0,10} (Datenschutz|Privatsphäre) ernst/,
     /(kannst|können)[^.]{0,10} Einwilligung jederzeit[^.]{0,20} widerrufen/,
     /(benutz|verwend|nutz|brauch|benötig|hab|setz|sammel|frag)[^.]{0,25} (Cookie|Zustimmung|Einwilligung|Einverständnis|Tracking)/,

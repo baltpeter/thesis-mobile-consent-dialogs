@@ -13,4 +13,7 @@ export const adb_get_pid_for_app_id = async (app_id) => {
     return parseInt(stdout, 10);
 };
 
+export const android_get_apk_version = async (apk_path) =>
+    (await execa('aapt', ['dump', 'badging', apk_path])).stdout.match(/versionName='(.+?)'/)[1];
+
 export const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);

@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+    db:
+        image: postgres:13
+        volumes:
+            - data:/var/lib/postgresql/data
+        env_file: ./.env
+        ports:
+            - '${HOST_PORT}:5432'
+volumes:
+    data:

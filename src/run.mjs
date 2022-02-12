@@ -1,6 +1,7 @@
 import { join } from 'path';
 import glob from 'glob';
-import fs from 'fs-extra';
+import yesno from 'yesno';
+import dirname from 'es-dirname';
 import { execa } from 'execa';
 import { remote as wdRemote } from 'webdriverio';
 import chalk from 'chalk';
@@ -8,6 +9,7 @@ import { timeout } from 'promise-timeout';
 import getImageColors from 'get-image-colors';
 import chroma from 'chroma-js';
 import frida from 'frida';
+import { db } from './common/db.mjs';
 import {
     // button_id_fragments,
     dialog_id_fragments,
@@ -16,17 +18,19 @@ import {
     link_text_fragments,
     keywords_regular,
     keywords_half,
-} from './indicators.mjs';
-import { adb_get_foreground_app_id, adb_get_pid_for_app_id, shuffle } from './util.mjs';
+} from './common/indicators.mjs';
+import { adb_get_foreground_app_id, adb_get_pid_for_app_id, android_get_apk_version, shuffle } from './common/util.mjs';
 
-const REQUIRED_SCORE = 1;
+const required_score = 1;
+const app_timeout = 60;
+const platform = 'android'; // TODO
+const mitmdump_path = join(dirname(), '../venv/bin/mitmdump');
+const mitmdump_addon_path = join(dirname(), 'mitm-addon.py');
 
 const run_for_open_app_only = process.argv.includes('--dev');
 let log_indicators = true;
 
 const apps_dir = '/media/benni/storage2/tmp/apks';
-const out_dir = join('..', 'data.tmp', 'labelling');
-fs.ensureDirSync(out_dir);
 
 const pause = (duration_in_ms) => new Promise((res) => setTimeout(res, duration_in_ms));
 
@@ -44,7 +48,7 @@ const testAndLog = (frags, val, msg, length_factor = false, multiple_matches = f
     return res;
 };
 const decide = (keyword_score, has_dialog, button_count, has_link) => {
-    if (keyword_score < REQUIRED_SCORE && !has_link) return 'neither';
+    if (keyword_score < required_score && !has_link) return 'neither';
 
     if (has_dialog) {
         if (button_count >= 1) return 'dialog';
@@ -81,6 +85,11 @@ const ensure_frida = async () => {
 };
 
 async function main() {
+    const ok = await yesno({
+        question: 'Have you disabled PiHole?',
+    });
+    if (!ok) process.exit(1);
+
     const app_ids = run_for_open_app_only
         ? [await adb_get_foreground_app_id()]
         : glob.sync(`*`, { absolute: false, cwd: apps_dir });
@@ -89,16 +98,77 @@ async function main() {
     await ensure_frida();
 
     for (const app_id of shuffle(app_ids)) {
-        let client;
-        let out_prefix;
-        try {
-            out_prefix = join(out_dir, app_id);
+        const apk_path = join(apps_dir, app_id, `${app_id}.apk`);
+        const version = await android_get_apk_version(apk_path);
+        const done = await db.any(
+            'SELECT 1 FROM apps WHERE name = ${app_id} AND version = ${version} AND platform = ${platform};',
+            { app_id, version, platform }
+        );
+        if (done.length > 0) {
+            console.log(chalk.underline(`Skipping ${app_id}@${version} (${platform})…`));
+            console.log();
+            continue;
+        }
+        console.log(chalk.underline(`Analyzing ${app_id}@${version} (${platform})…`));
+
+        const { id: db_app_id } = await db.one(
+            'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
+            { app_id, version, platform }
+        );
+        const { id: run_id } = await db.one(
+            'INSERT INTO runs (start_time, app) VALUES(now(), ${db_app_id}) RETURNING id;',
+            { db_app_id }
+        );
+
+        const res = {
+            verdict: 'neither',
+            violations: {
+                ambiguous_accept_button: false,
+                accept_button_without_reject_button: false,
+                ambiguous_reject_button: false,
+                accept_larger_than_reject: false,
+                accept_color_highlight: false,
+                stops_after_reject: false,
+            },
+            prefs: {
+                initial: undefined,
+                accepted: undefined,
+                rejected: undefined,
+            },
+            screenshot: undefined,
+        };
+
+        let client, mitmdump;
+        const cleanup = async (failed = false) => {
+            console.log('Cleaning up mitmproxy and Appium session…');
+            if (mitmdump) {
+                mitmdump.kill();
+                await mitmdump.catch(() => {});
+            }
+
+            if (client) await client.deleteSession().catch(() => {});
             if (!run_for_open_app_only) {
-                if (fs.existsSync(`${out_prefix}.json`)) continue;
+                console.log('Uninstalling app…');
+                await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]).catch(() => {});
+            }
 
-                console.log(chalk.bgWhite.black(app_id));
+            if (failed) {
+                console.log('Deleting from database…');
+                await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
+            }
+        };
+        process.removeAllListeners('SIGINT');
+        process.on('SIGINT', async () => {
+            await cleanup(true);
+            process.exit();
+        });
+        try {
+            console.log('Starting mitmproxy and Appium session…');
+            mitmdump = execa(mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
 
-                // Install app.
+            // Install app.
+            if (!run_for_open_app_only) {
+                console.log('Installing app…');
                 await execa('adb', ['install-multiple', '-g', join(apps_dir, app_id, '*.apk')], { shell: true });
             }
 
@@ -111,16 +181,18 @@ async function main() {
                     'appium:automationName': 'UiAutomator2',
                     'appium:platformVersion': '11',
                     'appium:deviceName': 'ignored-on-android',
-                    'appium:app': join(apps_dir, app_id, `${app_id}.apk`),
+                    'appium:app': apk_path,
                     'appium:noReset': false,
-                    'appium:autoGrantPermissions': true, // TODO
+                    'appium:autoGrantPermissions': true,
+                    'appium:newCommandTimeout': 360,
                     // This isn't reliable if we don't know the target activity and we're waiting ourselves anyway.
                     'appium:appWaitForLaunch': false,
                     'appium:appWaitActivity': '*',
                 },
                 logLevel: 'warn',
             });
-            await pause(run_for_open_app_only ? 2000 : 10000); // TODO: Increase to 60s.
+            console.log(`Starting app for ${app_timeout} seconds…`);
+            await pause(run_for_open_app_only ? 2000 : app_timeout * 1000);
             await client.setGeoLocation({ latitude: '52.2734031', longitude: '10.5251192', altitude: '77.23' });
             // For some reason, the first `findElements()` call in a session doesn't find elements inside webviews. As a
             // workaround, we can just do any `findElements()` call with results we don't care about first.
@@ -195,23 +267,15 @@ async function main() {
             console.log(chalk.redBright('Verdict:'), verdict);
 
             // Detect violations.
-            const violations = {
-                ambiguous_accept_button: false,
-                accept_button_without_reject_button: false,
-                ambiguous_reject_button: false,
-                accept_larger_than_reject: false,
-                accept_color_highlight: false,
-                stops_after_reject: false,
-            };
             if (['dialog', 'maybe_dialog'].includes(verdict)) {
                 // Unambiguous "accept" button (not "okay").
-                if (buttons.clear_affirmative.length < 1) violations.ambiguous_accept_button = true;
+                if (buttons.clear_affirmative.length < 1) res.violations.ambiguous_accept_button = true;
 
                 // Unambiguous "reject" button if there is an "accept" button.
                 if (buttons.clear_affirmative.length + buttons.hidden_affirmative.length > 0) {
                     if (buttons.clear_negative.length + buttons.hidden_negative.length < 1)
-                        violations.accept_button_without_reject_button = true;
-                    else if (buttons.clear_negative.length < 1) violations.ambiguous_reject_button = true;
+                        res.violations.accept_button_without_reject_button = true;
+                    else if (buttons.clear_negative.length < 1) res.violations.ambiguous_reject_button = true;
                 }
 
                 // "Accept" button not highlighted compared to "reject" button.
@@ -225,7 +289,7 @@ async function main() {
                     const negative_rect = await timeout(client.getElementRect(buttons.all_negative[0].ELEMENT), 5000);
                     const affirmative_size = affirmative_rect.width * affirmative_rect.height;
                     const negative_size = negative_rect.width * negative_rect.height;
-                    if (affirmative_size / negative_size > 1.5) violations.accept_larger_than_reject = true;
+                    if (affirmative_size / negative_size > 1.5) res.violations.accept_larger_than_reject = true;
                     console.log('button size factor:', affirmative_size / negative_size);
 
                     // Compare button colors.
@@ -246,7 +310,7 @@ async function main() {
                     )[0];
                     const color_difference = chroma.deltaE(affirmative_color, negative_color);
                     console.log('color difference:', color_difference);
-                    if (color_difference > 30) violations.accept_color_highlight = true;
+                    if (color_difference > 30) res.violations.accept_color_highlight = true;
                 }
 
                 // Using app needs to be possible after refusing/withdrawing consent.
@@ -256,14 +320,14 @@ async function main() {
                         await client.elementClick(buttons.all_negative[0].ELEMENT);
                         await pause(2000);
 
-                        if ((await client.queryAppState(app_id)) !== 4) violations.stops_after_reject = true;
+                        if ((await client.queryAppState(app_id)) !== 4) res.violations.stops_after_reject = true;
                     }
                 }
             }
 
             console.log();
             console.log(chalk.redBright('Violations:'));
-            console.log(violations);
+            console.log(res.violations);
 
             // Save prefs.
             if (['dialog', 'maybe_dialog'].includes(verdict)) {
@@ -310,18 +374,13 @@ send({ name: "app_prefs", payload: prefs });`);
                 await pause(2000);
 
                 const { buttons: buttons1 } = await collect_indicators();
-                const initial_prefs = await get_prefs();
-
-                if (!run_for_open_app_only)
-                    fs.writeFileSync(`${out_prefix}_initial_prefs.json`, JSON.stringify(initial_prefs, null, 4));
+                res.prefs.initial = await get_prefs();
 
                 if (buttons1.all_affirmative.length === 1) {
-                    client.elementClick(buttons1.all_affirmative[0].ELEMENT);
+                    await client.elementClick(buttons1.all_affirmative[0].ELEMENT);
                     await pause(2000);
 
-                    const accepted_prefs = await get_prefs();
-                    if (!run_for_open_app_only)
-                        fs.writeFileSync(`${out_prefix}_accepted_prefs.json`, JSON.stringify(accepted_prefs, null, 4));
+                    res.prefs.accepted = await get_prefs();
                 }
 
                 if (buttons1.all_negative.length === 1) {
@@ -333,53 +392,42 @@ send({ name: "app_prefs", payload: prefs });`);
                     }
 
                     const { buttons: buttons2 } = await collect_indicators();
-                    client.elementClick(buttons2.all_negative[0].ELEMENT);
+                    await client.elementClick(buttons2.all_negative[0].ELEMENT);
                     await pause(2000);
 
-                    const rejected_prefs = await get_prefs();
-                    if (!run_for_open_app_only)
-                        fs.writeFileSync(`${out_prefix}_rejected_prefs.json`, JSON.stringify(rejected_prefs, null, 4));
+                    res.prefs.rejected = await get_prefs();
                 }
             }
 
             // Take screenshot and save result.
             if (!run_for_open_app_only) {
                 // Apps with the "secure" flag set cannot be screenshotted. TODO: Can this be circumvented?
-                await client
-                    .saveScreenshot(`${out_prefix}.png`)
+                res.screenshot = await client
+                    .takeScreenshot()
                     .catch(() => console.error("Couldn't save screenshot for", app_id));
-                fs.writeFileSync(
-                    `${out_prefix}.json`,
-                    JSON.stringify(
-                        {
-                            verdict,
-                            keyword_score,
-                            has_dialog,
-                            button_counts: buttons,
-                            button_count,
-                            has_link,
-                            violations,
-                        },
-                        null,
-                        4
-                    )
+
+                await db.none(
+                    'INSERT INTO dialogs (run,verdict,violations,prefs,screenshot,meta) VALUES (${run_id},${verdict},${violations},${prefs},${screenshot},${meta})',
+                    {
+                        run_id,
+                        verdict: res.verdict,
+                        violations: JSON.stringify(res.violations),
+                        prefs: JSON.stringify(res.prefs),
+                        screenshot: Buffer.from(res.screenshot, 'base64'),
+                        meta: JSON.stringify({ has_dialog, buttons, has_link, keyword_score, button_count }),
+                    }
                 );
             }
 
             if (process.argv.includes('--debug-tree')) console.log(await client.getPageSource());
 
             // Clean up.
-            await client.deleteSession();
-            if (!run_for_open_app_only) await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]);
+            await cleanup();
             console.log();
         } catch (err) {
             console.error(`Analyzing ${app_id} failed:`, err);
 
-            if (client) await client.deleteSession();
-            if (!run_for_open_app_only) {
-                await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]).catch(() => {});
-                fs.removeSync(`${out_prefix}.json`);
-            }
+            await cleanup(true);
 
             console.log();
         }

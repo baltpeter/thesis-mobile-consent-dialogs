@@ -339,11 +339,15 @@
 * [ ] ~~Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.~~
 * [ ] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
     * Will also be helpful for complaint generator.
-* [ ] After CMP detection: Do violation detection next, then interaction.
-* [ ] Save raw mitmproxy flows/logs.
+* [x] After CMP detection: Do violation detection next, then interaction.
+* [ ] Save raw mitmproxy flows/logs. (`--save_stream_file` but also save cmd logs)
 * [ ] Look for SDK indicators in prefs?
 * [ ] Change geolocation.
 * [ ] For button color highlight: Also compare with background.
+* [ ] Cert pinning bypass
+* [ ] Honey data
+* [ ] Python `requirements.txt`
+* [ ] Verify app is actually running before waiting.
 
 ### Promises from proposal
 
