@@ -14,6 +14,8 @@ export const adb_get_pid_for_app_id = async (app_id) => {
 };
 
 export const android_get_apk_version = async (apk_path) =>
-    (await execa('aapt', ['dump', 'badging', apk_path])).stdout.match(/versionName='(.+?)'/)[1];
+    // These sometimes fail with `AndroidManifest.xml:42: error: ERROR getting 'android:icon' attribute: attribute value
+    // reference does not exist` but still have the correct version in the output.
+    (await execa('aapt', ['dump', 'badging', apk_path], { reject: false })).stdout.match(/versionName='(.+?)'/)[1];
 
 export const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);

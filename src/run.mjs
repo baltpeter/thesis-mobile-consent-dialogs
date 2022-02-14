@@ -193,7 +193,7 @@ async function main() {
             });
             console.log(`Starting app for ${app_timeout} seconds…`);
             await pause(run_for_open_app_only ? 2000 : app_timeout * 1000);
-            await client.setGeoLocation({ latitude: '52.2734031', longitude: '10.5251192', altitude: '77.23' });
+            await client.setGeoLocation({ latitude: '52.23528', longitude: '10.56437', altitude: '77.23' });
             // For some reason, the first `findElements()` call in a session doesn't find elements inside webviews. As a
             // workaround, we can just do any `findElements()` call with results we don't care about first.
             await timeout(client.findElements('xpath', '/invalid/webview-workaround-hack'), 15000);
@@ -413,7 +413,7 @@ send({ name: "app_prefs", payload: prefs });`);
                         verdict: res.verdict,
                         violations: JSON.stringify(res.violations),
                         prefs: JSON.stringify(res.prefs),
-                        screenshot: Buffer.from(res.screenshot, 'base64'),
+                        screenshot: res.screenshot && Buffer.from(res.screenshot, 'base64'),
                         meta: JSON.stringify({ has_dialog, buttons, has_link, keyword_score, button_count }),
                     }
                 );

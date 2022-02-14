@@ -322,6 +322,135 @@
     * Compliance programs not sufficient, no dissuasive measures (para. 488)
     * TC string has no measures for transfering data outside the EU (para. 491)
 
+## Tracking request adapters
+
+* Endpoints to consider (some of these will be hard to reverse engineer; went through all with at least 15/1326 apps):
+    * https://www.facebook.com:443/adnw_sync2
+    * https://graph.facebook.com:443/network_ads_common
+
+    * https://app-measurement.com:443/a (make sure app ID matches!)
+    * https://firebaselogging-pa.googleapis.com:443/v1/firelog/legacy/batchlog
+    * https://csi.gstatic.com:443/csi
+    * https://ssl.google-analytics.com:443/batch
+    * https://rr1---sn-4g5lzney.googlevideo.com:443/videoplayback
+    * https://rr1---sn-4g5ednse.googlevideo.com:443/videoplayback
+    * https://rr5---sn-4g5e6nzs.googlevideo.com:443/videoplayback
+    * https://rr3---sn-4g5e6nzz.googlevideo.com:443/videoplayback
+    * https://play.googleapis.com:443/log/batch
+    
+    * https://config.uca.cloud.unity3d.com:443/
+    * https://cdp.cloud.unity3d.com:443/v1/events
+    * https://httpkafka.unityads.unity3d.com:443/v1/events
+    * https://auiopt.unityads.unity3d.com:443/v1/category/experiment
+    * https://thind.unityads.unity3d.com:443/v1/events
+    * https://publisher-config.unityads.unity3d.com:443/games/3268074/configuration
+    * https://auction.unityads.unity3d.com:443/v4/test/games/3268074/requests
+
+    * https://app.adjust.com:443/session
+    * https://app.adjust.com:443/attribution
+    * https://app.adjust.com:443/event
+    
+    * https://googleads.g.doubleclick.net:443/mads/gma
+    * https://googleads.g.doubleclick.net:443/pagead/interaction/
+    * https://googleads.g.doubleclick.net:443/xbbe/pixel
+    * https://googleads.g.doubleclick.net:443/pagead/adview
+    * https://pagead2.googleadservices.com:443/pagead/adview
+    * https://googleads.g.doubleclick.net:443/dbm/ad
+    * https://googleads.g.doubleclick.net:443/pagead/conversion/
+    * https://googleads4.g.doubleclick.net:443/pcs/view
+    * https://pagead2.googlesyndication.com:443/pagead/gen_204
+    * https://pagead2.googlesyndication.com:443/pcs/activeview
+    * https://bid.g.doubleclick.net:443/dbm/vast
+    * https://www.googleadservices.com:443/pagead/aclk
+    * https://pubads.g.doubleclick.net:443/gampad/ads
+    * https://www.googleadservices.com:443/pagead/conversion/1001680686/
+
+    * https://ms.applovin.com:443/5.0/i
+    * https://d.applovin.com:443/2.0/device
+    * https://rt.applovin.com:443/4.0/pix
+    * https://ms.applovin.com:443/1.0/mediate
+    * https://prod-ms.applovin.com:443/1.0/event/load
+
+    * https://in.appcenter.ms:443/logs
+    * https://codepush.appcenter.ms:443/v0.1/public/codepush/report_status/deploy
+
+    * https://api.onesignal.com:443/players
+
+    * https://outcome-ssp.supersonicads.com:443/mediation
+
+    * https://adc3-launch.adcolony.com:443/v4/launch
+    * https://events3alt.adcolony.com:443/t/5.0/session_start
+    * https://events3.adcolony.com:443/t/5.0/install
+    * https://androidads4-6.adcolony.com:443/configure
+
+    * https://ads.mopub.com:443/m/open
+    * https://ads.mopub.com:443/m/gdpr_sync
+
+    * https://api2.branch.io:443/v1/install
+
+    * https://ads.api.vungle.com:443/config
+    * https://api.vungle.com:443/api/v5/new
+    * https://api.vungle.com:443/api/v5/ads
+    * https://events.api.vungle.com:443/api/v5/cache_bust
+
+    * https://conversions.appsflyer.com:443/api/v6.3/androidevent
+    * https://conversions.appsflyer.com:443/api/v6.2/androidevent
+    * https://conversions.appsflyer.com:443/api/v6.4/androidevent
+    * https://conversions.appsflyer.com:443/api/v5.4/androidevent
+    * https://inapps.appsflyer.com:443/api/v6.3/androidevent
+
+    * https://config.inmobi.com:443/config-server/v1/config/secure.cfg
+
+    * https://startup.mobile.yandex.net:443/analytics/startup
+    * https://report.appmetrica.yandex.net:443/report
+
+    * https://sessions.bugsnag.com:443/
+
+    * https://data.flurry.com:443/v1/flr.do
+
+    * https://infoevent.startappservice.com:443/tracking/infoEvent
+    * https://infoevent.startappservice.com:443/infoevent/api/v1.0/info
+    * https://trackdownload.startappservice.com:443/trackdownload/api/1.0/trackdownload
+
+    * https://api.segment.io:443/v1/import
+
+    * https://configure.rayjump.com:443/setting
+    * https://analytics.rayjump.com:443/
+
+    * https://pangolin16.isnssdk.com:443/api/ad/union/sdk/settings/
+
+    * https://config.ioam.de:443/appcfg.php
+
+    * https://live.chartboost.com:443/api/install
+    * https://live.chartboost.com:443/api/config
+
+    * https://dpm.demdex.net:443/id
+
+    * https://logs.ironsrc.mobi:443/logs
+
+### SQL
+
+To find interesting endpoints:
+
+```sql
+select
+       count(1) c, count(distinct apps.name) app_count, r.method,
+       regexp_replace(concat(r.scheme, '://', r.host, ':', r.port, r.path), '\?.+$', '') u from apps
+    join runs on apps.id = runs.app join requests r on runs.id = r.run
+    where (r.method = 'POST' or r.path ~ '\?.{25,}')
+    group by u, r.method order by app_count desc;
+```
+
+To view the corresponding requests:
+
+```sql
+select name, r.id, r.method, r.path, r.content, r.content_raw from apps
+    join runs on apps.id = runs.app join requests r on runs.id = r.run
+    where regexp_replace(concat(r.scheme, '://', r.host, ':', r.port, r.path), '\?.+$', '')
+        like '${url}'
+    order by length(r.path) + length(r.content);
+```
+
 ## Complaints about illegal practices
 
 * § 25 TTDSG (the German implementation of Art. 5(3) ePD) is very powerful and violations can easily be detected automatically. The regular German DPAs are responsible for enforcing it (§ 1(1)(8) TTDSG).
@@ -348,6 +477,9 @@
 * [ ] Honey data
 * [ ] Python `requirements.txt`
 * [ ] Verify app is actually running before waiting.
+* [ ] Look at cookies and headers.
+    * Same cookie values across different apps?
+    * Compare with cookie DB?
 
 ### Promises from proposal
 
