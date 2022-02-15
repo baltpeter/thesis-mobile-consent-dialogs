@@ -4,18 +4,20 @@ import fs from 'fs-extra';
 
 const res_dir = '../data.tmp/labelling';
 
+type Verdict = 'neither' | 'dialog' | 'notice' | 'maybe_dialog' | 'maybe_notice' | 'link';
+
 (async () => {
     const apps = glob
         .sync('*.json', { absolute: true, cwd: res_dir, ignore: ['*_prefs.json'] })
         .map((path) => ({ path, app_id: basename(path, '.json') }))
         .map((a) => ({ ...a, ...JSON.parse(fs.readFileSync(a.path, 'utf-8')) }));
 
-    const percentage = (a, b = undefined) => `(${((a / (b || apps.length)) * 100).toFixed(2)} %)`;
+    const percentage = (a: number, b?: number) => `(${((a / (b || apps.length)) * 100).toFixed(2)} %)`;
 
     console.log('Total apps:', apps.length);
     console.log();
 
-    const verdict_count = (verdict) => apps.filter((a) => a.verdict === verdict).length;
+    const verdict_count = (verdict: Verdict) => apps.filter((a) => a.verdict === verdict).length;
     console.log(
         'Apps with dialog:',
         verdict_count('dialog'),
@@ -39,7 +41,7 @@ const res_dir = '../data.tmp/labelling';
 
     console.log();
     const apps_with_dialog = verdict_count('dialog') + verdict_count('maybe_dialog');
-    const violation_count = (violation) => apps.filter((a) => a.violations[violation] === true).length;
+    const violation_count = (violation: string) => apps.filter((a) => a.violations[violation] === true).length;
     console.log(
         'Dialogs with ambiguous accept button:',
         violation_count('ambiguous_accept_button'),
@@ -122,21 +124,4 @@ const res_dir = '../data.tmp/labelling';
     );
 
     process.exit();
-    // ---
-
-    const prefs2 = glob
-        .sync(`*`, { absolute: true, cwd: res_dir })
-        .map((p) => ({ path: join(p, 'prefs.json'), app_id: basename(p) }))
-        .filter((a) => fs.existsSync(a.path))
-        .map((a) => ({ ...a, prefs: JSON.parse(fs.readFileSync(a.path, 'utf-8')) }));
-    console.log('Apps with readable prefs:', prefs.length);
-
-    const non_empty_prefs = prefs.filter((a) => Object.keys(a.prefs).length > 0);
-    console.log('Apps with non-empty prefs:', non_empty_prefs.length);
-
-    const privacy_prefs = non_empty_prefs.filter((a) =>
-        Object.keys(a.prefs).some((k) => k.match(/gdpr|iabtcf|didomi|IABUSPrivacy_String/i))
-    );
-    console.log('Apps with privacy-related prefs:', privacy_prefs.length);
-    console.log(privacy_prefs.map((a) => [a.app_id, Object.keys(a.prefs)]));
 })();

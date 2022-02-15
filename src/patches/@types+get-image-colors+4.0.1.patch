@@ -1,0 +1,15 @@
+diff --git a/node_modules/@types/get-image-colors/index.d.ts b/node_modules/@types/get-image-colors/index.d.ts
+index d619936..026c9ac 100755
+--- a/node_modules/@types/get-image-colors/index.d.ts
++++ b/node_modules/@types/get-image-colors/index.d.ts
+@@ -13,8 +13,8 @@ import { Color } from 'chroma-js';
+ declare function colorPalette(input: Buffer, options: colorPalette.Options, callback: Color[]): void;
+ declare function colorPalette(input: Buffer, type: string, callback: colorPalette.Callback): void;
+ declare function colorPalette(input: Buffer, type: string): Promise<Color[]>;
+-declare function colorPalette(input: string, options?: colorPalette.Options): Promise<Color[]>;
+-declare function colorPalette(input: string, callback: colorPalette.Callback): void;
++declare function colorPalette(input: Buffer, options?: colorPalette.Options): Promise<Color[]>;
++declare function colorPalette(input: Buffer, callback: colorPalette.Callback): void;
+ 
+ declare namespace colorPalette {
+     interface Options {

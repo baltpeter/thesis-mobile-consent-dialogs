@@ -1,4 +1,4 @@
-const normalizeFragments = (frags, enforce_word_boundaries = false) =>
+const normalizeFragments = (frags: (RegExp | string)[], enforce_word_boundaries = false) =>
     frags
         .map((frag) =>
             typeof frag === 'string'

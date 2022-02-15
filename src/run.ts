@@ -1,15 +1,18 @@
 import { join } from 'path';
 import glob from 'glob';
 import yesno from 'yesno';
+// @ts-ignore
 import dirname from 'es-dirname';
-import { execa } from 'execa';
+import { execa, ExecaChildProcess } from 'execa';
 import { remote as wdRemote } from 'webdriverio';
+import type { Capabilities } from '@wdio/types';
+import type { ElementReference } from '@wdio/protocols/build/types';
 import chalk from 'chalk';
 import { timeout } from 'promise-timeout';
 import getImageColors from 'get-image-colors';
 import chroma from 'chroma-js';
 import frida from 'frida';
-import { db, pg } from './common/db.mjs';
+import { db, pg } from './common/db.js';
 import {
     // button_id_fragments,
     dialog_id_fragments,
@@ -18,8 +21,8 @@ import {
     link_text_fragments,
     keywords_regular,
     keywords_half,
-} from './common/indicators.mjs';
-import { adb_get_foreground_app_id, adb_get_pid_for_app_id, android_get_apk_version, shuffle } from './common/util.mjs';
+} from './common/indicators.js';
+import { adb_get_foreground_app_id, adb_get_pid_for_app_id, android_get_apk_version, shuffle } from './common/util.js';
 
 const required_score = 1;
 const app_timeout = 60;
@@ -32,13 +35,19 @@ let log_indicators = true;
 
 const apps_dir = '/media/benni/storage2/tmp/apks';
 
-const pause = (duration_in_ms) => new Promise((res) => setTimeout(res, duration_in_ms));
+const pause = (duration_in_ms: number) => new Promise((res) => setTimeout(res, duration_in_ms));
 
-const fragmentTest = (frags, val, length_factor = false, multiple_matches = false) =>
+const fragmentTest = (frags: RegExp[], val: string, length_factor: false | number = false, multiple_matches = false) =>
     frags[multiple_matches ? 'filter' : 'find'](
         (frag) => frag.test(val) && (length_factor ? val.length < length_factor * frag.source.length : true) && frag
     );
-const testAndLog = (frags, val, msg, length_factor = false, multiple_matches = false) => {
+const testAndLog = (
+    frags: RegExp[],
+    val: string,
+    msg: string,
+    length_factor: false | number = false,
+    multiple_matches = false
+) => {
     const res = fragmentTest(frags, val, length_factor, multiple_matches);
     if (res) {
         for (const r of Array.isArray(res) ? res : [res]) {
@@ -47,7 +56,7 @@ const testAndLog = (frags, val, msg, length_factor = false, multiple_matches = f
     }
     return res;
 };
-const decide = (keyword_score, has_dialog, button_count, has_link) => {
+const decide = (keyword_score: number, has_dialog: boolean, button_count: number, has_link: boolean) => {
     if (keyword_score < required_score && !has_link) return 'neither';
 
     if (has_dialog) {
@@ -85,15 +94,13 @@ const ensure_frida = async () => {
 };
 
 async function main() {
-    const ok = await yesno({
-        question: 'Have you disabled PiHole?',
-    });
+    const ok = await yesno({ question: 'Have you disabled PiHole?' });
     if (!ok) process.exit(1);
 
     const app_ids = run_for_open_app_only
-        ? [await adb_get_foreground_app_id()]
+        ? [(await adb_get_foreground_app_id()) || '']
         : glob.sync(`*`, { absolute: false, cwd: apps_dir });
-    if (run_for_open_app_only && app_ids[0] === undefined) throw new Error('You need to start an app!');
+    if (run_for_open_app_only && app_ids[0] === '') throw new Error('You need to start an app!');
 
     await ensure_frida();
 
@@ -131,14 +138,14 @@ async function main() {
                 stops_after_reject: false,
             },
             prefs: {
-                initial: undefined,
-                accepted: undefined,
-                rejected: undefined,
+                initial: undefined as Record<string, any> | undefined,
+                accepted: undefined as Record<string, any> | undefined,
+                rejected: undefined as Record<string, any> | undefined,
             },
-            screenshot: undefined,
+            screenshot: undefined as string | undefined,
         };
 
-        let client, mitmdump;
+        let client: WebdriverIO.Browser, mitmdump: ExecaChildProcess<string>;
         const cleanup = async (failed = false) => {
             console.log('Cleaning up mitmproxy and Appium session…');
             if (mitmdump) {
@@ -149,7 +156,7 @@ async function main() {
             if (client) await client.deleteSession().catch(() => {});
             if (!run_for_open_app_only) {
                 console.log('Uninstalling app…');
-                await execa('adb', ['shell', 'pm', 'uninstall', '--user', 0, app_id]).catch(() => {});
+                await execa('adb', ['shell', 'pm', 'uninstall', '--user', '0', app_id]).catch(() => {});
             }
 
             if (failed) {
@@ -173,11 +180,10 @@ async function main() {
                 await execa('adb', ['install-multiple', '-g', join(apps_dir, app_id, '*.apk')], { shell: true });
             }
 
-            // Create Appium session and set geolocation.
-            client = await wdRemote({
-                path: '/wd/hub',
-                port: 4723,
-                capabilities: {
+            const capabilities: Capabilities.Capabilities & {
+                    'appium:autoGrantPermissions': boolean;
+                    'appium:appWaitForLaunch': boolean;
+                } = {
                     platformName: 'Android',
                     'appium:automationName': 'UiAutomator2',
                     'appium:platformVersion': '11',
@@ -190,8 +196,13 @@ async function main() {
                     'appium:appWaitForLaunch': false,
                     'appium:appWaitActivity': '*',
                 },
-                logLevel: 'warn',
-            });
+                // Create Appium session and set geolocation.
+                client = await wdRemote({
+                    path: '/wd/hub',
+                    port: 4723,
+                    capabilities,
+                    logLevel: 'warn',
+                });
             console.log(`Starting app for ${app_timeout} seconds…`);
             await pause(run_for_open_app_only ? 2000 : app_timeout * 1000);
             await client.setGeoLocation({ latitude: '52.23528', longitude: '10.56437', altitude: '77.23' });
@@ -203,10 +214,10 @@ async function main() {
             const collect_indicators = async () => {
                 let has_dialog = false;
                 const buttons = {
-                    clear_affirmative: [],
-                    clear_negative: [],
-                    hidden_affirmative: [],
-                    hidden_negative: [],
+                    clear_affirmative: [] as ElementReference[],
+                    clear_negative: [] as ElementReference[],
+                    hidden_affirmative: [] as ElementReference[],
+                    hidden_negative: [] as ElementReference[],
 
                     get all_affirmative() {
                         return [...this.clear_affirmative, ...this.hidden_affirmative];
@@ -247,7 +258,8 @@ async function main() {
 
                             const regular_keywords = testAndLog(keywords_regular, text, 'has 1p keyword', false, true);
                             const half_keywords = testAndLog(keywords_half, text, 'has 1/2p keyword', false, true);
-                            keyword_score += regular_keywords.length + half_keywords.length / 2;
+                            keyword_score +=
+                                (regular_keywords as RegExp[]).length + (half_keywords as RegExp[]).length / 2;
                         }
                     }
                 } catch (err) {
@@ -355,7 +367,7 @@ while (iterator.hasNext()) {
 }
 
 send({ name: "app_prefs", payload: prefs });`);
-                        const result_promise = new Promise((res, rej) => {
+                        const result_promise = new Promise<Record<string, unknown>>((res, rej) => {
                             frida_script.message.connect((message) => {
                                 if (message.type === 'send' && message.payload?.name === 'app_prefs')
                                     res(message.payload?.payload);
@@ -405,7 +417,7 @@ send({ name: "app_prefs", payload: prefs });`);
                 // Apps with the "secure" flag set cannot be screenshotted. TODO: Can this be circumvented?
                 res.screenshot = await client
                     .takeScreenshot()
-                    .catch(() => console.error("Couldn't save screenshot for", app_id));
+                    .catch(() => (console.error("Couldn't save screenshot for", app_id), undefined));
 
                 await db.none(
                     'INSERT INTO dialogs (run,verdict,violations,prefs,screenshot,meta) VALUES (${run_id},${verdict},${violations},${prefs},${screenshot},${meta})',

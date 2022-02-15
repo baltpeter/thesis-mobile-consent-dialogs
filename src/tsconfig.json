@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "types": ["node", "webdriverio/async"],
+        "strict": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": ["esnext"],
+        "allowJs": true,
+        "noEmit": true
+    },
+    "include": ["**/*.mjs", "**/*.ts"]
+}

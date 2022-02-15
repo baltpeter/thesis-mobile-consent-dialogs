@@ -1,19 +1,67 @@
 import deepmerge from 'deepmerge';
-import { match, when, otherwise, isFunction } from 'match-iz';
-import { db, pg } from './common/db.mjs';
-import { base64_decode } from './common/util.mjs';
+import { match } from 'ts-pattern';
+import { PartialDeep } from 'type-fest';
+import { db, pg } from './common/db.js';
+import { base64_decode } from './common/util.js';
+
+type Request = {
+    id: number;
+    run: number;
+    start_time: Date;
+    method: 'OPTIONS' | 'PATCH' | 'GET' | 'PRI' | 'HEAD' | 'POST' | 'PUT' | 'DELETE';
+    host: string;
+    path: string;
+    content?: string;
+    content_raw?: Buffer;
+    port: number;
+    scheme: 'http' | 'https';
+    authority: string;
+    http_version: 'HTTP/1.0' | 'HTTP/1.1' | 'HTTP/2.0';
+};
+type PrepareFunction = (r: Request) => Record<string, any>;
+type TrackerDataResult = PartialDeep<{
+    app: {
+        id: string;
+        version: string;
+    };
+    tracker: {
+        sdk_version: string;
+    };
+    device: {
+        adid: string;
+        model: string;
+        os: string;
+        language: string;
+        timezone: string;
+        user_agent: string;
+        orientation: 'portrait' | 'landscape';
+        carrier: string;
+        rooted: boolean;
+        width: number;
+        height: number;
+    };
+    user: {
+        country: string;
+    };
+}>;
 
 // TODO: This is only for developing the adapters. In the end, we will match on an individual request and need to
 // identify the correct endpoint ourselves.
-const getRequestsForEndpoint = (endpoint) =>
+const getRequestsForEndpoint = (endpoint: string) =>
     db.many(
         "select * from requests r where regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') = ${endpoint};",
         { endpoint }
     );
 
-const getEndpointUrlForRequest = (r) => `${r.scheme}://${r.host}${r.path}`;
+const getEndpointUrlForRequest = (r: Request) => `${r.scheme}://${r.host}${r.path}`;
 
-const adapters = [
+const adapters: {
+    endpoint_urls: string[];
+    tracker: string;
+    match?: (r: Request) => boolean;
+    prepare: 'json_body' | PrepareFunction;
+    extract: (pr: Record<string, any>) => TrackerDataResult;
+}[] = [
     {
         endpoint_urls: ['https://live.chartboost.com/api/install', 'https://live.chartboost.com/api/config'],
         tracker: 'chartboost',
@@ -64,7 +112,7 @@ const adapters = [
                 language: pr.client.language,
                 carrier: pr.client.carrier,
                 width: pr.client.screen.resolution.split('x')[0],
-                width: pr.client.screen.resolution.split('x')[1],
+                height: pr.client.screen.resolution.split('x')[1],
             },
             user: {
                 country: pr.client.country,
@@ -81,11 +129,15 @@ async function main() {
             a.match ? a.match(r) : a.endpoint_urls.includes(getEndpointUrlForRequest(r))
         );
         if (!adapter) return -1; // TODO
-        const prepared_request = match(adapter.prepare)(
-            when(isFunction)(() => adapter.prepare(r)),
-            when('json_body')(JSON.parse(r.content)),
-            otherwise(r)
-        );
+
+        const prepared_request: Record<string, any> = match(adapter.prepare)
+            .when(
+                (x): x is PrepareFunction => typeof x === 'function',
+                (x) => x(r)
+            )
+            .with('json_body', () => JSON.parse(r.content))
+            .otherwise(r);
+
         const res = adapter.extract(prepared_request);
         return deepmerge({ tracker: { name: adapter.tracker, endpoint_url: getEndpointUrlForRequest(r) } }, res);
     });
@@ -96,6 +148,7 @@ async function main() {
 
 process.on('unhandledRejection', (err) => {
     console.error('An unhandled promise rejection occurred:', err);
+
     pg.end();
     process.exit(1);
 });

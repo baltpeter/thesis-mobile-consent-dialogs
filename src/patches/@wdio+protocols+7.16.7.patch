@@ -1,0 +1,13 @@
+diff --git a/node_modules/@wdio/protocols/build/types.d.ts b/node_modules/@wdio/protocols/build/types.d.ts
+index e8febde..b336f1d 100644
+--- a/node_modules/@wdio/protocols/build/types.d.ts
++++ b/node_modules/@wdio/protocols/build/types.d.ts
+@@ -7,7 +7,7 @@ export interface StatusReturn extends ProtocolCommandResponse {
+     ready?: boolean;
+     message?: string;
+ }
+-export declare type ElementReferenceId = 'element-6066-11e4-a52e-4f735466cecf';
++export declare type ElementReferenceId = 'ELEMENT';
+ export declare type ElementReference = Record<ElementReferenceId, string>;
+ export interface WindowHandle {
+     handle: string;
