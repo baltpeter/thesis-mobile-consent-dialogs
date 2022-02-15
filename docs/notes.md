@@ -325,108 +325,108 @@
 ## Tracking request adapters
 
 * Endpoints to consider (some of these will be hard to reverse engineer; went through all with at least 15/1326 apps):
-    * https://www.facebook.com:443/adnw_sync2
-    * https://graph.facebook.com:443/network_ads_common
+    * https://www.facebook.com/adnw_sync2
+    * https://graph.facebook.com/network_ads_common
 
-    * https://app-measurement.com:443/a (make sure app ID matches!)
-    * https://firebaselogging-pa.googleapis.com:443/v1/firelog/legacy/batchlog
-    * https://csi.gstatic.com:443/csi
-    * https://ssl.google-analytics.com:443/batch
-    * https://rr1---sn-4g5lzney.googlevideo.com:443/videoplayback
-    * https://rr1---sn-4g5ednse.googlevideo.com:443/videoplayback
-    * https://rr5---sn-4g5e6nzs.googlevideo.com:443/videoplayback
-    * https://rr3---sn-4g5e6nzz.googlevideo.com:443/videoplayback
-    * https://play.googleapis.com:443/log/batch
+    * https://app-measurement.com/a (make sure app ID matches!)
+    * https://firebaselogging-pa.googleapis.com/v1/firelog/legacy/batchlog
+    * https://csi.gstatic.com/csi
+    * https://ssl.google-analytics.com/batch
+    * https://rr1---sn-4g5lzney.googlevideo.com/videoplayback
+    * https://rr1---sn-4g5ednse.googlevideo.com/videoplayback
+    * https://rr5---sn-4g5e6nzs.googlevideo.com/videoplayback
+    * https://rr3---sn-4g5e6nzz.googlevideo.com/videoplayback
+    * https://play.googleapis.com/log/batch
     
-    * https://config.uca.cloud.unity3d.com:443/
-    * https://cdp.cloud.unity3d.com:443/v1/events
-    * https://httpkafka.unityads.unity3d.com:443/v1/events
-    * https://auiopt.unityads.unity3d.com:443/v1/category/experiment
-    * https://thind.unityads.unity3d.com:443/v1/events
-    * https://publisher-config.unityads.unity3d.com:443/games/3268074/configuration
-    * https://auction.unityads.unity3d.com:443/v4/test/games/3268074/requests
+    * https://config.uca.cloud.unity3d.com/
+    * https://cdp.cloud.unity3d.com/v1/events
+    * https://httpkafka.unityads.unity3d.com/v1/events
+    * https://auiopt.unityads.unity3d.com/v1/category/experiment
+    * https://thind.unityads.unity3d.com/v1/events
+    * https://publisher-config.unityads.unity3d.com/games/3268074/configuration
+    * https://auction.unityads.unity3d.com/v4/test/games/3268074/requests
 
-    * https://app.adjust.com:443/session
-    * https://app.adjust.com:443/attribution
-    * https://app.adjust.com:443/event
+    * https://app.adjust.com/session
+    * https://app.adjust.com/attribution
+    * https://app.adjust.com/event
     
-    * https://googleads.g.doubleclick.net:443/mads/gma
-    * https://googleads.g.doubleclick.net:443/pagead/interaction/
-    * https://googleads.g.doubleclick.net:443/xbbe/pixel
-    * https://googleads.g.doubleclick.net:443/pagead/adview
-    * https://pagead2.googleadservices.com:443/pagead/adview
-    * https://googleads.g.doubleclick.net:443/dbm/ad
-    * https://googleads.g.doubleclick.net:443/pagead/conversion/
-    * https://googleads4.g.doubleclick.net:443/pcs/view
-    * https://pagead2.googlesyndication.com:443/pagead/gen_204
-    * https://pagead2.googlesyndication.com:443/pcs/activeview
-    * https://bid.g.doubleclick.net:443/dbm/vast
-    * https://www.googleadservices.com:443/pagead/aclk
-    * https://pubads.g.doubleclick.net:443/gampad/ads
-    * https://www.googleadservices.com:443/pagead/conversion/1001680686/
+    * https://googleads.g.doubleclick.net/mads/gma
+    * https://googleads.g.doubleclick.net/pagead/interaction/
+    * https://googleads.g.doubleclick.net/xbbe/pixel
+    * https://googleads.g.doubleclick.net/pagead/adview
+    * https://pagead2.googleadservices.com/pagead/adview
+    * https://googleads.g.doubleclick.net/dbm/ad
+    * https://googleads.g.doubleclick.net/pagead/conversion/
+    * https://googleads4.g.doubleclick.net/pcs/view
+    * https://pagead2.googlesyndication.com/pagead/gen_204
+    * https://pagead2.googlesyndication.com/pcs/activeview
+    * https://bid.g.doubleclick.net/dbm/vast
+    * https://www.googleadservices.com/pagead/aclk
+    * https://pubads.g.doubleclick.net/gampad/ads
+    * https://www.googleadservices.com/pagead/conversion/1001680686/
 
-    * https://ms.applovin.com:443/5.0/i
-    * https://d.applovin.com:443/2.0/device
-    * https://rt.applovin.com:443/4.0/pix
-    * https://ms.applovin.com:443/1.0/mediate
-    * https://prod-ms.applovin.com:443/1.0/event/load
+    * https://ms.applovin.com/5.0/i
+    * https://d.applovin.com/2.0/device
+    * https://rt.applovin.com/4.0/pix
+    * https://ms.applovin.com/1.0/mediate
+    * https://prod-ms.applovin.com/1.0/event/load
 
-    * https://in.appcenter.ms:443/logs
-    * https://codepush.appcenter.ms:443/v0.1/public/codepush/report_status/deploy
+    * https://in.appcenter.ms/logs
+    * https://codepush.appcenter.ms/v0.1/public/codepush/report_status/deploy
 
-    * https://api.onesignal.com:443/players
+    * https://api.onesignal.com/players
 
-    * https://outcome-ssp.supersonicads.com:443/mediation
+    * https://outcome-ssp.supersonicads.com/mediation
 
-    * https://adc3-launch.adcolony.com:443/v4/launch
-    * https://events3alt.adcolony.com:443/t/5.0/session_start
-    * https://events3.adcolony.com:443/t/5.0/install
-    * https://androidads4-6.adcolony.com:443/configure
+    * https://adc3-launch.adcolony.com/v4/launch
+    * https://events3alt.adcolony.com/t/5.0/session_start
+    * https://events3.adcolony.com/t/5.0/install
+    * https://androidads4-6.adcolony.com/configure
 
-    * https://ads.mopub.com:443/m/open
-    * https://ads.mopub.com:443/m/gdpr_sync
+    * https://ads.mopub.com/m/open
+    * https://ads.mopub.com/m/gdpr_sync
 
-    * https://api2.branch.io:443/v1/install
+    * https://api2.branch.io/v1/install
 
-    * https://ads.api.vungle.com:443/config
-    * https://api.vungle.com:443/api/v5/new
-    * https://api.vungle.com:443/api/v5/ads
-    * https://events.api.vungle.com:443/api/v5/cache_bust
+    * https://ads.api.vungle.com/config
+    * https://api.vungle.com/api/v5/new
+    * https://api.vungle.com/api/v5/ads
+    * https://events.api.vungle.com/api/v5/cache_bust
 
-    * https://conversions.appsflyer.com:443/api/v6.3/androidevent
-    * https://conversions.appsflyer.com:443/api/v6.2/androidevent
-    * https://conversions.appsflyer.com:443/api/v6.4/androidevent
-    * https://conversions.appsflyer.com:443/api/v5.4/androidevent
-    * https://inapps.appsflyer.com:443/api/v6.3/androidevent
+    * https://conversions.appsflyer.com/api/v6.3/androidevent
+    * https://conversions.appsflyer.com/api/v6.2/androidevent
+    * https://conversions.appsflyer.com/api/v6.4/androidevent
+    * https://conversions.appsflyer.com/api/v5.4/androidevent
+    * https://inapps.appsflyer.com/api/v6.3/androidevent
 
-    * https://config.inmobi.com:443/config-server/v1/config/secure.cfg
+    * https://config.inmobi.com/config-server/v1/config/secure.cfg
 
-    * https://startup.mobile.yandex.net:443/analytics/startup
-    * https://report.appmetrica.yandex.net:443/report
+    * https://startup.mobile.yandex.net/analytics/startup
+    * https://report.appmetrica.yandex.net/report
 
-    * https://sessions.bugsnag.com:443/
+    * https://sessions.bugsnag.com/
 
-    * https://data.flurry.com:443/v1/flr.do
+    * https://data.flurry.com/v1/flr.do
 
-    * https://infoevent.startappservice.com:443/tracking/infoEvent
-    * https://infoevent.startappservice.com:443/infoevent/api/v1.0/info
-    * https://trackdownload.startappservice.com:443/trackdownload/api/1.0/trackdownload
+    * https://infoevent.startappservice.com/tracking/infoEvent
+    * https://infoevent.startappservice.com/infoevent/api/v1.0/info
+    * https://trackdownload.startappservice.com/trackdownload/api/1.0/trackdownload
 
-    * https://api.segment.io:443/v1/import
+    * https://api.segment.io/v1/import
 
-    * https://configure.rayjump.com:443/setting
-    * https://analytics.rayjump.com:443/
+    * https://configure.rayjump.com/setting
+    * https://analytics.rayjump.com/
 
-    * https://pangolin16.isnssdk.com:443/api/ad/union/sdk/settings/
+    * https://pangolin16.isnssdk.com/api/ad/union/sdk/settings/
 
-    * https://config.ioam.de:443/appcfg.php
+    * https://config.ioam.de/appcfg.php
 
-    * https://live.chartboost.com:443/api/install
-    * https://live.chartboost.com:443/api/config
+    * https://live.chartboost.com/api/install
+    * https://live.chartboost.com/api/config
 
-    * https://dpm.demdex.net:443/id
+    * https://dpm.demdex.net/id
 
-    * https://logs.ironsrc.mobi:443/logs
+    * https://logs.ironsrc.mobi/logs
 
 ### SQL
 
@@ -435,7 +435,7 @@ To find interesting endpoints:
 ```sql
 select
        count(1) c, count(distinct apps.name) app_count, r.method,
-       regexp_replace(concat(r.scheme, '://', r.host, ':', r.port, r.path), '\?.+$', '') u from apps
+       regexp_replace(concat(r.scheme, '://', r.host, r.path), '\?.+$', '') u from apps
     join runs on apps.id = runs.app join requests r on runs.id = r.run
     where (r.method = 'POST' or r.path ~ '\?.{25,}')
     group by u, r.method order by app_count desc;
@@ -446,7 +446,7 @@ To view the corresponding requests:
 ```sql
 select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     join runs on apps.id = runs.app join requests r on runs.id = r.run
-    where regexp_replace(concat(r.scheme, '://', r.host, ':', r.port, r.path), '\?.+$', '')
+    where regexp_replace(concat(r.scheme, '://', r.host, r.path), '\?.+$', '')
         like '${url}'
     order by length(r.path) + length(r.content);
 ```
@@ -468,6 +468,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
 * [ ] ~~Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.~~
 * [ ] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
     * Will also be helpful for complaint generator.
+    * Idea: While value matching works for data points we can control, this isn't possible for everything, e.g. OS (`android`, `ios`) is way too generic to be matched that way.
 * [x] After CMP detection: Do violation detection next, then interaction.
 * [ ] Save raw mitmproxy flows/logs. (`--save_stream_file` but also save cmd logs)
 * [ ] Look for SDK indicators in prefs?
