@@ -9,7 +9,7 @@ import { timeout } from 'promise-timeout';
 import getImageColors from 'get-image-colors';
 import chroma from 'chroma-js';
 import frida from 'frida';
-import { db } from './common/db.mjs';
+import { db, pg } from './common/db.mjs';
 import {
     // button_id_fragments,
     dialog_id_fragments,
@@ -160,6 +160,7 @@ async function main() {
         process.removeAllListeners('SIGINT');
         process.on('SIGINT', async () => {
             await cleanup(true);
+            pg.end();
             process.exit();
         });
         try {
@@ -432,6 +433,14 @@ send({ name: "app_prefs", payload: prefs });`);
             console.log();
         }
     }
+
+    pg.end();
 }
+
+process.on('unhandledRejection', (err) => {
+    console.error('An unhandled promise rejection occurred:', err);
+    pg.end();
+    process.exit(1);
+});
 
 main();

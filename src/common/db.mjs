@@ -2,7 +2,8 @@ import { join } from 'path';
 import dirname from 'es-dirname';
 (await import('dotenv')).config({ path: join(dirname(), '..', '.env') });
 import _pg from 'pg-promise';
-const pg = _pg({});
+
+export const pg = _pg({});
 
 export const db = pg({
     host: 'localhost',
