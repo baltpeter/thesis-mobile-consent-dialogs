@@ -21,3 +21,15 @@ export const android_get_apk_version = async (apk_path: string) =>
 export const shuffle = <T>(arr: T[]) => arr.sort(() => Math.random() - 0.5);
 
 export const base64_decode = (base64: string) => Buffer.from(base64, 'base64').toString();
+
+export const str2bool = (val?: string | boolean) => {
+    if (typeof val === 'boolean') return val;
+    return typeof val === 'string' && ['true', 'yes', '1', 'y', 't'].includes(val.toLowerCase());
+};
+
+export const concat = (...strs: (string | undefined | (string | undefined)[])[]) =>
+    strs
+        .filter((s) => s)
+        .filter((s) => !Array.isArray(s) || s.every((s) => s))
+        .map((s) => (Array.isArray(s) ? `(${s.join(' ')})` : s))
+        .join(' ');

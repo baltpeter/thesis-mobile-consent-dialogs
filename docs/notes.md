@@ -325,8 +325,8 @@
 ## Tracking request adapters
 
 * Endpoints to consider (some of these will be hard to reverse engineer; went through all with at least 15/1326 apps):
-    * [ ] https://www.facebook.com/adnw_sync2
-    * [ ] https://graph.facebook.com/network_ads_common
+    * [x] https://www.facebook.com/adnw_sync2
+    * [x] https://graph.facebook.com/network_ads_common
 
     * [ ] https://app-measurement.com/a (make sure app ID matches!)
     * [ ] https://firebaselogging-pa.googleapis.com/v1/firelog/legacy/batchlog
@@ -338,17 +338,17 @@
     * [ ] https://rr3---sn-4g5e6nzz.googlevideo.com/videoplayback
     * [ ] https://play.googleapis.com/log/batch
 
+    * [ ] https://auiopt.unityads.unity3d.com/v1/category/experiment
+    * [x] https://publisher-config.unityads.unity3d.com/games/3268074/configuration
+    * [x] https://auction.unityads.unity3d.com/v4/test/games/3268074/requests
     * [ ] https://config.uca.cloud.unity3d.com/
     * [ ] https://cdp.cloud.unity3d.com/v1/events
     * [ ] https://httpkafka.unityads.unity3d.com/v1/events
-    * [ ] https://auiopt.unityads.unity3d.com/v1/category/experiment
     * [ ] https://thind.unityads.unity3d.com/v1/events
-    * [ ] https://publisher-config.unityads.unity3d.com/games/3268074/configuration
-    * [ ] https://auction.unityads.unity3d.com/v4/test/games/3268074/requests
 
-    * [ ] https://app.adjust.com/session
-    * [ ] https://app.adjust.com/attribution
-    * [ ] https://app.adjust.com/event
+    * [x] https://app.adjust.com/session
+    * [x] https://app.adjust.com/attribution
+    * [x] https://app.adjust.com/event
 
     * [ ] https://googleads.g.doubleclick.net/mads/gma
     * [ ] https://googleads.g.doubleclick.net/pagead/interaction/
@@ -371,10 +371,10 @@
     * [ ] https://ms.applovin.com/1.0/mediate
     * [ ] https://prod-ms.applovin.com/1.0/event/load
 
-    * [ ] https://in.appcenter.ms/logs
+    * [x] https://in.appcenter.ms/logs
     * [ ] https://codepush.appcenter.ms/v0.1/public/codepush/report_status/deploy
 
-    * [ ] https://api.onesignal.com/players
+    * [x] https://api.onesignal.com/players
 
     * [ ] https://outcome-ssp.supersonicads.com/mediation
 
@@ -408,9 +408,9 @@
 
     * [ ] https://data.flurry.com/v1/flr.do
 
-    * [ ] https://infoevent.startappservice.com/tracking/infoEvent
-    * [ ] https://infoevent.startappservice.com/infoevent/api/v1.0/info
-    * [ ] https://trackdownload.startappservice.com/trackdownload/api/1.0/trackdownload
+    * [x] https://infoevent.startappservice.com/tracking/infoEvent
+    * [x] https://infoevent.startappservice.com/infoevent/api/v1.0/info
+    * [x] https://trackdownload.startappservice.com/trackdownload/api/1.0/trackdownload
 
     * [ ] https://api.segment.io/v1/import
 
@@ -481,6 +481,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
 * [ ] Look at cookies and headers.
     * Same cookie values across different apps?
     * Compare with cookie DB?
+* [ ] Can we fix incorrect country detections (`US`)?
 
 ### Promises from proposal
 
