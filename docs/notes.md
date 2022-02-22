@@ -296,6 +296,7 @@
         * "CMPs are obliged to register with IAB Europe in order to be able to generate a TC String and must follow the technical specifications developed by IAB Europe in cooperation with IAB Tech Lab regarding the API with which CMPs can generate the TC String and adtech vendors and publishers can read it." (para. 344)
 * Legal basis for TC string processing: only legitimate interest potentially applicable (para. 409)
     * Balance between interests not met due to no opt-out (para. 421) and lack of information (para. 422).
+
 * TCF doesn't capture valid consent for OpenRTB
     * not informed:
         * Purposes "Measure content performance" and "Apply market research to generate audience insights" not sufficiently clearly described (para. 433)
@@ -376,22 +377,22 @@
 
     * [x] https://api.onesignal.com/players
 
-    * [ ] https://outcome-ssp.supersonicads.com/mediation
+    * [x] https://outcome-ssp.supersonicads.com/mediation
 
-    * [ ] https://adc3-launch.adcolony.com/v4/launch
+    * [x] https://adc3-launch.adcolony.com/v4/launch
     * [ ] https://events3alt.adcolony.com/t/5.0/session_start
     * [ ] https://events3.adcolony.com/t/5.0/install
-    * [ ] https://androidads4-6.adcolony.com/configure
+    * [x] https://androidads4-6.adcolony.com/configure
 
-    * [ ] https://ads.mopub.com/m/open
-    * [ ] https://ads.mopub.com/m/gdpr_sync
+    * [x] https://ads.mopub.com/m/open
+    * [x] https://ads.mopub.com/m/gdpr_sync
 
-    * [ ] https://api2.branch.io/v1/install
+    * [x] https://api2.branch.io/v1/install
 
-    * [ ] https://ads.api.vungle.com/config
-    * [ ] https://api.vungle.com/api/v5/new
-    * [ ] https://api.vungle.com/api/v5/ads
-    * [ ] https://events.api.vungle.com/api/v5/cache_bust
+    * [x] https://ads.api.vungle.com/config
+    * [x] https://api.vungle.com/api/v5/ads
+    * [x] https://events.api.vungle.com/api/v5/cache_bust
+    * [x] https://api.vungle.com/api/v5/new
 
     * [ ] https://conversions.appsflyer.com/api/v6.3/androidevent
     * [ ] https://conversions.appsflyer.com/api/v6.2/androidevent
@@ -401,10 +402,10 @@
 
     * [ ] https://config.inmobi.com/config-server/v1/config/secure.cfg
 
-    * [ ] https://startup.mobile.yandex.net/analytics/startup
-    * [ ] https://report.appmetrica.yandex.net/report
+    * [x] https://startup.mobile.yandex.net/analytics/startup
+    * [x] https://report.appmetrica.yandex.net/report
 
-    * [ ] https://sessions.bugsnag.com/
+    * [x] https://sessions.bugsnag.com/
 
     * [ ] https://data.flurry.com/v1/flr.do
 
@@ -414,8 +415,8 @@
 
     * [ ] https://api.segment.io/v1/import
 
-    * [ ] https://configure.rayjump.com/setting
-    * [ ] https://analytics.rayjump.com/
+    * [x] https://configure.rayjump.com/setting
+    * [x] https://analytics.rayjump.com/
 
     * [ ] https://pangolin16.isnssdk.com/api/ad/union/sdk/settings/
 
@@ -426,7 +427,7 @@
 
     * [ ] https://dpm.demdex.net/id
 
-    * [ ] https://logs.ironsrc.mobi/logs
+    * [x] https://logs.ironsrc.mobi/logs
 
 ### SQL
 
@@ -482,6 +483,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * Same cookie values across different apps?
     * Compare with cookie DB?
 * [ ] Can we fix incorrect country detections (`US`)?
+* [ ] Set device name.
 
 ### Promises from proposal
 

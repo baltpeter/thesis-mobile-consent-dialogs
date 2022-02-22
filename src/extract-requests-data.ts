@@ -25,6 +25,7 @@ type PrepareFunction = (r: Request) => Record<string, any>;
 type TrackerDataResult = PartialDeep<{
     app: {
         id: string;
+        name: string;
         version: string;
         viewed_page: string;
         in_foreground: boolean;
@@ -36,6 +37,7 @@ type TrackerDataResult = PartialDeep<{
         adid: string;
         model: string;
         os: string;
+        name: string;
         language: string;
         timezone: string;
         user_agent: string;
@@ -62,11 +64,17 @@ type TrackerDataResult = PartialDeep<{
         rotation_x: number;
         rotation_y: number;
         rotation_z: number;
+        mac_address: string;
+        architecture: string;
+        dark_mode: boolean;
+        local_ips: string[];
+        volume: number;
     };
     user: {
         country: string;
         lat: number;
         long: number;
+        public_ip: string;
     };
 }>;
 
@@ -77,8 +85,6 @@ const getRequestsForEndpoint = (endpoint: string) =>
         "select * from (select *, regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') endpoint_url from requests r) t where endpoint_url = ${endpoint};",
         { endpoint }
     );
-
-const getEndpointUrlForRequest = (r: Request) => `${r.scheme}://${r.host}${r.path.replace(/\?.+$/, '')}`;
 
 const adapters: {
     endpoint_urls: string[];
@@ -344,18 +350,326 @@ const adapters: {
             },
         }),
     },
+    {
+        endpoint_urls: ['https://outcome-ssp.supersonicads.com/mediation'],
+        tracker: 'supersonic',
+        // TODO: Deal with the ones with base64 blob.
+        match(r) {
+            return (this.endpoint_urls.includes(r.endpoint_url) && r.content?.startsWith('{"')) || false;
+        },
+        prepare: (r) => {
+            const json = JSON.parse(r.content!);
+            const query = qs.parse(r.path.replace(/.+\?/, ''));
+            if (json.table && json.data) return { table: json.table, ...JSON.parse(json.data), ...query };
+            return { ...json, ...query };
+        },
+        // TODO: icc, mcc, firstSession, auid, mnc, mt, sessionId, abt, groupId*, internalTestId, adUnit, events, InterstitialEvents, user_id
+        extract: (pr) => ({
+            app: {
+                version: pr.appVersion,
+                id: pr.bundleId,
+            },
+            device: {
+                carrier: pr.mobileCarrier,
+                timezone: pr.tz,
+                adid: pr.advertisingId,
+                language: pr.language,
+                battery_percentage: pr.battery,
+                network_connection_type: pr.connectionType,
+                ram_free: pr.internalFreeMemory,
+                os: concat(pr.deviceOS, pr.osVersion.match(/\d+\((\d+)\)/)[1]),
+                model: concat(pr.deviceOEM, pr.deviceModel),
+                rooted: str2bool(pr.jb),
+            },
+            tracker: {
+                sdk_version: pr.sdkVersion,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://adc3-launch.adcolony.com/v4/launch'],
+        tracker: 'adcolony',
+        prepare: 'json_body',
+        // TODO: device_type, *_path, memory_class, memory_used, cleartext_permitted, available_stores, adc_alt_id, network_speed, launch_metadata, permissions, device_id, immersion
+        extract: (pr) => ({
+            device: {
+                carrier: pr.carrier_name,
+                width: pr.screen_width,
+                height: pr.screen_height,
+                language: pr.locale_language_code,
+                mac_address: pr.mac_address,
+                model: concat(pr.manufacturer || pr.device_brand, pr.model || pr.device_model),
+                network_connection_type: pr.network_type,
+                os: concat(pr.os_name || pr.platform, pr.os_version),
+                architecture: pr.arch,
+                battery_percentage: pr.battery_level,
+                timezone: pr.timezone_ietf,
+                orientation: pr.current_orientation === 0 ? 'portrait' : 'landscape',
+                dark_mode: str2bool(pr.dark_mode),
+                adid: pr.advertiser_id,
+            },
+            tracker: {
+                sdk_version: pr.sdk_version,
+            },
+            app: {
+                name: pr.app_bundle_name,
+                version: pr.app_bundle_version,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://androidads4-6.adcolony.com/configure'],
+        tracker: 'adcolony',
+        prepare: 'json_body',
+        // TODO: origin_store, mediation_network, *_path, device_type, adc_alt_id, zones, ad_history, ad_playing, ad_queue, sid, memory_used_mb, available_stores, device_audio
+        extract: (pr) => ({
+            app: {
+                id: pr.bundle_id,
+                version: pr.bundle_version_short,
+            },
+            device: {
+                os: concat(pr.os_name, pr.os_version),
+                adid: pr.advertiser_id,
+                carrier: pr.carrier,
+                language: pr.ln,
+                model: concat(pr.device_brand || pr.manufacturer, pr.device_model),
+                battery_percentage: pr.battery_level,
+                orientation: pr.current_orientation === 0 ? 'portrait' : 'landscape',
+                timezone: pr.timezone_ietf,
+                height: pr.screen_height,
+                width: pr.screen_width,
+            },
+            tracker: {
+                sdk_version: pr.sdk_version,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://ads.mopub.com/m/open', 'https://ads.mopub.com/m/gdpr_sync'],
+        tracker: 'mopub',
+        prepare: 'json_body',
+        // Key documentation: https://github.com/mopub/mopub-ios-sdk/blob/4b5e70e4ff69b0c3f4ab71a8791f5e7351ad2828/MoPubSDK/Internal/MPAdServerKeys.m
+        // TODO: tas (tracking authorization status, #L18), adunit, e_name, last_consent_status, consent_change_reason
+        extract: (pr) => ({
+            app: {
+                version: pr.av, // #L14
+                id: pr.bundle,
+            },
+            tracker: {
+                sdk_version: pr.nv, // #L19
+            },
+            device: {
+                adid: pr.consent_ifa || (pr.udid?.startsWith('ifa:') ? pr.udid : undefined),
+                os: concat(pr.os, pr.osv),
+                model: concat(pr.make, pr.model),
+                name: pr.dn, // #L24
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://api2.branch.io/v1/install'],
+        tracker: 'branchio',
+        prepare: 'json_body',
+        // TODO: hardware_id, ui_mode, facebook_app_link_checked, is_referrable, *_install_time, environment, metadata, branch_key, partner_data, initial_referrer
+        extract: (pr) => ({
+            device: {
+                model: concat(pr.brand, pr.model),
+                width: pr.screen_width,
+                height: pr.screen_height,
+                network_connection_type: pr.connection_type,
+                os: concat(pr.os, pr.os_version_android, ['API level:', pr.os_version]),
+                language: pr.language,
+                local_ips: [pr.local_ip],
+                adid: pr.google_advertising_id || pr.advertising_ids?.aaid,
+                architecture: pr.cpu_type,
+                carrier: pr.device_carrier,
+            },
+            user: {
+                country: pr.country,
+            },
+            app: {
+                version: pr.app_version,
+                id: pr.cd?.pn,
+            },
+            tracker: {
+                sdk_version: pr.sdk,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://api.vungle.com/api/v5/new'],
+        tracker: 'vungle',
+        prepare: 'qs_path',
+        // TODO: app_id (is sometimes (but usually not) the bundle ID)
+        extract: (pr) => ({
+            device: {
+                adid: pr.ifa,
+            },
+        }),
+    },
+    {
+        endpoint_urls: [
+            'https://ads.api.vungle.com/config',
+            'https://api.vungle.com/api/v5/ads',
+            'https://events.api.vungle.com/api/v5/cache_bust',
+        ],
+        tracker: 'vungle',
+        prepare: 'json_body',
+        // TODO: is_google_play_services_available, battery_saver_enabled, data_saver_status, network_metered, sound_enabled, is_sideload_enabled, sd_card_available, lmt, vision, request
+        extract: (pr) => ({
+            device: {
+                model: concat(pr.device?.make, pr.device?.model),
+                os: concat(pr.device?.os, pr.device?.osv),
+                carrier: pr.device?.carrier,
+                width: pr.device?.w,
+                height: pr.device?.h,
+                adid: pr.device?.ifa || pr.device?.ext?.vungle?.android?.gaid,
+                battery_percentage: pr.device?.ext?.vungle?.android?.battery_level,
+                is_charging: pr.device?.ext?.vungle?.android?.battery_state === 'NOT_CHARGING' ? false : true,
+                network_connection_type: pr.device?.ext?.vungle?.android?.connection_type,
+                language: pr.device?.ext?.vungle?.android?.language,
+                timezone: pr.device?.ext?.vungle?.android?.time_zone,
+                volume: pr.device?.ext?.vungle?.android?.volume_level,
+                disk_free: pr.device?.ext?.vungle?.android?.storage_bytes_available,
+                user_agent: pr.device?.ua,
+            },
+            app: {
+                id: pr.app?.bundle,
+                version: pr.app?.ver,
+            },
+        }),
+    },
+    {
+        endpoint_urls: [
+            'https://startup.mobile.yandex.net/analytics/startup',
+            'https://report.appmetrica.yandex.net/report',
+        ],
+        tracker: 'yandex',
+        prepare: 'qs_path',
+        // TODO: deviceid, deviceid2, device_type, features, uuid
+        extract: (pr) => ({
+            device: {
+                adid: pr.adv_id,
+                os: concat(pr.app_platform, pr.os_version),
+                model: concat(pr.manufacturer, pr.model),
+                width: pr.screen_width,
+                height: pr.screen_height,
+                language: pr.locale?.split('_')[0],
+                rooted: str2bool(pr.is_rooted),
+            },
+            tracker: {
+                sdk_version: pr.analytics_sdk_version_name,
+            },
+            app: {
+                id: pr.app_id,
+                version: pr.app_version_name,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://sessions.bugsnag.com/'],
+        tracker: 'bugsnag',
+        match(r) {
+            return this.endpoint_urls.includes(r.endpoint_url) && r.method === 'POST';
+        },
+        prepare: 'json_body',
+        // TODO: locationStatus, sessions
+        extract: (pr) => ({
+            tracker: {
+                sdk_version: pr.notifier?.version,
+            },
+            app: {
+                version: pr.app?.version,
+                id: pr.app?.id || pr.app?.packageName,
+                in_foreground: str2bool(pr.app?.inForeground),
+                viewed_page: pr.app?.activeScreen,
+            },
+            device: {
+                architecture: pr.device?.cpuAbi,
+                os: concat(pr.device?.osName, pr.device?.osVersion, [pr.device?.osBuild]),
+                rooted: str2bool(pr.device?.jailbroken),
+                model: concat(pr.device?.manufacturer || pr.device?.brand, pr.device?.model),
+                language: pr.device?.locale?.split('_')[0],
+                user_agent: pr.device?.userAgent,
+                orientation: pr.device?.orientation,
+                ram_total: pr.device?.totalMemory,
+                timezone: pr.device?.timezone,
+                is_charging: str2bool(pr.device?.charging),
+                disk_free: pr.device?.freeDisk,
+                network_connection_type: pr.device?.networkAccess,
+                emulator: str2bool(pr.device?.emulator),
+                height: pr.device?.screenResolution?.split('x')[0],
+                width: pr.device?.screenResolution?.split('x')[1],
+                ram_free: pr.device?.freeMemory,
+                battery_percentage: pr.device?.batteryLevel,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://configure.rayjump.com/setting', 'https://analytics.rayjump.com/'],
+        tracker: 'rayjump',
+        prepare: (r) => {
+            if (r.endpoint_url === 'https://configure.rayjump.com/setting') return qs.parse(r.path.replace(/.+\?/, ''));
+
+            const json = qs.parse(decodeURIComponent(r.content!)) as Record<string, any>;
+            return deepmerge(json, { data: qs.parse(json.data) });
+        },
+        // TODO: sign, open, channel, band_width, platform, network_type, st
+        extract: (pr) => ({
+            device: {
+                os: concat(pr.os || pr.db, pr.os_version || pr.osv),
+                orientation: pr.orientation && pr.orientation === '1' ? 'portrait' : 'landscape' || undefined,
+                model: concat(pr.brand, pr.model),
+                adid: pr.gaid || pr.data?.gaid,
+                language: pr.language,
+                timezone: pr.timezone,
+                user_agent: pr.useragent || pr.ua?.replace('+', ' '),
+                width: pr.screen_size?.split('x')[0],
+                height: pr.screen_size?.split('x')[1],
+            },
+            app: {
+                id: pr.package_name || pr.pn,
+                version: pr.app_version_name,
+            },
+            tracker: {
+                sdk_version: pr.sdk_version,
+            },
+            user: {
+                country: pr.ct || pr.country_code,
+                public_ip: pr.ip,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://logs.ironsrc.mobi/logs'],
+        tracker: 'ironsource',
+        prepare: (r) => JSON.parse(base64_decode((qs.parse(r.path.replace(/.+\?/, '')) as { data: string }).data)),
+        extract: (pr) => ({
+            device: {
+                model: concat(pr.data?.deviceoem, pr.data?.devicemodel),
+                os: concat(pr.data?.deviceos, pr.data?.deviceosversion, ['API level:', pr.data?.deviceapilevel]),
+                adid: pr.data?.applicationuserid || pr.data?.deviceid,
+                network_connection_type: pr.data?.connectiontype,
+            },
+            app: {
+                id: pr.data?.bundleid,
+                version: pr.data?.appversion,
+            },
+            tracker: {
+                sdk_version: pr.data?.sdkversion,
+            },
+        }),
+    },
 ];
 
 async function main() {
     const requests: Request[] = (
-        await Promise.all(['https://api.onesignal.com/players'].map((e) => getRequestsForEndpoint(e)))
+        await Promise.all(['https://logs.ironsrc.mobi/logs'].map((e) => getRequestsForEndpoint(e)))
     ).flat();
 
     const prepared_requests_for_debugging: any[] = [];
     const results = requests.map((r) => {
-        const adapter = adapters.find((a) =>
-            a.match ? a.match(r) : a.endpoint_urls.includes(getEndpointUrlForRequest(r))
-        );
+        const adapter = adapters.find((a) => (a.match ? a.match(r) : a.endpoint_urls.includes(r.endpoint_url)));
         if (!adapter) return -1; // TODO
 
         const prepared_request = match(adapter.prepare)
@@ -370,9 +684,9 @@ async function main() {
         prepared_requests_for_debugging.push(prepared_request);
 
         const res = adapter.extract(prepared_request);
-        return deepmerge({ tracker: { name: adapter.tracker, endpoint_url: getEndpointUrlForRequest(r) } }, res);
+        return deepmerge({ tracker: { name: adapter.tracker, endpoint_url: r.endpoint_url } }, res);
     });
-    console.log(results);
+    console.dir(results, { depth: null });
     writeFileSync('./merged-reqs.tmp.json', JSON.stringify(deepmerge.all(prepared_requests_for_debugging), null, 4));
 
     pg.end();
