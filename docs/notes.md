@@ -20,6 +20,125 @@
     * [Appium Inspector](https://github.com/appium/appium-inspector) very helpful for… inspecting apps and finding IDs, etc.
     * Might even be possible to use a real device cloud like BrowserStack.
 
+### Steps for setting up Appium under iOS
+
+based on: https://appium.io/docs/en/drivers/ios-xcuitest-real-devices/ and https://makaka.org/unity-tutorials/test-ios-app-without-developer-account
+
+0. Create an Apple developer account (free is fine) and use that to log into XCode.
+1. Connect the iPhone via USB.
+2. Start *XCode*. In the menu bar, click *Window* and *Devices and Simulators*. Ensure the iPhone is available there.
+3. In a terminal, start `appium`.
+4. Follow the steps at https://appium.io/docs/en/drivers/ios-xcuitest-real-devices/#full-manual-configuration (full manual configuration).
+5. Open *Appium Inspector* and create a session with the following desired capabilities to test:
+
+  ```json
+  {
+    "appium:xcodeOrgId": "PUTGKYV8KZ",
+    "appium:xcodeSigningId": "Apple Development",
+    "appium:udid": "auto",
+    "platformName": "iOS",
+    "appium:app": "/Users/user/apps/7Mind_2.27.0.ipa",
+    "appium:automationName": "XCUITest",
+    "appium:deviceName": "iPhone",
+    "appium:updatedWDABundleId": "de.benjamin-altpeter.WebDriverAgentRunner"
+  }
+  ```
+
+  Replace `appium:app` with the path to any IPA, `appium:updatedWDABundleId` with the ID chosen in the previous step, and `appium:xcodeOrgId` with the personal team ID. To find that, open the *Keychain Access* app. On the left, select *login* under *Default Keychains*, then choose *My Certificates* in the top bar. Doubleclick the correct certificate. The ID is listed under *Organizational Unit*.
+6. Use the latter two values for running the analysis.
+
+## Setup
+
+### Preparation on macOS
+
+On macOS, we need to compile the Node bindings for Frida ourselves.
+
+* Use Node 14.
+* Clone https://github.com/frida/frida.
+* Follow the steps "1.1. Create a certificate in the System Keychain -> 1.1.2. Manual steps" and "1.2. Trust the certificate for code signing -> 1.2.2. Manual steps" in https://sourceware.org/gdb/wiki/PermissionsDarwin but name the certificate `frida-cert`.
+* Run:
+  
+  ```sh
+  cd frida
+  export MACOS_CERTID=frida-cert
+  export IOS_CERTID=frida-cert
+  sudo killall taskgated
+  make node-macos NODE=/opt/homebrew/opt/node@14/bin/node # Replace with the path to your Node 14 if necessary.
+  cd ..
+  ```
+
+  You will need to enter your credentials a lot of times.
+* Clone https://github.com/frida/frida-node.
+* Run:
+
+  ```sh
+  cd frida-node
+  FRIDA=/Users/user/coding/frida npm install # Replace the path to the main frida repo if necessary.
+  yarn link
+  ```
+* Run `brew install postgresql` to be able to install `psycopg2` later (https://github.com/psycopg/psycopg2/issues/1286#issuecomment-914286206).
+* Install Apple Configurator and `cfgutil`.
+
+### Steps for all systems
+
+```sh
+npm install -g appium appium-doctor
+# Run `appium-doctor --android` or `appium-doctor --ios` and resolve the issues.
+
+git clone <clone_url>
+cd <clone_dir>
+yarn link frida # Only on macOS.
+yarn
+
+python3 -m venv venv
+source venv/bin/activate
+pip install mitmproxy frida-tools objection python-dotenv psycopg2-binary
+
+cd src
+cp .env.sample .env
+nano .env
+```
+
+## Device preparation
+
+### iOS
+
+* Jailbreak
+* Enable SSH server.
+    * Install packages OpenSSH, Open, Sqlite3 from Cydia.
+    * Connect using `root@<ip>`, password `alpine`.
+* Settings
+    * General
+        * Background App Refresh: off (to hopefully minimize background network traffic)
+        * Software Update
+            * Automatic Updates
+                * Install iOS Updates: off
+                * Download iOS Updates: off
+    * Display & Brightness
+        * Auto-Lock: never
+    * Privacy
+        * Location Services
+            * Location Services: on
+        * Analytics & Improvements
+            * Share iPhone Analytics: off
+        * Apple Advertising
+            * Personalised Ads: on (default)
+    * App Store
+        * Automatic Downloads
+            * Apps: off
+            * App Updates: off
+* Install [Activator](https://cydia.saurik.com/package/libactivator/).
+* Setup mitmproxy: https://www.andyibanez.com/posts/intercepting-network-mitmproxy/#physical-ios-devices
+* Install [SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2) (https://steipete.com/posts/jailbreaking-for-ios-developers/#ssl-kill-switch)
+    * Install Debian Packager, Cydia Substrate, PreferenceLoader, PullToRespring, and Filza from Cydia.
+    * Download latest release: https://github.com/nabla-c0d3/ssl-kill-switch2/releases
+    * In Filza, go to `/private/var/mobile/Library/Mobile Documents/com~apple~CloudDocs/Downloads` and install.
+    * Respring by opening Settings and pulling down.
+    * Enable in Settings under SSL Kill Switch 2.
+* Install Frida: https://frida.re/docs/ios/#with-jailbreak
+* Uninstall all third-party apps that are not absolutely necessary.
+* Turn on Bluetooth.
+
 ## Mobile CMPs
 
 * IAB TCF
@@ -131,6 +250,30 @@
           1
           ```
         * Editing prefs using Frida: `pref_mgr.edit().put<Type>(key, value).commit()`
+        * For iOS:  
+          ```js
+          // Taken from: https://codeshare.frida.re/@dki/ios-app-info/
+          function dictFromNSDictionary(nsDict) {
+              var jsDict = {};
+              var keys = nsDict.allKeys();
+              var count = keys.count();
+              for (var i = 0; i < count; i++) {
+                  var key = keys.objectAtIndex_(i);
+                  var value = nsDict.objectForKey_(key);
+                  jsDict[key.toString()] = value.toString();
+              }
+          
+              return jsDict;
+          }
+
+          prefs = ObjC.classes.NSUserDefaults.alloc().init().dictionaryRepresentation();
+          dictFromNSDictionary(prefs);
+
+          // TODO: The below should work but crashes as `ObjC.classes.NSJSONSerialization.isValidJSONObject_(prefs)` is `false`.
+          err = ptr(ObjC.classes.NSError.alloc());
+          jsons = ObjC.classes.NSJSONSerialization.dataWithJSONObject_options_error_(prefs, 1, err);
+          json = ObjC.classes.NSString.alloc().initWithData_encoding_(jsons, 4).toString();
+          ```
     * List of certified vendors: https://iabeurope.eu/cmp-list/
     * JSON list of vendors and purposes: https://vendor-list.consensu.org/v2/vendor-list.json
 
@@ -484,6 +627,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * Compare with cookie DB?
 * [ ] Can we fix incorrect country detections (`US`)?
 * [ ] Set device name.
+* [ ] Record failures.
 
 ### Promises from proposal
 

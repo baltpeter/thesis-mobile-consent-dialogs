@@ -9,7 +9,7 @@ dotenv.config({ path: join(dirname(), '..', '.env') });
 export const pg = _pg({});
 
 export const db = pg({
-    host: 'localhost',
+    host: process.env.POSTGRES_HOST || 'localhost',
     port: parseInt(process.env.HOST_PORT!),
     database: process.env.POSTGRES_DB,
     user: process.env.POSTGRES_USER,

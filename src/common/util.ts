@@ -1,22 +1,4 @@
-import { execa } from 'execa';
-
-// Adapted after: https://stackoverflow.com/a/28573364
-export const adb_get_foreground_app_id = async () => {
-    const { stdout } = await execa('adb', ['shell', 'dumpsys', 'activity', 'recents']);
-    const foreground_line = stdout.split('\n').find((l) => l.includes('Recent #0'));
-    const [, app_id] = Array.from(foreground_line?.match(/A=\d+:(.+?) U=/) || []);
-    return app_id ? app_id.trim() : undefined;
-};
-
-export const adb_get_pid_for_app_id = async (app_id: string) => {
-    const { stdout } = await execa('adb', ['shell', 'pidof', '-s', app_id]);
-    return parseInt(stdout, 10);
-};
-
-export const android_get_apk_version = async (apk_path: string) =>
-    // These sometimes fail with `AndroidManifest.xml:42: error: ERROR getting 'android:icon' attribute: attribute value
-    // reference does not exist` but still have the correct version in the output.
-    (await execa('aapt', ['dump', 'badging', apk_path], { reject: false })).stdout.match(/versionName='(.+?)'/)?.[1];
+import { ExecaChildProcess } from 'execa';
 
 export const shuffle = <T>(arr: T[]) => arr.sort(() => Math.random() - 0.5);
 
@@ -33,3 +15,16 @@ export const concat = (...strs: (string | undefined | (string | undefined)[])[])
         .filter((s) => !Array.isArray(s) || s.every((s) => s))
         .map((s) => (Array.isArray(s) ? `(${s.join(' ')})` : s))
         .join(' ') || undefined;
+
+export const pause = (duration_in_ms: number) => new Promise((res) => setTimeout(res, duration_in_ms));
+
+export const await_proc_start = (proc: ExecaChildProcess<string>, start_message: string) => {
+    return new Promise<true>((res) => {
+        proc.stdout?.addListener('data', (chunk: string) => {
+            if (chunk.includes(start_message)) {
+                proc.stdout?.removeAllListeners('data');
+                res(true);
+            }
+        });
+    });
+};

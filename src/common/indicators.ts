@@ -20,11 +20,10 @@ export const button_text_fragments = {
     clear_affirmative: normalizeFragments(['accept', 'agree', 'yes', 'akzeptieren', 'zustimmen', 'annehmen', 'ja'], true),
     hidden_affirmative: normalizeFragments(['ok', 'okay', 'next', 'continue', 'weiter', 'fortfahren', 'nein'], true),
     clear_negative: normalizeFragments(['decline', 'reject', 'refuse', 'no', 'widersprechen', 'ablehnen', 'verweigern'], true),
-    hidden_negative: normalizeFragments([/customi(z|s)e/, 'more choices', 'settings', 'options', 'exit', 'cancel', 'einstellungen', 'optionen', 'anpassen', /schlie(ß|ss)en/, 'beenden', 'abbrechen'], true),
+    hidden_negative: normalizeFragments([/customi(z|s)e/, 'more choices', 'settings', 'options', 'exit', 'cancel', 'learn more', 'einstellungen', 'optionen', 'anpassen', /schlie(ß|ss)en/, 'beenden', 'abbrechen', 'mehr erfahren'], true),
 };
 
 export const button_text_fragments_all = Object.values(button_text_fragments).flat();
-// TODO: Continue the list.
 export const dialog_text_fragments = normalizeFragments([
     /(we care about|comitted|respect)[^.]{0,10} (privacy|data protection)/,
     /(privacy|data protection) [^.]{0,35} important/,

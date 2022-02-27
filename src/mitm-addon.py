@@ -91,7 +91,7 @@ class MitmAddon:
             help="The ID of the run in the database"
         )
 
-        self.conn = psycopg2.connect(host='localhost', port=os.environ['HOST_PORT'], dbname=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], password=os.environ['POSTGRES_PASSWORD'])
+        self.conn = psycopg2.connect(host=os.environ['POSTGRES_HOST'] or 'localhost', port=os.environ['HOST_PORT'], dbname=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], password=os.environ['POSTGRES_PASSWORD'])
         self.cur = self.conn.cursor()
 
 

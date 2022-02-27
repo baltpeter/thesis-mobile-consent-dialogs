@@ -1,6 +1,7 @@
-import { join } from 'path';
+import { basename, join } from 'path';
 import glob from 'glob';
 import yesno from 'yesno';
+import yargs from 'yargs';
 // @ts-ignore
 import dirname from 'es-dirname';
 import { execa, ExecaChildProcess } from 'execa';
@@ -13,6 +14,7 @@ import getImageColors from 'get-image-colors';
 import chroma from 'chroma-js';
 import frida from 'frida';
 import { db, pg } from './common/db.js';
+import { platform_api } from './common/platform.js';
 import {
     // button_id_fragments,
     dialog_id_fragments,
@@ -22,20 +24,78 @@ import {
     keywords_regular,
     keywords_half,
 } from './common/indicators.js';
-import { adb_get_foreground_app_id, adb_get_pid_for_app_id, android_get_apk_version, shuffle } from './common/util.js';
+import { shuffle, pause, await_proc_start } from './common/util.js';
 
 const required_score = 1;
 const app_timeout = 60;
-const platform = 'android'; // TODO
-const mitmdump_path = join(dirname(), '../venv/bin/mitmdump');
 const mitmdump_addon_path = join(dirname(), 'mitm-addon.py');
 
-const run_for_open_app_only = process.argv.includes('--dev');
+const argv = yargs(process.argv.slice(2))
+    .options({
+        platform: { choices: ['android', 'ios'] as const, demandOption: true, group: 'Required options:' },
+        apps_dir: { type: 'string', demandOption: true, group: 'Required options:' },
+
+        xcode_org_id: {
+            type: 'string',
+            describe: 'Team ID of the Apple developer certificate to use',
+            group: 'iOS options:',
+        },
+        xcode_signing_id: {
+            type: 'string',
+            default: 'Apple Development',
+            describe: 'Name of the Apple developer certificate to use',
+            group: 'iOS options:',
+        },
+        device_udid: {
+            type: 'string',
+            default: 'auto',
+            describe: 'Unique device identifier of the device to use',
+            group: 'iOS options:',
+        },
+        device_name: {
+            type: 'string',
+            default: 'iPhone',
+            describe: 'Name of the device to use (hint: `xcrun xctrace list devices`)',
+            group: 'iOS options:',
+        },
+        webdriver_agent_bundle_id: {
+            type: 'string',
+            default: 'com.facebook.WebDriverAgentRunner',
+            describe: 'Bundle ID of the WebDriverAgentRunner to use',
+            group: 'iOS options:',
+        },
+
+        mitmdump_path: { type: 'string', default: join(dirname(), '../venv/bin/mitmdump'), group: 'Optional options:' },
+        frida_ps_path: { type: 'string', default: join(dirname(), '../venv/bin/frida-ps'), group: 'Optional options:' },
+
+        dev: {
+            type: 'boolean',
+            default: false,
+            describe: 'Run analysis on the app that is currently open',
+            group: 'Development options:',
+        },
+        debug_text: {
+            type: 'boolean',
+            default: false,
+            describe: 'Log the text of all encountered elements',
+            group: 'Development options:',
+        },
+        debug_tree: {
+            type: 'boolean',
+            default: false,
+            describe: 'Log the app source tree at the end',
+            group: 'Development options:',
+        },
+    })
+    .check((argv) => {
+        if (argv.platform === 'ios' && !argv.xcode_org_id)
+            throw new Error('You need to specify `xcode_org_id` for iOS.');
+        return true;
+    })
+    .parseSync();
+
+const run_for_open_app_only = argv.dev;
 let log_indicators = true;
-
-const apps_dir = '/media/benni/storage2/tmp/apks';
-
-const pause = (duration_in_ms: number) => new Promise((res) => setTimeout(res, duration_in_ms));
 
 const fragmentTest = (frags: RegExp[], val: string, length_factor: false | number = false, multiple_matches = false) =>
     frags[multiple_matches ? 'filter' : 'find'](
@@ -72,55 +132,42 @@ const decide = (keyword_score: number, has_dialog: boolean, button_count: number
     return 'neither';
 };
 
-const ensure_frida = async () => {
-    const frida_check = await execa('frida-ps -U | grep frida-server', { shell: true, reject: false });
-    if (frida_check.exitCode === 0) return;
-
-    await execa('adb', ['root']);
-    let adb_tries = 0;
-    while ((await execa('adb', ['get-state'], { reject: false })).exitCode !== 0) {
-        if (adb_tries > 100) throw new Error('Failed to connect via adb.');
-        await pause(250);
-        adb_tries++;
-    }
-
-    await execa('adb shell "nohup /data/local/tmp/frida-server >/dev/null 2>&1 &"', { shell: true });
-    let frida_tries = 0;
-    while ((await execa('frida-ps -U | grep frida-server', { shell: true, reject: false })).exitCode !== 0) {
-        if (frida_tries > 100) throw new Error('Failed to start Frida.');
-        await pause(250);
-        frida_tries++;
-    }
-};
-
 async function main() {
     const ok = await yesno({ question: 'Have you disabled PiHole?' });
     if (!ok) process.exit(1);
 
+    const api = platform_api(argv)[argv.platform];
+
     const app_ids = run_for_open_app_only
-        ? [(await adb_get_foreground_app_id()) || '']
-        : glob.sync(`*`, { absolute: false, cwd: apps_dir });
+        ? [(await api.get_foreground_app_id()) || '']
+        : glob.sync(`*`, { absolute: false, cwd: argv.apps_dir }).map((p) => basename(p, '.ipa'));
     if (run_for_open_app_only && app_ids[0] === '') throw new Error('You need to start an app!');
 
-    await ensure_frida();
+    await api.ensure_frida();
 
     for (const app_id of shuffle(app_ids)) {
-        const apk_path = join(apps_dir, app_id, `${app_id}.apk`);
-        const version = await android_get_apk_version(apk_path);
-        const done = await db.any(
-            'SELECT 1 FROM apps WHERE name = ${app_id} AND version = ${version} AND platform = ${platform};',
-            { app_id, version, platform }
-        );
-        if (done.length > 0) {
-            console.log(chalk.underline(`Skipping ${app_id}@${version} (${platform})…`));
-            console.log();
-            continue;
+        const app_path =
+            argv.platform === 'android'
+                ? join(argv.apps_dir, app_id, `${app_id}.apk`)
+                : join(argv.apps_dir, `${app_id}.ipa`);
+        const version = await api.get_app_version(app_path);
+
+        if (!run_for_open_app_only) {
+            const done = await db.any(
+                'SELECT 1 FROM apps WHERE name = ${app_id} AND version = ${version} AND platform = ${platform};',
+                { app_id, version, platform: argv.platform }
+            );
+            if (done.length > 0) {
+                console.log(chalk.underline(`Skipping ${app_id}@${version} (${argv.platform})…`));
+                console.log();
+                continue;
+            }
         }
-        console.log(chalk.underline(`Analyzing ${app_id}@${version} (${platform})…`));
+        console.log(chalk.underline(`Analyzing ${app_id}@${version} (${argv.platform})…`));
 
         const { id: db_app_id } = await db.one(
             'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
-            { app_id, version, platform }
+            { app_id, version, platform: argv.platform }
         );
         const { id: run_id } = await db.one(
             'INSERT INTO runs (start_time, app) VALUES(now(), ${db_app_id}) RETURNING id;',
@@ -146,17 +193,23 @@ async function main() {
         };
 
         let client: WebdriverIO.Browser, mitmdump: ExecaChildProcess<string>;
+        // On iOS, a globally started Appium server tends to break after a few runs, so we just start a new one for each
+        // app which adds a bit of overhead but solves the problem.
+        const appium: ExecaChildProcess<string> = execa('appium');
+
         const cleanup = async (failed = false) => {
             console.log('Cleaning up mitmproxy and Appium session…');
-            if (mitmdump) {
-                mitmdump.kill();
-                await mitmdump.catch(() => {});
+            for (const proc of [mitmdump, appium]) {
+                if (proc) {
+                    proc.kill();
+                    await proc.catch(() => {});
+                }
             }
 
             if (client) await client.deleteSession().catch(() => {});
             if (!run_for_open_app_only) {
                 console.log('Uninstalling app…');
-                await execa('adb', ['shell', 'pm', 'uninstall', '--user', '0', app_id]).catch(() => {});
+                await api.uninstall_app(app_id);
             }
 
             if (failed) {
@@ -171,38 +224,61 @@ async function main() {
             process.exit();
         });
         try {
-            console.log('Starting mitmproxy and Appium session…');
-            mitmdump = execa(mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
-
-            // Install app.
-            if (!run_for_open_app_only) {
+            // Install app (Android only).
+            // On Android, our app may be a split APK and we need to install packages of that. On iOS, we only have one
+            // IPA and Appium can handle that.
+            if (!run_for_open_app_only && argv.platform === 'android') {
                 console.log('Installing app…');
-                await execa('adb', ['install-multiple', '-g', join(apps_dir, app_id, '*.apk')], { shell: true });
+                await api.install_app(join(argv.apps_dir, app_id, '*.apk'));
             }
 
-            const capabilities: Capabilities.Capabilities & {
-                    'appium:autoGrantPermissions': boolean;
-                    'appium:appWaitForLaunch': boolean;
-                } = {
-                    platformName: 'Android',
-                    'appium:automationName': 'UiAutomator2',
-                    'appium:platformVersion': '11',
-                    'appium:deviceName': 'ignored-on-android',
-                    'appium:app': apk_path,
-                    'appium:noReset': false,
-                    'appium:autoGrantPermissions': true,
-                    'appium:newCommandTimeout': 360,
-                    // This isn't reliable if we don't know the target activity and we're waiting ourselves anyway.
-                    'appium:appWaitForLaunch': false,
-                    'appium:appWaitActivity': '*',
-                },
-                // Create Appium session and set geolocation.
-                client = await wdRemote({
-                    path: '/wd/hub',
-                    port: 4723,
-                    capabilities,
-                    logLevel: 'warn',
-                });
+            console.log('Starting mitmproxy and Appium session…');
+            mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
+            await await_proc_start(appium, 'Appium REST http interface listener started');
+            await await_proc_start(mitmdump, 'Proxy server listening');
+
+            // Create Appium session and set geolocation.
+            const android_capabilities: Capabilities.Capabilities & {
+                'appium:autoGrantPermissions': boolean;
+                'appium:appWaitForLaunch': boolean;
+            } = {
+                platformName: 'Android',
+                'appium:automationName': 'UiAutomator2',
+                'appium:platformVersion': '11',
+
+                'appium:deviceName': 'ignored-on-android',
+
+                'appium:autoGrantPermissions': true,
+                // This isn't reliable if we don't know the target activity and we're waiting ourselves anyway.
+                'appium:appWaitForLaunch': false,
+                'appium:appWaitActivity': '*',
+            };
+            const ios_capabilities: Capabilities.Capabilities & Capabilities.AppiumXCUITestCapabilities = {
+                platformName: 'iOS',
+                'appium:automationName': 'XCUITest',
+                'appium:platformVersion': '14.8',
+
+                'appium:deviceName': argv.device_name,
+                'appium:udid': argv.device_udid,
+
+                'appium:xcodeOrgId': argv.xcode_org_id,
+                'appium:xcodeSigningId': argv.xcode_signing_id,
+                'appium:updatedWDABundleId': argv.webdriver_agent_bundle_id,
+            };
+            const capabilities: Capabilities.Capabilities = {
+                ...(argv.platform === 'android' ? android_capabilities : ios_capabilities),
+
+                'appium:app': app_path,
+                'appium:noReset': false,
+                'appium:newCommandTimeout': 360,
+            };
+            if (argv.platform === 'ios') console.log('Installing app…');
+            client = await wdRemote({
+                path: '/wd/hub',
+                port: 4723,
+                capabilities,
+                logLevel: 'warn',
+            });
             console.log(`Starting app for ${app_timeout} seconds…`);
             await pause(run_for_open_app_only ? 2000 : app_timeout * 1000);
             await client.setGeoLocation({ latitude: '52.23528', longitude: '10.56437', altitude: '77.23' });
@@ -219,6 +295,14 @@ async function main() {
                     hidden_affirmative: [] as ElementReference[],
                     hidden_negative: [] as ElementReference[],
 
+                    push(
+                        category: 'clear_affirmative' | 'clear_negative' | 'hidden_affirmative' | 'hidden_negative',
+                        el: ElementReference
+                    ) {
+                        if (this[category].some((e) => e.ELEMENT === el.ELEMENT)) return;
+                        this[category].push(el);
+                    },
+
                     get all_affirmative() {
                         return [...this.clear_affirmative, ...this.hidden_affirmative];
                     },
@@ -232,7 +316,13 @@ async function main() {
                 const elements = await timeout(client.findElements('xpath', '//*'), 15000);
                 try {
                     for (const el of elements) {
-                        const id = await timeout(client.getElementAttribute(el.ELEMENT, 'resource-id'), 5000);
+                        const id = await timeout(
+                            client.getElementAttribute(
+                                el.ELEMENT,
+                                argv.platform === 'android' ? 'resource-id' : 'name'
+                            ),
+                            5000
+                        );
                         if (id) {
                             // if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
                             if (testAndLog(dialog_id_fragments, id, 'has dialog ID')) has_dialog = true;
@@ -240,18 +330,18 @@ async function main() {
 
                         const text = await timeout(client.getElementText(el.ELEMENT), 5000);
                         if (text) {
-                            if (process.argv.includes('--debug-text')) console.log(text);
+                            if (argv.debug_text) console.log(text);
 
                             if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
-                                buttons.clear_affirmative.push(el);
+                                buttons.push('clear_affirmative', el);
                             else if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
-                                buttons.clear_negative.push(el);
+                                buttons.push('clear_negative', el);
                             else if (
                                 testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2)
                             )
-                                buttons.hidden_affirmative.push(el);
+                                buttons.push('hidden_affirmative', el);
                             else if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
-                                buttons.hidden_negative.push(el);
+                                buttons.push('hidden_negative', el);
 
                             if (testAndLog(dialog_text_fragments, text, 'has dialog text')) has_dialog = true;
                             if (testAndLog(link_text_fragments, text, 'has privacy policy link')) has_link = true;
@@ -269,8 +359,9 @@ async function main() {
                 return { has_dialog, buttons, has_link, keyword_score };
             };
 
+            log_indicators = true;
             const { has_dialog, buttons, has_link, keyword_score } = await collect_indicators();
-            const button_count = Object.values(buttons).reduce((acc, cur) => acc + cur.length, 0);
+            const button_count = buttons.all_affirmative.length + buttons.all_negative.length;
 
             const verdict = decide(keyword_score, has_dialog, button_count, has_link);
 
@@ -346,54 +437,17 @@ async function main() {
             if (['dialog', 'maybe_dialog'].includes(verdict)) {
                 log_indicators = false;
 
-                const get_prefs = async () => {
-                    try {
-                        const frida_device = await frida.getUsbDevice();
-                        const pid = await adb_get_pid_for_app_id(app_id);
-                        if (!pid) throw new Error("App to analyze doesn't seem to be running.");
-
-                        const frida_session = await frida_device.attach(pid);
-                        const frida_script = await frida_session.createScript(`
-var app_ctx = Java.use('android.app.ActivityThread').currentApplication().getApplicationContext();
-var pref_mgr = Java.use('android.preference.PreferenceManager').getDefaultSharedPreferences(app_ctx);
-var HashMapNode = Java.use('java.util.HashMap$Node');
-
-var prefs = {};
-
-var iterator = pref_mgr.getAll().entrySet().iterator();
-while (iterator.hasNext()) {
-    var entry = Java.cast(iterator.next(), HashMapNode);
-    prefs[entry.getKey().toString()] = entry.getValue().toString();
-}
-
-send({ name: "app_prefs", payload: prefs });`);
-                        const result_promise = new Promise<Record<string, unknown>>((res, rej) => {
-                            frida_script.message.connect((message) => {
-                                if (message.type === 'send' && message.payload?.name === 'app_prefs')
-                                    res(message.payload?.payload);
-                                else rej(message);
-                            });
-                        });
-                        await frida_script.load();
-
-                        await frida_session.detach();
-                        return await result_promise; // We want this to be caught here if it fails, thus the `await`.
-                    } catch (err) {
-                        console.error("Couldn't get prefs:", err);
-                    }
-                };
-
                 await client.reset();
                 await pause(2000);
 
                 const { buttons: buttons1 } = await collect_indicators();
-                res.prefs.initial = await get_prefs();
+                res.prefs.initial = await api.get_prefs(app_id);
 
                 if (buttons1.all_affirmative.length === 1) {
                     await client.elementClick(buttons1.all_affirmative[0].ELEMENT);
                     await pause(2000);
 
-                    res.prefs.accepted = await get_prefs();
+                    res.prefs.accepted = await api.get_prefs(app_id);
                 }
 
                 if (buttons1.all_negative.length === 1) {
@@ -408,7 +462,7 @@ send({ name: "app_prefs", payload: prefs });`);
                     await client.elementClick(buttons2.all_negative[0].ELEMENT);
                     await pause(2000);
 
-                    res.prefs.rejected = await get_prefs();
+                    res.prefs.rejected = await api.get_prefs(app_id);
                 }
             }
 
@@ -430,9 +484,9 @@ send({ name: "app_prefs", payload: prefs });`);
                         meta: JSON.stringify({ has_dialog, buttons, has_link, keyword_score, button_count }),
                     }
                 );
-            }
+            } else console.log(res);
 
-            if (process.argv.includes('--debug-tree')) console.log(await client.getPageSource());
+            if (argv.debug_tree) console.log(await client.getPageSource());
 
             // Clean up.
             await cleanup();
