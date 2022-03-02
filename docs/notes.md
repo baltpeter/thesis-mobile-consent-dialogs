@@ -77,7 +77,9 @@ On macOS, we need to compile the Node bindings for Frida ourselves.
   yarn link
   ```
 * Run `brew install postgresql` to be able to install `psycopg2` later (https://github.com/psycopg/psycopg2/issues/1286#issuecomment-914286206).
-* Install Apple Configurator and `cfgutil`.
+* Install `libimobiledevice`: `brew install libimobiledevice ideviceinstaller`
+* Install `sshpass`: `brew install esolitos/ipa/sshpass`
+* SSH into the iDevice manually once to add it to the list of known hosts.
 
 ### Steps for all systems
 
@@ -610,24 +612,29 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * Not possible.
 * [ ] Automate 3u with Frida?
 * [ ] ~~Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.~~
-* [ ] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
+* [x] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
     * Will also be helpful for complaint generator.
     * Idea: While value matching works for data points we can control, this isn't possible for everything, e.g. OS (`android`, `ios`) or screen dimensions are way too generic to be matched that way.
 * [x] After CMP detection: Do violation detection next, then interaction.
 * [ ] Save raw mitmproxy flows/logs. (`--save_stream_file` but also save cmd logs)
 * [ ] Look for SDK indicators in prefs?
-* [ ] Change geolocation.
+* [x] Change geolocation.
 * [ ] For button color highlight: Also compare with background.
 * [ ] Cert pinning bypass
 * [ ] Honey data
 * [ ] Python `requirements.txt`
-* [ ] Verify app is actually running before waiting.
+* [x] Verify app is still running after waiting.
 * [ ] Look at cookies and headers.
     * Same cookie values across different apps?
     * Compare with cookie DB?
 * [ ] Can we fix incorrect country detections (`US`)?
 * [ ] Set device name.
 * [ ] Record failures.
+* [ ] For iOS:
+    * [ ] There tend to be multiple nested elements with the same name/label that are displayed as a single element. This breaks the violation detection, which expects exactly one affirmative and negative button. While all of those elements are `visible`, it seems like only one of them is `accessible`.
+    * [ ] We need to make sure to always dismiss all modals as they can stick around after the app is uninstalled and Appium will then only see them.
+    * [x] We sometimes get into a state where Appium sees the system UI and detects a "No SIM" "button". It seems like this can be resolved by getting rid of all modals.
+        * Maybe we should throw if we detect that?
 
 ### Promises from proposal
 

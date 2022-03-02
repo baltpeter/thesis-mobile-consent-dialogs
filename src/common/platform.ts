@@ -3,13 +3,21 @@ import { execa } from 'execa';
 // @ts-ignore
 import _ipaInfo from 'ipa-extract-info';
 import frida from 'frida';
+import { ArgvType } from './argv.js';
 import { pause } from './util.js';
 
 type PlatformApi = {
     ensure_frida: () => Promise<void>;
+    clear_stuck_modals: () => Promise<void>;
 
     install_app: (app_path: string) => Promise<unknown>;
     uninstall_app: (app_id: string) => Promise<unknown>;
+    set_app_permissions: (app_id: string) => Promise<unknown>;
+    start_app: (app_id: string) => Promise<unknown>;
+    /**
+     * Uninstall, install, setup, start.
+     */
+    reset_app: (app_id: string, app_path: string, on_before_start?: () => Promise<void>) => Promise<unknown>;
 
     get_foreground_app_id: () => Promise<string | undefined>;
     get_pid_for_app_id: (app_id: string) => Promise<number | undefined>;
@@ -19,6 +27,9 @@ type PlatformApi = {
 };
 
 const async_nop = async () => {};
+const async_unimplemented = (action: string) => async () => {
+    throw new Error('Unimplemented on this platform: ' + action);
+};
 
 const frida_scripts = {
     android: {
@@ -80,8 +91,23 @@ const get_obj_from_frida_script = async (pid: number | undefined, script: string
         console.error("Couldn't get data from Frida script:", err);
     }
 };
+const reset_app = async (
+    that: PlatformApi,
+    app_id: string,
+    app_path: string,
+    on_before_start?: () => Promise<void>
+) => {
+    console.log('Resetting and installing app…');
+    await that.uninstall_app(app_id); // Won't fail if the app isn't installed anyway.
+    await that.install_app(app_path);
+    await that.set_app_permissions(app_id);
+    await that.clear_stuck_modals();
+    if (on_before_start) await on_before_start();
+    console.log('Starting app…');
+    await that.start_app(app_id);
+};
 
-export const platform_api = (argv: { frida_ps_path: string }): { android: PlatformApi; ios: PlatformApi } => ({
+export const platform_api = (argv: ArgvType): { android: PlatformApi; ios: PlatformApi } => ({
     android: {
         ensure_frida: async () => {
             const frida_check = await execa('frida-ps -U | grep frida-server', { shell: true, reject: false });
@@ -103,9 +129,17 @@ export const platform_api = (argv: { frida_ps_path: string }): { android: Platfo
                 frida_tries++;
             }
         },
+        clear_stuck_modals: async_unimplemented('clear_stuck_modals'),
 
         install_app: (apk_path) => execa('adb', ['install-multiple', '-g', apk_path], { shell: true }),
+        // TODO: Only fail if app wasn't installed.
         uninstall_app: (app_id) => execa('adb', ['shell', 'pm', 'uninstall', '--user', '0', app_id]).catch(() => {}),
+        // Basic permissions are granted at install time. TODO: Grant dangerous permissions.
+        set_app_permissions: async_unimplemented('set_app_permissions'),
+        start_app: async_unimplemented('start_app'),
+        async reset_app(app_id, apk_path, on_before_start) {
+            await reset_app(this, app_id, apk_path, on_before_start);
+        },
 
         // Adapted after: https://stackoverflow.com/a/28573364
         get_foreground_app_id: async () => {
@@ -118,7 +152,7 @@ export const platform_api = (argv: { frida_ps_path: string }): { android: Platfo
             const { stdout } = await execa('adb', ['shell', 'pidof', '-s', app_id]);
             return parseInt(stdout, 10);
         },
-        async get_prefs(app_id: string) {
+        async get_prefs(app_id) {
             const pid = await this.get_pid_for_app_id(app_id);
             return get_obj_from_frida_script(pid, frida_scripts.android.get_prefs);
         },
@@ -133,21 +167,75 @@ export const platform_api = (argv: { frida_ps_path: string }): { android: Platfo
     ios: {
         // On iOS, Frida is automatically provided by the Frida app installed through Cydia.
         ensure_frida: async_nop,
+        clear_stuck_modals: async () => {
+            await execa('sshpass', [
+                '-p',
+                argv.idevice_root_pw,
+                'ssh',
+                `root@${argv.idevice_ip}`,
+                `activator send libactivator.system.clear-switcher; activator send libactivator.system.homebutton`,
+            ]);
+        },
 
-        install_app: (ipa_path) => execa('cfgutil', ['install-app', ipa_path]),
-        uninstall_app: (app_id) => execa('cfgutil', ['remove-app', app_id]),
+        // We're using `libimobiledevice` instead of `cfgutil` because the latter doesn't wait for the app to be fully
+        // installed before exiting.
+        install_app: (ipa_path) => execa('ideviceinstaller', ['--install', ipa_path]),
+        uninstall_app: (app_id) => execa('ideviceinstaller', ['--uninstall', app_id]),
+        set_app_permissions: async (app_id: string) => {
+            // prettier-ignore
+            const permissions_to_grant = ['kTCCServiceLiverpool', 'kTCCServiceUbiquity', 'kTCCServiceCalendar', 'kTCCServiceAddressBook', 'kTCCServiceReminders', 'kTCCServicePhotos', 'kTCCServiceMediaLibrary', 'kTCCServiceBluetoothAlways', 'kTCCServiceMotion', 'kTCCServiceWillow', 'kTCCServiceExposureNotification'];
+            const permissions_to_deny = ['kTCCServiceCamera', 'kTCCServiceMicrophone', 'kTCCServiceUserTracking'];
+
+            // value === 0 for not granted, value === 2 for granted
+            const setPermission = async (permission: string, value: 0 | 2) => {
+                const timestamp = Math.floor(Date.now() / 1000);
+                await execa('sshpass', [
+                    '-p',
+                    argv.idevice_root_pw,
+                    'ssh',
+                    `root@${argv.idevice_ip}`,
+                    'sqlite3',
+                    '/private/var/mobile/Library/TCC/TCC.db',
+                    `'INSERT OR REPLACE INTO access VALUES("${permission}", "${app_id}", 0, ${value}, 2, 1, NULL, NULL, 0, "UNUSED", NULL, 0, ${timestamp});'`,
+                ]);
+            };
+            const grantLocationPermission = async () => {
+                await execa('sshpass', [
+                    '-p',
+                    argv.idevice_root_pw,
+                    'ssh',
+                    `root@${argv.idevice_ip}`,
+                    'open com.apple.Preferences',
+                ]);
+                const session = await frida.getUsbDevice().then((f) => f.attach('Settings'));
+                const script = await session.createScript(
+                    `ObjC.classes.CLLocationManager.setAuthorizationStatusByType_forBundleIdentifier_(4, "${app_id}");`
+                );
+                await script.load();
+                await session.detach();
+            };
+
+            for (const permission of permissions_to_grant) await setPermission(permission, 2);
+            for (const permission of permissions_to_deny) await setPermission(permission, 0);
+            await grantLocationPermission();
+        },
+        start_app: (app_id) =>
+            execa('sshpass', ['-p', argv.idevice_root_pw, 'ssh', `root@${argv.idevice_ip}`, `open ${app_id}`]),
+        async reset_app(app_id, ipa_path, on_before_start) {
+            await reset_app(this, app_id, ipa_path, on_before_start);
+        },
 
         get_foreground_app_id: async () => {
             const device = await frida.getUsbDevice();
             const app = await device.getFrontmostApplication();
             return app?.identifier;
         },
-        get_pid_for_app_id: async (app_id: string) => {
+        get_pid_for_app_id: async (app_id) => {
             const { stdout: ps_json } = await execa(argv.frida_ps_path, ['--usb', '--applications', '--json']);
             const ps: { pid: number; name: string; identifier: string }[] = JSON.parse(ps_json);
             return ps.find((p) => p.identifier === app_id)?.pid;
         },
-        async get_prefs(app_id: string) {
+        async get_prefs(app_id) {
             const pid = await this.get_pid_for_app_id(app_id);
             return get_obj_from_frida_script(pid, frida_scripts.ios.get_prefs);
         },

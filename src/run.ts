@@ -1,7 +1,6 @@
 import { basename, join } from 'path';
 import glob from 'glob';
 import yesno from 'yesno';
-import yargs from 'yargs';
 // @ts-ignore
 import dirname from 'es-dirname';
 import { execa, ExecaChildProcess } from 'execa';
@@ -12,7 +11,7 @@ import chalk from 'chalk';
 import { timeout } from 'promise-timeout';
 import getImageColors from 'get-image-colors';
 import chroma from 'chroma-js';
-import frida from 'frida';
+import { argv } from './common/argv.js';
 import { db, pg } from './common/db.js';
 import { platform_api } from './common/platform.js';
 import {
@@ -29,70 +28,6 @@ import { shuffle, pause, await_proc_start } from './common/util.js';
 const required_score = 1;
 const app_timeout = 60;
 const mitmdump_addon_path = join(dirname(), 'mitm-addon.py');
-
-const argv = yargs(process.argv.slice(2))
-    .options({
-        platform: { choices: ['android', 'ios'] as const, demandOption: true, group: 'Required options:' },
-        apps_dir: { type: 'string', demandOption: true, group: 'Required options:' },
-
-        xcode_org_id: {
-            type: 'string',
-            describe: 'Team ID of the Apple developer certificate to use',
-            group: 'iOS options:',
-        },
-        xcode_signing_id: {
-            type: 'string',
-            default: 'Apple Development',
-            describe: 'Name of the Apple developer certificate to use',
-            group: 'iOS options:',
-        },
-        device_udid: {
-            type: 'string',
-            default: 'auto',
-            describe: 'Unique device identifier of the device to use',
-            group: 'iOS options:',
-        },
-        device_name: {
-            type: 'string',
-            default: 'iPhone',
-            describe: 'Name of the device to use (hint: `xcrun xctrace list devices`)',
-            group: 'iOS options:',
-        },
-        webdriver_agent_bundle_id: {
-            type: 'string',
-            default: 'com.facebook.WebDriverAgentRunner',
-            describe: 'Bundle ID of the WebDriverAgentRunner to use',
-            group: 'iOS options:',
-        },
-
-        mitmdump_path: { type: 'string', default: join(dirname(), '../venv/bin/mitmdump'), group: 'Optional options:' },
-        frida_ps_path: { type: 'string', default: join(dirname(), '../venv/bin/frida-ps'), group: 'Optional options:' },
-
-        dev: {
-            type: 'boolean',
-            default: false,
-            describe: 'Run analysis on the app that is currently open',
-            group: 'Development options:',
-        },
-        debug_text: {
-            type: 'boolean',
-            default: false,
-            describe: 'Log the text of all encountered elements',
-            group: 'Development options:',
-        },
-        debug_tree: {
-            type: 'boolean',
-            default: false,
-            describe: 'Log the app source tree at the end',
-            group: 'Development options:',
-        },
-    })
-    .check((argv) => {
-        if (argv.platform === 'ios' && !argv.xcode_org_id)
-            throw new Error('You need to specify `xcode_org_id` for iOS.');
-        return true;
-    })
-    .parseSync();
 
 const run_for_open_app_only = argv.dev;
 let log_indicators = true;
@@ -133,8 +68,10 @@ const decide = (keyword_score: number, has_dialog: boolean, button_count: number
 };
 
 async function main() {
-    const ok = await yesno({ question: 'Have you disabled PiHole?' });
-    if (!ok) process.exit(1);
+    if (!run_for_open_app_only) {
+        const ok = await yesno({ question: 'Have you disabled PiHole?' });
+        if (!ok) process.exit(1);
+    }
 
     const api = platform_api(argv)[argv.platform];
 
@@ -146,11 +83,13 @@ async function main() {
     await api.ensure_frida();
 
     for (const app_id of shuffle(app_ids)) {
-        const app_path =
+        const app_path_main =
             argv.platform === 'android'
                 ? join(argv.apps_dir, app_id, `${app_id}.apk`)
                 : join(argv.apps_dir, `${app_id}.ipa`);
-        const version = await api.get_app_version(app_path);
+        // To handle split APKs on Android.
+        const app_path_all = argv.platform === 'android' ? join(argv.apps_dir, app_id, '*.apk') : app_path_main;
+        const version = await api.get_app_version(app_path_main);
 
         if (!run_for_open_app_only) {
             const done = await db.any(
@@ -224,18 +163,8 @@ async function main() {
             process.exit();
         });
         try {
-            // Install app (Android only).
-            // On Android, our app may be a split APK and we need to install packages of that. On iOS, we only have one
-            // IPA and Appium can handle that.
-            if (!run_for_open_app_only && argv.platform === 'android') {
-                console.log('Installing app…');
-                await api.install_app(join(argv.apps_dir, app_id, '*.apk'));
-            }
-
-            console.log('Starting mitmproxy and Appium session…');
-            mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
-            await await_proc_start(appium, 'Appium REST http interface listener started');
-            await await_proc_start(mitmdump, 'Proxy server listening');
+            console.log('Starting Appium session…');
+            await timeout(await_proc_start(appium, 'Appium REST http interface listener started'), 15000);
 
             // Create Appium session and set geolocation.
             const android_capabilities: Capabilities.Capabilities & {
@@ -265,23 +194,35 @@ async function main() {
                 'appium:xcodeSigningId': argv.xcode_signing_id,
                 'appium:updatedWDABundleId': argv.webdriver_agent_bundle_id,
             };
-            const capabilities: Capabilities.Capabilities = {
+            const capabilities: Capabilities.Capabilities & { 'appium:autoLaunch': boolean } = {
                 ...(argv.platform === 'android' ? android_capabilities : ios_capabilities),
 
-                'appium:app': app_path,
-                'appium:noReset': false,
+                'appium:appPackage': app_id,
+                'appium:autoLaunch': false,
+                'appium:noReset': true,
+                'appium:fullReset': false,
                 'appium:newCommandTimeout': 360,
             };
-            if (argv.platform === 'ios') console.log('Installing app…');
             client = await wdRemote({
                 path: '/wd/hub',
                 port: 4723,
                 capabilities,
                 logLevel: 'warn',
             });
-            console.log(`Starting app for ${app_timeout} seconds…`);
-            await pause(run_for_open_app_only ? 2000 : app_timeout * 1000);
             await client.setGeoLocation({ latitude: '52.23528', longitude: '10.56437', altitude: '77.23' });
+
+            await api.reset_app(app_id, app_path_all, async () => {
+                console.log('Starting mitmproxy…');
+                mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
+                await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
+            });
+
+            console.log(`Waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`);
+            await pause(run_for_open_app_only ? 10000 : app_timeout * 1000);
+
+            // Ensure app is still running and in foreground after timeout.
+            if ((await client.queryAppState(app_id)) !== 4) throw new Error("App isn't in foreground anymore.");
+
             // For some reason, the first `findElements()` call in a session doesn't find elements inside webviews. As a
             // workaround, we can just do any `findElements()` call with results we don't care about first.
             await timeout(client.findElements('xpath', '/invalid/webview-workaround-hack'), 15000);
@@ -316,6 +257,9 @@ async function main() {
                 const elements = await timeout(client.findElements('xpath', '//*'), 15000);
                 try {
                     for (const el of elements) {
+                        // Only consider elements that the user can actually see.
+                        if (!client.isElementDisplayed(el.ELEMENT)) continue;
+
                         const id = await timeout(
                             client.getElementAttribute(
                                 el.ELEMENT,
@@ -331,6 +275,13 @@ async function main() {
                         const text = await timeout(client.getElementText(el.ELEMENT), 5000);
                         if (text) {
                             if (argv.debug_text) console.log(text);
+
+                            // On iOS, we sometimes get into a state where Appium sees the system UI, which we can
+                            // detect through the presence of the "No SIM" indicator.
+                            if (argv.platform === 'ios' && text === 'No SIM')
+                                throw new Error(
+                                    'Found "No SIM" indicator. There is likely a stuck modal that blocks the actual app.'
+                                );
 
                             if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
                                 buttons.push('clear_affirmative', el);
@@ -363,15 +314,22 @@ async function main() {
             const { has_dialog, buttons, has_link, keyword_score } = await collect_indicators();
             const button_count = buttons.all_affirmative.length + buttons.all_negative.length;
 
-            const verdict = decide(keyword_score, has_dialog, button_count, has_link);
+            res.verdict = decide(keyword_score, has_dialog, button_count, has_link);
+            // Take screenshot.
+            if (!run_for_open_app_only) {
+                // Apps with the "secure" flag set cannot be screenshotted. TODO: Can this be circumvented?
+                res.screenshot = await client
+                    .takeScreenshot()
+                    .catch(() => (console.error("Couldn't save screenshot for", app_id), undefined));
+            }
 
             console.log(
                 `has_dialog=${has_dialog}, button_count=${button_count}, has_link=${has_link}, keyword_score=${keyword_score}`
             );
-            console.log(chalk.redBright('Verdict:'), verdict);
+            console.log(chalk.redBright('Verdict:'), res.verdict);
 
             // Detect violations.
-            if (['dialog', 'maybe_dialog'].includes(verdict)) {
+            if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 // Unambiguous "accept" button (not "okay").
                 if (buttons.clear_affirmative.length < 1) res.violations.ambiguous_accept_button = true;
 
@@ -434,18 +392,18 @@ async function main() {
             console.log(res.violations);
 
             // Save prefs.
-            if (['dialog', 'maybe_dialog'].includes(verdict)) {
+            if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 log_indicators = false;
 
-                await client.reset();
-                await pause(2000);
+                await api.reset_app(app_id, app_path_all);
+                await pause(app_timeout);
 
                 const { buttons: buttons1 } = await collect_indicators();
                 res.prefs.initial = await api.get_prefs(app_id);
 
                 if (buttons1.all_affirmative.length === 1) {
                     await client.elementClick(buttons1.all_affirmative[0].ELEMENT);
-                    await pause(2000);
+                    await pause(5000);
 
                     res.prefs.accepted = await api.get_prefs(app_id);
                 }
@@ -454,25 +412,20 @@ async function main() {
                     // We only need to reset if there was an affirmative button that we clicked, otherwise we are in a
                     // reset state anyway.
                     if (buttons1.all_affirmative.length === 1) {
-                        await client.reset();
-                        await pause(2000);
+                        await api.reset_app(app_id, app_path_all);
+                        await pause(app_timeout);
                     }
 
                     const { buttons: buttons2 } = await collect_indicators();
                     await client.elementClick(buttons2.all_negative[0].ELEMENT);
-                    await pause(2000);
+                    await pause(5000);
 
                     res.prefs.rejected = await api.get_prefs(app_id);
                 }
             }
 
-            // Take screenshot and save result.
+            // Save result.
             if (!run_for_open_app_only) {
-                // Apps with the "secure" flag set cannot be screenshotted. TODO: Can this be circumvented?
-                res.screenshot = await client
-                    .takeScreenshot()
-                    .catch(() => (console.error("Couldn't save screenshot for", app_id), undefined));
-
                 await db.none(
                     'INSERT INTO dialogs (run,verdict,violations,prefs,screenshot,meta) VALUES (${run_id},${verdict},${violations},${prefs},${screenshot},${meta})',
                     {
