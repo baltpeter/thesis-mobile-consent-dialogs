@@ -1,0 +1,198 @@
+% Adapted after https://pandoc.org/demo/mytemplate.tex from https://pandoc.org/demos.html and Malte's thesis.
+
+\documentclass[
+  a4paper,
+  10pt,
+  bibliography=totoc, % unnumbered bibliography entries
+  oneside,
+  rgb,
+  abstract=on,
+  lnum, % use "Versalziffern" instead of "Mediaevalziffern"
+  smallchapters
+]{tubsreprt}
+
+% No extra spacing after punctuation, taken from: https://tex.stackexchange.com/a/228148
+\frenchspacing
+
+\usepackage[english]{babel}
+\usepackage{datetime2}
+\usepackage[hyphens]{url} % break long urls
+\usepackage[hidelinks]{hyperref} % make things clickable without changing the appearance
+\usepackage{tabularx}
+\usepackage{csquotes}
+\usepackage{microtype} % prettier typesetting
+\usepackage{listings} % code
+\usepackage{xcolor}
+\usepackage{booktabs} % nicer tables
+\usepackage{enumitem} % gives the ability to configure the label in front of \item
+\usepackage{parcolumns}
+\usepackage{makecell}
+\usepackage{floatrow} % \ttabbox to wrap a table's caption
+\floatsetup{capposition=top}
+\usepackage{chngpage} % change page temporary
+\usepackage{placeins} % exposes \FloatBarrier
+
+% Sideways tables, see: https://tex.stackexchange.com/a/19021
+\usepackage{lscape}
+\usepackage{afterpage}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=newest, cycle list/Set3}
+
+\usepackage[type={CC},modifier={by},version={4.0},]{doclicense}
+
+% Taken from: https://tex.stackexchange.com/a/117422
+\makeatletter
+\pgfplotsset{
+    boxplot/hide outliers/.code={
+        \def\pgfplotsplothandlerboxplot@outlier{}%
+    }
+}
+\makeatother
+
+\lstset{
+  basicstyle=\ttfamily,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{$$\hookrightarrow$$\space}, % show arrow for broken lines
+  numbers=left
+}
+
+\usepackage[
+  backend=biber,
+  hyperref=true,
+  alldates=iso,
+  seconds=true,
+  style=numeric,
+  url=false,
+  isbn=false,
+  maxcitenames=2,
+  mincitenames=1,
+]{biblatex}
+$for(bibliography)$
+  \addbibresource{$bibliography$}
+$endfor$
+
+% ---
+
+\usepackage{amssymb,amsmath}
+\usepackage{longtable,booktabs}
+% \usepackage{upquote} % Do we need this?
+
+$if(highlighting-macros)$
+  $highlighting-macros$
+$endif$
+
+% Support for pandoc-crossref listings (see: https://github.com/lierdakil/pandoc-crossref/issues/47#issuecomment-169980660)
+$for(header-includes)$
+  $header-includes$
+$endfor$
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\fi
+
+$if(graphics)$
+  \usepackage{graphicx,grffile}
+  \makeatletter
+  \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+  \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+  \makeatother
+  % Scale images if necessary, so that they will not overflow the page
+  % margins by default, and it is still possible to overwrite the defaults
+  % using explicit options in \includegraphics[width, height, ...]{}
+  \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+
+% Taken from: https://stackoverflow.com/a/42474192
+\usepackage{letltxmacro}
+% Alias href to originalHref to avoid an infinite loop
+\LetLtxMacro{\originalHref}{\href}
+% Make links footnotes in addition to hotlinks:
+\renewcommand{\href}[2]{\originalHref{#1}{#2}\footnote{\url{#1}}}
+
+$if(verbatim-in-note)$
+  \usepackage{fancyvrb}
+  \VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+
+$if(strikeout)$
+  \usepackage[normalem]{ulem}
+  % avoid problems with \sout in headers with hyperref:
+  \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ---
+
+% Title Page
+\title{$title$}
+\subtitle{$type$}
+\logo{\includegraphics[trim=0 20cm 0 3cm]{IAS_Logo_RZ_CMYK}}
+\author{$author_name$\\ \vspace{1cm} \large{$author_matr_num$}}
+\publishers{supervised by $supervisor$}
+\date{$date$}
+
+\begin{document}
+\maketitle
+
+\chapter*{Declaration of Authorship}
+
+\vspace{3cm}
+
+I hereby declare that the thesis submitted is my own unaided work. All direct or indirect
+sources used are acknowledged as references.
+I am aware that the thesis in digital form can be examined for the use of unauthorized
+aid and in order to determine whether the thesis as a whole or parts incorporated
+in it may be deemed as plagiarism. For the comparison of my work with existing
+sources I agree that it shall be entered in a database. Further rights
+of reproduction and usage, however, are not granted here.
+This paper was not previously presented to another examination board and has not
+been published.
+\vspace{3cm}
+
+\hspace{2cm}Braunschweig, on May 04, 2022 \hfill Benjamin Altpeter\hspace{2cm}
+
+\tableofcontents
+
+$if(abstract)$
+\begin{abstract}
+    $abstract$
+
+    \vspace*{\fill}
+    \renewcommand{\href}[2]{\originalHref{#1}{#2}}
+    \doclicenseThis
+    \renewcommand{\href}[2]{\originalHref{#1}{#2}\footnote{\url{#1}}}
+\end{abstract}
+
+
+$endif$
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+$body$
+
+\printbibliography
+
+$for(include-after)$
+$include-after$
+$endfor$
+\end{document}
