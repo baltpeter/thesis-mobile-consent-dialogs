@@ -635,12 +635,19 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * [ ] We need to make sure to always dismiss all modals as they can stick around after the app is uninstalled and Appium will then only see them.
     * [x] We sometimes get into a state where Appium sees the system UI and detects a "No SIM" "button". It seems like this can be resolved by getting rid of all modals.
         * Maybe we should throw if we detect that?
+    * [ ] Read IDFV using Frida and check for that.
+* Questions for Simon:
+    * "the listed options (consent for which processing is requested?, which third-party tracking companies are used?) will be extracted" -> I can do that for the TCF apps, for everything else, this will be very difficult.
+    * Interaction with CDs: Should I go further (would much likely mean manual interaction)?
+        * Shouldn't be too time consuming considering how few dialogs there are.
+        * Problem: What to check?
+    * No interaction with apps beyond consent dialog okay?
 
 ### Promises from proposal
 
 * [x] Compile list of criteria for compliant consent dialogs, based on applicable legislation, court rulings, supervisory authority recommendations, and previous work.
 * [x] Extend existing analysis framework to allow extraction of elements on screen and interaction with apps.
-* [ ] Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
+* [~] Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
 * [~] Identify consent dialogs as well as their frameworks and settings in apps. Compare results with research for the web.
 * [~] Identify violations in consent dialogs (dark patterns, nudging).
 * [~] Interact with consent dialogs and measure effect of the choices on the tracking going on.

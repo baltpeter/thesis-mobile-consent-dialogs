@@ -1,6 +1,6 @@
 ---
 # actual parameters
-title: Informed consent? A study of “consent dialogs” on Android and iOS
+title: Informed Consent? A Study of “Consent Dialogs” on Android and iOS
 type: Master’s Thesis
 author_name: Benjamin Altpeter
 author_matr_num: <redacted>
