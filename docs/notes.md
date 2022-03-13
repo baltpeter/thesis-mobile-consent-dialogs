@@ -636,12 +636,14 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * [x] We sometimes get into a state where Appium sees the system UI and detects a "No SIM" "button". It seems like this can be resolved by getting rid of all modals.
         * Maybe we should throw if we detect that?
     * [ ] Read IDFV using Frida and check for that.
+* [ ] Consider US transfers without consent a violation, maybe go even deeper (scan consent notice for keywords)?
 * Questions for Simon:
     * "the listed options (consent for which processing is requested?, which third-party tracking companies are used?) will be extracted" -> I can do that for the TCF apps, for everything else, this will be very difficult.
     * Interaction with CDs: Should I go further (would much likely mean manual interaction)?
         * Shouldn't be too time consuming considering how few dialogs there are.
         * Problem: What to check?
     * No interaction with apps beyond consent dialog okay?
+    * How to cite laws?
 
 ### Promises from proposal
 
