@@ -21,6 +21,7 @@ TODO: Introduce "data subject" and "controller".
         * Law itself doesn't directly answer the question which of the remaining three can be used. For that, one can look to the data protection authorities. Those are public authorities in each member state tasked with enforcing the GDPR in their respective jurisdiction. They publish their interpretation of unclear aspects of the law like this in recommendations. While those recommendations aren't legally binding in and of themselves, the DPAs can issue sanctations (including fines) to companies who don't follow them.
         * EDPB is TODO
         * EDPB says that b) and f) can typically not be used for tracking.
+            * So does BAWÜ (https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.3.1.1.5, B.3.2.10.3); and others (TODO)
         * That leaves only consent as a potential legal basis for tracking. The GDPR has high conditions for what is considered valid consent. Chapter TODO will deal with this in detail.
 
 ## Storing and Accessing Information on Terminal Equipment
@@ -33,6 +34,7 @@ TODO: Introduce "data subject" and "controller".
     * Not just personal data but TODO
     * For a long time, Germany didn't properly implement the ePD, TODO, Planet49
     * In Dec 2021: TTDSG. § 25 TTDSG now implements Art. 5(3) ePD.
+    * ePD and TTDSG don't know legitimate interest or contractual necessity => even stricter conditions for not needing consent
 
 ## Transferring Personal Data to Third Countries
 
@@ -43,6 +45,7 @@ TODO: Introduce "data subject" and "controller".
     * Invalidated by the ECJ in July 2020 Schrems II ruling due to TODO
     * As such, legal data transfers to the US now much harder or even impossible in many cases [https://diercks-digital-recht.de/2021/01/die-rechtslage-im-transatlantischen-datenverkehr-teil-1-von-4-wie-ordnet-die-us-regierung-das-schrems-ii-urteil-des-eugh-ein/ https://diercks-digital-recht.de/2021/02/rechtslage-im-transatlantischen-datenverkehr-teil-2-von-5-loesungen-der-aufsichtsbehoerden-aus-dem-elfenbeinturm/ https://noyb.eu/en/next-steps-users-faqs]
 
+    * TODO: https://www.baden-wuerttemberg.datenschutz.de/wp-content/uploads/2021/10/OH-int-Datentransfer.pdf
 ---
 
 TODO: Consent dialogs (maybe merge into something else)
