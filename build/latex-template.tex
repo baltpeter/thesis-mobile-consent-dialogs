@@ -14,6 +14,10 @@
 % No extra spacing after punctuation, taken from: https://tex.stackexchange.com/a/228148
 \frenchspacing
 
+% Don't indent paragraphs but instead put spacing between them.
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
 \usepackage[english]{babel}
 \usepackage{datetime2}
 \usepackage[hyphens]{url} % break long urls
@@ -138,6 +142,33 @@ $endif$
 
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% https://github.com/jgm/pandoc/blob/307a4e25b2a03e6704fcda9ac91289911764b5d1/data/templates/default.latex#L311-L335
+$if(csl-refs)$
+  \newlength{\cslhangindent}
+  \setlength{\cslhangindent}{1.5em}
+  \newlength{\csllabelwidth}
+  \setlength{\csllabelwidth}{3em}
+  \newlength{\cslentryspacingunit} % times entry-spacing
+  \setlength{\cslentryspacingunit}{\parskip}
+  \newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+  {% don't indent paragraphs
+    \setlength{\parindent}{0pt}
+    % turn on hanging indent if param 1 is 1
+    \ifodd #1
+    \let\oldpar\par
+    \def\par{\hangindent=\cslhangindent\oldpar}
+    \fi
+    % set entry spacing
+    \setlength{\parskip}{#2\cslentryspacingunit}
+  }%
+  {}
+  \usepackage{calc}
+  \newcommand{\CSLBlock}[1]{#1\hfill\break}
+  \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+  \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+  \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
 
 % ---
 

@@ -6,8 +6,6 @@ In this thesis, only EU-wide and German sources of law are considered.
 
 ## Laws
 
-### Laws to Consider
-
 Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@sec:legal-background]: the GPDR, the ePrivacy Directive (ePD), and its national implementation in Germany, the TTDSG.
 
 In addition, the GDPR has so-called opening clauses which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG ("Bundesdatenschutzgesetz"), which thus also needs to be considered.
@@ -20,7 +18,7 @@ However, in actuality, most of these laws don't introduce their own conditions o
 
 This leaves the GDPR as the only law that defines applicable conditions for consent dialogs.
 
-### Guidelines from the GDPR
+### Criteria from the GDPR
 
 Consent is one of the six possible legal bases for processing personal data from Art. 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking for example, see [@sec:bg-gdpr]), may thus only happen _after_ consent has been given and the controller needs to be able to demonstrate that consent has been given (Art. 7(1) GDPR).
 
@@ -50,77 +48,48 @@ Art. 7 GDPR then lists a number of additional conditions for consent:
 
 TODO: Explicit consent for special categories (Art. 9 GDPR), third-country transfer without adequacy decision (Art. 49 GDPR)
 
-### DPA recommendations
+## DPA recommendations
 
-Most of the criteria extracted from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in concrete cases and are also commonly used in similar research (TODO: cite).
+Most of the criteria extracted directly from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in concrete cases and are also commonly used in similar research (TODO: cite).
 
-TODO: Criteria already listed above not included here again?
+### Criteria from DPA recommendations
 
-* Active action is necessary, preticked boxes or mere use of app don't constitute consent
-    * https://www.datenschutzkonferenz-online.de/media/kp/dsk_kpnr_20.pdf
-    * https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 86.
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.2
-* Consent has to be voluntary, i.e. it needs to be possible to use app without consenting
-    * https://www.datenschutzkonferenz-online.de/media/kp/dsk_kpnr_20.pdf
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.2
-* Notice has to inform about the possibility to withdraw consent at any time without detriment
-    * https://www.datenschutzkonferenz-online.de/media/kp/dsk_kpnr_20.pdf
-    * https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 64.
-    * https://www.baden-wuerttemberg.datenschutz.de/zum-einsatz-von-cookies-und-cookie-bannern-was-gilt-es-bei-einwilligungen-zu-tun-eugh-urteil-planet49/
-    * https://www.ldi.nrw.de/mainmenu_Datenschutz/Inhalt/FAQ/EinwilligungDaten.php
-    * https://lfd.niedersachsen.de/download/161158
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.3
-* A consent banner that only mentions cookies can only receive consent under the ePD, not the GDPR
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 9
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.1.3.5.1
-* Necessary information: controller, purpose of access, cookie duration, access for third parties?
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 12
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.2
-* "Okay" is not consent
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 14
-    * https://lfd.niedersachsen.de/download/161158
-    * https://www.baden-wuerttemberg.datenschutz.de/wp-content/uploads/2021/10/OH-int-Datentransfer.pdf, B.1.3.12.1
-* Even "Agree" is not consent if details are hidden behind another link
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 14
-    * https://lfd.niedersachsen.de/download/161158
-* Refusing consent has to be possible through inaction or with the same number of clicks as consenting
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 14
-    * https://www.lda.bayern.de/media/pm/pm2021_06.pdf
-    * https://lfd.niedersachsen.de/download/161158
-    * https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 114.
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.3
-* Concrete purposes need to be listed, "to improve user experience" is not sufficient
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 16
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.2
-    * https://lfd.niedersachsen.de/download/161158
-* It needs to be possible to only consent to (adequate) subpurposes and/or recipients
-    * https://www.datenschutzkonferenz-online.de/media/oh/20211220_oh_telemedien.pdf, p. 16
-    * https://edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_202005_consent_en.pdf, 42.
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.2
-* The "consent" button cannot be highlighted compared to the "refuse" button
-    * https://www.lda.bayern.de/media/pm/pm2021_06.pdf
-    * https://lfd.niedersachsen.de/startseite/infothek/faqs_zur_ds_gvo/faq-telekommunikations-telemediendatenschutz-gesetz-ttdsg-206449.html#10._Welche_Anforderungen_werden_an_die_Einwilligung_gemaess_25_Abs._1_TTDSG_gestellt_die_grundsaetzlich_beim_Einsatz_von_Cookies_und_bei_der_Einbindung_von_Drittdiensten_einzuholen_ist_
-    * https://lfd.niedersachsen.de/download/161158
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.3
-* Consent dialog may not make it impossible to access other required legal notices
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.1
-* No purposes may be pre-selected
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, A.4.2
-* Third-party recipients have to be mentioned explicitly
-    * https://lfd.niedersachsen.de/download/161158
-    * https://www.baden-wuerttemberg.datenschutz.de/wp-content/uploads/2021/10/OH-int-Datentransfer.pdf, A.4.2
-* "Accept all" may not toggle additional, previously unselected, purposes
-    * https://lfd.niedersachsen.de/download/161158
-* Clear heading (no "we respect your privacy" but rather "data disclosure to third-parties for tracking purposes")
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.1.3.7 (includes list!)
-* Consent notice must be in the language of the country it addresses
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.1.3.1
-* Consent notice cannot be overly long or complex
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.1.3.3.3, B.1.3.3.4
-* Consent notice saves consent but not refusal thereof and is thus displayed over and over again
-    * https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.2.2.3
+For this thesis, all current publications regarding consent and adjacent topics from all German data protection authorities (which includes all state DPAs, as well as the national DPA), the German data protection conference ("Datenschutzkonferenz", a council of the German DPAs that develops unified recommendations), and the European Data Protection Board (an EU body tasked with ensuring consistent application of data protection law across the EU), were searched for criteria on consent dialogs, resulting in the list presented below. Criteria that already directly follow from the text of the law are not included here again.
 
-### What can be checked automatically?
+#### Criteria for underlying circumstances
+
+* Consent has to be voluntary, i.e. it needs to be possible to use the app without consenting [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderEinwilligungNachDSGVO2019; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
+* A consent dialog may not make it impossible to access other required legal notices (like contact information or privacy policy) [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.1].
+
+#### Criteria for wording and design of consent dialogs
+
+* The consent dialog needs to have a clear heading that accurately describes the impact of the processing on the data subject, like "Data disclosure to third parties for tracking purposes". Vague headings like "We respect your privacy." are not sufficient. [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.7]
+* The "consent" button cannot be highlighted compared to the "refuse" button (e.g. by making it bigger or using a more prominent colour for it) [@bayerischeslandesamtfurdatenschutzaufsichtPressemitteilungLanderubergreifendePrufung2021; @dielandesbeauftragtefurdendatenschutzniedersachsenTelekommunikationsTelemediendatenschutzGesetzTTDSGFragen2021; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.3].
+* The consent notice must be in the language of the country it addresses [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.1].
+* The consent notice cannot be overly long or complex [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, nos. B.1.3.3.3, B.1.3.3.4].
+* A consent banner that only mentions cookies can only receive consent under the ePD, not the GDPR [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 9; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.5.1].
+
+#### Criteria on information to include in consent dialogs
+
+* The consent notice needs to contain at least the following details [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 12; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2]:
+    * Who is the controller?
+    * What is the purpose of the processing?
+    * If cookies are used, what is their duration?
+    * Is there any access for third parties? 
+* Third-party recipients have to be mentioned explicitly [@dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
+* The consent notice needs to list concrete purposes, vague wordings like "to improve user experience" are not sufficient [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 16; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
+
+#### Criteria for buttons and interactive elements in consent dialogs
+
+* Refusing consent has to be possible through inaction or with the same number of clicks as consenting [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @bayerischeslandesamtfurdatenschutzaufsichtPressemitteilungLanderubergreifendePrufung2021; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @europeandataprotectionboardGuidelines0520202020, para. 114; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.3].
+* A button with the text "Okay" does not sufficiently convey that clicking it is supposed to agree to the consent dialog, and thus doesn't result in valid consent [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.12.1].
+* It is not possible to receive consent on a page that doesn't include all necessary details (e.g. if they are hidden behind another link, or on a deeper page in the consent flow) [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
+* It needs to be possible to only consent to adequate subpurposes and/or recipients [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 16; @europeandataprotectionboardGuidelines0520202020, para. 42; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
+* No purposes may be pre-selected [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
+* Clicking an "Accept all" button may not toggle additional, previously unselected purposes [@dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
+* A consent dialog that saves consent but not refusal thereof (and is thus displayed over and over again when refused) is not compliant [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.2.2.3].
+
+## Criteria to be checked automatically
 
 TODO: NLP beyond the scope of this thesis
 
@@ -131,7 +100,7 @@ TODO: NLP beyond the scope of this thesis
 * [x] Using app needs to be possible after refusing/withdrawing consent.
 * [ ] TODO: US transfers
 * [ ] TODO: Language
-* [ ] TODO: Heading
+* [ ] TODO: Heading (see list from BaWü)
 * [ ] Consent notice includes at least the identity of the controller, the concrete purposes, storage duration, access for third parties (explicitly listed).
 * [ ] Consent notice informs of right to withdrawal.
 * [ ] Details may not be hidden after another link if consenting is possible on that screen.

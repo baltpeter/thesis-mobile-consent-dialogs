@@ -46,6 +46,7 @@ TODO: Introduce "data subject" and "controller".
     * As such, legal data transfers to the US now much harder or even impossible in many cases [https://diercks-digital-recht.de/2021/01/die-rechtslage-im-transatlantischen-datenverkehr-teil-1-von-4-wie-ordnet-die-us-regierung-das-schrems-ii-urteil-des-eugh-ein/ https://diercks-digital-recht.de/2021/02/rechtslage-im-transatlantischen-datenverkehr-teil-2-von-5-loesungen-der-aufsichtsbehoerden-aus-dem-elfenbeinturm/ https://noyb.eu/en/next-steps-users-faqs]
 
     * TODO: https://www.baden-wuerttemberg.datenschutz.de/wp-content/uploads/2021/10/OH-int-Datentransfer.pdf
+
 ---
 
 TODO: Consent dialogs (maybe merge into something else)
