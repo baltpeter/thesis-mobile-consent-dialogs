@@ -645,6 +645,60 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     order by length(r.path) + length(r.content);
 ```
 
+## Apps
+
+### App selection
+
+* iOS
+    * The `https://itunes.apple.com/WebObjects/MZStore.woa/wa/topChartFragmentData?cc=de&genreId=6000&pageSize=100&popId=27&pageNumbers=0` endpoint now only returns 100 entries.
+        * `popId` values (determined by trying all values between 0 and 100, and comparing with: https://appfigures.com/top-apps/ios-app-store/germany/iphone/top-overall)
+            * `27`: top free iPhone
+            * `30`: top paid iPhone
+            * `38`: top grossing iPhone
+            * `44`: top free iPad
+            * `46`: top grossing iPad
+            * `47`: top paid iPad
+            * additional values that return something (unsure what): `79`, `80`, `88`, `89`, `90`, `96`, `97`, `98`, `99`, `100`
+            * between `101` and `156`, most values also return something
+            * starting from `157`, you get 500 errors
+    * "RSS feeds" (https://rss.applemarketingtools.com/) have changed, can still get 200 apps but only for "top free" and "top paid" now
+    * Older "RSS feed" API, 100 per genre (https://stackoverflow.com/a/52750825/3211062)
+        * `https://itunes.apple.com/de/rss/<channel_name>/genre=<genre_id>/explicit=true/limit=100/json`
+        * For getting the genres: https://itunes.apple.com/WebObjects/MZStoreServices.woa/ws/genres (https://web.archive.org/web/20190920135004/https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)
+            * `36` is the top category for iOS apps
+            * probably best to ignore third-level genres, as these are only for games and newsstand?
+        * Valid channel names (not all listed in the genre list work): `topfreeapplications`, `topfreeipadapplications`, `toppaidipadapplications`, `topapplications`, `toppaidapplications`
+    * `https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewTop?cc=de&genreId=36&l=en&popId=27` (from iTunes)
+        * up to 200 results (per category)
+        * but for some reason `json.storePlatformData.lockup.results` only has 84 results with meta data
+        * to access all IDs: `json.pageData.segmentedControl.segments[0].pageData.selectedChart.adamIds`
+
+### Better method for aquiring IPAs
+
+* [ipatool](https://github.com/majd/ipatool) seems promising, works for downloading already bought apps (on recent macOS) but cannot buy new apps
+    * Replicating requests as defined in code and sending them manually doesn't work
+    * To proxy macOS traffic through mitmproxy for inspection:
+        * In network preferences, set HTTP and HTTPS proxy
+        * Go to http://mitm.it and follow instructions for macOS
+        * In Terminal:
+
+          ```sh
+          export http_proxy="http://<ip>:8080"
+          export https_proxy="http://<ip>:8080"
+          export all_proxy="http://<ip>:8080"
+          ```
+    * macOS pins certifications for certain domains, including apple.com. -.-
+    * I've managed to disable cert pinning in code.
+    * Nonetheless, even if I exactly replicate the request as seen by mitmproxy, I still get "The Apple ID you entered couldn’t be found or your password was incorrect. Please try again."
+    * Even (naively) replicating the request through Swift on the M1 doesn't work.
+
+    * I've gotten further trying to modify ipatool to use the 3u buy endpoint.
+        * Making the requests through ipatool, I now finally actually get different responses from Apple!
+        * One problem, though: ipatool identifies itself to the auth endpoint as Apple Configurator while 3u identifies itself as an old version of iTunes. The auth cookies from the two are unfortunately _not_ compatible. If I try to make a 3u buy request with the ipatool cookies, the API returns a prompt to login again.
+        * However, if I grab the cookies from 3u and manually set them in ipatool, it does work (though the token seems to be very short-lived).
+        * To use the 3u auth endpoint, you need an `X-Apple-ActionSignature` which I can't generate yet.
+        * Breakthrough: Seems like you can just call the buy endpoint as Configurator. Apple won't return the download URL for that request but you can afterwards just call Configurator's download API!
+
 ## Complaints about illegal practices
 
 * § 25 TTDSG (the German implementation of Art. 5(3) ePD) is very powerful and violations can easily be detected automatically. The regular German DPAs are responsible for enforcing it (§ 1(1)(8) TTDSG).
@@ -684,14 +738,25 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * [x] We sometimes get into a state where Appium sees the system UI and detects a "No SIM" "button". It seems like this can be resolved by getting rid of all modals.
         * Maybe we should throw if we detect that?
     * [ ] Read IDFV using Frida and check for that.
-* [ ] Consider US transfers without consent a violation, maybe go even deeper (scan consent notice for keywords)?
+* [ ] More potential violations to detect:
+    * [ ] Consider US transfers without consent a violation, maybe go even deeper (scan consent notice for keywords)?
+    * [ ] Check consent dialog language.
+    * [ ] Check for "forbidden" heading (BaWü).
 * Questions for Simon:
     * "the listed options (consent for which processing is requested?, which third-party tracking companies are used?) will be extracted" -> I can do that for the TCF apps, for everything else, this will be very difficult.
+        * -> only for TCF apps
     * Interaction with CDs: Should I go further (would much likely mean manual interaction)?
         * Shouldn't be too time consuming considering how few dialogs there are.
         * Problem: What to check?
+
+        * -> consider manual clicking but not necessary
     * No interaction with apps beyond consent dialog okay?
+        * -> is okay as a limitation
     * How to cite laws?
+        * -> ok as-is
+    * For button highlight violation detection: What if there is more than one of each button?
+        * For each positive button, go through all negative buttons and only note violation if it is highlighted compared to all of them?
+            * -> do that
 
 ### Promises from proposal
 

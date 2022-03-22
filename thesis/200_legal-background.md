@@ -17,11 +17,12 @@ TODO: Introduce "data subject" and "controller".
     * Legal basis for processing
         * conclusive list of them defined in Art. 6(1)(a–f) GDPR, any processing of PD can only be legal if it fulfills one of these conditions:
             * list them
-        * In the context of tracking, c), d), e) obviously not applicable
+        * In the context of tracking, c), d), e) obviously not applicable [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 27]
         * Law itself doesn't directly answer the question which of the remaining three can be used. For that, one can look to the data protection authorities. Those are public authorities in each member state tasked with enforcing the GDPR in their respective jurisdiction. They publish their interpretation of unclear aspects of the law like this in recommendations. While those recommendations aren't legally binding in and of themselves, the DPAs can issue sanctations (including fines) to companies who don't follow them.
         * EDPB is TODO
         * EDPB says that b) and f) can typically not be used for tracking.
-            * So does BAWÜ (https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.3.1.1.5, B.3.2.10.3); and others (TODO)
+            * https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-22019-processing-personal-data-under-article-61b_en
+            * So does BAWÜ (https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.3.1.1.5, B.3.2.10.3); DSK [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, sec. IV]; and others (TODO)
         * That leaves only consent as a potential legal basis for tracking. The GDPR has high conditions for what is considered valid consent. Chapter TODO will deal with this in detail.
 
 ## Storing and Accessing Information on Terminal Equipment
