@@ -649,6 +649,8 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
 
 ### App selection
 
+* To get a sufficient amount of apps, on both platforms we cannot just rely on the overall top charts (as they only contain ~200 apps each). Instead, we rely on the top charts per category and merge the results.
+
 * iOS
     * The `https://itunes.apple.com/WebObjects/MZStore.woa/wa/topChartFragmentData?cc=de&genreId=6000&pageSize=100&popId=27&pageNumbers=0` endpoint now only returns 100 entries.
         * `popId` values (determined by trying all values between 0 and 100, and comparing with: https://appfigures.com/top-apps/ios-app-store/germany/iphone/top-overall)
@@ -672,6 +674,17 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
         * up to 200 results (per category)
         * but for some reason `json.storePlatformData.lockup.results` only has 84 results with meta data
         * to access all IDs: `json.pageData.segmentedControl.segments[0].pageData.selectedChart.adamIds`
+* Android
+    * No (usable) API endpoint that I could find. Endpoint called by webpage is too cryptic.
+    * We could use external service (like `https://appfigures.com/_u/api/ranks/snapshots?category=100&country=DE&count=200&start=0&fields=results,id,entries,name,developer,developer_id,price,currency,storefront,vendor_identifier,category,subtype,timestamp,total_count` or `https://sensortower.com/api/android/rankings/get_category_rankings?category=all&country=DE&date=<date>T00:00:00.000Z&device=MOBILE&limit=300&offset=0`) but luckily we don't have to.
+    * While very much hidden, the web version of the Play Store does have top charts for each category (`https://play.google.com/store/apps/top/category/<category_id>?gl=DE`). There, you have to click on the "Top for €0" link (we can't generate that ourselves). We can scrape those (after bypassing the infinite scrolling).
+* Top apps for Android and iOS collected on 2022-03-22.
+    * iOS
+        * With all found apps: Apps before deduplication: 5205, Apps after deduplication: 4968
+        * Top 100 per category: Apps before deduplication: 2605, Apps after deduplication: 2486
+    * Android
+        * With all found apps: Apps before deduplication: 6970, Apps after deduplication: 6817
+        * Top 100 per category: Apps before deduplication: 3500, Apps after deduplication: 3421
 
 ### Better method for aquiring IPAs
 
