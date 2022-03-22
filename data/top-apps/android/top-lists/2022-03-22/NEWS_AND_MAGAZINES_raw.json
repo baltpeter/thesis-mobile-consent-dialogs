@@ -1,0 +1,1002 @@
+[
+    {
+        "app_id": "de.cellular.focus",
+        "app_name": "FOCUS Online Nachrichten",
+        "position": 1
+    },
+    {
+        "app_id": "de.tagesschau",
+        "app_name": "tagesschau - Aktuelle Nachrichten",
+        "position": 2
+    },
+    {
+        "app_id": "de.cellular.n24hybrid",
+        "app_name": "WELT News – Nachrichten live",
+        "position": 3
+    },
+    {
+        "app_id": "de.materna.bbk.mobile.app",
+        "app_name": "NINA - Die Warn-App des BBK",
+        "position": 4
+    },
+    {
+        "app_id": "ma.safe.bn",
+        "app_name": "Breaking News: Local & Alerts",
+        "position": 5
+    },
+    {
+        "app_id": "de.lineas.lit.ntv.android",
+        "app_name": "ntv Nachrichten",
+        "position": 6
+    },
+    {
+        "app_id": "de.br.sep.news.br24",
+        "app_name": "BR24 – Nachrichten",
+        "position": 7
+    },
+    {
+        "app_id": "com.opera.app.news",
+        "app_name": "Opera News: Breaking & Local",
+        "position": 8
+    },
+    {
+        "app_id": "com.netbiscuits.bild.android",
+        "app_name": "BILD News: Nachrichten Live",
+        "position": 9
+    },
+    {
+        "app_id": "de.heute.mobile",
+        "app_name": "ZDFheute - Nachrichten",
+        "position": 10
+    },
+    {
+        "app_id": "com.stayinformed.ka802800048782",
+        "app_name": "Kita-Info-App",
+        "position": 11
+    },
+    {
+        "app_id": "de.axelspringer.yana",
+        "app_name": "upday - Headlines & Daily News",
+        "position": 12
+    },
+    {
+        "app_id": "de.spiegel.android.app.spon",
+        "app_name": "DER SPIEGEL - Nachrichten",
+        "position": 13
+    },
+    {
+        "app_id": "com.local.news.plus",
+        "app_name": "Local News - Latest & Breaking",
+        "position": 14
+    },
+    {
+        "app_id": "de.rtl.video",
+        "app_name": "RTL News: Aktuelle Nachrichten, Stories und Videos",
+        "position": 15
+    },
+    {
+        "app_id": "de.tagesspiegel.epaper.android.uni",
+        "app_name": "Der Tagesspiegel - alle aktuellen News des Tages",
+        "position": 16
+    },
+    {
+        "app_id": "ma.safe.bnde",
+        "app_name": "Deutschland Eilmeldungen",
+        "position": 17
+    },
+    {
+        "app_id": "de.tag24.app",
+        "app_name": "TAG24 NEWS",
+        "position": 18
+    },
+    {
+        "app_id": "de.sde.mobile",
+        "app_name": "SZ.de - Nachrichten - Süddeutsche Zeitung",
+        "position": 19
+    },
+    {
+        "app_id": "com.readly.client",
+        "app_name": "Readly Magazines & Newspapers",
+        "position": 20
+    },
+    {
+        "app_id": "com.particlenews.newsbreak",
+        "app_name": "NewsBreak: Local News & Alerts",
+        "position": 21
+    },
+    {
+        "app_id": "de.combirisk.katwarn",
+        "app_name": "KATWARN",
+        "position": 22
+    },
+    {
+        "app_id": "de.zeit.online",
+        "app_name": "ZEIT ONLINE - Nachrichten",
+        "position": 23
+    },
+    {
+        "app_id": "com.google.android.apps.magazines",
+        "app_name": "Google News - Daily Headlines",
+        "position": 24
+    },
+    {
+        "app_id": "de.WDR.NewsApp",
+        "app_name": "WDR aktuell",
+        "position": 25
+    },
+    {
+        "app_id": "de.telekom.t_online_de",
+        "app_name": "t-online - Nachrichten",
+        "position": 26
+    },
+    {
+        "app_id": "com.opera.app.news.us",
+        "app_name": "Apex News: Breaking & Local",
+        "position": 27
+    },
+    {
+        "app_id": "de.mdr.android.mdraktuell",
+        "app_name": "MDR Aktuell – Nachrichten",
+        "position": 28
+    },
+    {
+        "app_id": "com.tuxfusion.polizeibericht",
+        "app_name": "Polizeibericht",
+        "position": 29
+    },
+    {
+        "app_id": "com.nytimes.android",
+        "app_name": "The New York Times",
+        "position": 30
+    },
+    {
+        "app_id": "ch.nzz.mobile",
+        "app_name": "NZZ",
+        "position": 31
+    },
+    {
+        "app_id": "net.faz.FAZ",
+        "app_name": "FAZ.NET - Nachrichten",
+        "position": 32
+    },
+    {
+        "app_id": "com.idmedia.android.newsportal",
+        "app_name": "DW - Breaking World News",
+        "position": 33
+    },
+    {
+        "app_id": "com.cnn.mobile.android.phone",
+        "app_name": "CNN Breaking US & World News",
+        "position": 34
+    },
+    {
+        "app_id": "de.deutschlandradio.dlf24",
+        "app_name": "Dlf: Die Nachrichten aus Deutschland und der Welt",
+        "position": 35
+    },
+    {
+        "app_id": "de.impactpartner.goodnews",
+        "app_name": "Good News: Your daily dose of optimism",
+        "position": 36
+    },
+    {
+        "app_id": "bbc.mobile.news.ww",
+        "app_name": "BBC News",
+        "position": 37
+    },
+    {
+        "app_id": "de.dumont.ksta.android",
+        "app_name": "KSTA – Nachrichten",
+        "position": 38
+    },
+    {
+        "app_id": "com.twitter.android.lite",
+        "app_name": "Twitter Lite",
+        "position": 39
+    },
+    {
+        "app_id": "com.aol.mobile.aolapp",
+        "app_name": "AOL - News, Mail & Video",
+        "position": 40
+    },
+    {
+        "app_id": "com.quora.android",
+        "app_name": "Quora — Ask Questions, Get Answers",
+        "position": 41
+    },
+    {
+        "app_id": "de.phoenix.app",
+        "app_name": "phoenix",
+        "position": 42
+    },
+    {
+        "app_id": "com.bambuna.podcastaddict",
+        "app_name": "Podcast Addict: Podcast player",
+        "position": 43
+    },
+    {
+        "app_id": "com.handelsblatt.live",
+        "app_name": "Handelsblatt - Nachrichten",
+        "position": 44
+    },
+    {
+        "app_id": "com.checkitt",
+        "app_name": "Ground News",
+        "position": 45
+    },
+    {
+        "app_id": "com.microsoft.amp.apps.bingnews",
+        "app_name": "Microsoft Start: News & more",
+        "position": 46
+    },
+    {
+        "app_id": "de.ndr.app.ndrnds",
+        "app_name": "NDR Niedersachsen",
+        "position": 47
+    },
+    {
+        "app_id": "com.iart.chromecastapps",
+        "app_name": "Apps for Chromecast Guide",
+        "position": 48
+    },
+    {
+        "app_id": "de.zeit.diezeit.epaper.android",
+        "app_name": "DIE ZEIT E-Paper App",
+        "position": 49
+    },
+    {
+        "app_id": "de.deinupdateMediaGmbh.deinupdate",
+        "app_name": "DeinUpdate",
+        "position": 50
+    },
+    {
+        "app_id": "com.microsoft.amp.apps.bingnews",
+        "app_name": "Microsoft Start: News & more",
+        "position": 51
+    },
+    {
+        "app_id": "de.swr.swraktuell",
+        "app_name": "SWR Aktuell",
+        "position": 52
+    },
+    {
+        "app_id": "de.rbb.rbb24",
+        "app_name": "rbb24",
+        "position": 53
+    },
+    {
+        "app_id": "de.sueddeutsche",
+        "app_name": "Süddeutsche Zeitung",
+        "position": 54
+    },
+    {
+        "app_id": "com.aljazeera.mobile",
+        "app_name": "Al Jazeera",
+        "position": 55
+    },
+    {
+        "app_id": "com.mekmedia.N24nexT.prod",
+        "app_name": "WELT Nachrichtensender",
+        "position": 56
+    },
+    {
+        "app_id": "com.economist.lamarr",
+        "app_name": "Economist",
+        "position": 57
+    },
+    {
+        "app_id": "de.lineas.ntv.leanback",
+        "app_name": "ntv Nachrichten für TV",
+        "position": 58
+    },
+    {
+        "app_id": "de.rponline.smartphone",
+        "app_name": "RP ePaper",
+        "position": 59
+    },
+    {
+        "app_id": "com.guardian",
+        "app_name": "The Guardian - Live World News, Sport & Opinion",
+        "position": 60
+    },
+    {
+        "app_id": "de.bundeswehr.news",
+        "app_name": "Bw-Newsradar",
+        "position": 61
+    },
+    {
+        "app_id": "com.euronews.express",
+        "app_name": "Euronews: Daily breaking world news & Live TV",
+        "position": 62
+    },
+    {
+        "app_id": "com.voidmod.meinort",
+        "app_name": "meinOrt - lokale Nachrichten aus Deinem Ort!",
+        "position": 63
+    },
+    {
+        "app_id": "de.rnd.news",
+        "app_name": "RND - Nachrichten und Podcast",
+        "position": 64
+    },
+    {
+        "app_id": "de.cellular.stern",
+        "app_name": "stern - Aktuelle Nachrichten",
+        "position": 65
+    },
+    {
+        "app_id": "de.zeit.print.android",
+        "app_name": "DIE ZEIT",
+        "position": 66
+    },
+    {
+        "app_id": "ro.rcsrds.digisport",
+        "app_name": "Digi Sport - Știri din sport, meciuri LIVE",
+        "position": 67
+    },
+    {
+        "app_id": "de.ndr.app.ndrmv",
+        "app_name": "NDR Mecklenburg-Vorpommern",
+        "position": 68
+    },
+    {
+        "app_id": "de.taz.android.app",
+        "app_name": "taz",
+        "position": 69
+    },
+    {
+        "app_id": "com.medium.reader",
+        "app_name": "Medium",
+        "position": 70
+    },
+    {
+        "app_id": "de.mm.newsapp",
+        "app_name": "MM News",
+        "position": 71
+    },
+    {
+        "app_id": "de.ndr.app.ndrinfo",
+        "app_name": "NDR Info",
+        "position": 72
+    },
+    {
+        "app_id": "de.fcms.webapp.sk_news",
+        "app_name": "SÜDKURIER Online",
+        "position": 73
+    },
+    {
+        "app_id": "flipboard.app",
+        "app_name": "Flipboard - Latest News, Top Stories & Lifestyle",
+        "position": 74
+    },
+    {
+        "app_id": "de.ndr.app.ndrsh",
+        "app_name": "NDR Schleswig-Holstein",
+        "position": 75
+    },
+    {
+        "app_id": "ru.rbc.news.starter",
+        "app_name": "RBC News",
+        "position": 76
+    },
+    {
+        "app_id": "com.altwork.liveuamap",
+        "app_name": "Liveuamap",
+        "position": 77
+    },
+    {
+        "app_id": "com.newsadoo.newsadoo",
+        "app_name": "Newsadoo: Daily Breaking News",
+        "position": 78
+    },
+    {
+        "app_id": "de.bundesregierung.bpaapp",
+        "app_name": "Bundesregierung",
+        "position": 79
+    },
+    {
+        "app_id": "com.newspaperdirect.pressreader.android",
+        "app_name": "PressReader: News & Magazines",
+        "position": 80
+    },
+    {
+        "app_id": "de.snanews",
+        "app_name": "SNA Nachrichten",
+        "position": 81
+    },
+    {
+        "app_id": "com.ideashower.readitlater.pro",
+        "app_name": "Pocket: Save. Read. Grow.",
+        "position": 82
+    },
+    {
+        "app_id": "com.foxnews.international",
+        "app_name": "Fox News International",
+        "position": 83
+    },
+    {
+        "app_id": "de.inFrankenNews.news",
+        "app_name": "inFranken.de - lokale News & Informationen",
+        "position": 84
+    },
+    {
+        "app_id": "de.mdr.smartphone.android.mdrthueringen",
+        "app_name": "MDR Thüringen",
+        "position": 85
+    },
+    {
+        "app_id": "au.com.shiftyjelly.pocketcasts",
+        "app_name": "Pocket Casts - Podcast Player",
+        "position": 86
+    },
+    {
+        "app_id": "info.heimat.app",
+        "app_name": "Heimat Info",
+        "position": 87
+    },
+    {
+        "app_id": "branded.m2a8c2a66922444c782d5e0a50c080258.mysite",
+        "app_name": "CELLEHEUTE.DE",
+        "position": 88
+    },
+    {
+        "app_id": "com.eidosmedia.android.reader.nwz",
+        "app_name": "NWZ-ePaper",
+        "position": 89
+    },
+    {
+        "app_id": "de.bundestag.android",
+        "app_name": "Deutscher Bundestag",
+        "position": 90
+    },
+    {
+        "app_id": "com.devapprove.a.ru.news",
+        "app_name": "Новости России",
+        "position": 91
+    },
+    {
+        "app_id": "de.metamorph.bild",
+        "app_name": "BILD LIVE",
+        "position": 92
+    },
+    {
+        "app_id": "com.kapron.ap.vreader",
+        "app_name": "Voice Reader reads texts aloud",
+        "position": 93
+    },
+    {
+        "app_id": "de.ndr.app.ndrhh",
+        "app_name": "NDR Hamburg: News, Radio, TV",
+        "position": 94
+    },
+    {
+        "app_id": "de.heise.android.heiseonlineapp",
+        "app_name": "heise online - News",
+        "position": 95
+    },
+    {
+        "app_id": "de.mdr.smartphone.android.mdrsachsen",
+        "app_name": "MDR SACHSEN App – Nachrichten aus Ihrer Region",
+        "position": 96
+    },
+    {
+        "app_id": "de.wiwo.one",
+        "app_name": "WirtschaftsWoche - Nachrichten",
+        "position": 97
+    },
+    {
+        "app_id": "com.stayinformed.sa508573897986",
+        "app_name": "Schul-Info-App",
+        "position": 98
+    },
+    {
+        "app_id": "co.squidapp.squid",
+        "app_name": "SQUID - News & Magazines",
+        "position": 99
+    },
+    {
+        "app_id": "com.audionowdigital.player.bbcworld",
+        "app_name": "BBC World Service",
+        "position": 100
+    },
+    {
+        "app_id": "de.mdr.smartphone.android.mdrsachsenanhalt",
+        "app_name": "MDR Sachsen-Anhalt – Nachrichten aus deiner Region",
+        "position": 101
+    },
+    {
+        "app_id": "de.pnp.pnpdigital",
+        "app_name": "PNP ePaper - Ihre Heimatzeitung",
+        "position": 102
+    },
+    {
+        "app_id": "de.hr.hessenschau",
+        "app_name": "hessenschau",
+        "position": 103
+    },
+    {
+        "app_id": "com.hineighboor.gametips_abd",
+        "app_name": "Overview Neighbor 2 secrets All Acts",
+        "position": 104
+    },
+    {
+        "app_id": "ch.srf.mobile",
+        "app_name": "SRF News - Nachrichten",
+        "position": 105
+    },
+    {
+        "app_id": "com.washingtonpost.android",
+        "app_name": "Washington Post",
+        "position": 106
+    },
+    {
+        "app_id": "net.faz.FAZAndroid",
+        "app_name": "F.A.Z. Kiosk",
+        "position": 107
+    },
+    {
+        "app_id": "com.rheinischepost.wrapper",
+        "app_name": "RP ONLINE Aktuelle Nachrichten",
+        "position": 108
+    },
+    {
+        "app_id": "de.kiosk.waz.android",
+        "app_name": "WAZ ZEITUNG DIGITAL",
+        "position": 109
+    },
+    {
+        "app_id": "regnum.news.app",
+        "app_name": "Новости России и мира - политика, экономика, наука",
+        "position": 110
+    },
+    {
+        "app_id": "de.id.merkuronline",
+        "app_name": "Merkur.de: Die Nachrichten App",
+        "position": 111
+    },
+    {
+        "app_id": "com.devhd.feedly",
+        "app_name": "Feedly - Smarter News Reader",
+        "position": 112
+    },
+    {
+        "app_id": "com.thomsonreuters.reuters",
+        "app_name": "Reuters News",
+        "position": 113
+    },
+    {
+        "app_id": "com.cisana.guidatv.de",
+        "app_name": "TV Listings DE - Cisana TV+",
+        "position": 114
+    },
+    {
+        "app_id": "net.aljazeera.english",
+        "app_name": "Al Jazeera English",
+        "position": 115
+    },
+    {
+        "app_id": "com.Neighbor2.Hellowalkthrough",
+        "app_name": "Walkthrough For Neighbor All Acts",
+        "position": 116
+    },
+    {
+        "app_id": "com.top.ten.casino.world.slot.online",
+        "app_name": "Online Casinos for Slots",
+        "position": 117
+    },
+    {
+        "app_id": "io.meduza.meduza",
+        "app_name": "meduza",
+        "position": 118
+    },
+    {
+        "app_id": "com.dav.davpanorama",
+        "app_name": "DAV Panorama",
+        "position": 119
+    },
+    {
+        "app_id": "de.nwzonline.nwzkompakt",
+        "app_name": "NWZ - Nachrichten",
+        "position": 120
+    },
+    {
+        "app_id": "ru.rian.dynamics",
+        "app_name": "Динамика дня",
+        "position": 121
+    },
+    {
+        "app_id": "com.dbwv.app",
+        "app_name": "DBwV App",
+        "position": 122
+    },
+    {
+        "app_id": "mobil.ardtext",
+        "app_name": "ARD Text (Teletext)",
+        "position": 123
+    },
+    {
+        "app_id": "at.apa.pdfwlclient.saechsischezeitung",
+        "app_name": "SZ E-Paper",
+        "position": 124
+    },
+    {
+        "app_id": "de.sharemagazines.app",
+        "app_name": "sharemagazines - der digitale Lesezirkel",
+        "position": 125
+    },
+    {
+        "app_id": "de.zimme.www.zitto",
+        "app_name": "Lotto Check & Scan",
+        "position": 126
+    },
+    {
+        "app_id": "com.postillon",
+        "app_name": "Der Postillon",
+        "position": 127
+    },
+    {
+        "app_id": "hr.dnevnik.news.dnevnik_hr",
+        "app_name": "DNEVNIK.hr",
+        "position": 128
+    },
+    {
+        "app_id": "com.khorasannews.akharinkhabar",
+        "app_name": "Akharinkhabar",
+        "position": 129
+    },
+    {
+        "app_id": "de.hessen.hmdis.hessenwarn",
+        "app_name": "hessenWARN",
+        "position": 130
+    },
+    {
+        "app_id": "com.canlitvkesintisizrehber.android",
+        "app_name": "Canlı Tv Kesintisiz Rehber",
+        "position": 131
+    },
+    {
+        "app_id": "com.newsaktuell.presseportal",
+        "app_name": "Presseportal",
+        "position": 132
+    },
+    {
+        "app_id": "de.zeit.audio",
+        "app_name": "ZEIT AUDIO",
+        "position": 133
+    },
+    {
+        "app_id": "com.zumobi.msnbc",
+        "app_name": "NBC News: Breaking News & Live",
+        "position": 134
+    },
+    {
+        "app_id": "de.shzmain.areader",
+        "app_name": "sh:z E-Paper",
+        "position": 135
+    },
+    {
+        "app_id": "esselgroup.zeemedia.wionews",
+        "app_name": "WION News - World News Live",
+        "position": 136
+    },
+    {
+        "app_id": "de.freiepresse.android",
+        "app_name": "FP E-Paper",
+        "position": 137
+    },
+    {
+        "app_id": "com.pylba.whatsnew",
+        "app_name": "Notify – Relevant News for You in Real-Time",
+        "position": 138
+    },
+    {
+        "app_id": "de.stiftungwarentest.ePaper",
+        "app_name": "test - Das Verbrauchermagazin",
+        "position": 139
+    },
+    {
+        "app_id": "dw.com.androidtv.live",
+        "app_name": "DW",
+        "position": 140
+    },
+    {
+        "app_id": "com.uk.carwow",
+        "app_name": "Carwow Reviews",
+        "position": 141
+    },
+    {
+        "app_id": "at.apa.pdfwlclient.noz",
+        "app_name": "noz Premium",
+        "position": 142
+    },
+    {
+        "app_id": "org.rferl.ctvideo",
+        "app_name": "Настоящее Время",
+        "position": 143
+    },
+    {
+        "app_id": "de.konsole_labs.info",
+        "app_name": "Inforadio",
+        "position": 144
+    },
+    {
+        "app_id": "net.eujackpot",
+        "app_name": "EuroJackpot Results, euJackpot",
+        "position": 145
+    },
+    {
+        "app_id": "com.bskyb.skynews.android",
+        "app_name": "Sky News: Breaking, UK, & World",
+        "position": 146
+    },
+    {
+        "app_id": "de.tv.tvzeitung",
+        "app_name": "TV Guide & Schedule by TV.de",
+        "position": 147
+    },
+    {
+        "app_id": "com.france24.androidapp",
+        "app_name": "FRANCE 24 - Live international news 24/7",
+        "position": 148
+    },
+    {
+        "app_id": "com.igmetall.pushapp",
+        "app_name": "IG Metall App",
+        "position": 149
+    },
+    {
+        "app_id": "wsj.reader_sp",
+        "app_name": "The Wall Street Journal: Business & Market News",
+        "position": 150
+    },
+    {
+        "app_id": "com.ft.news",
+        "app_name": "Financial Times",
+        "position": 151
+    },
+    {
+        "app_id": "de.thecode.android.tazreader",
+        "app_name": "taz klassisch",
+        "position": 152
+    },
+    {
+        "app_id": "de.rheinpfalz.android",
+        "app_name": "RHEINPFALZ-App",
+        "position": 153
+    },
+    {
+        "app_id": "de.wilhelmshavenerzeitung.areader",
+        "app_name": "Brune-Mettcker ePaper",
+        "position": 154
+    },
+    {
+        "app_id": "de.endios.meinfrankenapp.wuerzburg",
+        "app_name": "Meine WVV",
+        "position": 155
+    },
+    {
+        "app_id": "at.apa.pdfwlclient.vrm_rheinmainpresse",
+        "app_name": "VRM E-Paper App",
+        "position": 156
+    },
+    {
+        "app_id": "at.apa.pdfwlclient.badische",
+        "app_name": "Badische Zeitung",
+        "position": 157
+    },
+    {
+        "app_id": "com.saxo.westmoney",
+        "app_name": "westmoney: Insight of China",
+        "position": 158
+    },
+    {
+        "app_id": "at.apa.pdfwlclient.lensing_ruhrnachrichten",
+        "app_name": "Ruhr Nachrichten",
+        "position": 159
+    },
+    {
+        "app_id": "de.butenunbinnen.app",
+        "app_name": "buten un binnen",
+        "position": 160
+    },
+    {
+        "app_id": "de.hamburgerabendblatt.android",
+        "app_name": "Hamburger Abendblatt E-Paper",
+        "position": 161
+    },
+    {
+        "app_id": "de.schwaebische.epaper",
+        "app_name": "Schwäbische E-Paper App",
+        "position": 162
+    },
+    {
+        "app_id": "de.hansehaus.bauratgeber",
+        "app_name": "BauMentor",
+        "position": 163
+    },
+    {
+        "app_id": "com.newscope.epaper.ln",
+        "app_name": "Lübecker Nachrichten E-Paper",
+        "position": 164
+    },
+    {
+        "app_id": "com.podcast.podcasts",
+        "app_name": "Podcast Player",
+        "position": 165
+    },
+    {
+        "app_id": "com.dibaache.android",
+        "app_name": "دیباچه: همه‌ی اخبار یکجا",
+        "position": 166
+    },
+    {
+        "app_id": "de.noz.newsapp",
+        "app_name": "noz News",
+        "position": 167
+    },
+    {
+        "app_id": "de.sr.app.sr",
+        "app_name": "SR - Saarländischer Rundfunk",
+        "position": 168
+    },
+    {
+        "app_id": "com.bloomberg.android.plus",
+        "app_name": "Bloomberg: Market & Financial News",
+        "position": 169
+    },
+    {
+        "app_id": "ru.chechensoft.vaynahtv",
+        "app_name": "ТВ Вайнах",
+        "position": 170
+    },
+    {
+        "app_id": "vcam.dk.DeutschNachrichtenZeitungen",
+        "app_name": "Deutsche Zeitungen",
+        "position": 171
+    },
+    {
+        "app_id": "de.zgs.clubapp.vfb.android",
+        "app_name": "MeinVfB",
+        "position": 172
+    },
+    {
+        "app_id": "de.brigitte.mobile.android",
+        "app_name": "BRIGITTE – Mode, Liebe, Beauty",
+        "position": 173
+    },
+    {
+        "app_id": "at.apa.pdfwlclient.augsburg",
+        "app_name": "Augsburger Allgemeine",
+        "position": 174
+    },
+    {
+        "app_id": "de.sz.iapps",
+        "app_name": "SZ ePaper",
+        "position": 175
+    },
+    {
+        "app_id": "de.julianmh.esisandroid",
+        "app_name": "ESIS",
+        "position": 176
+    },
+    {
+        "app_id": "com.newscope.epaper.haz",
+        "app_name": "HAZ E-Paper",
+        "position": 177
+    },
+    {
+        "app_id": "org.scientology.aosheu.live",
+        "app_name": "Advance! EU",
+        "position": 178
+    },
+    {
+        "app_id": "de.berlinerzeitung.areader",
+        "app_name": "Berliner Zeitung E-Paper",
+        "position": 179
+    },
+    {
+        "app_id": "de.konsole_labs.hr.android.hrinfo",
+        "app_name": "hr-iNFO",
+        "position": 180
+    },
+    {
+        "app_id": "com.waveline.nabd",
+        "app_name": "نبض Nabd - اخبار العالم ، عاجل",
+        "position": 181
+    },
+    {
+        "app_id": "net.faz.dertag",
+        "app_name": "F.A.Z. Der Tag - Nachrichten",
+        "position": 182
+    },
+    {
+        "app_id": "com.dwarfplanet.bundle",
+        "app_name": "Bundle Breaking News",
+        "position": 183
+    },
+    {
+        "app_id": "ru.ntv.today",
+        "app_name": "Сегодня. Главные и важные события",
+        "position": 184
+    },
+    {
+        "app_id": "com.pressmatrix.sailerlesen",
+        "app_name": "sailer lesen+",
+        "position": 185
+    },
+    {
+        "app_id": "com.lemonde.androidapp",
+        "app_name": "Le Monde, Actualités en direct",
+        "position": 186
+    },
+    {
+        "app_id": "de.bzv.bz",
+        "app_name": "Braunschweiger Zeitung E-Paper",
+        "position": 187
+    },
+    {
+        "app_id": "de.nurnbergernachrichten.areader",
+        "app_name": "Nürnberger Nachrichten E-Paper",
+        "position": 188
+    },
+    {
+        "app_id": "com.funker530.funker530app",
+        "app_name": "FUNKER530 - Military News and Videos",
+        "position": 189
+    },
+    {
+        "app_id": "de.burda.buntede",
+        "app_name": "BUNTE.de - Stars & Royals News",
+        "position": 190
+    },
+    {
+        "app_id": "de.lesewert.scan",
+        "app_name": "Lesewert",
+        "position": 191
+    },
+    {
+        "app_id": "com.spektrum.kompakt",
+        "app_name": "Spektrum Kompakt",
+        "position": 192
+    },
+    {
+        "app_id": "de.msh.android.stz",
+        "app_name": "Stuttgarter Zeitung",
+        "position": 193
+    },
+    {
+        "app_id": "ru.funspirit.daily_shop",
+        "app_name": "Item Shop Battle Royale",
+        "position": 194
+    },
+    {
+        "app_id": "com.sprylab.axelspringer.tablet.welt",
+        "app_name": "WELT Edition",
+        "position": 195
+    },
+    {
+        "app_id": "de.hna.epaper.android",
+        "app_name": "HNA-ePaper",
+        "position": 196
+    },
+    {
+        "app_id": "com.pressmatrix.derfreitag",
+        "app_name": "der Freitag EPaper",
+        "position": 197
+    },
+    {
+        "app_id": "de.zgt.ta",
+        "app_name": "TA E-Paper",
+        "position": 198
+    },
+    {
+        "app_id": "com.chinahandys.app",
+        "app_name": "chinahandys.net",
+        "position": 199
+    },
+    {
+        "app_id": "cz.burdapraha.chip",
+        "app_name": "Chip CZ",
+        "position": 200
+    }
+]

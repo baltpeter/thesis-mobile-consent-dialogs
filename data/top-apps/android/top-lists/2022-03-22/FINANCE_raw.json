@@ -1,0 +1,997 @@
+[
+    {
+        "app_id": "com.paypal.android.p2pmobile",
+        "app_name": "PayPal - Send, Shop, Manage",
+        "position": 1
+    },
+    {
+        "app_id": "de.fiduciagad.securego.vr",
+        "app_name": "VR SecureGo plus: Zahlungen direkt freigeben",
+        "position": 2
+    },
+    {
+        "app_id": "com.dkbcodefactory.banking",
+        "app_name": "DKB",
+        "position": 3
+    },
+    {
+        "app_id": "com.starfinanz.mobile.android.pushtan",
+        "app_name": "S-pushTAN",
+        "position": 4
+    },
+    {
+        "app_id": "de.check24.check24",
+        "app_name": "CHECK24 Vergleiche",
+        "position": 5
+    },
+    {
+        "app_id": "com.starfinanz.smob.android.sfinanzstatus",
+        "app_name": "Sparkasse Ihre mobile Filiale",
+        "position": 6
+    },
+    {
+        "app_id": "de.taxfix",
+        "app_name": "Taxfix German tax declaration",
+        "position": 7
+    },
+    {
+        "app_id": "com.advanzia.mobile",
+        "app_name": "Advanzia",
+        "position": 8
+    },
+    {
+        "app_id": "de.deutschepost.postident",
+        "app_name": "POSTIDENT",
+        "position": 9
+    },
+    {
+        "app_id": "com.google.android.apps.walletnfcrel",
+        "app_name": "Google Pay",
+        "position": 10
+    },
+    {
+        "app_id": "de.fiduciagad.banking.vr",
+        "app_name": "VR Banking - Deine mobile Bank",
+        "position": 11
+    },
+    {
+        "app_id": "de.empfohlen",
+        "app_name": "empfohlen.de - earn money",
+        "position": 12
+    },
+    {
+        "app_id": "de.buhl.steuerphone",
+        "app_name": "WISO Steuer – Steuererklärung",
+        "position": 13
+    },
+    {
+        "app_id": "com.s_payment.mobiles_bezahlen",
+        "app_name": "Mobiles Bezahlen",
+        "position": 14
+    },
+    {
+        "app_id": "de.datev.timp",
+        "app_name": "KLARTAX",
+        "position": 15
+    },
+    {
+        "app_id": "com.libertex.mobile",
+        "app_name": "Libertex: Stocks & CFD Trading",
+        "position": 16
+    },
+    {
+        "app_id": "de.dwins.financeguru",
+        "app_name": "Finanzguru",
+        "position": 17
+    },
+    {
+        "app_id": "com.entersekt.authapp.sparkasse",
+        "app_name": "S-ID-Check",
+        "position": 18
+    },
+    {
+        "app_id": "com.steuerbot",
+        "app_name": "Steuerbot – German Tax Return",
+        "position": 19
+    },
+    {
+        "app_id": "de.webidsolutions.mywebid",
+        "app_name": "My WebID",
+        "position": 20
+    },
+    {
+        "app_id": "de.elster.smart.release",
+        "app_name": "ElsterSmart",
+        "position": 21
+    },
+    {
+        "app_id": "com.guide.play.diary",
+        "app_name": "|Play Diary| Tips",
+        "position": 22
+    },
+    {
+        "app_id": "de.traderepublic.app",
+        "app_name": "Trade Republic: Mobile Broker",
+        "position": 23
+    },
+    {
+        "app_id": "de.postbank.bestsign",
+        "app_name": "Postbank BestSign",
+        "position": 24
+    },
+    {
+        "app_id": "com.starfinanz.mobile.android.dkbpushtan",
+        "app_name": "DKB-TAN2go",
+        "position": 25
+    },
+    {
+        "app_id": "capital.scalable.droid",
+        "app_name": "Scalable Capital: ETF & Stocks",
+        "position": 26
+    },
+    {
+        "app_id": "com.Plus500",
+        "app_name": "Plus500 Trading",
+        "position": 27
+    },
+    {
+        "app_id": "de.fiduciagad.securego.wl",
+        "app_name": "SecureGo plus: Zahlungen direkt freigeben",
+        "position": 28
+    },
+    {
+        "app_id": "de.fiducia.smartphone.android.banking.vr",
+        "app_name": "VR Banking Classic",
+        "position": 29
+    },
+    {
+        "app_id": "com.revolut.revolut",
+        "app_name": "Revolut",
+        "position": 30
+    },
+    {
+        "app_id": "de.ingdiba.bankingapp",
+        "app_name": "ING Banking to go",
+        "position": 31
+    },
+    {
+        "app_id": "com.westernunion.moneytransferr3app.eu",
+        "app_name": "Western Union Germany",
+        "position": 32
+    },
+    {
+        "app_id": "com.pockid.app",
+        "app_name": "pockid.money - Neobank made for our generation",
+        "position": 33
+    },
+    {
+        "app_id": "com.Splitwise.SplitwiseMobile",
+        "app_name": "Splitwise",
+        "position": 34
+    },
+    {
+        "app_id": "de.barmenia.meinebarmenia",
+        "app_name": "Barmenia",
+        "position": 35
+    },
+    {
+        "app_id": "com.starfinanz.mobile.android.invest",
+        "app_name": "S-Invest - Wertpapiere + Börse",
+        "position": 36
+    },
+    {
+        "app_id": "de.commerzbanking.mobil",
+        "app_name": "Commerzbank Banking",
+        "position": 37
+    },
+    {
+        "app_id": "com.moregames.makemoney",
+        "app_name": "PlaySpot - Make Money Playing Games",
+        "position": 38
+    },
+    {
+        "app_id": "com.etoro.openbook",
+        "app_name": "eToro: Crypto. Stocks. Social.",
+        "position": 39
+    },
+    {
+        "app_id": "com.commerzbank.photoTAN",
+        "app_name": "Commerzbank photoTAN",
+        "position": 40
+    },
+    {
+        "app_id": "de.sparda.securego",
+        "app_name": "SpardaSecureGo+",
+        "position": 41
+    },
+    {
+        "app_id": "de.clark.app",
+        "app_name": "CLARK - Versicherungen managen",
+        "position": 42
+    },
+    {
+        "app_id": "com.barclaycard.germany",
+        "app_name": "Barclays Privatkunden DE/AT",
+        "position": 43
+    },
+    {
+        "app_id": "com.db.pbc.phototan.db",
+        "app_name": "Deutsche Bank photoTAN",
+        "position": 44
+    },
+    {
+        "app_id": "com.transferwise.android",
+        "app_name": "Wise",
+        "position": 45
+    },
+    {
+        "app_id": "at.paysafecard.android",
+        "app_name": "paysafecard - prepaid payments",
+        "position": 46
+    },
+    {
+        "app_id": "de.fiducia.smartphone.android.securego.vr",
+        "app_name": "VR-SecureGo",
+        "position": 47
+    },
+    {
+        "app_id": "com.binance.dev",
+        "app_name": "Binance: Buy BTC & 600+ Crypto",
+        "position": 48
+    },
+    {
+        "app_id": "co.mona.android",
+        "app_name": "Crypto.com - Buy BTC, ETH",
+        "position": 49
+    },
+    {
+        "app_id": "de.dkb.portalapp",
+        "app_name": "DKB-Banking",
+        "position": 50
+    },
+    {
+        "app_id": "com.timeless.investments.app",
+        "app_name": "Timeless Investments",
+        "position": 51
+    },
+    {
+        "app_id": "io.metamask",
+        "app_name": "MetaMask - Blockchain Wallet",
+        "position": 52
+    },
+    {
+        "app_id": "org.toshi",
+        "app_name": "Coinbase Wallet - Store Crypto",
+        "position": 53
+    },
+    {
+        "app_id": "de.wgvpks.prod",
+        "app_name": "WGV Kundenbereich",
+        "position": 54
+    },
+    {
+        "app_id": "com.kubi.kucoin",
+        "app_name": "KuCoin: BTC, Crypto exchange",
+        "position": 55
+    },
+    {
+        "app_id": "com.db.pwcc.dbmobile",
+        "app_name": "Deutsche Bank Mobile",
+        "position": 56
+    },
+    {
+        "app_id": "de.consorsfinanz.onlinebanking",
+        "app_name": "Consors Finanz Mobile Banking",
+        "position": 57
+    },
+    {
+        "app_id": "de.fiduciagad.android.vrwallet",
+        "app_name": "Pay – Deine Bezahl-App",
+        "position": 58
+    },
+    {
+        "app_id": "de.allianz.meineallianz.prod",
+        "app_name": "Meine Allianz",
+        "position": 59
+    },
+    {
+        "app_id": "de.boersego.gmt.android",
+        "app_name": "Guidants – Stocks & News",
+        "position": 60
+    },
+    {
+        "app_id": "ru.innim.my_finance",
+        "app_name": "Money manager, expense tracker, budget, wallet",
+        "position": 61
+    },
+    {
+        "app_id": "com.coinbase.android",
+        "app_name": "Coinbase: Buy Bitcoin & Ether",
+        "position": 62
+    },
+    {
+        "app_id": "de.sparda.banking.app",
+        "app_name": "SpardaBanking App",
+        "position": 63
+    },
+    {
+        "app_id": "de.number26.android",
+        "app_name": "N26 — The Mobile Bank",
+        "position": 64
+    },
+    {
+        "app_id": "com.ebase.secure",
+        "app_name": "ebaseSecure",
+        "position": 65
+    },
+    {
+        "app_id": "splid.teamturtle.com.splid",
+        "app_name": "Splid – Split group bills",
+        "position": 66
+    },
+    {
+        "app_id": "com.app.cryptobiz",
+        "app_name": "CryptoBiz:CryptoTrade Platfrom",
+        "position": 67
+    },
+    {
+        "app_id": "com.comdirect.phototan",
+        "app_name": "comdirect photoTAN App",
+        "position": 68
+    },
+    {
+        "app_id": "com.wallet.crypto.trustapp",
+        "app_name": "Trust: Crypto & Bitcoin Wallet",
+        "position": 69
+    },
+    {
+        "app_id": "de.comdirect.app",
+        "app_name": "comdirect",
+        "position": 70
+    },
+    {
+        "app_id": "com.capital.trading",
+        "app_name": "Trading app by Capital.com",
+        "position": 71
+    },
+    {
+        "app_id": "com.fusionmedia.investing",
+        "app_name": "Investing.com: Stocks & News",
+        "position": 72
+    },
+    {
+        "app_id": "com.bitwala.app",
+        "app_name": "Nuri - Mobile Banking & Crypto",
+        "position": 73
+    },
+    {
+        "app_id": "ru.tsk.ftc.bender.qpay",
+        "app_name": "KoronaPay Money Transfer",
+        "position": 74
+    },
+    {
+        "app_id": "com.tribab.tricount.android",
+        "app_name": "Tricount - Split bills & manage group expenses",
+        "position": 75
+    },
+    {
+        "app_id": "com.getpenta.app",
+        "app_name": "Penta – Business Banking App",
+        "position": 76
+    },
+    {
+        "app_id": "com.targo_prod.bad",
+        "app_name": "TARGOBANK Mobile Banking",
+        "position": 77
+    },
+    {
+        "app_id": "de.betaapps.bruttonetto",
+        "app_name": "Bruno - Brutto Netto Rechner 2022",
+        "position": 78
+    },
+    {
+        "app_id": "com.tradingview.tradingviewapp",
+        "app_name": "TradingView: Track All Markets",
+        "position": 79
+    },
+    {
+        "app_id": "com.realbyteapps.moneymanagerfree",
+        "app_name": "Money Manager Expense & Budget",
+        "position": 80
+    },
+    {
+        "app_id": "com.gimb.paydirekt.app",
+        "app_name": "paydirekt",
+        "position": 81
+    },
+    {
+        "app_id": "com.commerzbank.ccbidn",
+        "app_name": "Commerzbank videoIDENT",
+        "position": 82
+    },
+    {
+        "app_id": "com.comeco.teo",
+        "app_name": "TEO - Das neue Multibanking",
+        "position": 83
+    },
+    {
+        "app_id": "com.hanseaticbank.banking",
+        "app_name": "Hanseatic Bank Mobile",
+        "position": 84
+    },
+    {
+        "app_id": "com.getquin.app",
+        "app_name": "getquin - Stock Tracker",
+        "position": 85
+    },
+    {
+        "app_id": "io.gonative.android.pmqloj",
+        "app_name": "Testerheld - Geld verdienen",
+        "position": 86
+    },
+    {
+        "app_id": "de.renaultbankdirekt.securego",
+        "app_name": "SecureGo+ Renault Bank direkt",
+        "position": 87
+    },
+    {
+        "app_id": "de.buhl.steuerscan",
+        "app_name": "WISO Steuer-Scan",
+        "position": 88
+    },
+    {
+        "app_id": "com.symantec.lifelock.memberapp",
+        "app_name": "LifeLock Identity by Norton",
+        "position": 89
+    },
+    {
+        "app_id": "com.paysend.app",
+        "app_name": "Money Transfer App Paysend",
+        "position": 90
+    },
+    {
+        "app_id": "com.avuscapital.trading212",
+        "app_name": "Trading 212 - Stocks, ETFs, Forex, Gold",
+        "position": 91
+    },
+    {
+        "app_id": "com.ebcom.ewano",
+        "app_name": "EWANO|کارت به کارت، شارژ، قبض",
+        "position": 92
+    },
+    {
+        "app_id": "de.lexoffice.android",
+        "app_name": "lexoffice - Online Buchhaltung",
+        "position": 93
+    },
+    {
+        "app_id": "vivid.money",
+        "app_name": "Vivid: Investments & Banking & Crypto",
+        "position": 94
+    },
+    {
+        "app_id": "com.remitly.androidapp",
+        "app_name": "Remitly: Send Money & Transfer",
+        "position": 95
+    },
+    {
+        "app_id": "one.tomorrow.app",
+        "app_name": "Tomorrow Mobile Banking",
+        "position": 96
+    },
+    {
+        "app_id": "de.bisonapp",
+        "app_name": "BISON - Buy Bitcoin & Co",
+        "position": 97
+    },
+    {
+        "app_id": "com.bunq.android",
+        "app_name": "bunq - bank of The Free",
+        "position": 98
+    },
+    {
+        "app_id": "de.bank.clanq",
+        "app_name": "Clanq",
+        "position": 99
+    },
+    {
+        "app_id": "de.onvista.ovone",
+        "app_name": "onvista - Stocks and Shares",
+        "position": 100
+    },
+    {
+        "app_id": "de.fondsdepotbank.pushtan",
+        "app_name": "pushTAN-App der Fondsdepot Bank",
+        "position": 101
+    },
+    {
+        "app_id": "rocks.monkee.frontapp",
+        "app_name": "Monkee: Geld sparen & Cashback",
+        "position": 102
+    },
+    {
+        "app_id": "com.margdemo.quotes",
+        "app_name": "Binary options traders Hub: Prices, Charts, Guides",
+        "position": 103
+    },
+    {
+        "app_id": "de.unister.boersennews",
+        "app_name": "Börse & Aktien - BörsennewsApp",
+        "position": 104
+    },
+    {
+        "app_id": "de.zasta.app",
+        "app_name": "Zasta",
+        "position": 105
+    },
+    {
+        "app_id": "de.zenhomes.android",
+        "app_name": "Vermietet.de",
+        "position": 106
+    },
+    {
+        "app_id": "com.info.assistant.optionsbinary",
+        "app_name": "Options Assistant for traders",
+        "position": 107
+    },
+    {
+        "app_id": "com.getbux.android",
+        "app_name": "BUX X - Mobile Trading App",
+        "position": 108
+    },
+    {
+        "app_id": "de.sdvrz.ihb.mobile.secureapp.sparda.produktion",
+        "app_name": "SpardaSecureApp",
+        "position": 109
+    },
+    {
+        "app_id": "mobile.santander.de.smartsign",
+        "app_name": "SantanderSign",
+        "position": 110
+    },
+    {
+        "app_id": "com.americanexpress.android.acctsvcs.de",
+        "app_name": "Amex Deutschland",
+        "position": 111
+    },
+    {
+        "app_id": "com.sibche.aspardproject.app",
+        "app_name": "AP - Asan Pardakht",
+        "position": 112
+    },
+    {
+        "app_id": "com.bitpanda.bitpanda",
+        "app_name": "Bitpanda: Buy bitcoin securely",
+        "position": 113
+    },
+    {
+        "app_id": "de.gratisbroker.android.mobileapp",
+        "app_name": "finanzen.net zero Aktien & ETF",
+        "position": 114
+    },
+    {
+        "app_id": "com.transfergo.android",
+        "app_name": "TransferGo: Money Transfer",
+        "position": 115
+    },
+    {
+        "app_id": "com.coinmarketcap.android",
+        "app_name": "CoinMarketCap: Crypto News App",
+        "position": 116
+    },
+    {
+        "app_id": "de.authada.id",
+        "app_name": "AUTHADA",
+        "position": 117
+    },
+    {
+        "app_id": "com.adpdigital.mbs.ayande",
+        "app_name": "همراه کارت | Hamrah Card",
+        "position": 118
+    },
+    {
+        "app_id": "com.mgi.moneygram",
+        "app_name": "MoneyGram® International Money Transfers App",
+        "position": 119
+    },
+    {
+        "app_id": "com.tradingcourses.learnhowtoinvest",
+        "app_name": "Trading Courses: How to Invest",
+        "position": 120
+    },
+    {
+        "app_id": "com.rynatsa.xtrendspeed",
+        "app_name": "XTrend Speed Trading App",
+        "position": 121
+    },
+    {
+        "app_id": "eu.unicreditgroup.hvbapptan",
+        "app_name": "HVB Mobile Banking",
+        "position": 122
+    },
+    {
+        "app_id": "com.anyfin.app",
+        "app_name": "Anyfin",
+        "position": 123
+    },
+    {
+        "app_id": "com.tiosignals.app",
+        "app_name": "TIOsignals — FX & Stocks Trading Signals",
+        "position": 124
+    },
+    {
+        "app_id": "com.kobil.consors",
+        "app_name": "Consorsbank SecurePlus",
+        "position": 125
+    },
+    {
+        "app_id": "de.signaliduna.meinesi",
+        "app_name": "meine SIGNAL IDUNA",
+        "position": 126
+    },
+    {
+        "app_id": "de.immocation.bierdeckelrechnung",
+        "app_name": "immocation.de - die App",
+        "position": 127
+    },
+    {
+        "app_id": "trx.genesis.app",
+        "app_name": "GenesisTRX",
+        "position": 128
+    },
+    {
+        "app_id": "de.followmytrader",
+        "app_name": "Follow MyMoney",
+        "position": 129
+    },
+    {
+        "app_id": "de.finanzen.net",
+        "app_name": "Börse & Aktien - finanzen.net",
+        "position": 130
+    },
+    {
+        "app_id": "de.lbb.amazon",
+        "app_name": "Amazon.de VISA Karte",
+        "position": 131
+    },
+    {
+        "app_id": "com.wolterskluwer.oneclick.employee.de",
+        "app_name": "ADDISON OneClick Lohnordner",
+        "position": 132
+    },
+    {
+        "app_id": "de.easycredit.bkapp",
+        "app_name": "easyCredit",
+        "position": 133
+    },
+    {
+        "app_id": "de.c24.bankapp",
+        "app_name": "C24 Bank",
+        "position": 134
+    },
+    {
+        "app_id": "de.wallstreet_online.woapp",
+        "app_name": "Börse, Aktien & Finanzen",
+        "position": 135
+    },
+    {
+        "app_id": "com.taptapsend",
+        "app_name": "Taptap Send: Send money abroad",
+        "position": 136
+    },
+    {
+        "app_id": "com.moneybookers.skrillpayments",
+        "app_name": "Skrill - Pay and spend money online",
+        "position": 137
+    },
+    {
+        "app_id": "net.petafuel.mobile.vimpay",
+        "app_name": "VIMpay – the way to pay",
+        "position": 138
+    },
+    {
+        "app_id": "de.ergo.app",
+        "app_name": "ERGO APP",
+        "position": 139
+    },
+    {
+        "app_id": "de.santander.presentation",
+        "app_name": "Santander Banking",
+        "position": 140
+    },
+    {
+        "app_id": "com.mobilecalltracker.numberlocator",
+        "app_name": "Mobile Number Location",
+        "position": 141
+    },
+    {
+        "app_id": "de.axa.myaxa",
+        "app_name": "My AXA Deutschland",
+        "position": 142
+    },
+    {
+        "app_id": "goldesel.app.newsticker",
+        "app_name": "Goldesel",
+        "position": 143
+    },
+    {
+        "app_id": "ir.sep.sesoot",
+        "app_name": "724",
+        "position": 144
+    },
+    {
+        "app_id": "de.getsafe.nxt",
+        "app_name": "Getsafe",
+        "position": 145
+    },
+    {
+        "app_id": "com.awesomesoft.muenzzaehler",
+        "app_name": "Coin Counter",
+        "position": 146
+    },
+    {
+        "app_id": "com.auxmoney",
+        "app_name": "auxmoney Kredite",
+        "position": 147
+    },
+    {
+        "app_id": "com.ria.moneytransfer",
+        "app_name": "Ria Money Transfer: Send money",
+        "position": 148
+    },
+    {
+        "app_id": "com.kobil.dab",
+        "app_name": "DAB SecurePlus",
+        "position": 149
+    },
+    {
+        "app_id": "com.hivearts.accountable",
+        "app_name": "Accountable: invoices, receipts, tax & VAT",
+        "position": 150
+    },
+    {
+        "app_id": "de.axa.myaxa",
+        "app_name": "My AXA Deutschland",
+        "position": 151
+    },
+    {
+        "app_id": "de.lohnsteuerkompakt.App",
+        "app_name": "Lohnsteuer kompakt",
+        "position": 152
+    },
+    {
+        "app_id": "com.easy.currency.extra.androary",
+        "app_name": "Easy Currency Converter",
+        "position": 153
+    },
+    {
+        "app_id": "com.bitfinex.mobileapp",
+        "app_name": "Bitfinex: Trade Digital Assets",
+        "position": 154
+    },
+    {
+        "app_id": "ir.sep.sesoot",
+        "app_name": "724",
+        "position": 155
+    },
+    {
+        "app_id": "com.hanseaticbank.secure",
+        "app_name": "Hanseatic Bank Secure",
+        "position": 156
+    },
+    {
+        "app_id": "de.bbbank.securego",
+        "app_name": "BBBank SecureGo+",
+        "position": 157
+    },
+    {
+        "app_id": "de.falko.stundenrechner",
+        "app_name": "Stundenrechner",
+        "position": 158
+    },
+    {
+        "app_id": "se.tfbank.tfbankmobile",
+        "app_name": "TF Bank Mobile",
+        "position": 159
+    },
+    {
+        "app_id": "com.ebase.banking",
+        "app_name": "ebaseBanking",
+        "position": 160
+    },
+    {
+        "app_id": "eu.mobile.icard",
+        "app_name": "iCard: Send Money to Anyone",
+        "position": 161
+    },
+    {
+        "app_id": "de.getsafe.nxt",
+        "app_name": "Getsafe",
+        "position": 162
+    },
+    {
+        "app_id": "de.sdvrz.ihb.mobile.app",
+        "app_name": "SpardaApp",
+        "position": 163
+    },
+    {
+        "app_id": "de.bwbank.bwsecure",
+        "app_name": "BW-Secure mit 3D-Secure - Sicher online bezahlen",
+        "position": 164
+    },
+    {
+        "app_id": "com.cmcmarkets.android.cfd",
+        "app_name": "CMC: Trading App",
+        "position": 165
+    },
+    {
+        "app_id": "com.defi.wallet",
+        "app_name": "Crypto.com l DeFi Wallet",
+        "position": 166
+    },
+    {
+        "app_id": "de.lvm.app",
+        "app_name": "Meine LVM",
+        "position": 167
+    },
+    {
+        "app_id": "com.banknorwegian",
+        "app_name": "Bank Norwegian",
+        "position": 168
+    },
+    {
+        "app_id": "com.volders.app",
+        "app_name": "Volders: Cancellation Service",
+        "position": 169
+    },
+    {
+        "app_id": "net.metaquotes.metatrader5",
+        "app_name": "MetaTrader 5 — Forex & Stock trading",
+        "position": 170
+    },
+    {
+        "app_id": "com.joompay.narwhal",
+        "app_name": "Joompay: Banking but simple",
+        "position": 171
+    },
+    {
+        "app_id": "de.elfsoft.bestbrokers",
+        "app_name": "Best Brokers: Stock Simulator",
+        "position": 172
+    },
+    {
+        "app_id": "de.fiducia.smartphone.android.securego.wl",
+        "app_name": "SecureGo",
+        "position": 173
+    },
+    {
+        "app_id": "io.getdelta.android",
+        "app_name": "Delta Investment Portfolio Tracker",
+        "position": 174
+    },
+    {
+        "app_id": "com.esyoil.webapp2c",
+        "app_name": "Heizölpreise",
+        "position": 175
+    },
+    {
+        "app_id": "de.ergodirekt.mobile.android.capture",
+        "app_name": "Send it",
+        "position": 176
+    },
+    {
+        "app_id": "de.finanzen100.currencyconverter",
+        "app_name": "Currency Converter Finanzen100",
+        "position": 177
+    },
+    {
+        "app_id": "com.db.mm.norisbank",
+        "app_name": "norisbank App",
+        "position": 178
+    },
+    {
+        "app_id": "com.ibm.de.ish.app.hansemerkur.prod",
+        "app_name": "HanseMerkur RechnungsApp",
+        "position": 179
+    },
+    {
+        "app_id": "sinc.cases.beihilfe.bawu",
+        "app_name": "Beihilfe BW",
+        "position": 180
+    },
+    {
+        "app_id": "de.xcom.flatexde",
+        "app_name": "flatex next",
+        "position": 181
+    },
+    {
+        "app_id": "com.vivawallet.spoc.payapp",
+        "app_name": "Viva Wallet POS",
+        "position": 182
+    },
+    {
+        "app_id": "com.imaginecurve.curve.prd",
+        "app_name": "Curve | All-in-one money app",
+        "position": 183
+    },
+    {
+        "app_id": "de.akount.app",
+        "app_name": "Akount - Teenager Bankkonto",
+        "position": 184
+    },
+    {
+        "app_id": "de.hvb_ident.android",
+        "app_name": "HVB Ident",
+        "position": 185
+    },
+    {
+        "app_id": "com.monefy.app.lite",
+        "app_name": "Monefy - Budget Manager and Expense Tracker app",
+        "position": 186
+    },
+    {
+        "app_id": "de.allianz.bonusdriveapp",
+        "app_name": "Allianz BonusDrive",
+        "position": 187
+    },
+    {
+        "app_id": "pl.dlabs.taxando.android",
+        "app_name": "Taxando - German Tax Return",
+        "position": 188
+    },
+    {
+        "app_id": "com.enjin.mobile.wallet",
+        "app_name": "Enjin: Bitcoin, Ethereum, NFT Crypto Wallet",
+        "position": 189
+    },
+    {
+        "app_id": "de.adesso.unionfondsonline",
+        "app_name": "FondsOnline",
+        "position": 190
+    },
+    {
+        "app_id": "de.cosmosdirekt.meincosmos",
+        "app_name": "meinCosmosDirekt",
+        "position": 191
+    },
+    {
+        "app_id": "com.givve.cardsuite.app",
+        "app_name": "givve® Card",
+        "position": 192
+    },
+    {
+        "app_id": "de.fiduciagad.android.videoident.vr",
+        "app_name": "VR-VideoIdent",
+        "position": 193
+    },
+    {
+        "app_id": "de.finanzen100",
+        "app_name": "Finanzen100 - Börse, Aktien & Finanznachrichten",
+        "position": 194
+    },
+    {
+        "app_id": "com.barclays.android.barclaysmobilebanking",
+        "app_name": "Barclays",
+        "position": 195
+    },
+    {
+        "app_id": "com.ziraat.ziraatmobil",
+        "app_name": "Ziraat Mobile",
+        "position": 196
+    },
+    {
+        "app_id": "com.db.businessline.cardapp",
+        "app_name": "Meine Karte",
+        "position": 197
+    },
+    {
+        "app_id": "de.psd.banking.app",
+        "app_name": "PSD Banking",
+        "position": 198
+    },
+    {
+        "app_id": "com.kraken.invest.app",
+        "app_name": "Kraken - Buy Bitcoin & Crypto",
+        "position": 199
+    }
+]

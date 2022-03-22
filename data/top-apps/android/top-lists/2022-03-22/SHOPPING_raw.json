@@ -1,0 +1,1002 @@
+[
+    {
+        "app_id": "com.ebay.kleinanzeigen",
+        "app_name": "eBay Kleinanzeigen Marketplace",
+        "position": 1
+    },
+    {
+        "app_id": "de.cellular.ottohybrid",
+        "app_name": "OTTO - Shopping und Möbel",
+        "position": 2
+    },
+    {
+        "app_id": "com.lidl.eci.lidlplus",
+        "app_name": "Lidl Plus",
+        "position": 3
+    },
+    {
+        "app_id": "com.amazon.mShop.android.shopping",
+        "app_name": "Amazon Shopping",
+        "position": 4
+    },
+    {
+        "app_id": "com.ebay.mobile",
+        "app_name": "eBay: The shopping marketplace",
+        "position": 5
+    },
+    {
+        "app_id": "com.zzkko",
+        "app_name": "SHEIN-Fashion Shopping Online",
+        "position": 6
+    },
+    {
+        "app_id": "com.kaufland.Kaufland",
+        "app_name": "Kaufland - Shopping & Offers",
+        "position": 7
+    },
+    {
+        "app_id": "com.getir",
+        "app_name": "getir: Lebensmittel in Minuten",
+        "position": 8
+    },
+    {
+        "app_id": "com.myklarnamobile",
+        "app_name": "Klarna | Shop now. Pay later.",
+        "position": 9
+    },
+    {
+        "app_id": "fr.vinted",
+        "app_name": "Vinted - Second-hand clothing",
+        "position": 10
+    },
+    {
+        "app_id": "com.valuephone.vpnetto",
+        "app_name": "Netto-App",
+        "position": 11
+    },
+    {
+        "app_id": "com.pickery.app",
+        "app_name": "Flink: Groceries in minutes",
+        "position": 12
+    },
+    {
+        "app_id": "com.bonial.kaufda",
+        "app_name": "kaufDA - Weekly Ads, Discounts & Local Deals",
+        "position": 13
+    },
+    {
+        "app_id": "de.zalando.mobile",
+        "app_name": "Zalando – online fashion store",
+        "position": 14
+    },
+    {
+        "app_id": "com.fressnapf.mobileapp",
+        "app_name": "Fressnapf - Tierbedarf",
+        "position": 15
+    },
+    {
+        "app_id": "de.dm.meindm.android",
+        "app_name": "Mein dm",
+        "position": 16
+    },
+    {
+        "app_id": "de.obi.app",
+        "app_name": "heyOBI: DIY-Projekte mit OBI",
+        "position": 17
+    },
+    {
+        "app_id": "com.tippingcanoe.mydealz",
+        "app_name": "mydealz – Gutscheine, Angebote",
+        "position": 18
+    },
+    {
+        "app_id": "de.payback.client.android",
+        "app_name": "PAYBACK - Karte und Coupons",
+        "position": 19
+    },
+    {
+        "app_id": "com.marktguru.mg2.de",
+        "app_name": "marktguru - leaflets & offers",
+        "position": 20
+    },
+    {
+        "app_id": "de.meinprospekt.android",
+        "app_name": "MeinProspekt – Local Deals & Weekly Ads",
+        "position": 21
+    },
+    {
+        "app_id": "com.ingka.ikea.app",
+        "app_name": "IKEA",
+        "position": 22
+    },
+    {
+        "app_id": "de.autodoc.gmbh",
+        "app_name": "AUTODOC: buy car parts online",
+        "position": 23
+    },
+    {
+        "app_id": "com.etsy.android",
+        "app_name": "Etsy: Buy & Sell Unique Items",
+        "position": 24
+    },
+    {
+        "app_id": "de.sec.mobile",
+        "app_name": "Lidl - Offers & Leaflets",
+        "position": 25
+    },
+    {
+        "app_id": "de.idealo.android",
+        "app_name": "idealo: Find Latest Deals",
+        "position": 26
+    },
+    {
+        "app_id": "de.bonprix",
+        "app_name": "bonprix - fashion & style",
+        "position": 27
+    },
+    {
+        "app_id": "de.momox",
+        "app_name": "momox: Bücher & mehr verkaufen",
+        "position": 28
+    },
+    {
+        "app_id": "de.aboutyou.mobile.app",
+        "app_name": "ABOUT YOU Online Fashion Shop",
+        "position": 29
+    },
+    {
+        "app_id": "com.alibaba.aliexpresshd",
+        "app_name": "AliExpress",
+        "position": 30
+    },
+    {
+        "app_id": "com.nike.omega",
+        "app_name": "Nike",
+        "position": 31
+    },
+    {
+        "app_id": "ch.publisheria.bring",
+        "app_name": "Bring! Grocery Shopping List",
+        "position": 32
+    },
+    {
+        "app_id": "com.alibaba.intl.android.apps.poseidon",
+        "app_name": "Alibaba.com",
+        "position": 33
+    },
+    {
+        "app_id": "com.joom",
+        "app_name": "Joom. Shopping for every day.",
+        "position": 34
+    },
+    {
+        "app_id": "com.lootboy.app",
+        "app_name": "LootBoy - Grab your loot!",
+        "position": 35
+    },
+    {
+        "app_id": "de.tchibo.app",
+        "app_name": "Tchibo - Mode, Wohnen, Lifestyle & Kaffee",
+        "position": 36
+    },
+    {
+        "app_id": "de.zalando.lounge",
+        "app_name": "Zalando Lounge - Shopping Club",
+        "position": 37
+    },
+    {
+        "app_id": "com.eddress.getgoodys",
+        "app_name": "Gorillas: Grocery Delivery",
+        "position": 38
+    },
+    {
+        "app_id": "at.helloagain.muellerde",
+        "app_name": "Müller Deutschland",
+        "position": 39
+    },
+    {
+        "app_id": "com.wholee",
+        "app_name": "Wholee I FITS YOU WELL",
+        "position": 40
+    },
+    {
+        "app_id": "de.apptiv.business.android.aldi_de",
+        "app_name": "ALDI SÜD Angebote & Prospekte",
+        "position": 41
+    },
+    {
+        "app_id": "de.baur.shop",
+        "app_name": "BAUR – Mode & Wohnen",
+        "position": 42
+    },
+    {
+        "app_id": "com.wayfair.wayfair",
+        "app_name": "Wayfair - Shop All Things Home",
+        "position": 43
+    },
+    {
+        "app_id": "com.backmarket",
+        "app_name": "Back Market. Buy. Sell. Easy.",
+        "position": 44
+    },
+    {
+        "app_id": "de.otto.lascana",
+        "app_name": "LASCANA – Bademode & Lingerie",
+        "position": 45
+    },
+    {
+        "app_id": "com.asos.app",
+        "app_name": "ASOS",
+        "position": 46
+    },
+    {
+        "app_id": "de.aldiNord.android",
+        "app_name": "ALDI Nord Angebote & Sortiment",
+        "position": 47
+    },
+    {
+        "app_id": "de.mytoys.mobile",
+        "app_name": "myToys – Alles für Ihr Kind",
+        "position": 48
+    },
+    {
+        "app_id": "com.bestsecret.main",
+        "app_name": "BestSecret",
+        "position": 49
+    },
+    {
+        "app_id": "com.bofrost",
+        "app_name": "bofrost*",
+        "position": 50
+    },
+    {
+        "app_id": "de.ernstings",
+        "app_name": "Ernsting's family – Kleidung & Mode Online Shop",
+        "position": 51
+    },
+    {
+        "app_id": "com.media.markt",
+        "app_name": "Media Markt Deutschland",
+        "position": 52
+    },
+    {
+        "app_id": "com.decathlon.app",
+        "app_name": "Decathlon",
+        "position": 53
+    },
+    {
+        "app_id": "com.contextlogic.wish",
+        "app_name": "Wish - Shopping Made Fun",
+        "position": 54
+    },
+    {
+        "app_id": "com.canda.mobileapp",
+        "app_name": "C&A Fashion Online Shop",
+        "position": 55
+    },
+    {
+        "app_id": "com.lightinthebox.android",
+        "app_name": "LightInTheBox Online Shopping",
+        "position": 56
+    },
+    {
+        "app_id": "com.banggood.client",
+        "app_name": "Banggood - Online Shopping",
+        "position": 57
+    },
+    {
+        "app_id": "com.picnic.android",
+        "app_name": "Picnic Online Supermarket",
+        "position": 58
+    },
+    {
+        "app_id": "fr.vestiairecollective",
+        "app_name": "Vestiaire Collective",
+        "position": 59
+    },
+    {
+        "app_id": "com.interfocusllc.patpat",
+        "app_name": "PatPat - Kids & Baby Clothing",
+        "position": 60
+    },
+    {
+        "app_id": "com.saramart.android",
+        "app_name": "SaraMart -Free Shipping",
+        "position": 61
+    },
+    {
+        "app_id": "de.corporatebenefits.app",
+        "app_name": "corporate benefits",
+        "position": 62
+    },
+    {
+        "app_id": "pl.eobuwie.eobuwieapp",
+        "app_name": "efootwear.eu",
+        "position": 63
+    },
+    {
+        "app_id": "trendyol.com",
+        "app_name": "Trendyol - Online Shopping",
+        "position": 64
+    },
+    {
+        "app_id": "com.levi.levis247",
+        "app_name": "Levi’s®",
+        "position": 65
+    },
+    {
+        "app_id": "com.cider",
+        "app_name": "CIDER - Clothing & Fashion",
+        "position": 66
+    },
+    {
+        "app_id": "de.kfzteile24.app",
+        "app_name": "kfzteile24 - PKW-, Ersatz- und Autoteile kaufen",
+        "position": 67
+    },
+    {
+        "app_id": "com.deichmann.deichmannapp",
+        "app_name": "DEICHMANN",
+        "position": 68
+    },
+    {
+        "app_id": "de.scoup.gutscheine.coupons.app",
+        "app_name": "Sovendus: Gutscheine & Coupons",
+        "position": 69
+    },
+    {
+        "app_id": "de.rebuy.android",
+        "app_name": "rebuy - Kaufen & Verkaufen",
+        "position": 70
+    },
+    {
+        "app_id": "com.voghion.app",
+        "app_name": "Voghion - Online shopping app",
+        "position": 71
+    },
+    {
+        "app_id": "de.hagebau.shop",
+        "app_name": "hagebau",
+        "position": 72
+    },
+    {
+        "app_id": "de.quelle.shop",
+        "app_name": "Quelle Technik & Haushalt Shop",
+        "position": 73
+    },
+    {
+        "app_id": "com.uniqlo.de2.catalogue",
+        "app_name": "UNIQLO DE",
+        "position": 74
+    },
+    {
+        "app_id": "de.babymarkt.app",
+        "app_name": "babymarkt.de",
+        "position": 75
+    },
+    {
+        "app_id": "io.getfaster.app",
+        "app_name": "GetFaster: Online-Supermarkt",
+        "position": 76
+    },
+    {
+        "app_id": "de.hornbach",
+        "app_name": "HORNBACH",
+        "position": 77
+    },
+    {
+        "app_id": "com.application_4u.qrcode.barcode",
+        "app_name": "QR code Scanner app",
+        "position": 78
+    },
+    {
+        "app_id": "de.roller.twa",
+        "app_name": "ROLLER",
+        "position": 79
+    },
+    {
+        "app_id": "com.jd.jdsports",
+        "app_name": "JD Sports",
+        "position": 80
+    },
+    {
+        "app_id": "de.prospektangebote.app",
+        "app_name": "Neue Prospekte und Angebote – Prospektangebote.de",
+        "position": 81
+    },
+    {
+        "app_id": "de.sheego.mobile",
+        "app_name": "sheego - Mode in großen Größen",
+        "position": 82
+    },
+    {
+        "app_id": "at.helloagain.myshoesde",
+        "app_name": "MyShoes Deutschland",
+        "position": 83
+    },
+    {
+        "app_id": "de.toom.app",
+        "app_name": "toom",
+        "position": 84
+    },
+    {
+        "app_id": "com.adidas.confirmed.app",
+        "app_name": "adidas CONFIRMED",
+        "position": 85
+    },
+    {
+        "app_id": "com.media.saturn",
+        "app_name": "Saturn Deutschland",
+        "position": 86
+    },
+    {
+        "app_id": "de.markusliebschner.thatlist",
+        "app_name": "That Shopping List",
+        "position": 87
+    },
+    {
+        "app_id": "de.stocard.stocard",
+        "app_name": "Stocard - Rewards Cards Wallet",
+        "position": 88
+    },
+    {
+        "app_id": "com.nike.snkrs",
+        "app_name": "Nike SNKRS: Find & Buy The Latest Sneaker Releases",
+        "position": 89
+    },
+    {
+        "app_id": "de.globus.meinglobus",
+        "app_name": "Mein Globus",
+        "position": 90
+    },
+    {
+        "app_id": "de.happysize.app",
+        "app_name": "HAPPYsize: Plus Size Fashion",
+        "position": 91
+    },
+    {
+        "app_id": "de.onlineshop.seventyseven.android",
+        "app_name": "77onlineshop: Fashion & Mode",
+        "position": 92
+    },
+    {
+        "app_id": "com.shpock.android",
+        "app_name": "Shpock | Second hand marketplace to buy and sell",
+        "position": 93
+    },
+    {
+        "app_id": "com.amazon.windowshop",
+        "app_name": "Amazon for Tablets",
+        "position": 94
+    },
+    {
+        "app_id": "com.inditex.ecommerce.bershka",
+        "app_name": "Bershka: Fashion & trends",
+        "position": 95
+    },
+    {
+        "app_id": "de.klingel.app",
+        "app_name": "KLiNGEL - Mode, Wohnen & Living",
+        "position": 96
+    },
+    {
+        "app_id": "de.zooplus",
+        "app_name": "zooplus",
+        "position": 97
+    },
+    {
+        "app_id": "de.online.norma",
+        "app_name": "NORMA",
+        "position": 98
+    },
+    {
+        "app_id": "de.quoka.kleinanzeigen",
+        "app_name": "Quoka Kleinanzeigen Flohmarkt",
+        "position": 99
+    },
+    {
+        "app_id": "com.poqstudio.app.orsay",
+        "app_name": "ORSAY: Shop Women’s latest Fashion Trends & Styles",
+        "position": 100
+    },
+    {
+        "app_id": "com.footlocker.europe.uk",
+        "app_name": "Foot Locker - Shop Shoes",
+        "position": 101
+    },
+    {
+        "app_id": "com.gls.glsone.hybridapp",
+        "app_name": "GLS App",
+        "position": 102
+    },
+    {
+        "app_id": "momox.fashion",
+        "app_name": "momox - sell used clothes without auction",
+        "position": 103
+    },
+    {
+        "app_id": "com.soliver.inyourpocket",
+        "app_name": "s.Oliver | Mode & Styles",
+        "position": 104
+    },
+    {
+        "app_id": "com.dhgate.buyermob",
+        "app_name": "DHgate-online wholesale stores",
+        "position": 105
+    },
+    {
+        "app_id": "com.lppsa.app.reserved",
+        "app_name": "Reserved",
+        "position": 106
+    },
+    {
+        "app_id": "com.groupon",
+        "app_name": "Groupon – Deals & Coupons",
+        "position": 107
+    },
+    {
+        "app_id": "com.smhaggle.app",
+        "app_name": "smhaggle: Sparen im Supermarkt",
+        "position": 108
+    },
+    {
+        "app_id": "com.jooli.jca",
+        "app_name": "jooli - the videoshopping app",
+        "position": 109
+    },
+    {
+        "app_id": "com.tksolution.einkaufszettelmitspracheingabe",
+        "app_name": "Shopping list voice input",
+        "position": 110
+    },
+    {
+        "app_id": "com.gpshopper.boohooman",
+        "app_name": "boohooMAN: Shop Men’s Clothing",
+        "position": 111
+    },
+    {
+        "app_id": "com.google.zxing.client.android",
+        "app_name": "Barcode Scanner",
+        "position": 112
+    },
+    {
+        "app_id": "com.brands4friends.b4f",
+        "app_name": "brands4friends",
+        "position": 113
+    },
+    {
+        "app_id": "com.mi.global.shop",
+        "app_name": "Mi Store",
+        "position": 114
+    },
+    {
+        "app_id": "de.engelbertstrauss.app",
+        "app_name": "Engelbert Strauss - workwear & more",
+        "position": 115
+    },
+    {
+        "app_id": "eu.wittgruppe.witt",
+        "app_name": "WITT WEIDEN",
+        "position": 116
+    },
+    {
+        "app_id": "com.opongo.android",
+        "app_name": "Mein Deal - Schnäppchen",
+        "position": 117
+    },
+    {
+        "app_id": "com.aftership.AfterShip",
+        "app_name": "AfterShip Package Tracker - Tracking Packages",
+        "position": 118
+    },
+    {
+        "app_id": "de.marktjagd.android",
+        "app_name": "Marktjagd Prospekte & Angebote",
+        "position": 119
+    },
+    {
+        "app_id": "eu.wittgruppe.siehan",
+        "app_name": "Sieh an! Mode einfach günstig!",
+        "position": 120
+    },
+    {
+        "app_id": "com.hunkemoller",
+        "app_name": "Hunkemöller - Shop Lingerie",
+        "position": 121
+    },
+    {
+        "app_id": "de.limango.shop",
+        "app_name": "limango - Online-Shop",
+        "position": 122
+    },
+    {
+        "app_id": "com.momoxfashion",
+        "app_name": "momox fashion",
+        "position": 123
+    },
+    {
+        "app_id": "com.home24.android",
+        "app_name": "home24 - Möbel & Wohnideen",
+        "position": 124
+    },
+    {
+        "app_id": "de.mybestbrands",
+        "app_name": "MYBESTBRANDS - Designer Mode, Kleider & Sneaker",
+        "position": 125
+    },
+    {
+        "app_id": "com.farfetch.farfetchshop",
+        "app_name": "FARFETCH — Designer Shopping",
+        "position": 126
+    },
+    {
+        "app_id": "de.cominto.blaetterkatalog.customer.emp",
+        "app_name": "EMP - Merchandise & Fashion",
+        "position": 127
+    },
+    {
+        "app_id": "com.wunderkauf.android",
+        "app_name": "Wunderkauf Prospekte, Angebote",
+        "position": 128
+    },
+    {
+        "app_id": "com.zaful",
+        "app_name": "ZAFUL - My Fashion Story",
+        "position": 129
+    },
+    {
+        "app_id": "com.fordeal.android",
+        "app_name": "Fordeal - فورديل سوق الانترنت",
+        "position": 130
+    },
+    {
+        "app_id": "com.inditex.pullandbear",
+        "app_name": "PULL&BEAR",
+        "position": 131
+    },
+    {
+        "app_id": "de.wenz.app",
+        "app_name": "WENZ – Mode für mich gemacht",
+        "position": 132
+    },
+    {
+        "app_id": "com.allylikes.allylikes",
+        "app_name": "allyLikes - Spring Collection",
+        "position": 133
+    },
+    {
+        "app_id": "com.aosom.mall",
+        "app_name": "Aosom-Shop All Things Home",
+        "position": 134
+    },
+    {
+        "app_id": "de.shoop.app",
+        "app_name": "Cashback App Shoop",
+        "position": 135
+    },
+    {
+        "app_id": "de.guthaben.app.prod",
+        "app_name": "Guthaben.de",
+        "position": 136
+    },
+    {
+        "app_id": "de.mirapodo.mobile",
+        "app_name": "mirapodo Shopping: Schuhe, Taschen & Bekleidung",
+        "position": 137
+    },
+    {
+        "app_id": "com.stockx.stockx",
+        "app_name": "StockX- Access the Now",
+        "position": 138
+    },
+    {
+        "app_id": "de.deinetierwelt.app",
+        "app_name": "DeineTierwelt – Kleinanzeigen, Community, Ratgeber",
+        "position": 139
+    },
+    {
+        "app_id": "de.ocm.app",
+        "app_name": "OUTLETCITY METZINGEN",
+        "position": 140
+    },
+    {
+        "app_id": "de.miamoda.app",
+        "app_name": "MIAMODA – Die Marke für grosse Grössen",
+        "position": 141
+    },
+    {
+        "app_id": "com.pentlandfirth.whizcart",
+        "app_name": "EASY Shopper",
+        "position": 142
+    },
+    {
+        "app_id": "ir.divar",
+        "app_name": "Divar",
+        "position": 143
+    },
+    {
+        "app_id": "de.sephora.sephoragermany",
+        "app_name": "Sephora – Make up & Pflege",
+        "position": 144
+    },
+    {
+        "app_id": "com.arvato.myafterpay",
+        "app_name": "AfterPay",
+        "position": 145
+    },
+    {
+        "app_id": "de.qvc",
+        "app_name": "QVC (Deutschland)",
+        "position": 146
+    },
+    {
+        "app_id": "com.sportscheck.mobile",
+        "app_name": "SportScheck – DEIN SPORT SHOP",
+        "position": 147
+    },
+    {
+        "app_id": "com.excelsisnet.android.breuninger",
+        "app_name": "Breuninger – Mode & Lifestyle",
+        "position": 148
+    },
+    {
+        "app_id": "de.fabrik19.globus",
+        "app_name": "Globus Baumarkt",
+        "position": 149
+    },
+    {
+        "app_id": "com.amour.chicme",
+        "app_name": "Chic Me - Chic in Command",
+        "position": 150
+    },
+    {
+        "app_id": "com.l",
+        "app_name": "Grocery Shopping List Listonic",
+        "position": 151
+    },
+    {
+        "app_id": "de.karstadt.karstadt",
+        "app_name": "Galeria Karstadt Kaufhof",
+        "position": 152
+    },
+    {
+        "app_id": "pl.modivo.modivoapp",
+        "app_name": "MODIVO – WYRAŻAJ SIEBIE",
+        "position": 153
+    },
+    {
+        "app_id": "com.application_4u.qrcode.barcode.scanner.reader.flashlight",
+        "app_name": "Lightning QR code scanner",
+        "position": 154
+    },
+    {
+        "app_id": "de.weekli.WeekliAndroid",
+        "app_name": "weekli - Prospekte & Angebote",
+        "position": 155
+    },
+    {
+        "app_id": "de.xxxlutz.ccapp",
+        "app_name": "XXXLutz Freundschaftskarte",
+        "position": 156
+    },
+    {
+        "app_id": "com.intersport.app.de",
+        "app_name": "INTERSPORT Deutschland",
+        "position": 157
+    },
+    {
+        "app_id": "de.interaid.heizoelapp",
+        "app_name": "HeizOel24 | meX - Heizölpreise & Tank",
+        "position": 158
+    },
+    {
+        "app_id": "com.appsrise.sodexo.card",
+        "app_name": "Sodexo Pass",
+        "position": 159
+    },
+    {
+        "app_id": "com.getarive.app",
+        "app_name": "arive - 30min delivery",
+        "position": 160
+    },
+    {
+        "app_id": "de.vamos.app",
+        "app_name": "Vamos der Schuhweitenspezialist",
+        "position": 161
+    },
+    {
+        "app_id": "de.bringmeister.app",
+        "app_name": "Bringmeister",
+        "position": 162
+    },
+    {
+        "app_id": "com.asphaltgold.asphaltgold",
+        "app_name": "Asphaltgold",
+        "position": 163
+    },
+    {
+        "app_id": "com.globalegrow.app.dresslily",
+        "app_name": "Dresslily-Fashion Trend",
+        "position": 164
+    },
+    {
+        "app_id": "de.knuspr.app",
+        "app_name": "Knuspr.de",
+        "position": 165
+    },
+    {
+        "app_id": "com.ravensburger.puzzle.world",
+        "app_name": "Ravensburger Puzzle World",
+        "position": 166
+    },
+    {
+        "app_id": "pl.tablica",
+        "app_name": "OLX - ogłoszenia lokalne",
+        "position": 167
+    },
+    {
+        "app_id": "com.groverapp",
+        "app_name": "Grover - rent tech flexibly",
+        "position": 168
+    },
+    {
+        "app_id": "at.willhaben",
+        "app_name": "willhaben",
+        "position": 169
+    },
+    {
+        "app_id": "com.lyst.lystapp",
+        "app_name": "Lyst",
+        "position": 170
+    },
+    {
+        "app_id": "com.instantgaming.android",
+        "app_name": "Instant Gaming",
+        "position": 171
+    },
+    {
+        "app_id": "com.myunidays",
+        "app_name": "UNiDAYS: Student Deals",
+        "position": 172
+    },
+    {
+        "app_id": "com.gfk.consumerscan",
+        "app_name": "GfK MyScan",
+        "position": 173
+    },
+    {
+        "app_id": "com.pozitron.hepsiburada",
+        "app_name": "Hepsiburada: Online Shopping",
+        "position": 174
+    },
+    {
+        "app_id": "com.geekslab.qrbarcodescanner.pro",
+        "app_name": "Barcode Scanner Pro",
+        "position": 175
+    },
+    {
+        "app_id": "com.modanisa",
+        "app_name": "Modanisa: Modest Hijab Fashion",
+        "position": 176
+    },
+    {
+        "app_id": "com.gries_deco_company.depot_heimweh",
+        "app_name": "DEPOT Home & Living",
+        "position": 177
+    },
+    {
+        "app_id": "fr.snapp.igraal",
+        "app_name": "iGraal: Codes-promo & Cashback",
+        "position": 178
+    },
+    {
+        "app_id": "de.westwing.android",
+        "app_name": "Westwing Home & Living",
+        "position": 179
+    },
+    {
+        "app_id": "com.amazon.mShop.android.business.shopping",
+        "app_name": "Amazon Business",
+        "position": 180
+    },
+    {
+        "app_id": "de.sebag.Vorrat",
+        "app_name": "Inventory and Shopping list",
+        "position": 181
+    },
+    {
+        "app_id": "com.bestseller.only",
+        "app_name": "ONLY: Women's fashion",
+        "position": 182
+    },
+    {
+        "app_id": "com.ttech.android.onlineislem",
+        "app_name": "Turkcell Digital Operator",
+        "position": 183
+    },
+    {
+        "app_id": "app.selgros",
+        "app_name": "Selgros",
+        "position": 184
+    },
+    {
+        "app_id": "de.wuerth.customerapp",
+        "app_name": "Würth Deutschland",
+        "position": 185
+    },
+    {
+        "app_id": "com.sinsiay.onlinesinsiayshop",
+        "app_name": "Sinsay Shopping Online",
+        "position": 186
+    },
+    {
+        "app_id": "com.airjordandeals.android",
+        "app_name": "Air Jordan Deals",
+        "position": 187
+    },
+    {
+        "app_id": "app.buttinette.shop",
+        "app_name": "buttinette App",
+        "position": 188
+    },
+    {
+        "app_id": "com.tally.weijl",
+        "app_name": "TALLY WEiJL",
+        "position": 189
+    },
+    {
+        "app_id": "de.heine.mobile",
+        "app_name": "heine – Mode & Wohnen-Shopping",
+        "position": 190
+    },
+    {
+        "app_id": "com.defshop.app.android",
+        "app_name": "DefShop - Fashion & Mode",
+        "position": 191
+    },
+    {
+        "app_id": "com.dylvian.mango.activities",
+        "app_name": "MANGO - Online fashion",
+        "position": 192
+    },
+    {
+        "app_id": "com.inditex.stradivarius",
+        "app_name": "Stradivarius - Online Fashion",
+        "position": 193
+    },
+    {
+        "app_id": "de.hse24",
+        "app_name": "HSE - here shopping entertains",
+        "position": 194
+    },
+    {
+        "app_id": "com.famila.nordost",
+        "app_name": "famila Nordost",
+        "position": 195
+    },
+    {
+        "app_id": "com.catawiki2",
+        "app_name": "Catawiki Online Auctions",
+        "position": 196
+    },
+    {
+        "app_id": "com.sahibinden",
+        "app_name": "sahibinden.com: Al Sat Kirala",
+        "position": 197
+    },
+    {
+        "app_id": "de.jkg.einkaufsliste",
+        "app_name": "EasyList - Shopping List",
+        "position": 198
+    },
+    {
+        "app_id": "com.digikala.diagon",
+        "app_name": "دیجیکالا | فروشگاه خرید آنلاین",
+        "position": 199
+    },
+    {
+        "app_id": "de.hse.hello",
+        "app_name": "HELLO – live shopping",
+        "position": 200
+    }
+]

@@ -1,0 +1,1002 @@
+[
+    {
+        "app_id": "de.edeka.genuss",
+        "app_name": "EDEKA",
+        "position": 1
+    },
+    {
+        "app_id": "com.yopeso.lieferando",
+        "app_name": "Lieferando.de - Order Food",
+        "position": 2
+    },
+    {
+        "app_id": "com.app.tgtg",
+        "app_name": "Too Good To Go: End Food Waste",
+        "position": 3
+    },
+    {
+        "app_id": "com.rewedigital.shop",
+        "app_name": "REWE - Online Shop & Märkte",
+        "position": 4
+    },
+    {
+        "app_id": "de.rewe.app.mobile",
+        "app_name": "REWE - Angebote & Coupons",
+        "position": 5
+    },
+    {
+        "app_id": "de.burgerking.kingfinder",
+        "app_name": "BURGER KING®",
+        "position": 6
+    },
+    {
+        "app_id": "com.ubercab.eats",
+        "app_name": "Uber Eats: Food Delivery",
+        "position": 7
+    },
+    {
+        "app_id": "com.mcdonalds.mobileapp",
+        "app_name": "McDonald's",
+        "position": 8
+    },
+    {
+        "app_id": "com.hellofresh.androidapp",
+        "app_name": "HelloFresh: Meal Kit Delivery",
+        "position": 9
+    },
+    {
+        "app_id": "com.wolt.android",
+        "app_name": "Wolt Delivery: Food and more",
+        "position": 10
+    },
+    {
+        "app_id": "de.penny.app",
+        "app_name": "PENNY Angebote & Coupons",
+        "position": 11
+    },
+    {
+        "app_id": "com.appfarms.monsieurcuisine",
+        "app_name": "Monsieur Cuisine",
+        "position": 12
+    },
+    {
+        "app_id": "com.vorwerk.cookidoo",
+        "app_name": "Thermomix Cookidoo App",
+        "position": 13
+    },
+    {
+        "app_id": "com.kfc.de.mobileapp",
+        "app_name": "KFC",
+        "position": 14
+    },
+    {
+        "app_id": "de.pixelhouse",
+        "app_name": "Chefkoch - Rezepte & Kochen",
+        "position": 15
+    },
+    {
+        "app_id": "de.flaschenpost.app",
+        "app_name": "flaschenpost",
+        "position": 16
+    },
+    {
+        "app_id": "com.kptncook.app.kptncook",
+        "app_name": "KptnCook Meal Plan & Recipes",
+        "position": 17
+    },
+    {
+        "app_id": "com.subway.subway",
+        "app_name": "Subway® - Official App",
+        "position": 18
+    },
+    {
+        "app_id": "com.broapplication",
+        "app_name": "4BRO",
+        "position": 19
+    },
+    {
+        "app_id": "com.openreply.pam",
+        "app_name": "Pam App",
+        "position": 20
+    },
+    {
+        "app_id": "de.dominos.android",
+        "app_name": "Domino's Pizza Germany",
+        "position": 21
+    },
+    {
+        "app_id": "de.flwebsolutions.waldfleisch",
+        "app_name": "Waldfleisch",
+        "position": 22
+    },
+    {
+        "app_id": "com.nordsee.de.app",
+        "app_name": "NORDSEE",
+        "position": 23
+    },
+    {
+        "app_id": "com.yababa.yababapp",
+        "app_name": "Yababa: Halal Grocery Shopping",
+        "position": 24
+    },
+    {
+        "app_id": "com.opentable",
+        "app_name": "OpenTable: Restaurants Near Me",
+        "position": 25
+    },
+    {
+        "app_id": "com.bringman",
+        "app_name": "Bringman",
+        "position": 26
+    },
+    {
+        "app_id": "com.sevencooks.wochenplan",
+        "app_name": "SevenCooks: Rezepte & Kochen",
+        "position": 27
+    },
+    {
+        "app_id": "com.philips.ka.oneka.app",
+        "app_name": "Kitchen+ Airfryer recipes",
+        "position": 28
+    },
+    {
+        "app_id": "de.falkemedia.sallys_welt_android",
+        "app_name": "Sallys Welt",
+        "position": 29
+    },
+    {
+        "app_id": "com.kiransmoothie.kiranchavan.juicerecipe",
+        "app_name": "Smoothie Recipes : 500+ Healthy Smoothie Recipes",
+        "position": 30
+    },
+    {
+        "app_id": "de.lieferheld.android",
+        "app_name": "LIEFERHELD | Order Food",
+        "position": 31
+    },
+    {
+        "app_id": "de.funke.bdf.rezepte",
+        "app_name": "Rezepte - BILD der FRAU",
+        "position": 32
+    },
+    {
+        "app_id": "com.bringoo.customer",
+        "app_name": "Bringoo - Wir bringen es.",
+        "position": 33
+    },
+    {
+        "app_id": "com.liebherr.hau.hngry",
+        "app_name": "HNGRY Shopping list & Storage",
+        "position": 34
+    },
+    {
+        "app_id": "vivino.web.app",
+        "app_name": "Vivino: Buy the Right Wine",
+        "position": 35
+    },
+    {
+        "app_id": "com.ajnsnewmedia.kitchenstories",
+        "app_name": "Kitchen Stories: Easy Recipes",
+        "position": 36
+    },
+    {
+        "app_id": "com.mcd.gut",
+        "app_name": "McDonald's Gutscheine App Bonn",
+        "position": 37
+    },
+    {
+        "app_id": "digifit.virtuagym.foodtracker",
+        "app_name": "Calorie, Carb & Fat Counter",
+        "position": 38
+    },
+    {
+        "app_id": "org.peta.veganstart3",
+        "app_name": "Veganstart",
+        "position": 39
+    },
+    {
+        "app_id": "de.falkemedia.zaubertopfappandroid",
+        "app_name": "ZauberTopf Rezepte",
+        "position": 40
+    },
+    {
+        "app_id": "com.vytal.vytalconsumerapp",
+        "app_name": "Vytal",
+        "position": 41
+    },
+    {
+        "app_id": "com.restegourmet.rg_eat",
+        "app_name": "Restegourmet - Rezepte nach Zutaten finden",
+        "position": 42
+    },
+    {
+        "app_id": "com.lafourchette.lafourchette",
+        "app_name": "TheFork - Restaurant bookings",
+        "position": 43
+    },
+    {
+        "app_id": "com.dd.doordash",
+        "app_name": "DoorDash - Food Delivery",
+        "position": 44
+    },
+    {
+        "app_id": "com.bauermedia.leckertagesrezepte",
+        "app_name": "Lecker - Rezepte für jeden Tag",
+        "position": 45
+    },
+    {
+        "app_id": "com.halalzulal.mammar.halalzulal",
+        "app_name": "Halal Zulal",
+        "position": 46
+    },
+    {
+        "app_id": "evismedia.lebensmittel_sonderpostende",
+        "app_name": "Lebensmittel-Sonderposten.de",
+        "position": 47
+    },
+    {
+        "app_id": "com.shinningstar.bubbletea",
+        "app_name": "DIY Bubble Tea - Tapioca Ice Tea",
+        "position": 48
+    },
+    {
+        "app_id": "gutscheine.mcdonalds.gutschein",
+        "app_name": "Gutscheine für McDonald's – Deals, Rabatte",
+        "position": 49
+    },
+    {
+        "app_id": "com.apptionlabs.meater_app",
+        "app_name": "MEATER® Smart Meat Thermometer",
+        "position": 50
+    },
+    {
+        "app_id": "eu.dominos.offers",
+        "app_name": "Domino's Promo’s App",
+        "position": 51
+    },
+    {
+        "app_id": "co.za.wigroup.dunkindonutsge",
+        "app_name": "Dunkin' DE",
+        "position": 52
+    },
+    {
+        "app_id": "xjcl.mundraub",
+        "app_name": "Mundraub Navigator",
+        "position": 53
+    },
+    {
+        "app_id": "de.mixdichgluecklich.mobile",
+        "app_name": "mix dich glücklich",
+        "position": 54
+    },
+    {
+        "app_id": "com.buzzfeed.tasty",
+        "app_name": "Tasty",
+        "position": 55
+    },
+    {
+        "app_id": "it.delonghi",
+        "app_name": "De'Longhi Coffee Link",
+        "position": 56
+    },
+    {
+        "app_id": "com.crowdfarming.app",
+        "app_name": "CrowdFarming",
+        "position": 57
+    },
+    {
+        "app_id": "de.oetker.android.rezeptideen",
+        "app_name": "Dr. Oetker Rezeptideen",
+        "position": 58
+    },
+    {
+        "app_id": "com.OnVation.LowCarbRecipeOfTheDay",
+        "app_name": "Low Carb Rezept des Tages - Rezepte & Planer",
+        "position": 59
+    },
+    {
+        "app_id": "com.deananddavid.android",
+        "app_name": "dean&david",
+        "position": 60
+    },
+    {
+        "app_id": "de.ottomatik.callapizza",
+        "app_name": "Call a Pizza - Best Pizza Delivery & Pizza Coupons",
+        "position": 61
+    },
+    {
+        "app_id": "at.dieschmiede.eatsmarter",
+        "app_name": "EAT SMARTER",
+        "position": 62
+    },
+    {
+        "app_id": "com.mufumbo.android.recipe.search",
+        "app_name": "Cookpad: Find & Share Recipes",
+        "position": 63
+    },
+    {
+        "app_id": "com.deliveroo.orderapp",
+        "app_name": "Deliveroo: Food Delivery",
+        "position": 64
+    },
+    {
+        "app_id": "de.mensamax.mobile",
+        "app_name": "MensaMax",
+        "position": 65
+    },
+    {
+        "app_id": "com.fittastetic.fitnessrecipes",
+        "app_name": "Fitness Recipes - Light and tasty healthy food!",
+        "position": 66
+    },
+    {
+        "app_id": "com.inovel.app.yemeksepeti",
+        "app_name": "Yemeksepeti - Food & Grocery",
+        "position": 67
+    },
+    {
+        "app_id": "com.grabtaxi.passenger",
+        "app_name": "Grab Superapp",
+        "position": 68
+    },
+    {
+        "app_id": "com.foodient.whisk",
+        "app_name": "Whisk: Recipes & Meal Planner",
+        "position": 69
+    },
+    {
+        "app_id": "com.yinqs.weeklymealplanner",
+        "app_name": "Meal Planner-Plan Weekly Meals",
+        "position": 70
+    },
+    {
+        "app_id": "de.backenmachtgluecklich.lite",
+        "app_name": "Backen macht glücklich",
+        "position": 71
+    },
+    {
+        "app_id": "com.bolt.deliveryclient",
+        "app_name": "Bolt Food",
+        "position": 72
+    },
+    {
+        "app_id": "com.junismile.superfood.de",
+        "app_name": "SuperFood - Healthy Recipes",
+        "position": 73
+    },
+    {
+        "app_id": "com.relevoapp",
+        "app_name": "Relevo",
+        "position": 74
+    },
+    {
+        "app_id": "enjoy.with.our.apps.thermomixrecipes",
+        "app_name": "Thermomix Recipes",
+        "position": 75
+    },
+    {
+        "app_id": "com.malmatech.eggtimer",
+        "app_name": "EggTimer - boil a perfect egg!",
+        "position": 76
+    },
+    {
+        "app_id": "de.choosy.app",
+        "app_name": "Choosy – Essen planen & kochen",
+        "position": 77
+    },
+    {
+        "app_id": "com.marleyspoon",
+        "app_name": "Marley Spoon",
+        "position": 78
+    },
+    {
+        "app_id": "com.durst.durst",
+        "app_name": "Durst - Getränke-Bestellung per App",
+        "position": 79
+    },
+    {
+        "app_id": "com.yelp.android",
+        "app_name": "Yelp: Food, Delivery & Reviews",
+        "position": 80
+    },
+    {
+        "app_id": "de.hawesko.app",
+        "app_name": "Hawesko",
+        "position": 81
+    },
+    {
+        "app_id": "com.beeorder.customer",
+        "app_name": "BeeOrder",
+        "position": 82
+    },
+    {
+        "app_id": "com.scs.inet",
+        "app_name": "i-NET-Menue®",
+        "position": 83
+    },
+    {
+        "app_id": "com.adlidet.food_sharing",
+        "app_name": "HomeMeal",
+        "position": 84
+    },
+    {
+        "app_id": "finalimage.Freddy_Fresh",
+        "app_name": "FREDDY FRESH PIZZA",
+        "position": 85
+    },
+    {
+        "app_id": "com.waterdrop.hydrationapp",
+        "app_name": "waterdrop® Hydration App",
+        "position": 86
+    },
+    {
+        "app_id": "com.diet.recipes.meal.plan",
+        "app_name": "Healthy Recipes for Weight Loss",
+        "position": 87
+    },
+    {
+        "app_id": "com.blackapps.kochbuch2",
+        "app_name": "My Cookbook | All your recipes",
+        "position": 88
+    },
+    {
+        "app_id": "com.casoapp.foodmanager",
+        "app_name": "CASO Food Manager",
+        "position": 89
+    },
+    {
+        "app_id": "dindonlabs.eggtimer",
+        "app_name": "Egg Timer",
+        "position": 90
+    },
+    {
+        "app_id": "de.enfokus.haehnchengriller",
+        "app_name": "Hähnchen-Radar",
+        "position": 91
+    },
+    {
+        "app_id": "de.kitaeinkauf.kitaLieblingsrezepte",
+        "app_name": "Kita-Lieblingsrezepte",
+        "position": 92
+    },
+    {
+        "app_id": "com.untappdllc.app",
+        "app_name": "Untappd - Discover Beer",
+        "position": 93
+    },
+    {
+        "app_id": "de.telepizza",
+        "app_name": "Tele Pizza",
+        "position": 94
+    },
+    {
+        "app_id": "com.oetkerdigital.backen",
+        "app_name": "Backen.de - Rezepte mit Backformumrechner",
+        "position": 95
+    },
+    {
+        "app_id": "com.mybarapp.free",
+        "app_name": "My Cocktail Bar",
+        "position": 96
+    },
+    {
+        "app_id": "com.shopgate.android.app20123",
+        "app_name": "roastmarket - Kaffee Online",
+        "position": 97
+    },
+    {
+        "app_id": "hu.viala.newiapp",
+        "app_name": "foodpanda - Food Delivery",
+        "position": 98
+    },
+    {
+        "app_id": "com.talabat",
+        "app_name": "talabat: Food & Groceries",
+        "position": 99
+    },
+    {
+        "app_id": "rezepte.kochen.free",
+        "app_name": "Rezepte Kochbuch zum Kochen",
+        "position": 100
+    },
+    {
+        "app_id": "de.kitaeinkauf.kitaLieblingsrezepte",
+        "app_name": "Kita-Lieblingsrezepte",
+        "position": 101
+    },
+    {
+        "app_id": "com.groupeseb.moncookeo",
+        "app_name": "Cook4Me",
+        "position": 102
+    },
+    {
+        "app_id": "st.tom.intervallfasten",
+        "app_name": "Intervallfasten",
+        "position": 103
+    },
+    {
+        "app_id": "com.nestle.nescafe.dolcegusto",
+        "app_name": "Nescafé Dolce Gusto",
+        "position": 104
+    },
+    {
+        "app_id": "de.rtli.kochbar",
+        "app_name": "kochbar: Rezepte zum Kochen & Backen für jeden Tag",
+        "position": 105
+    },
+    {
+        "app_id": "com.project.kiranchavan.detoxfree",
+        "app_name": "Detox Drinks : 300+ Healthy Detox Cleansing Drinks",
+        "position": 106
+    },
+    {
+        "app_id": "de.springlane.app",
+        "app_name": "Springlane – Rezepte & Kochen",
+        "position": 107
+    },
+    {
+        "app_id": "at.mjam",
+        "app_name": "mjam - food & groceries",
+        "position": 108
+    },
+    {
+        "app_id": "com.globaltronics.gtsfkmw01",
+        "app_name": "gt-sf-kmw-01",
+        "position": 109
+    },
+    {
+        "app_id": "com.kuka.app.bring",
+        "app_name": "bring - Grocery Delivery",
+        "position": 110
+    },
+    {
+        "app_id": "at.oetker.android.rezeptideen",
+        "app_name": "Dr. Oetker Rezeptideen",
+        "position": 111
+    },
+    {
+        "app_id": "com.mk.mealpy",
+        "app_name": "Meal Planner - Plan your meals for the whole week",
+        "position": 112
+    },
+    {
+        "app_id": "com.hup.km2017wi",
+        "app_name": "Küchenmaschine mit Kochfunktion KM2017Wi",
+        "position": 113
+    },
+    {
+        "app_id": "app.speisekammer",
+        "app_name": "PantryChief: Inventory Tracker",
+        "position": 114
+    },
+    {
+        "app_id": "de.apetito.landhauskuechenapp",
+        "app_name": "Landhausküche - Essen für Zuhause",
+        "position": 115
+    },
+    {
+        "app_id": "com.kenwood.world",
+        "app_name": "Kenwood World",
+        "position": 116
+    },
+    {
+        "app_id": "de.ncn.kochloeffel",
+        "app_name": "Kochlöffel",
+        "position": 117
+    },
+    {
+        "app_id": "fr.recettetek",
+        "app_name": "My Recipe Box : RecetteTek",
+        "position": 118
+    },
+    {
+        "app_id": "com.joelapenna.foursquared",
+        "app_name": "Foursquare City Guide",
+        "position": 119
+    },
+    {
+        "app_id": "com.zoodfood.android.play",
+        "app_name": "SnappFood سفارش انلاین غذا و سوپرمارکت",
+        "position": 120
+    },
+    {
+        "app_id": "qlnet.com.bbqgo",
+        "app_name": "BBQ Go",
+        "position": 121
+    },
+    {
+        "app_id": "net.markenwerk.apps.vzhs.gruenzeit",
+        "app_name": "GrünZeit – Saisonkalender",
+        "position": 122
+    },
+    {
+        "app_id": "com.leckerelowcarb.leckerelowcarbrezepts",
+        "app_name": "Low carb recipes fast",
+        "position": 123
+    },
+    {
+        "app_id": "de.myhypersoftapp.misspepper",
+        "app_name": "Miss PeppeR American Diner",
+        "position": 124
+    },
+    {
+        "app_id": "fisico.pizzapp",
+        "app_name": "PizzApp+",
+        "position": 125
+    },
+    {
+        "app_id": "de.discoeat",
+        "app_name": "DiscoEat - Discover Restaurants",
+        "position": 126
+    },
+    {
+        "app_id": "com.rstream.ketorecipes",
+        "app_name": "Keto Recipes",
+        "position": 127
+    },
+    {
+        "app_id": "com.supercook.app",
+        "app_name": "SuperCook - Recipe Generator",
+        "position": 128
+    },
+    {
+        "app_id": "io.foodji.app",
+        "app_name": "foodji",
+        "position": 129
+    },
+    {
+        "app_id": "com.dinnerly",
+        "app_name": "Dinnerly",
+        "position": 130
+    },
+    {
+        "app_id": "com.justeat.app.it",
+        "app_name": "Just Eat Italy - Ordina pranzo e cena a Domicilio",
+        "position": 131
+    },
+    {
+        "app_id": "com.dedie.skitbs.mobile",
+        "app_name": "Bestell-App",
+        "position": 132
+    },
+    {
+        "app_id": "com.vadetskii.kitchenscale",
+        "app_name": "Kitchen Scale",
+        "position": 133
+    },
+    {
+        "app_id": "com.tudorspan.recipekeeper",
+        "app_name": "Recipe Keeper",
+        "position": 134
+    },
+    {
+        "app_id": "com.viamichelin.android.gm21",
+        "app_name": "MICHELIN Guide - The best restaurants & hotels",
+        "position": 135
+    },
+    {
+        "app_id": "de.jb.mundfein",
+        "app_name": "Mundfein",
+        "position": 136
+    },
+    {
+        "app_id": "com.groupeseb.companion",
+        "app_name": "Prep&Cook von Krups",
+        "position": 137
+    },
+    {
+        "app_id": "com.nefisyemektarifleri.android",
+        "app_name": "Nefis Yemek Tarifleri",
+        "position": 138
+    },
+    {
+        "app_id": "de.aramark.new",
+        "app_name": "Mein Aramark Restaurant",
+        "position": 139
+    },
+    {
+        "app_id": "air.com.unit9.bkFrApp",
+        "app_name": "BURGER KING France",
+        "position": 140
+    },
+    {
+        "app_id": "com.groupeseb.actifry",
+        "app_name": "ActiFry",
+        "position": 141
+    },
+    {
+        "app_id": "de.lieferservice.android",
+        "app_name": "Lieferservice.de",
+        "position": 142
+    },
+    {
+        "app_id": "com.application.zomato",
+        "app_name": "Zomato: Food Delivery & Dining",
+        "position": 143
+    },
+    {
+        "app_id": "com.main.gopuff",
+        "app_name": "Gopuff—Alcohol & Food Delivery",
+        "position": 144
+    },
+    {
+        "app_id": "de.simplydelivery.losteria",
+        "app_name": "L'Osteria",
+        "position": 145
+    },
+    {
+        "app_id": "de.ordersmart.portal",
+        "app_name": "hunger.de - Bestell & Liefer-App für Essen",
+        "position": 146
+    },
+    {
+        "app_id": "org.petazwei.petazwei",
+        "app_name": "Der vegane Einkaufsguide – PETA ZWEI",
+        "position": 147
+    },
+    {
+        "app_id": "com.ooni.app",
+        "app_name": "Ooni Pizza Ovens",
+        "position": 148
+    },
+    {
+        "app_id": "de.simplydelivery.worldofpizza",
+        "app_name": "WORLD OF PIZZA",
+        "position": 149
+    },
+    {
+        "app_id": "com.yummly.android",
+        "app_name": "Yummly Recipes & Cooking Tools",
+        "position": 150
+    },
+    {
+        "app_id": "com.fiveguys.fiveguysuk",
+        "app_name": "Five Guys",
+        "position": 151
+    },
+    {
+        "app_id": "com.xtremeweb.eucemananc",
+        "app_name": "tazz",
+        "position": 152
+    },
+    {
+        "app_id": "com.food.recipes.tasty.weekly.meal.yammly.recipes",
+        "app_name": "Smarter IPTV Player lite",
+        "position": 153
+    },
+    {
+        "app_id": "com.justeat.app.es",
+        "app_name": "Just Eat ES - Order Food Online",
+        "position": 154
+    },
+    {
+        "app_id": "de.simplydelivery.sushifreunde",
+        "app_name": "Sushifreunde",
+        "position": 155
+    },
+    {
+        "app_id": "de.recup",
+        "app_name": "RECUP – reuse return repeat",
+        "position": 156
+    },
+    {
+        "app_id": "club.resq.android",
+        "app_name": "ResQ Club - Save food!",
+        "position": 157
+    },
+    {
+        "app_id": "com.yourdelivery.pyszne",
+        "app_name": "Pyszne.pl – order food online",
+        "position": 158
+    },
+    {
+        "app_id": "com.applaunch.uxa",
+        "app_name": "UXA Foodsharing-Essen retten heißt Umwelt schützen",
+        "position": 159
+    },
+    {
+        "app_id": "com.takeaway.android",
+        "app_name": "Thuisbezorgd.nl - Order food online",
+        "position": 160
+    },
+    {
+        "app_id": "koerbchen.koerbchen",
+        "app_name": "körbchen | Recipemanager",
+        "position": 161
+    },
+    {
+        "app_id": "de.stryi.Vorratsuebersicht",
+        "app_name": "Vorratsübersicht",
+        "position": 162
+    },
+    {
+        "app_id": "uk.takeaway.android",
+        "app_name": "Takeaway.com - Order Food",
+        "position": 163
+    },
+    {
+        "app_id": "shop.foodly.mobile",
+        "app_name": "Foodly - Dein Supermarkteinkauf in 1 Minute!",
+        "position": 164
+    },
+    {
+        "app_id": "de.nivona.mobileapp",
+        "app_name": "Nivona App",
+        "position": 165
+    },
+    {
+        "app_id": "app.foodisto.foodisto",
+        "app_name": "NeoTaste",
+        "position": 166
+    },
+    {
+        "app_id": "com.wetherspoon.orderandpay",
+        "app_name": "Wetherspoon",
+        "position": 167
+    },
+    {
+        "app_id": "de.restablo.app.android",
+        "app_name": "restablo.de - Essen bestellen",
+        "position": 168
+    },
+    {
+        "app_id": "com.grability.rappi",
+        "app_name": "Rappi",
+        "position": 169
+    },
+    {
+        "app_id": "app.grid.guest",
+        "app_name": "Grid: IRL Upgraded",
+        "position": 170
+    },
+    {
+        "app_id": "at.co.babos.beertasting",
+        "app_name": "BeerTasting - Beer Guide",
+        "position": 171
+    },
+    {
+        "app_id": "au.com.npsupermarket",
+        "app_name": "NP Supermarket",
+        "position": 172
+    },
+    {
+        "app_id": "com.venturegeeks.efood",
+        "app_name": "efood delivery",
+        "position": 173
+    },
+    {
+        "app_id": "at.incibit.vegancheffrey",
+        "app_name": "Vegan Cheffrey: Rezepte Kochen",
+        "position": 174
+    },
+    {
+        "app_id": "com.phenix.arabic_food",
+        "app_name": "Arabica food",
+        "position": 175
+    },
+    {
+        "app_id": "com.hamzabinamin.rezeptrechner.pro",
+        "app_name": "Rezeptrechner 2.0",
+        "position": 176
+    },
+    {
+        "app_id": "de.gesundessen.app",
+        "app_name": "Gesund essen",
+        "position": 177
+    },
+    {
+        "app_id": "de.quandoo.android.consumerapp",
+        "app_name": "Quandoo: Restaurant Bookings",
+        "position": 178
+    },
+    {
+        "app_id": "com.youtaste",
+        "app_name": "Youtaste - Order Food",
+        "position": 179
+    },
+    {
+        "app_id": "burger.gutscheine.deals.bgk",
+        "app_name": "Gutscheine für Burger King – Deals, Rabatte",
+        "position": 180
+    },
+    {
+        "app_id": "com.couponspromocodes.mcdonalds",
+        "app_name": "McDonalds coupons",
+        "position": 181
+    },
+    {
+        "app_id": "com.appsmart.delivery.derfliegendeitaliener12444",
+        "app_name": "Der fliegende Italiener",
+        "position": 182
+    },
+    {
+        "app_id": "com.chefclub.App",
+        "app_name": "Chefclub - Anyone can be chef!",
+        "position": 183
+    },
+    {
+        "app_id": "com.optiwelt.app",
+        "app_name": "OptiWelt – OptiGrill Rezepte & Community",
+        "position": 184
+    },
+    {
+        "app_id": "com.ma.cc.salad",
+        "app_name": "Salad Recipes: Healthy Foods with Nutrition & Tips",
+        "position": 185
+    },
+    {
+        "app_id": "com.brotchen.app",
+        "app_name": "Brötchen App – simply. pre-order",
+        "position": 186
+    },
+    {
+        "app_id": "com.kfc.ksa",
+        "app_name": "KFC Saudi Arabia",
+        "position": 187
+    },
+    {
+        "app_id": "club.sorted.cook",
+        "app_name": "Sidekick by Sorted Food",
+        "position": 188
+    },
+    {
+        "app_id": "com.cb.cakebaker.bakinggames.makergames",
+        "app_name": "Ice Cream Cake Games",
+        "position": 189
+    },
+    {
+        "app_id": "de.gastroblitz.pizzaboy",
+        "app_name": "pizzaboy",
+        "position": 190
+    },
+    {
+        "app_id": "com.smorderloyalty.unfucked",
+        "app_name": "Unfckd Vegan",
+        "position": 191
+    },
+    {
+        "app_id": "com.pedidosya",
+        "app_name": "PedidosYa - Delivery Online",
+        "position": 192
+    },
+    {
+        "app_id": "com.speisekarte24.sk24",
+        "app_name": "speisekarte24.de - Essen online bestellen",
+        "position": 193
+    },
+    {
+        "app_id": "com.movo.movouser",
+        "app_name": "Movo",
+        "position": 194
+    },
+    {
+        "app_id": "com.biocompany.bcapp",
+        "app_name": "BIO COMPANY",
+        "position": 195
+    },
+    {
+        "app_id": "com.goldencode.moajanat",
+        "app_name": "وصفات معجنات وطبخ بدون انترنت",
+        "position": 196
+    },
+    {
+        "app_id": "com.lieferfuchs.lieferfuchs",
+        "app_name": "Lieferfuchs",
+        "position": 197
+    },
+    {
+        "app_id": "com.endless.healthyrecipes",
+        "app_name": "Healthy Recipes",
+        "position": 198
+    },
+    {
+        "app_id": "com.appsmart.delivery.pizzacab3599",
+        "app_name": "Pizza Cab Lieferservice",
+        "position": 199
+    },
+    {
+        "app_id": "de.appkreativ.kochdichhappy",
+        "app_name": "Kochen mit AMC",
+        "position": 200
+    }
+]
