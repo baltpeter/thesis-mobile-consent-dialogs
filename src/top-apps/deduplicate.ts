@@ -19,7 +19,7 @@ const out_dir = (platform: 'android' | 'ios') =>
             .map((p) => JSON.parse(fs.readFileSync(p, 'utf-8')).slice(0, 100))
             .flat();
         const deduplicated_app_ids = [...new Set(app_ids)];
-        await fs.writeFile(join(dir, 'app_ids.json'), deduplicated_app_ids.join('\n'));
+        await fs.writeFile(join(dir, 'app_ids.csv'), deduplicated_app_ids.join('\n'));
         console.log(`On ${platform === 'android' ? 'Android' : 'iOS'}:`);
         console.log(
             'Apps before deduplication:',

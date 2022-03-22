@@ -686,6 +686,18 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
         * With all found apps: Apps before deduplication: 6970, Apps after deduplication: 6817
         * Top 100 per category: Apps before deduplication: 3500, Apps after deduplication: 3421
 
+### App aquisition
+
+* Android
+    * Uses https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/
+    * Follow instructions in README to setup Google account.
+    * Download started on 2022-03-22T18:54:00.
+* iOS
+    * Uses ipatool with my changes.
+    * Additional change: Allow using `adamId` instead of `bundleId`.
+    * Privacy labels downloaded immediately after IPA.
+    * Download started on 2022-03-22T21:00:00.
+
 ### Better method for aquiring IPAs
 
 * [ipatool](https://github.com/majd/ipatool) seems promising, works for downloading already bought apps (on recent macOS) but cannot buy new apps
