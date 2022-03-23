@@ -35,7 +35,7 @@ do
 
         if [ $err_count -ge 5 ]; then
             echo "Sleeping…"
-            sleep 300
+            sleep $(( err_count * 60))
         fi
     fi
 done
