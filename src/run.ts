@@ -403,7 +403,7 @@ async function main() {
 
                 if (buttons1.all_affirmative.length === 1) {
                     await client.elementClick(buttons1.all_affirmative[0].ELEMENT);
-                    await pause(5000);
+                    await pause(app_timeout * 1000);
 
                     res.prefs.accepted = await api.get_prefs(app_id);
                 }
@@ -418,7 +418,7 @@ async function main() {
 
                     const { buttons: buttons2 } = await collect_indicators();
                     await client.elementClick(buttons2.all_negative[0].ELEMENT);
-                    await pause(5000);
+                    await pause(app_timeout * 1000);
 
                     res.prefs.rejected = await api.get_prefs(app_id);
                 }

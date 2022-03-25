@@ -745,7 +745,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * If we do find them, try to interact with them using Frida.
 * [x] Find out how to get element style properties (to answer questions like "which button is more prominent?").
     * Not possible.
-* [ ] Automate 3u with Frida?
+* [ ] ~~Automate 3u with Frida?~~
 * [ ] ~~Go through CMPs and check whether their state can be read programmatically/they can be interacted with programmatically.~~
 * [x] Write adapters for different trackers and endpoints that detect their presence and can extract the transmitted data.
     * Will also be helpful for complaint generator.
@@ -775,6 +775,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * [ ] Consider US transfers without consent a violation, maybe go even deeper (scan consent notice for keywords)?
     * [ ] Check consent dialog language.
     * [ ] Check for "forbidden" heading (BaWü).
+* [ ] For button highlight violation detection: What if there is more than one of each button? For each positive button, go through all negative buttons and only note violation if it is highlighted compared to all of them?
 * Questions for Simon:
     * "the listed options (consent for which processing is requested?, which third-party tracking companies are used?) will be extracted" -> I can do that for the TCF apps, for everything else, this will be very difficult.
         * -> only for TCF apps

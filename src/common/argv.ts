@@ -59,6 +59,11 @@ export const argv = yargs(process.argv.slice(2))
             default: join(dirname(), '../../venv/bin/frida-ps'),
             group: 'Optional options:',
         },
+        objection_path: {
+            type: 'string',
+            default: join(dirname(), '../../venv/bin/objection'),
+            group: 'Optional options:',
+        },
 
         dev: {
             type: 'boolean',

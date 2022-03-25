@@ -1,8 +1,9 @@
 import fs from 'fs-extra';
-import { execa } from 'execa';
+import { execa, ExecaChildProcess } from 'execa';
 // @ts-ignore
 import _ipaInfo from 'ipa-extract-info';
 import frida from 'frida';
+import { timeout } from 'promise-timeout';
 import { ArgvType } from './argv.js';
 import { pause } from './util.js';
 
@@ -107,10 +108,17 @@ const reset_app = async (
     await that.start_app(app_id);
 };
 
-export const platform_api = (argv: ArgvType): { android: PlatformApi; ios: PlatformApi } => ({
+export const platform_api = (
+    argv: ArgvType
+): { android: PlatformApi & { _internal: { objection_processes: ExecaChildProcess[] } }; ios: PlatformApi } => ({
     android: {
+        _internal: { objection_processes: [] },
+
         ensure_frida: async () => {
-            const frida_check = await execa('frida-ps -U | grep frida-server', { shell: true, reject: false });
+            const frida_check = await execa(`${argv.frida_ps_path} -U | grep frida-server`, {
+                shell: true,
+                reject: false,
+            });
             if (frida_check.exitCode === 0) return;
 
             await execa('adb', ['root']);
@@ -123,21 +131,62 @@ export const platform_api = (argv: ArgvType): { android: PlatformApi; ios: Platf
 
             await execa('adb shell "nohup /data/local/tmp/frida-server >/dev/null 2>&1 &"', { shell: true });
             let frida_tries = 0;
-            while ((await execa('frida-ps -U | grep frida-server', { shell: true, reject: false })).exitCode !== 0) {
+            while (
+                (await execa(`${argv.frida_ps_path} -U | grep frida-server`, { shell: true, reject: false }))
+                    .exitCode !== 0
+            ) {
                 if (frida_tries > 100) throw new Error('Failed to start Frida.');
                 await pause(250);
                 frida_tries++;
             }
         },
-        clear_stuck_modals: async_unimplemented('clear_stuck_modals'),
+        clear_stuck_modals: async () => {
+            // Press back button.
+            await execa('adb', ['shell', 'input', 'keyevent', '4']);
+            // Press home button.
+            await execa('adb', ['shell', 'input', 'keyevent', '3']);
+        },
 
         install_app: (apk_path) => execa('adb', ['install-multiple', '-g', apk_path], { shell: true }),
-        // TODO: Only fail if app wasn't installed.
-        uninstall_app: (app_id) => execa('adb', ['shell', 'pm', 'uninstall', '--user', '0', app_id]).catch(() => {}),
-        // Basic permissions are granted at install time. TODO: Grant dangerous permissions.
-        set_app_permissions: async_unimplemented('set_app_permissions'),
-        start_app: async_unimplemented('start_app'),
+        uninstall_app: (app_id) =>
+            execa('adb', ['shell', 'pm', 'uninstall', '--user', '0', app_id]).catch((err) => {
+                // Only fail if app wasn't installed.
+                if (err.stderr.includes('not installed for 0')) throw err;
+            }),
+        // Basic permissions are granted at install time, we only need to grant dangerous permissions, see:
+        // https://android.stackexchange.com/a/220297.
+        set_app_permissions: async (app_id) => {
+            const { stdout: perm_str } = await execa('adb', ['shell', 'pm', 'list', 'permissions', '-g', '-d', '-u']);
+            const dangerous_permissions = perm_str
+                .split('\n')
+                .filter((l) => l.startsWith('  permission:'))
+                .map((l) => l.replace('  permission:', ''));
+
+            // We expect this to fail for permissions the app doesn't want.
+            for (const permission of dangerous_permissions)
+                await execa('adb', ['shell', 'pm', 'grant', app_id, permission]).catch(() => {});
+        },
+        start_app(app_id) {
+            // We deliberately don't await that since Objection doesn't exit after the app is started.
+            const process = execa(argv.objection_path, [
+                '--gadget',
+                app_id,
+                'explore',
+                '--startup-command',
+                'android sslpinning disable',
+            ]);
+            this._internal.objection_processes.push(process);
+            return Promise.resolve();
+        },
         async reset_app(app_id, apk_path, on_before_start) {
+            for (const process of this._internal.objection_processes) {
+                console.log('killing');
+                process.kill();
+                await timeout(
+                    process.catch(() => {}),
+                    5000
+                ).catch(() => process.kill(9));
+            }
             await reset_app(this, app_id, apk_path, on_before_start);
         },
 
