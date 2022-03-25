@@ -1,14 +1,18 @@
+import { join } from 'path';
 import fs from 'fs-extra';
 import { execa, ExecaChildProcess } from 'execa';
 // @ts-ignore
 import _ipaInfo from 'ipa-extract-info';
 import frida from 'frida';
 import { timeout } from 'promise-timeout';
+// @ts-ignore
+import dirname from 'es-dirname';
 import { ArgvType } from './argv.js';
 import { pause } from './util.js';
 
 type PlatformApi = {
-    ensure_frida: () => Promise<void>;
+    ensure_device: () => Promise<void>;
+    reset_device: () => Promise<void>;
     clear_stuck_modals: () => Promise<void>;
 
     install_app: (app_path: string) => Promise<unknown>;
@@ -110,35 +114,72 @@ const reset_app = async (
 
 export const platform_api = (
     argv: ArgvType
-): { android: PlatformApi & { _internal: { objection_processes: ExecaChildProcess[] } }; ios: PlatformApi } => ({
+): {
+    android: PlatformApi & {
+        _internal: {
+            ensure_frida: () => Promise<void>;
+
+            emu_process?: ExecaChildProcess;
+            objection_processes: ExecaChildProcess[];
+        };
+    };
+    ios: PlatformApi;
+} => ({
     android: {
-        _internal: { objection_processes: [] },
+        _internal: {
+            emu_process: undefined,
+            objection_processes: [],
 
-        ensure_frida: async () => {
-            const frida_check = await execa(`${argv.frida_ps_path} -U | grep frida-server`, {
-                shell: true,
-                reject: false,
-            });
-            if (frida_check.exitCode === 0) return;
+            ensure_frida: async () => {
+                const frida_check = await execa(`${argv.frida_ps_path} -U | grep frida-server`, {
+                    shell: true,
+                    reject: false,
+                });
+                if (frida_check.exitCode === 0) return;
 
-            await execa('adb', ['root']);
-            let adb_tries = 0;
-            while ((await execa('adb', ['get-state'], { reject: false })).exitCode !== 0) {
-                if (adb_tries > 100) throw new Error('Failed to connect via adb.');
-                await pause(250);
-                adb_tries++;
+                await execa('adb', ['root']);
+                let adb_tries = 0;
+                while ((await execa('adb', ['get-state'], { reject: false })).exitCode !== 0) {
+                    if (adb_tries > 100) throw new Error('Failed to connect via adb.');
+                    await pause(250);
+                    adb_tries++;
+                }
+
+                await execa('adb shell "nohup /data/local/tmp/frida-server >/dev/null 2>&1 &"', { shell: true });
+                let frida_tries = 0;
+                while (
+                    (await execa(`${argv.frida_ps_path} -U | grep frida-server`, { shell: true, reject: false }))
+                        .exitCode !== 0
+                ) {
+                    if (frida_tries > 100) throw new Error('Failed to start Frida.');
+                    await pause(250);
+                    frida_tries++;
+                }
+            },
+        },
+
+        async reset_device() {
+            console.log('Resetting emulator…');
+            await execa('adb', ['emu', 'avd', 'snapshot', 'load', argv.avd_snapshot_name!]);
+            await this._internal.ensure_frida();
+        },
+        async ensure_device() {
+            if (!argv.dev) {
+                console.log('Starting emulator…');
+                this._internal.emu_process = execa('emulator', [
+                    '-avd',
+                    argv.avd_name!,
+                    '-no-audio',
+                    '-no-boot-anim',
+                    '-writable-system',
+                    '-http-proxy',
+                    '127.0.0.1:8080',
+                    '-no-snapshot-save',
+                ]);
+                await execa(join(dirname(), '../await_emulator.sh'));
             }
 
-            await execa('adb shell "nohup /data/local/tmp/frida-server >/dev/null 2>&1 &"', { shell: true });
-            let frida_tries = 0;
-            while (
-                (await execa(`${argv.frida_ps_path} -U | grep frida-server`, { shell: true, reject: false }))
-                    .exitCode !== 0
-            ) {
-                if (frida_tries > 100) throw new Error('Failed to start Frida.');
-                await pause(250);
-                frida_tries++;
-            }
+            await this._internal.ensure_frida();
         },
         clear_stuck_modals: async () => {
             // Press back button.
@@ -150,8 +191,8 @@ export const platform_api = (
         install_app: (apk_path) => execa('adb', ['install-multiple', '-g', apk_path], { shell: true }),
         uninstall_app: (app_id) =>
             execa('adb', ['shell', 'pm', 'uninstall', '--user', '0', app_id]).catch((err) => {
-                // Only fail if app wasn't installed.
-                if (err.stderr.includes('not installed for 0')) throw err;
+                // Don't fail if app wasn't installed.
+                if (!err.stdout.includes('not installed for 0')) throw err;
             }),
         // Basic permissions are granted at install time, we only need to grant dangerous permissions, see:
         // https://android.stackexchange.com/a/220297.
@@ -179,14 +220,15 @@ export const platform_api = (
             return Promise.resolve();
         },
         async reset_app(app_id, apk_path, on_before_start) {
+            // Kill leftover Objection processes.
             for (const process of this._internal.objection_processes) {
-                console.log('killing');
                 process.kill();
                 await timeout(
                     process.catch(() => {}),
                     5000
                 ).catch(() => process.kill(9));
             }
+
             await reset_app(this, app_id, apk_path, on_before_start);
         },
 
@@ -214,8 +256,9 @@ export const platform_api = (
             )?.[1],
     },
     ios: {
-        // On iOS, Frida is automatically provided by the Frida app installed through Cydia.
-        ensure_frida: async_nop,
+        // On iOS, we're running a physical device and Frida doesn't need to be started manually.
+        reset_device: async_nop,
+        ensure_device: async_nop,
         clear_stuck_modals: async () => {
             await execa('sshpass', [
                 '-p',

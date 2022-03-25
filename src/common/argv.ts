@@ -8,6 +8,18 @@ export const argv = yargs(process.argv.slice(2))
         platform: { choices: ['android', 'ios'] as const, demandOption: true, group: 'Required options:' },
         apps_dir: { type: 'string', demandOption: true, group: 'Required options:' },
 
+        avd_name: {
+            type: 'string',
+            describe: 'Name of the Android emulator AVD',
+            group: 'Android options:',
+        },
+        avd_snapshot_name: {
+            type: 'string',
+            describe:
+                'Name of snapshot to reset the Android emulator to after each app (hint: `adb emu avd snapshot save <name>`)',
+            group: 'Android options:',
+        },
+
         idevice_ip: {
             type: 'string',
             describe: 'Local IP address of the iDevice to use',
@@ -88,6 +100,14 @@ export const argv = yargs(process.argv.slice(2))
         for (const arg of ['xcode_org_id', 'idevice_ip']) {
             if (argv.platform === 'ios' && !argv[arg]) throw new Error(`You need to specify \`${arg}\` for iOS.`);
         }
+
+        if (argv.platform === 'android' && !argv.dev && !argv.avd_name)
+            throw new Error('You need to specify `avd_name` for Android.');
+        for (const arg of ['avd_snapshot_name']) {
+            if (argv.platform === 'android' && !argv[arg])
+                throw new Error(`You need to specify \`${arg}\` for Android.`);
+        }
+
         return true;
     })
     .parseSync();

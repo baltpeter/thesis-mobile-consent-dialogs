@@ -15,7 +15,6 @@ import { argv } from './common/argv.js';
 import { db, pg } from './common/db.js';
 import { platform_api } from './common/platform.js';
 import {
-    // button_id_fragments,
     dialog_id_fragments,
     button_text_fragments,
     dialog_text_fragments,
@@ -80,7 +79,7 @@ async function main() {
         : glob.sync(`*`, { absolute: false, cwd: argv.apps_dir }).map((p) => basename(p, '.ipa'));
     if (run_for_open_app_only && app_ids[0] === '') throw new Error('You need to start an app!');
 
-    await api.ensure_frida();
+    await api.ensure_device();
 
     for (const app_id of shuffle(app_ids)) {
         const app_path_main =
@@ -151,7 +150,7 @@ async function main() {
                 await api.uninstall_app(app_id);
             }
 
-            if (failed) {
+            if (failed && !run_for_open_app_only) {
                 console.log('Deleting from database…');
                 await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
             }
@@ -163,6 +162,8 @@ async function main() {
             process.exit();
         });
         try {
+            await api.reset_device();
+
             console.log('Starting Appium session…');
             await timeout(await_proc_start(appium, 'Appium REST http interface listener started'), 15000);
 
@@ -331,7 +332,8 @@ async function main() {
             // Detect violations.
             if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 // Unambiguous "accept" button (not "okay").
-                if (buttons.clear_affirmative.length < 1) res.violations.ambiguous_accept_button = true;
+                if (buttons.clear_affirmative.length < 1 && buttons.hidden_affirmative.length > 0)
+                    res.violations.ambiguous_accept_button = true;
 
                 // Unambiguous "reject" button if there is an "accept" button.
                 if (buttons.clear_affirmative.length + buttons.hidden_affirmative.length > 0) {
@@ -396,12 +398,17 @@ async function main() {
                 log_indicators = false;
 
                 await api.reset_app(app_id, app_path_all);
-                await pause(app_timeout);
+                await client.reloadSession();
+
+                await pause(10000);
 
                 const { buttons: buttons1 } = await collect_indicators();
                 res.prefs.initial = await api.get_prefs(app_id);
 
                 if (buttons1.all_affirmative.length === 1) {
+                    console.log(
+                        `Accepting dialog and waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`
+                    );
                     await client.elementClick(buttons1.all_affirmative[0].ELEMENT);
                     await pause(app_timeout * 1000);
 
@@ -413,10 +420,14 @@ async function main() {
                     // reset state anyway.
                     if (buttons1.all_affirmative.length === 1) {
                         await api.reset_app(app_id, app_path_all);
-                        await pause(app_timeout);
+                        await client.reloadSession();
+                        await pause(10000);
                     }
 
                     const { buttons: buttons2 } = await collect_indicators();
+                    console.log(
+                        `Rejecting dialog and waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`
+                    );
                     await client.elementClick(buttons2.all_negative[0].ELEMENT);
                     await pause(app_timeout * 1000);
 
