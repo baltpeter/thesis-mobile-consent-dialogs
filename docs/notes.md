@@ -692,11 +692,19 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * Uses https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/
     * Follow instructions in README to setup Google account.
     * Download started on 2022-03-22T18:54:00.
+    * Download done on 2022-03-23T17:54:20 (with 108 apps that couldn't be downloaded)
+    * Missing apps all failed with "Fehler beim Abrufen von Informationen vom Server: DF-DFERH-01".
+        * Trying to download the failed apps through other download tools failed as well.
+        * Viewing them in the Play Store on an emulator (the one used to setup the Google account for the downloads), showed: "Your device isn't compatible with this app."
 * iOS
     * Uses ipatool with my changes.
     * Additional change: Allow using `adamId` instead of `bundleId`.
     * Privacy labels downloaded immediately after IPA.
     * Download started on 2022-03-22T21:00:00.
+    * Download took longer than it should have due to App Store downtime, which forced me to pause it.
+    * Had to use two Apple IDs because because (for some reason) after downloading around 300 apps, the buy command wouldn't actually immediately buy the app even though it returned success (the app wozld only show up as "purchased" after a few hours to days). After that, even buying apps through the actual App Store didn't result in them being listed as "purchased" anymore.
+        * Seems to cool down after a few days?
+    * Download done on 2022-03-25T12:06:35 (with 5 apps that couldn't be downloaded, all not available on the App Store anymore)
 
 ### Better method for aquiring IPAs
 
