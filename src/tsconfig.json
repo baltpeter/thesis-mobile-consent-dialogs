@@ -13,5 +13,8 @@
         "allowJs": true,
         "noEmit": true
     },
+    "ts-node": {
+        "transpileOnly": true
+    },
     "include": ["**/*.mjs", "**/*.ts"]
 }
