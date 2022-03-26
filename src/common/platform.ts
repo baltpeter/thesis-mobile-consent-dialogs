@@ -177,6 +177,9 @@ export const platform_api = (
                     '-no-snapshot-save',
                 ]);
                 await execa(join(dirname(), '../await_emulator.sh'));
+            } else {
+                if ((await execa('adb', ['get-state'], { reject: false })).exitCode !== 0)
+                    throw new Error('You need to start an emulator for dev mode.');
             }
 
             await this._internal.ensure_frida();
