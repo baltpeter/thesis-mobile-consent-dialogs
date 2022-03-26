@@ -8,7 +8,7 @@ import { timeout } from 'promise-timeout';
 // @ts-ignore
 import dirname from 'es-dirname';
 import { ArgvType } from './argv.js';
-import { pause } from './util.js';
+import { kill_process, pause } from './util.js';
 
 type PlatformApi = {
     ensure_device: () => Promise<void>;
@@ -221,13 +221,7 @@ export const platform_api = (
         },
         async reset_app(app_id, apk_path, on_before_start) {
             // Kill leftover Objection processes.
-            for (const process of this._internal.objection_processes) {
-                process.kill();
-                await timeout(
-                    process.catch(() => {}),
-                    5000
-                ).catch(() => process.kill(9));
-            }
+            for (const proc of this._internal.objection_processes) await kill_process(proc);
 
             await reset_app(this, app_id, apk_path, on_before_start);
         },

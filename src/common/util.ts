@@ -1,4 +1,5 @@
 import { ExecaChildProcess } from 'execa';
+import { timeout } from 'promise-timeout';
 
 export const shuffle = <T>(arr: T[]) => arr.sort(() => Math.random() - 0.5);
 
@@ -27,4 +28,10 @@ export const await_proc_start = (proc: ExecaChildProcess<string>, start_message:
             }
         });
     });
+};
+export const kill_process = async (proc?: ExecaChildProcess) => {
+    if (proc) {
+        proc.kill();
+        await timeout(proc, 5000).catch(() => proc.kill(9));
+    }
 };

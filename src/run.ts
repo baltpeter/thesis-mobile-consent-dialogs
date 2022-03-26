@@ -22,7 +22,7 @@ import {
     keywords_regular,
     keywords_half,
 } from './common/indicators.js';
-import { shuffle, pause, await_proc_start } from './common/util.js';
+import { shuffle, pause, await_proc_start, kill_process } from './common/util.js';
 
 const required_score = 1;
 const app_timeout = 60;
@@ -107,10 +107,7 @@ async function main() {
             'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
             { app_id, version, platform: argv.platform }
         );
-        const { id: run_id } = await db.one(
-            'INSERT INTO runs (start_time, app) VALUES(now(), ${db_app_id}) RETURNING id;',
-            { db_app_id }
-        );
+        let main_run_id;
 
         const res = {
             verdict: 'neither',
@@ -130,19 +127,40 @@ async function main() {
             screenshot: undefined as string | undefined,
         };
 
-        let client: WebdriverIO.Browser, mitmdump: ExecaChildProcess<string>;
+        // This isn't exactly clean but I don't know how else to convince TS that `mitmdump` will be assigned a value
+        // below.
+        let client: WebdriverIO.Browser,
+            mitmdump: ExecaChildProcess<string> = undefined as any;
         // On iOS, a globally started Appium server tends to break after a few runs, so we just start a new one for each
         // app which adds a bit of overhead but solves the problem.
         const appium: ExecaChildProcess<string> = execa('appium');
 
+        const start_mitmproxy = async (
+            run_type: 'initial' | 'rejected' | 'accepted' | 'ignore'
+        ): Promise<number | undefined> => {
+            if (mitmdump) {
+                console.log('Stopping existing mitmproxy instance…');
+                await kill_process(mitmdump);
+            }
+
+            console.log('Starting mitmproxy…');
+            if (run_type !== 'ignore') {
+                const { id: run_id } = await db.one(
+                    'INSERT INTO runs (start_time, app, run_type) VALUES(now(), ${db_app_id}, ${run_type}) RETURNING id;',
+                    { db_app_id, run_type }
+                );
+                mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
+                await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
+                return run_id;
+            }
+
+            mitmdump = execa(argv.mitmdump_path);
+            await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
+        };
+
         const cleanup = async (failed = false) => {
             console.log('Cleaning up mitmproxy and Appium session…');
-            for (const proc of [mitmdump, appium]) {
-                if (proc) {
-                    proc.kill();
-                    await proc.catch(() => {});
-                }
-            }
+            for (const proc of [mitmdump, appium]) await kill_process(proc);
 
             if (client) await client.deleteSession().catch(() => {});
             if (!run_for_open_app_only) {
@@ -213,9 +231,7 @@ async function main() {
             await client.setGeoLocation({ latitude: '52.23528', longitude: '10.56437', altitude: '77.23' });
 
             await api.reset_app(app_id, app_path_all, async () => {
-                console.log('Starting mitmproxy…');
-                mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
-                await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
+                main_run_id = await start_mitmproxy('initial');
             });
 
             console.log(`Waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`);
@@ -393,10 +409,11 @@ async function main() {
             console.log(chalk.redBright('Violations:'));
             console.log(res.violations);
 
-            // Save prefs.
+            // Collect traffic after accepting/rejecting dialog; and save corresponding prefs.
             if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 log_indicators = false;
 
+                await start_mitmproxy('ignore');
                 await api.reset_app(app_id, app_path_all);
                 await client.reloadSession();
 
@@ -405,20 +422,26 @@ async function main() {
                 const { buttons: buttons1 } = await collect_indicators();
                 res.prefs.initial = await api.get_prefs(app_id);
 
-                if (buttons1.all_affirmative.length === 1) {
+                if (buttons1.all_affirmative.length > 0) {
                     console.log(
                         `Accepting dialog and waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`
                     );
-                    await client.elementClick(buttons1.all_affirmative[0].ELEMENT);
+                    await start_mitmproxy('accepted');
+                    await client.elementClick(
+                        buttons1.clear_affirmative.length > 0
+                            ? buttons1.clear_affirmative[0].ELEMENT
+                            : buttons1.all_affirmative[0].ELEMENT
+                    );
                     await pause(app_timeout * 1000);
 
                     res.prefs.accepted = await api.get_prefs(app_id);
                 }
 
-                if (buttons1.all_negative.length === 1) {
+                if (buttons1.clear_negative.length > 0) {
                     // We only need to reset if there was an affirmative button that we clicked, otherwise we are in a
                     // reset state anyway.
                     if (buttons1.all_affirmative.length === 1) {
+                        await start_mitmproxy('ignore');
                         await api.reset_app(app_id, app_path_all);
                         await client.reloadSession();
                         await pause(10000);
@@ -428,7 +451,8 @@ async function main() {
                     console.log(
                         `Rejecting dialog and waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`
                     );
-                    await client.elementClick(buttons2.all_negative[0].ELEMENT);
+                    await start_mitmproxy('rejected');
+                    await client.elementClick(buttons2.clear_negative[0].ELEMENT);
                     await pause(app_timeout * 1000);
 
                     res.prefs.rejected = await api.get_prefs(app_id);
@@ -440,7 +464,7 @@ async function main() {
                 await db.none(
                     'INSERT INTO dialogs (run,verdict,violations,prefs,screenshot,meta) VALUES (${run_id},${verdict},${violations},${prefs},${screenshot},${meta})',
                     {
-                        run_id,
+                        run_id: main_run_id,
                         verdict: res.verdict,
                         violations: JSON.stringify(res.violations),
                         prefs: JSON.stringify(res.prefs),

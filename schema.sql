@@ -7,6 +7,10 @@ create type verdict_enum as enum ('neither', 'dialog', 'notice', 'maybe_dialog',
 
 alter type verdict_enum owner to ma;
 
+create type run_type as enum ('initial', 'accepted', 'rejected');
+
+alter type run_type owner to ma;
+
 create table if not exists apps
 (
     name text not null,
@@ -29,7 +33,8 @@ create table if not exists runs
     app integer not null
         constraint runs_apps_id_fk
             references apps
-                on delete cascade
+                on delete cascade,
+    run_type run_type not null
 );
 
 alter table runs owner to ma;
