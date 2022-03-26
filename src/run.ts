@@ -82,81 +82,12 @@ async function main() {
     await api.ensure_device();
 
     for (const app_id of shuffle(app_ids)) {
-        const app_path_main =
-            argv.platform === 'android'
-                ? join(argv.apps_dir, app_id, `${app_id}.apk`)
-                : join(argv.apps_dir, `${app_id}.ipa`);
-        // To handle split APKs on Android.
-        const app_path_all = argv.platform === 'android' ? join(argv.apps_dir, app_id, '*.apk') : app_path_main;
-        const version = await api.get_app_version(app_path_main);
-
-        if (!run_for_open_app_only) {
-            const done = await db.any(
-                'SELECT 1 FROM apps WHERE name = ${app_id} AND version = ${version} AND platform = ${platform};',
-                { app_id, version, platform: argv.platform }
-            );
-            if (done.length > 0) {
-                console.log(chalk.underline(`Skipping ${app_id}@${version} (${argv.platform})…`));
-                console.log();
-                continue;
-            }
-        }
-        console.log(chalk.underline(`Analyzing ${app_id}@${version} (${argv.platform})…`));
-
-        const { id: db_app_id } = await db.one(
-            'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
-            { app_id, version, platform: argv.platform }
-        );
-        let main_run_id;
-
-        const res = {
-            verdict: 'neither',
-            violations: {
-                ambiguous_accept_button: false,
-                accept_button_without_reject_button: false,
-                ambiguous_reject_button: false,
-                accept_larger_than_reject: false,
-                accept_color_highlight: false,
-                stops_after_reject: false,
-            },
-            prefs: {
-                initial: undefined as Record<string, any> | undefined,
-                accepted: undefined as Record<string, any> | undefined,
-                rejected: undefined as Record<string, any> | undefined,
-            },
-            screenshot: undefined as string | undefined,
-        };
-
         // This isn't exactly clean but I don't know how else to convince TS that `mitmdump` will be assigned a value
         // below.
         let client: WebdriverIO.Browser,
-            mitmdump: ExecaChildProcess<string> = undefined as any;
-        // On iOS, a globally started Appium server tends to break after a few runs, so we just start a new one for each
-        // app which adds a bit of overhead but solves the problem.
-        const appium: ExecaChildProcess<string> = execa('appium');
-
-        const start_mitmproxy = async (
-            run_type: 'initial' | 'rejected' | 'accepted' | 'ignore'
-        ): Promise<number | undefined> => {
-            if (mitmdump) {
-                console.log('Stopping existing mitmproxy instance…');
-                await kill_process(mitmdump);
-            }
-
-            console.log('Starting mitmproxy…');
-            if (run_type !== 'ignore') {
-                const { id: run_id } = await db.one(
-                    'INSERT INTO runs (start_time, app, run_type) VALUES(now(), ${db_app_id}, ${run_type}) RETURNING id;',
-                    { db_app_id, run_type }
-                );
-                mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
-                await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
-                return run_id;
-            }
-
-            mitmdump = execa(argv.mitmdump_path);
-            await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
-        };
+            appium: ExecaChildProcess<string>,
+            mitmdump: ExecaChildProcess<string> = undefined as any,
+            db_app_id: number;
 
         const cleanup = async (failed = false) => {
             console.log('Cleaning up mitmproxy and Appium session…');
@@ -170,16 +101,90 @@ async function main() {
 
             if (failed && !run_for_open_app_only) {
                 console.log('Deleting from database…');
-                await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
+                if (db_app_id) await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
             }
         };
-        process.removeAllListeners('SIGINT');
-        process.on('SIGINT', async () => {
-            await cleanup(true);
-            pg.end();
-            process.exit();
-        });
+
         try {
+            const app_path_main =
+                argv.platform === 'android'
+                    ? join(argv.apps_dir, app_id, `${app_id}.apk`)
+                    : join(argv.apps_dir, `${app_id}.ipa`);
+            // To handle split APKs on Android.
+            const app_path_all = argv.platform === 'android' ? join(argv.apps_dir, app_id, '*.apk') : app_path_main;
+            const version = await api.get_app_version(app_path_main);
+
+            if (!run_for_open_app_only) {
+                const done = await db.any(
+                    'SELECT 1 FROM apps WHERE name = ${app_id} AND version = ${version} AND platform = ${platform};',
+                    { app_id, version, platform: argv.platform }
+                );
+                if (done.length > 0) {
+                    console.log(chalk.underline(`Skipping ${app_id}@${version} (${argv.platform})…`));
+                    console.log();
+                    continue;
+                }
+            }
+            console.log(chalk.underline(`Analyzing ${app_id}@${version} (${argv.platform})…`));
+
+            const { id: db_app_id } = await db.one(
+                'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
+                { app_id, version, platform: argv.platform }
+            );
+            let main_run_id;
+
+            const res = {
+                verdict: 'neither',
+                violations: {
+                    ambiguous_accept_button: false,
+                    accept_button_without_reject_button: false,
+                    ambiguous_reject_button: false,
+                    accept_larger_than_reject: false,
+                    accept_color_highlight: false,
+                    stops_after_reject: false,
+                },
+                prefs: {
+                    initial: undefined as Record<string, any> | undefined,
+                    accepted: undefined as Record<string, any> | undefined,
+                    rejected: undefined as Record<string, any> | undefined,
+                },
+                screenshot: undefined as string | undefined,
+            };
+
+            // On iOS, a globally started Appium server tends to break after a few runs, so we just start a new one for each
+            // app which adds a bit of overhead but solves the problem.
+            appium = execa('appium');
+
+            const start_mitmproxy = async (
+                run_type: 'initial' | 'rejected' | 'accepted' | 'ignore'
+            ): Promise<number | undefined> => {
+                if (mitmdump) {
+                    console.log('Stopping existing mitmproxy instance…');
+                    await kill_process(mitmdump);
+                }
+
+                console.log('Starting mitmproxy…');
+                if (run_type !== 'ignore') {
+                    const { id: run_id } = await db.one(
+                        'INSERT INTO runs (start_time, app, run_type) VALUES(now(), ${db_app_id}, ${run_type}) RETURNING id;',
+                        { db_app_id, run_type }
+                    );
+                    mitmdump = execa(argv.mitmdump_path, ['-s', mitmdump_addon_path, '--set', `run=${run_id}`]);
+                    await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
+                    return run_id;
+                }
+
+                mitmdump = execa(argv.mitmdump_path);
+                await timeout(await_proc_start(mitmdump, 'Proxy server listening'), 15000);
+            };
+
+            process.removeAllListeners('SIGINT');
+            process.on('SIGINT', async () => {
+                await cleanup(true);
+                pg.end();
+                process.exit();
+            });
+
             await api.reset_device();
 
             console.log('Starting Appium session…');
