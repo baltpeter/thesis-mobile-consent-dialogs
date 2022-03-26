@@ -74,9 +74,11 @@ async function main() {
 
     const api = platform_api(argv)[argv.platform];
 
-    const app_ids = run_for_open_app_only
-        ? [(await api.get_foreground_app_id()) || '']
-        : glob.sync(`*`, { absolute: false, cwd: argv.apps_dir }).map((p) => basename(p, '.ipa'));
+    const app_ids =
+        argv.app_ids ||
+        (run_for_open_app_only
+            ? [(await api.get_foreground_app_id()) || '']
+            : glob.sync(`*`, { absolute: false, cwd: argv.apps_dir }).map((p) => basename(p, '.ipa')));
     if (run_for_open_app_only && app_ids[0] === '') throw new Error('You need to start an app!');
 
     await api.ensure_device();
@@ -99,9 +101,9 @@ async function main() {
                 await api.uninstall_app(app_id);
             }
 
-            if (failed && !run_for_open_app_only) {
+            if (failed && !run_for_open_app_only && db_app_id) {
                 console.log('Deleting from database…');
-                if (db_app_id) await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
+                await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
             }
         };
 
@@ -127,10 +129,12 @@ async function main() {
             }
             console.log(chalk.underline(`Analyzing ${app_id}@${version} (${argv.platform})…`));
 
-            const { id: db_app_id } = await db.one(
-                'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
-                { app_id, version, platform: argv.platform }
-            );
+            db_app_id = (
+                await db.one(
+                    'INSERT INTO apps (name, version, platform) VALUES(${app_id}, ${version}, ${platform}) RETURNING id;',
+                    { app_id, version, platform: argv.platform }
+                )
+            ).id;
             let main_run_id;
 
             const res = {

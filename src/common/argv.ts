@@ -61,6 +61,12 @@ export const argv = yargs(process.argv.slice(2))
             group: 'iOS options:',
         },
 
+        app_ids: {
+            type: 'string',
+            array: true,
+            describe: 'A list of app IDs to analyse (will otherwise default to all apps in the specified `--apps_dir`)',
+            group: 'Optional options:',
+        },
         mitmdump_path: {
             type: 'string',
             default: join(dirname(), '../../venv/bin/mitmdump'),
