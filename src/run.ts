@@ -26,6 +26,8 @@ import { shuffle, pause, await_proc_start, kill_process } from './common/util.js
 
 const required_score = 1;
 const app_timeout = 60;
+const max_button_size_factor = 1.5;
+const max_button_color_difference = 30;
 const mitmdump_addon_path = join(dirname(), 'mitm-addon.py');
 
 const run_for_open_app_only = argv.dev;
@@ -368,49 +370,68 @@ async function main() {
                 }
 
                 // "Accept" button not highlighted compared to "reject" button.
-                // TODO: What if there is more than one of each button type?
-                if (buttons.all_affirmative.length === 1 && buttons.all_negative.length === 1) {
-                    // Compare button sizes.
-                    const affirmative_rect = await timeout(
-                        client.getElementRect(buttons.all_affirmative[0].ELEMENT),
-                        5000
-                    );
-                    const negative_rect = await timeout(client.getElementRect(buttons.all_negative[0].ELEMENT), 5000);
-                    const affirmative_size = affirmative_rect.width * affirmative_rect.height;
-                    const negative_size = negative_rect.width * negative_rect.height;
-                    if (affirmative_size / negative_size > 1.5) res.violations.accept_larger_than_reject = true;
-                    console.log('button size factor:', affirmative_size / negative_size);
+                if (buttons.all_affirmative.length > 0 && buttons.all_negative.length > 0) {
+                    const element_size_factor = async (el1: string, el2: string) => {
+                        const el1_rect = await timeout(client.getElementRect(el1), 5000);
+                        const el2_rect = await timeout(client.getElementRect(el2), 5000);
 
-                    // Compare button colors.
-                    const affirmative_screenshot = Buffer.from(
-                        await client.takeElementScreenshot(buttons.all_affirmative[0].ELEMENT),
-                        'base64'
-                    );
-                    const negative_screenshot = Buffer.from(
-                        await client.takeElementScreenshot(buttons.all_negative[0].ELEMENT),
-                        'base64'
-                    );
+                        const el1_size = el1_rect.width * el1_rect.height;
+                        const el2_size = el2_rect.width * el2_rect.height;
 
-                    const affirmative_color = (
-                        await getImageColors(affirmative_screenshot, { count: 1, type: 'image/png' })
-                    )[0];
-                    const negative_color = (
-                        await getImageColors(negative_screenshot, { count: 1, type: 'image/png' })
-                    )[0];
-                    const color_difference = chroma.deltaE(affirmative_color, negative_color);
-                    console.log('color difference:', color_difference);
-                    if (color_difference > 30) res.violations.accept_color_highlight = true;
+                        return el1_size / el2_size;
+                    };
+
+                    const element_color_difference = async (el1: string, el2: string) => {
+                        const el1_screenshot = Buffer.from(await client.takeElementScreenshot(el1), 'base64');
+                        const el2_screenshot = Buffer.from(await client.takeElementScreenshot(el2), 'base64');
+
+                        const el1_color = (await getImageColors(el1_screenshot, { count: 1, type: 'image/png' }))[0];
+                        const el2_color = (await getImageColors(el2_screenshot, { count: 1, type: 'image/png' }))[0];
+
+                        return chroma.deltaE(el1_color, el2_color);
+                    };
+
+                    // If there is more than one of each button, we can't know which ones to check against each other to
+                    // detect whether one is highlighted. Thus, for each affirmative button, we only record a violation
+                    // if _every_ negative button is highlighted compared to it.
+                    // But it is enough if there is one affirmative button that is highlighted, not all of them need to
+                    // be.
+                    for (const affirmative_button of buttons.all_affirmative) {
+                        // Compare button sizes.
+                        if (!res.violations.accept_larger_than_reject) {
+                            const violates_size = await buttons.all_negative.reduce(
+                                async (acc, cur) =>
+                                    (await acc) ||
+                                    (await element_size_factor(affirmative_button.ELEMENT, cur.ELEMENT)) >
+                                        max_button_size_factor,
+                                Promise.resolve(false)
+                            );
+                            if (violates_size) res.violations.accept_larger_than_reject = true;
+                        }
+
+                        // Compare button colors.
+                        if (!res.violations.accept_color_highlight) {
+                            const violates_color = await buttons.all_negative.reduce(
+                                async (acc, cur) =>
+                                    (await acc) ||
+                                    (await element_color_difference(affirmative_button.ELEMENT, cur.ELEMENT)) >
+                                        max_button_color_difference,
+                                Promise.resolve(false)
+                            );
+                            if (violates_color) res.violations.accept_color_highlight = true;
+                        }
+                    }
                 }
 
                 // Using app needs to be possible after refusing/withdrawing consent.
-                if (buttons.all_negative.length === 1) {
+                if (buttons.clear_negative.length > 0 || buttons.hidden_negative.length === 1) {
                     // Ensure the app is still running in the foreground (4), see: http://appium.io/docs/en/commands/device/app/app-state/
                     if ((await client.queryAppState(app_id)) === 4) {
-                        await client.elementClick(buttons.all_negative[0].ELEMENT);
-                        await pause(2000);
+                        await client.elementClick((buttons.clear_negative[0] || buttons.hidden_negative[0]).ELEMENT);
+                        await pause(5000);
 
                         if ((await client.queryAppState(app_id)) !== 4) res.violations.stops_after_reject = true;
-                    }
+                    } else throw new Error('App lost focus while testing for violations.');
                 }
             }
 

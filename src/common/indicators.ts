@@ -20,7 +20,7 @@ export const button_text_fragments = {
     clear_affirmative: normalizeFragments(['accept', 'agree', 'allow', 'consent', 'permit', /(select|choose) all/, 'yes', 'akzeptieren', 'zustimmen', 'annehmen', 'erlauben', 'einwilligen', 'genehmigen', /alle (aus)?wählen/, 'ja'], true),
     hidden_affirmative: normalizeFragments(['ok', 'okay', 'next', 'continue', 'weiter', 'fortfahren'], true),
     clear_negative: normalizeFragments(['decline', 'reject', 'refuse', 'no', 'widersprechen', 'ablehnen', 'verweigern', 'nein'], true),
-    hidden_negative: normalizeFragments([/customi(z|s)e/, /more (choices|details)/, 'settings', 'options', 'show details', 'exit', 'cancel', 'learn more', 'einstellungen', 'optionen', 'mehr details', 'details anzeigen', 'anpassen', /schlie(ß|ss)en/, 'beenden', 'abbrechen', 'mehr erfahren'], true),
+    hidden_negative: normalizeFragments([/customi(z|s)e/, /personali(z|s)e/, /more (choices|details)/, 'settings', 'options', /(show|more) details/, 'exit', 'cancel', 'learn more', 'anpassen', 'personalisieren', 'einstellungen', 'optionen', 'mehr details', 'details anzeigen', 'anpassen', /schlie(ß|ss)en/, 'beenden', 'abbrechen', 'mehr erfahren'], true),
 };
 
 export const button_text_fragments_all = Object.values(button_text_fragments).flat();
