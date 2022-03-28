@@ -76,10 +76,11 @@ function dictFromNSDictionary(nsDict) {
 }
 var prefs = ObjC.classes.NSUserDefaults.alloc().init().dictionaryRepresentation();
 send({ name: "get_obj_from_frida_script", payload: dictFromNSDictionary(prefs) });`,
-        set_clipboard: (text: string) => `ObjC.classes.UIPasteboard.generalPasteboard().setString_("${text}");
-send({ name: "get_obj_from_frida_script", payload: true });`,
-        get_idfc: `var idfv = ObjC.classes.UIDevice.currentDevice().identifierForVendor();
+        set_clipboard: (text: string) => `ObjC.classes.UIPasteboard.generalPasteboard().setString_("${text}");`,
+        get_idfv: `var idfv = ObjC.classes.UIDevice.currentDevice().identifierForVendor();
 send({ name: "get_obj_from_frida_script", payload: idfv });`,
+        grant_location_permission: (app_id: string) =>
+            `ObjC.classes.CLLocationManager.setAuthorizationStatusByType_forBundleIdentifier_(4, "${app_id}");`,
     },
 };
 
@@ -322,9 +323,7 @@ export const platform_api = (argv: ArgvType): { android: PlatformApiAndroid; ios
                     'open com.apple.Preferences',
                 ]);
                 const session = await frida.getUsbDevice().then((f) => f.attach('Settings'));
-                const script = await session.createScript(
-                    `ObjC.classes.CLLocationManager.setAuthorizationStatusByType_forBundleIdentifier_(4, "${app_id}");`
-                );
+                const script = await session.createScript(frida_scripts.ios.grant_location_permission(app_id));
                 await script.load();
                 await session.detach();
             };
@@ -363,9 +362,10 @@ export const platform_api = (argv: ArgvType): { android: PlatformApiAndroid; ios
             return { idfv: await get_idfv() };
         },
         async set_clipboard(text) {
-            const launcher_pid = await this.get_pid_for_app_id('SpringBoard');
-            const res = await get_obj_from_frida_script(launcher_pid, frida_scripts.ios.set_clipboard(text));
-            if (!res) throw new Error('Setting clipboard failed.');
+            const session = await frida.getUsbDevice().then((f) => f.attach('SpringBoard'));
+            const script = await session.createScript(frida_scripts.ios.set_clipboard(text));
+            await script.load();
+            await session.detach();
         },
 
         get_app_version: async (ipa_path) =>
