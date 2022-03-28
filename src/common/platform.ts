@@ -125,19 +125,19 @@ const reset_app = async (
     await that.start_app(app_id);
 };
 
-export const platform_api = (
-    argv: ArgvType
-): {
-    android: PlatformApi & {
-        _internal: {
-            ensure_frida: () => Promise<void>;
+export type PlatformApiAndroid = PlatformApi & {
+    _internal: {
+        ensure_frida: () => Promise<void>;
 
-            emu_process?: ExecaChildProcess;
-            objection_processes: ExecaChildProcess[];
-        };
+        emu_process?: ExecaChildProcess;
+        objection_processes: ExecaChildProcess[];
     };
-    ios: PlatformApi;
-} => ({
+};
+export type PlatformApiIos = PlatformApi & {
+    _internal: { get_app_id: (app_path: string) => Promise<string | undefined> };
+};
+
+export const platform_api = (argv: ArgvType): { android: PlatformApiAndroid; ios: PlatformApiIos } => ({
     android: {
         _internal: {
             emu_process: undefined,
@@ -274,6 +274,10 @@ export const platform_api = (
             )?.[1],
     },
     ios: {
+        _internal: {
+            get_app_id: async (ipa_path) => (await ipa_info(ipa_path)).info.CFBundleIdentifier as string | undefined,
+        },
+
         // On iOS, we're running a physical device and Frida doesn't need to be started manually.
         reset_device: async_nop,
         ensure_device: async_nop,

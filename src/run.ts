@@ -15,7 +15,7 @@ import { serializeError } from 'serialize-error';
 import chroma from 'chroma-js';
 import { argv } from './common/argv.js';
 import { db, pg } from './common/db.js';
-import { platform_api } from './common/platform.js';
+import { platform_api, PlatformApiIos } from './common/platform.js';
 import {
     dialog_id_fragments,
     button_text_fragments,
@@ -87,7 +87,7 @@ async function main() {
 
     await api.ensure_device();
 
-    for (const app_id of shuffle(app_ids)) {
+    for (let app_id of shuffle(app_ids)) {
         // This isn't exactly clean but I don't know how else to convince TS that `mitmdump` will be assigned a value
         // below.
         let client: WebdriverIO.Browser,
@@ -119,6 +119,9 @@ async function main() {
             // To handle split APKs on Android.
             const app_path_all = argv.platform === 'android' ? join(argv.apps_dir, app_id, '*.apk') : app_path_main;
             const version = await api.get_app_version(app_path_main);
+
+            // On iOS, our IPA files are named by their numeric ID instead of the bundle ID.
+            if (argv.platform === 'ios') app_id = (await (api as PlatformApiIos)._internal.get_app_id(app_path_all))!;
 
             if (!run_for_open_app_only) {
                 const done = await db.any(
