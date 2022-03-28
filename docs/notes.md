@@ -141,6 +141,96 @@ nano .env
 * Uninstall all third-party apps that are not absolutely necessary.
 * Turn on Bluetooth.
 
+### Android
+
+* Make sure to use an x86_64 emulator (Android 11).
+* Uninstall unnecessary Google apps to avoid their background traffic:
+
+  ```sh
+  adb shell 'pm uninstall --user 0 com.android.chrome'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.docs'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.maps'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.messaging'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.photos'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.pixelmigrate'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.wellbeing'
+  adb shell 'pm uninstall --user 0 com.google.android.apps.youtube.music'
+  adb shell 'pm uninstall --user 0 com.google.android.gm'
+  adb shell 'pm uninstall --user 0 com.google.android.googlequicksearchbox'
+  adb shell 'pm uninstall --user 0 com.google.android.videos'
+  adb shell 'pm uninstall --user 0 com.google.android.youtube'
+  adb shell 'pm uninstall --user 0 com.google.mainline.telemetry'
+  ```
+* Disable captive portal checks to further reduce background noise:
+
+  ```sh
+  adb shell 'settings put global captive_portal_detection_enabled 0'
+  adb shell 'settings put global captive_portal_server localhost'
+  adb shell 'settings put global captive_portal_mode 0'
+  ```
+* Install mitmproxy certificate as root CA (emu needs to be started with `-writable-system`):
+
+  ```sh
+  # Yields <hash>.
+  openssl x509 -inform PEM -subject_hash_old -in ~/.mitmproxy/mitmproxy-ca-cert.pem | head -1
+  cp ~/.mitmproxy/mitmproxy-ca-cert.pem <hash>.0
+  
+  adb root
+  adb shell avbctl disable-verification
+  adb disable-verity
+  adb reboot
+  adb root
+  adb remount
+  
+  adb push <hash>.0 /sdcard/
+  adb shell 'mv /sdcard/<hash>.0 /system/etc/security/cacerts/'
+  adb shell 'chmod 644 /system/etc/security/cacerts/<hash>.0'
+  adb reboot
+  ```
+* Install Frida on the emulator:
+
+  ```sh
+  wget https://github.com/frida/frida/releases/download/15.1.12/frida-server-15.1.12-android-x86_64.xz
+  7z x frida-server-15.1.12-android-x86_64.xz
+  adb push frida-server-15.1.12-android-x86_64 /data/local/tmp/frida-server
+  adb shell 'chmod 777 /data/local/tmp/frida-server'
+  
+  adb root
+  adb shell 'nohup /data/local/tmp/frida-server >/dev/null 2>&1 &'
+  # Should have `frida-server`.
+  frida-ps -U | grep frida
+  ```
+
+## Honey data
+
+### Set
+
+* Contact: `JGKfozntbF TBFFZbBYea`, 0155 57543434, `RYnlSPbEYh@bn.al`, `https://q8phlLSJgq.bn.al`, `N2AsWEMI5D 565, 859663 p0GdKDTbYV`
+* Messages: `9FBqD2CNIJ` (to|from) +49 155 75734343
+* Calls from and to +49 155 75734343 (Android only)
+* Calendar: `fWAs4GFbpN`, at `urscf2178L`, 2022-08-14T08:56 (iOS only)
+* Reminder: `b5jHg3Eh1k`, `HQBOdx4kx2` (scheduled for 2022-08-02T13:38) (iOS only)
+* Health details: Name `DkwIXobsJN t5TfTlezmn`, DOB 1973-05-15, female, height 146cm, weight 108.5kg (iOS only)
+* Home data: Rooms `bEZf1h06j1`, `DX7BgPtH99` (basement); second home `g1bVNue3On` (iOS only)
+* Device name: `R2Gl5OLv20`
+* Note: `S0Ei7sFP9b` (iOS only)
+* Phone number: +49 155 85834346 (Android only)
+* Apple ID (iOS only)
+
+* Clipboard: `LDDsvPqQdT`
+
+### Read
+
+TODO
+
+* Location: Schreinerweg 6, 38126 Braunschweig; 52.235288, 10.564235
+* WiFi network: WLAN3.ALTPETER.ME
+* IMEI: 356395106788056
+* BSSID: 34:81:c4:dc:36:1
+* WiFi addr: 3C:CD:36:D4:CC:E4
+* Bluetooth addr: 3C:CD:36:D2:BD:B2
+* Local IP: `10.0.0.68`
+
 ## Mobile CMPs
 
 * IAB TCF

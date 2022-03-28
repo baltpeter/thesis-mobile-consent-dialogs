@@ -175,6 +175,8 @@ export const platform_api = (
                     '-http-proxy',
                     '127.0.0.1:8080',
                     '-no-snapshot-save',
+                    '-phone-number',
+                    '4915585834346',
                 ]);
                 await execa(join(dirname(), '../await_emulator.sh'));
             } else {
