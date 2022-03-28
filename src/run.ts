@@ -1,4 +1,5 @@
 import { basename, join } from 'path';
+import fs from 'fs-extra';
 import glob from 'glob';
 import yesno from 'yesno';
 // @ts-ignore
@@ -10,6 +11,7 @@ import type { ElementReference } from '@wdio/protocols/build/types';
 import chalk from 'chalk';
 import { timeout } from 'promise-timeout';
 import getImageColors from 'get-image-colors';
+import { serializeError } from 'serialize-error';
 import chroma from 'chroma-js';
 import { argv } from './common/argv.js';
 import { db, pg } from './common/db.js';
@@ -511,6 +513,14 @@ async function main() {
             console.log();
         } catch (err) {
             console.error(`Analyzing ${app_id} failed:`, err);
+
+            const err_dir = join(dirname(), '../data/failed-apps.tmp');
+            const date = new Date().toISOString();
+            await fs.ensureDir(err_dir);
+            await fs.writeFile(
+                join(err_dir, `${date}-${app_id}.json`),
+                JSON.stringify({ app_id, date, error: serializeError(err) }, null, 4)
+            );
 
             await cleanup(true);
 

@@ -841,23 +841,22 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * Will also be helpful for complaint generator.
     * Idea: While value matching works for data points we can control, this isn't possible for everything, e.g. OS (`android`, `ios`) or screen dimensions are way too generic to be matched that way.
 * [x] After CMP detection: Do violation detection next, then interaction.
-* [ ] Save raw mitmproxy flows/logs. (`--save_stream_file` but also save cmd logs)
 * [ ] Look for SDK indicators in prefs?
 * [x] Change geolocation.
 * [ ] ~~For button color highlight: Also compare with background.~~ Manually check all color highlight violations that ensure that it's not actually the negative button that is highlighted.
-* [ ] Cert pinning bypass
-* [ ] Honey data
-* [ ] Python `requirements.txt`
+* [x] Cert pinning bypass
+* [x] Honey data
+* [x] Python `requirements.txt`
 * [x] Verify app is still running after waiting.
 * [ ] Look at cookies and headers.
     * Same cookie values across different apps?
     * Compare with cookie DB?
 * [ ] Can we fix incorrect country detections (`US`)?
-* [ ] Set device name.
-* [ ] Record failures.
+* [x] Set device name.
+* [x] Record failures.
 * [ ] For iOS:
-    * [ ] There tend to be multiple nested elements with the same name/label that are displayed as a single element. This breaks the violation detection, which expects exactly one affirmative and negative button. While all of those elements are `visible`, it seems like only one of them is `accessible`.
-    * [ ] We need to make sure to always dismiss all modals as they can stick around after the app is uninstalled and Appium will then only see them.
+    * [ ] ~~There tend to be multiple nested elements with the same name/label that are displayed as a single element. This breaks the violation detection, which expects exactly one affirmative and negative button. While all of those elements are `visible`, it seems like only one of them is `accessible`.~~
+    * [ ] ~~We need to make sure to always dismiss all modals as they can stick around after the app is uninstalled and Appium will then only see them.~~
     * [x] We sometimes get into a state where Appium sees the system UI and detects a "No SIM" "button". It seems like this can be resolved by getting rid of all modals.
         * Maybe we should throw if we detect that?
     * [ ] Read IDFV using Frida and check for that.
