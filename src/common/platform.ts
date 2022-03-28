@@ -27,6 +27,7 @@ type PlatformApi = {
     get_foreground_app_id: () => Promise<string | undefined>;
     get_pid_for_app_id: (app_id: string) => Promise<number | undefined>;
     get_prefs: (app_id: string) => Promise<Record<string, unknown> | undefined>;
+    set_clipboard: (text: string) => Promise<void>;
 
     get_app_version: (app_path: string) => Promise<string | undefined>;
 };
@@ -51,6 +52,12 @@ while (iterator.hasNext()) {
 }
 
 send({ name: "get_obj_from_frida_script", payload: prefs });`,
+        set_clipboard: (
+            text: string
+        ) => `var app_ctx = Java.use('android.app.ActivityThread').currentApplication().getApplicationContext();
+var cm = Java.cast(app_ctx.getSystemService("clipboard"), Java.use("android.content.ClipboardManager"));
+cm.setText(Java.use("java.lang.StringBuilder").$new("${text}"));
+send({ name: "get_obj_from_frida_script", payload: true });`,
     },
     ios: {
         get_prefs: `// Taken from: https://codeshare.frida.re/@dki/ios-app-info/
@@ -68,6 +75,8 @@ function dictFromNSDictionary(nsDict) {
 }
 var prefs = ObjC.classes.NSUserDefaults.alloc().init().dictionaryRepresentation();
 send({ name: "get_obj_from_frida_script", payload: dictFromNSDictionary(prefs) });`,
+        set_clipboard: (text: string) => `ObjC.classes.UIPasteboard.generalPasteboard().setString_("${text}");
+send({ name: "get_obj_from_frida_script", payload: true });`,
     },
 };
 
@@ -81,7 +90,7 @@ const get_obj_from_frida_script = async (pid: number | undefined, script: string
         const frida_device = await frida.getUsbDevice();
         const frida_session = await frida_device.attach(pid);
         const frida_script = await frida_session.createScript(script);
-        const result_promise = new Promise<Record<string, unknown>>((res, rej) => {
+        const result_promise = new Promise<any>((res, rej) => {
             frida_script.message.connect((message) => {
                 if (message.type === 'send' && message.payload?.name === 'get_obj_from_frida_script')
                     res(message.payload?.payload);
@@ -107,6 +116,7 @@ const reset_app = async (
     await that.install_app(app_path);
     await that.set_app_permissions(app_id);
     await that.clear_stuck_modals();
+    await that.set_clipboard('LDDsvPqQdT');
     if (on_before_start) await on_before_start();
     console.log('Starting app…');
     await that.start_app(app_id);
@@ -246,6 +256,11 @@ export const platform_api = (
             const pid = await this.get_pid_for_app_id(app_id);
             return get_obj_from_frida_script(pid, frida_scripts.android.get_prefs);
         },
+        async set_clipboard(text) {
+            const launcher_pid = await this.get_pid_for_app_id('com.google.android.apps.nexuslauncher');
+            const res = await get_obj_from_frida_script(launcher_pid, frida_scripts.android.set_clipboard(text));
+            if (!res) throw new Error('Setting clipboard failed.');
+        },
 
         get_app_version: async (apk_path) =>
             // These sometimes fail with `AndroidManifest.xml:42: error: ERROR getting 'android:icon' attribute: attribute value
@@ -329,6 +344,11 @@ export const platform_api = (
         async get_prefs(app_id) {
             const pid = await this.get_pid_for_app_id(app_id);
             return get_obj_from_frida_script(pid, frida_scripts.ios.get_prefs);
+        },
+        async set_clipboard(text) {
+            const launcher_pid = await this.get_pid_for_app_id('SpringBoard');
+            const res = await get_obj_from_frida_script(launcher_pid, frida_scripts.ios.set_clipboard(text));
+            if (!res) throw new Error('Setting clipboard failed.');
         },
 
         get_app_version: async (ipa_path) =>
