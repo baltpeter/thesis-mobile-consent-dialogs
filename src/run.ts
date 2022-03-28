@@ -229,6 +229,7 @@ async function main() {
                 'appium:xcodeOrgId': argv.xcode_org_id,
                 'appium:xcodeSigningId': argv.xcode_signing_id,
                 'appium:updatedWDABundleId': argv.webdriver_agent_bundle_id,
+                'appium:autoDismissAlerts': true,
             };
             const capabilities: Capabilities.Capabilities & { 'appium:autoLaunch': boolean } = {
                 ...(argv.platform === 'android' ? android_capabilities : ios_capabilities),
@@ -289,56 +290,46 @@ async function main() {
                 let keyword_score = 0;
 
                 const elements = await timeout(client.findElements('xpath', '//*'), 15000);
-                try {
-                    for (const el of elements) {
-                        // Only consider elements that the user can actually see.
-                        if (!client.isElementDisplayed(el.ELEMENT)) continue;
+                for (const el of elements) {
+                    // Only consider elements that the user can actually see.
+                    if (!client.isElementDisplayed(el.ELEMENT)) continue;
 
-                        const id = await timeout(
-                            client.getElementAttribute(
-                                el.ELEMENT,
-                                argv.platform === 'android' ? 'resource-id' : 'name'
-                            ),
-                            5000
-                        );
-                        if (id) {
-                            // if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
-                            if (testAndLog(dialog_id_fragments, id, 'has dialog ID')) has_dialog = true;
-                        }
-
-                        const text = await timeout(client.getElementText(el.ELEMENT), 5000);
-                        if (text) {
-                            if (argv.debug_text) console.log(text);
-
-                            // On iOS, we sometimes get into a state where Appium sees the system UI, which we can
-                            // detect through the presence of the "No SIM" indicator.
-                            if (argv.platform === 'ios' && text === 'No SIM')
-                                throw new Error(
-                                    'Found "No SIM" indicator. There is likely a stuck modal that blocks the actual app.'
-                                );
-
-                            if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
-                                buttons.push('clear_affirmative', el);
-                            else if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
-                                buttons.push('clear_negative', el);
-                            else if (
-                                testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2)
-                            )
-                                buttons.push('hidden_affirmative', el);
-                            else if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
-                                buttons.push('hidden_negative', el);
-
-                            if (testAndLog(dialog_text_fragments, text, 'has dialog text')) has_dialog = true;
-                            if (testAndLog(link_text_fragments, text, 'has privacy policy link')) has_link = true;
-
-                            const regular_keywords = testAndLog(keywords_regular, text, 'has 1p keyword', false, true);
-                            const half_keywords = testAndLog(keywords_half, text, 'has 1/2p keyword', false, true);
-                            keyword_score +=
-                                (regular_keywords as RegExp[]).length + (half_keywords as RegExp[]).length / 2;
-                        }
+                    const id = await timeout(
+                        client.getElementAttribute(el.ELEMENT, argv.platform === 'android' ? 'resource-id' : 'name'),
+                        5000
+                    );
+                    if (id) {
+                        // if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
+                        if (testAndLog(dialog_id_fragments, id, 'has dialog ID')) has_dialog = true;
                     }
-                } catch (err) {
-                    console.error(err);
+
+                    const text = await timeout(client.getElementText(el.ELEMENT), 5000);
+                    if (text) {
+                        if (argv.debug_text) console.log(text);
+
+                        // On iOS, we sometimes get into a state where Appium sees the system UI, which we can
+                        // detect through the presence of the "No SIM" indicator.
+                        if (argv.platform === 'ios' && text === 'No SIM')
+                            throw new Error(
+                                'Found "No SIM" indicator. There is likely a stuck modal that blocks the actual app.'
+                            );
+
+                        if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
+                            buttons.push('clear_affirmative', el);
+                        else if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
+                            buttons.push('clear_negative', el);
+                        else if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2))
+                            buttons.push('hidden_affirmative', el);
+                        else if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
+                            buttons.push('hidden_negative', el);
+
+                        if (testAndLog(dialog_text_fragments, text, 'has dialog text')) has_dialog = true;
+                        if (testAndLog(link_text_fragments, text, 'has privacy policy link')) has_link = true;
+
+                        const regular_keywords = testAndLog(keywords_regular, text, 'has 1p keyword', false, true);
+                        const half_keywords = testAndLog(keywords_half, text, 'has 1/2p keyword', false, true);
+                        keyword_score += (regular_keywords as RegExp[]).length + (half_keywords as RegExp[]).length / 2;
+                    }
                 }
 
                 return { has_dialog, buttons, has_link, keyword_score };
