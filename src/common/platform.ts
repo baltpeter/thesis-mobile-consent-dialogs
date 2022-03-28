@@ -4,7 +4,6 @@ import { execa, ExecaChildProcess } from 'execa';
 // @ts-ignore
 import _ipaInfo from 'ipa-extract-info';
 import frida from 'frida';
-import { timeout } from 'promise-timeout';
 // @ts-ignore
 import dirname from 'es-dirname';
 import { ArgvType } from './argv.js';
@@ -77,7 +76,7 @@ function dictFromNSDictionary(nsDict) {
 var prefs = ObjC.classes.NSUserDefaults.alloc().init().dictionaryRepresentation();
 send({ name: "get_obj_from_frida_script", payload: dictFromNSDictionary(prefs) });`,
         set_clipboard: (text: string) => `ObjC.classes.UIPasteboard.generalPasteboard().setString_("${text}");`,
-        get_idfv: `var idfv = ObjC.classes.UIDevice.currentDevice().identifierForVendor();
+        get_idfv: `var idfv = ObjC.classes.UIDevice.currentDevice().identifierForVendor().toString();
 send({ name: "get_obj_from_frida_script", payload: idfv });`,
         grant_location_permission: (app_id: string) =>
             `ObjC.classes.CLLocationManager.setAuthorizationStatusByType_forBundleIdentifier_(4, "${app_id}");`,
@@ -356,7 +355,7 @@ export const platform_api = (argv: ArgvType): { android: PlatformApiAndroid; ios
             const that = this;
             async function get_idfv() {
                 const pid = await that.get_pid_for_app_id(app_id);
-                return get_obj_from_frida_script(pid, frida_scripts.ios.get_prefs);
+                return get_obj_from_frida_script(pid, frida_scripts.ios.get_idfv);
             }
 
             return { idfv: await get_idfv() };

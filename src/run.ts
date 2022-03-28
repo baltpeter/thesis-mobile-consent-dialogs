@@ -362,8 +362,6 @@ async function main() {
             );
             console.log(chalk.redBright('Verdict:'), res.verdict);
 
-            res.platform_specific_data = await api.get_platform_specific_data(app_id);
-
             // Detect violations.
             if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 // Unambiguous "accept" button (not "okay").
@@ -436,7 +434,7 @@ async function main() {
                     // Ensure the app is still running in the foreground (4), see: http://appium.io/docs/en/commands/device/app/app-state/
                     if ((await client.queryAppState(app_id)) === 4) {
                         await client.elementClick((buttons.clear_negative[0] || buttons.hidden_negative[0]).ELEMENT);
-                        await pause(5000);
+                        await pause(10000);
 
                         if ((await client.queryAppState(app_id)) !== 4) res.violations.stops_after_reject = true;
                     } else throw new Error('App lost focus while testing for violations.');
@@ -447,18 +445,19 @@ async function main() {
             console.log(chalk.redBright('Violations:'));
             console.log(res.violations);
 
+            // Reset app to collect prefs and platform-specific data and (if applicable) interact with dialog.
+            await start_mitmproxy('ignore');
+            await api.reset_app(app_id, app_path_all);
+            await client.reloadSession();
+            await pause(10000);
+            res.prefs.initial = await api.get_prefs(app_id);
+            res.platform_specific_data = await api.get_platform_specific_data(app_id);
+
             // Collect traffic after accepting/rejecting dialog; and save corresponding prefs.
             if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 log_indicators = false;
 
-                await start_mitmproxy('ignore');
-                await api.reset_app(app_id, app_path_all);
-                await client.reloadSession();
-
-                await pause(10000);
-
                 const { buttons: buttons1 } = await collect_indicators();
-                res.prefs.initial = await api.get_prefs(app_id);
 
                 if (buttons1.all_affirmative.length > 0) {
                     console.log(
