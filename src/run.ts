@@ -525,8 +525,8 @@ async function main() {
             const date = new Date().toISOString();
             await fs.ensureDir(err_dir);
             await fs.writeFile(
-                join(err_dir, `${date}-${app_id}.json`),
-                JSON.stringify({ app_id, date, error: serializeError(err) }, null, 4)
+                join(err_dir, `${argv.platform}-${date}-${app_id}.json`),
+                JSON.stringify({ app_id, date, platform: argv.platform, error: serializeError(err) }, null, 4)
             );
 
             await cleanup(true);
