@@ -120,7 +120,8 @@ create table if not exists dialogs
     violations jsonb not null,
     prefs jsonb not null,
     screenshot bytea,
-    meta jsonb not null
+    meta jsonb not null,
+    platform_specific_data jsonb
 );
 
 alter table dialogs owner to ma;

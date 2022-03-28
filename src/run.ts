@@ -156,6 +156,7 @@ async function main() {
                     accepted: undefined as Record<string, any> | undefined,
                     rejected: undefined as Record<string, any> | undefined,
                 },
+                platform_specific_data: {} as Record<string, any> | undefined,
                 screenshot: undefined as string | undefined,
             };
 
@@ -358,6 +359,8 @@ async function main() {
             );
             console.log(chalk.redBright('Verdict:'), res.verdict);
 
+            res.platform_specific_data = await api.get_platform_specific_data(app_id);
+
             // Detect violations.
             if (['dialog', 'maybe_dialog'].includes(res.verdict)) {
                 // Unambiguous "accept" button (not "okay").
@@ -494,7 +497,7 @@ async function main() {
             // Save result.
             if (!run_for_open_app_only) {
                 await db.none(
-                    'INSERT INTO dialogs (run,verdict,violations,prefs,screenshot,meta) VALUES (${run_id},${verdict},${violations},${prefs},${screenshot},${meta})',
+                    'INSERT INTO dialogs (run,verdict,violations,prefs,screenshot,meta,platform_specific_data) VALUES (${run_id},${verdict},${violations},${prefs},${screenshot},${meta},${platform_specific_data})',
                     {
                         run_id: main_run_id,
                         verdict: res.verdict,
@@ -502,6 +505,7 @@ async function main() {
                         prefs: JSON.stringify(res.prefs),
                         screenshot: res.screenshot && Buffer.from(res.screenshot, 'base64'),
                         meta: JSON.stringify({ has_dialog, buttons, has_link, keyword_score, button_count }),
+                        platform_specific_data: JSON.stringify(res.platform_specific_data),
                     }
                 );
             } else console.log(res);

@@ -27,6 +27,7 @@ type PlatformApi = {
     get_foreground_app_id: () => Promise<string | undefined>;
     get_pid_for_app_id: (app_id: string) => Promise<number | undefined>;
     get_prefs: (app_id: string) => Promise<Record<string, unknown> | undefined>;
+    get_platform_specific_data: (app_id: string) => Promise<Record<string, unknown> | undefined>;
     set_clipboard: (text: string) => Promise<void>;
 
     get_app_version: (app_path: string) => Promise<string | undefined>;
@@ -77,6 +78,8 @@ var prefs = ObjC.classes.NSUserDefaults.alloc().init().dictionaryRepresentation(
 send({ name: "get_obj_from_frida_script", payload: dictFromNSDictionary(prefs) });`,
         set_clipboard: (text: string) => `ObjC.classes.UIPasteboard.generalPasteboard().setString_("${text}");
 send({ name: "get_obj_from_frida_script", payload: true });`,
+        get_idfc: `var idfv = ObjC.classes.UIDevice.currentDevice().identifierForVendor();
+send({ name: "get_obj_from_frida_script", payload: idfv });`,
     },
 };
 
@@ -256,6 +259,7 @@ export const platform_api = (
             const pid = await this.get_pid_for_app_id(app_id);
             return get_obj_from_frida_script(pid, frida_scripts.android.get_prefs);
         },
+        get_platform_specific_data: async_nop as () => Promise<any>,
         async set_clipboard(text) {
             const launcher_pid = await this.get_pid_for_app_id('com.google.android.apps.nexuslauncher');
             const res = await get_obj_from_frida_script(launcher_pid, frida_scripts.android.set_clipboard(text));
@@ -344,6 +348,15 @@ export const platform_api = (
         async get_prefs(app_id) {
             const pid = await this.get_pid_for_app_id(app_id);
             return get_obj_from_frida_script(pid, frida_scripts.ios.get_prefs);
+        },
+        async get_platform_specific_data(app_id) {
+            const that = this;
+            async function get_idfv() {
+                const pid = await that.get_pid_for_app_id(app_id);
+                return get_obj_from_frida_script(pid, frida_scripts.ios.get_prefs);
+            }
+
+            return { idfv: await get_idfv() };
         },
         async set_clipboard(text) {
             const launcher_pid = await this.get_pid_for_app_id('SpringBoard');
