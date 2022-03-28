@@ -100,7 +100,7 @@ async function main() {
             for (const proc of [mitmdump, appium]) await kill_process(proc);
 
             if (client) await client.deleteSession().catch(() => {});
-            if (!run_for_open_app_only) {
+            if (!run_for_open_app_only && argv.platform !== 'android') {
                 console.log('Uninstalling app…');
                 await api.uninstall_app(app_id);
             }
