@@ -1,4 +1,4 @@
-# Analysis Method
+# Analysis Method {#sec:analysis-method}
 
 <!--
 * Consent dialog detection

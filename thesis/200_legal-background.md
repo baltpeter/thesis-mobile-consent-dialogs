@@ -50,4 +50,6 @@ TODO: Introduce "data subject" and "controller".
 
 ---
 
-TODO: Consent dialogs (maybe merge into something else)
+TODO:
+    * Consent dialogs (maybe merge into something else)
+    * Consent notices (don't have much of an effect, other than maybe Art. 13/14 GDPR)
