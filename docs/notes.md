@@ -215,6 +215,7 @@ nano .env
 * Device name: `R2Gl5OLv20`
 * Note: `S0Ei7sFP9b` (iOS only)
 * Phone number: +49 155 85834346 (Android only)
+* Location: Schreinerweg 6, 38126 Braunschweig; 52.235288, 10.564235
 * Apple ID (iOS only)
 
 * Clipboard: `LDDsvPqQdT`
@@ -223,7 +224,6 @@ nano .env
 
 TODO
 
-* Location: Schreinerweg 6, 38126 Braunschweig; 52.235288, 10.564235
 * WiFi network: WLAN3.ALTPETER.ME
 * IMEI: 356395106788056
 * BSSID: 34:81:c4:dc:36:1
@@ -400,7 +400,7 @@ TODO
 
 * Exodus does `dexdump my.apk | grep "Class descriptor" | sort | uniq` to statically list class (and thus libraries) in an APK ([1](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/)).
     * Can find things like `com/iabtcf` or `io/didomi`.
-    * Of 3270 apps, 38 use `com.iabtcf`, 221 use class matching `/appconsent|BEDROCK|CommandersAct|consentdesk|consentmanager|didomi|Easybrain|FundingChoices|iubenda|madvertise|next14|ogury|onetrust|sibboventures|sourcepoint|uniconsent|TXGroup|usercentrics/i`.
+    * Of 3270 apps, 38 use `com.iabtcf`, 221 use class matching `/appconsent|axeptio|bedrock|clarip|commandersact|consentdesk|consentmanager|cookiepro|didomi|easybrain|freecmp|fundingchoices|iubenda|madvertise|next14|ogury|onetrust|osano|sfbx|sibboventures|sourcepoint|tamoco|trustarc|txgroup|uniconsent|usercentrics/i`.
     * Seems to only be detectable in rather small subset of apps => motivation for dynamic analysis.
 * No prior art on iOS (that I found, anyway…) but can use `otool -L <binary_file_in_ipa>` to list shared libraries and `nm <binary_file_in_ipa>` or `symbols -w -noSources <binary_file_in_ipa>` to list symbol table (see https://stackoverflow.com/a/39668318, https://stackoverflow.com/a/32053076).
     * Neither of those works on Linux. [jtool2](http://newosxbook.com/tools/jtool.html) is an alternative that sometimes crashes, though.

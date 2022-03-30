@@ -29,8 +29,12 @@ const apps_dir = for_android ? '/media/benni/storage2/tmp/apks' : '/media/benni/
             if (lines.filter((l) => l.match(/iabtcf/i)).length > 0) with_iabtcf++;
             if (
                 lines.filter((l) =>
+                    // List based on:
+                    //   * https://iabeurope.eu/cmp-list/,
+                    //   * https://www.blog.udonis.co/mobile-marketing/mobile-games/consent-management-tools,
+                    //   * https://instabug.com/blog/top-mobile-app-consent-management-tools/
                     l.match(
-                        /appconsent|BEDROCK|CommandersAct|consentdesk|consentmanager|didomi|Easybrain|FundingChoices|iubenda|madvertise|next14|ogury|onetrust|sibboventures|sourcepoint|uniconsent|TXGroup|usercentrics/i
+                        /appconsent|axeptio|bedrock|clarip|commandersact|consentdesk|consentmanager|cookiepro|didomi|easybrain|freecmp|fundingchoices|iubenda|madvertise|next14|ogury|onetrust|osano|sfbx|sibboventures|sourcepoint|tamoco|trustarc|txgroup|uniconsent|usercentrics/i
                     )
                 ).length > 0
             )
@@ -41,7 +45,7 @@ const apps_dir = for_android ? '/media/benni/storage2/tmp/apks' : '/media/benni/
                 '::',
                 'with iabtcf:',
                 with_iabtcf,
-                'with any cerifified CMP:',
+                'with any CMP:',
                 with_certified_cmp,
                 'total:',
                 total

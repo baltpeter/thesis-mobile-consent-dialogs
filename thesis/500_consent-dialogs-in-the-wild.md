@@ -84,35 +84,31 @@ console.log(prefs.dictionaryRepresentation());
 
 In both cases, for automated analysis, the objects would still need to be converted from their respective platform-native representation to JSON but that step is omitted here for brevity.
 
-Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as the author is aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, a simple analysis was performed on a dataset of 823 popular Android apps from November 2021: The apps were run in an Emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Afterwards, the screenshots were manually looked at to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
+Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as the author is aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, a simple analysis was performed on 823 apps from a dataset of popular Android apps from November 2021: The apps were run in an Emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Afterwards, the screenshots were manually looked at to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
 
 181 of the 823 (22&nbsp;%) apps displayed such a reference to data protection on screen after 5 seconds. However, only 21 of the 823 apps (3&nbsp;%) had set a corresponding privacy-related preference (i.e. one with a key that includes `IABTCF` or `GDPR`). This suggests that the IAB TCF is not commonly implemented on mobile.
 
 ### Use of CMPs
 
+* Sources for CMP list: [@iabeuropeCMPList2021; @udonisTop14Consent2022; @instabugTopMobileApp2021]
+* Approach used here is even an overapproximation!
+* Used same dataset as above, but all apps this time.
+* Exodus does `dexdump my.apk | grep "Class descriptor" | sort | uniq` to statically list class (and thus libraries) in an APK ([1](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/)).
+    * Can find things like `com/iabtcf` or `io/didomi`.
+    * regex: `/appconsent|BEDROCK|CommandersAct|consentdesk|consentmanager|didomi|Easybrain|FundingChoices|iubenda|madvertise|next14|ogury|onetrust|sibboventures|sourcepoint|uniconsent|TXGroup|usercentrics/i`.
+    * with iabtcf: 38, with any CMP: 234, total: 3271
+    * Seems to only be detectable in rather small subset of apps => motivation for dynamic analysis.
+* No prior art on iOS (that I found, anyway…) but can use `otool -L <binary_file_in_ipa>` to list shared libraries and `nm <binary_file_in_ipa>` or `symbols -w -noSources <binary_file_in_ipa>` to list symbol table (see https://stackoverflow.com/a/39668318, https://stackoverflow.com/a/32053076).
+    * Neither of those works on Linux. [jtool2](http://newosxbook.com/tools/jtool.html) is an alternative that sometimes crashes, though.
+    * For our purposes, this can easily be replicated on Linux: The only `otool` lines we are interested in, are the ones starting with `@rpath` (like `@rpath/AdjustSdk.framework/AdjustSdk`), the other ones (like `/usr/lib/swift/libswiftos.dylib`) are system libs.
+    * The former seem to be a subset of the directories in `Payload/<app_name>.app/Frameworks` in the IPA.
+    * Results (for old dataset from proj-ios): `with iabtcf: 0, with any CMP: 28, total: 1001`
+
 ## Consequences for Analysis
 
-<!--
-* Situation on mobile
-    * CMPs also rarely used
-        * Exodus does `dexdump my.apk | grep "Class descriptor" | sort | uniq` to statically list class (and thus libraries) in an APK ([1](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/)).
-            * Can find things like `com/iabtcf` or `io/didomi`.
-            * Of 3270 apps, 38 use `com.iabtcf`, 221 use class matching `/appconsent|BEDROCK|CommandersAct|consentdesk|consentmanager|didomi|Easybrain|FundingChoices|iubenda|madvertise|next14|ogury|onetrust|sibboventures|sourcepoint|uniconsent|TXGroup|usercentrics/i`.
-            * Seems to only be detectable in rather small subset of apps => motivation for dynamic analysis.
-        * No prior art on iOS (that I found, anyway…) but can use `otool -L <binary_file_in_ipa>` to list shared libraries and `nm <binary_file_in_ipa>` or `symbols -w -noSources <binary_file_in_ipa>` to list symbol table (see https://stackoverflow.com/a/39668318, https://stackoverflow.com/a/32053076).
-            * Neither of those works on Linux. [jtool2](http://newosxbook.com/tools/jtool.html) is an alternative that sometimes crashes, though.
-            * For our purposes, this can easily be replicated on Linux: The only `otool` lines we are interested in, are the ones starting with `@rpath` (like `@rpath/AdjustSdk.framework/AdjustSdk`), the other ones (like `/usr/lib/swift/libswiftos.dylib`) are system libs.
-            * The former seem to be a subset of the directories in `Payload/<app_name>.app/Frameworks` in the IPA.
-            * Results (for old dataset from proj-ios): `with iabtcf: 0, with any cerifified CMP: 28, total: 1001`
-* Consequences for analysis
-
+---
 
 TODO:
 
 * Explain OpenRTB?
-* DPA decision
-* Introduce taxonomy
-    * dialog
-    * notice
-    * link
--->
+* DPA decision on TCF
