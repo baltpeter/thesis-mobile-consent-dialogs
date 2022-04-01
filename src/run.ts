@@ -197,7 +197,12 @@ async function main() {
                 process.exit();
             });
 
-            await api.reset_device();
+            await timeout(api.reset_device(), 20000).catch(async () => {
+                // Sometimes, the Android emulator gets stuck and doesn't accept any commands anymore. In this case, we
+                // restart it.
+                await timeout(api.ensure_device(), 20000);
+                await timeout(api.reset_device(), 20000);
+            });
 
             console.log('Starting Appium session…');
             await timeout(await_proc_start(appium, 'Appium REST http interface listener started'), 15000);

@@ -179,6 +179,7 @@ export const platform_api = (argv: ArgvType): { android: PlatformApiAndroid; ios
         async ensure_device() {
             if (!argv.dev) {
                 console.log('Starting emulator…');
+                if (this._internal.emu_process) await kill_process(this._internal.emu_process);
                 this._internal.emu_process = execa('emulator', [
                     '-avd',
                     argv.avd_name!,
