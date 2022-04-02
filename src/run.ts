@@ -87,6 +87,7 @@ async function main() {
 
     await api.ensure_device();
 
+    let per_app_timeout_id: NodeJS.Timeout | undefined = undefined;
     for (let app_id of shuffle(app_ids)) {
         // This isn't exactly clean but I don't know how else to convince TS that `mitmdump` will be assigned a value
         // below.
@@ -110,6 +111,13 @@ async function main() {
                 await db.none('DELETE FROM apps WHERE id = ${db_app_id};', { db_app_id });
             }
         };
+
+        // Analyzing an app should never take more than 10 minutes, so we fail in that case to avoid getting stuck.
+        if (per_app_timeout_id) clearTimeout(per_app_timeout_id);
+        per_app_timeout_id = setTimeout(async () => {
+            await cleanup(true);
+            throw new Error('Analyzing app took too long.');
+        }, 10 * 60 * 1000);
 
         try {
             const app_path_main =
