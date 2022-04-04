@@ -31,6 +31,7 @@ const app_timeout = 60;
 const max_button_size_factor = 1.5;
 const max_button_color_difference = 30;
 const mitmdump_addon_path = join(dirname(), 'mitm-addon.py');
+const err_dir = join(dirname(), '../data/failed-apps.tmp');
 
 const run_for_open_app_only = argv.dev;
 let log_indicators = true;
@@ -85,6 +86,13 @@ async function main() {
             : glob.sync(`*`, { absolute: false, cwd: argv.apps_dir }).map((p) => basename(p, '.ipa')));
     if (run_for_open_app_only && app_ids[0] === '') throw new Error('You need to start an app!');
 
+    const fails = glob
+        .sync('*.json', { cwd: err_dir, absolute: true })
+        .map((f) => fs.readFileSync(f, 'utf-8'))
+        .map((j) => JSON.parse(j));
+    const app_previously_quit_immediately = (app_id: string) =>
+        fails.some((f) => f?.app_id === app_id && f?.error?.message?.includes('foreground'));
+
     await api.ensure_device();
 
     let per_app_timeout_id: NodeJS.Timeout | undefined = undefined;
@@ -132,12 +140,26 @@ async function main() {
             if (argv.platform === 'ios') app_id = (await (api as PlatformApiIos)._internal.get_app_id(app_path_all))!;
 
             if (!run_for_open_app_only) {
+                if (app_previously_quit_immediately(app_id)) {
+                    console.log(
+                        chalk.underline(
+                            `Skipping ${app_id}@${version} (${argv.platform}) because it previously quit immediately after starting…`
+                        )
+                    );
+                    console.log();
+                    continue;
+                }
+
                 const done = await db.any(
                     'SELECT 1 FROM apps WHERE name = ${app_id} AND version = ${version} AND platform = ${platform};',
                     { app_id, version, platform: argv.platform }
                 );
                 if (done.length > 0) {
-                    console.log(chalk.underline(`Skipping ${app_id}@${version} (${argv.platform})…`));
+                    console.log(
+                        chalk.underline(
+                            `Skipping ${app_id}@${version} (${argv.platform}) because we already analyzed it…`
+                        )
+                    );
                     console.log();
                     continue;
                 }
@@ -531,7 +553,6 @@ async function main() {
         } catch (err) {
             console.error(`Analyzing ${app_id} failed:`, err);
 
-            const err_dir = join(dirname(), '../data/failed-apps.tmp');
             const date = new Date().toISOString();
             await fs.ensureDir(err_dir);
             await fs.writeFile(
