@@ -302,7 +302,7 @@ async function main() {
                 let has_link = false;
                 let keyword_score = 0;
 
-                const elements = await timeout(client.findElements('xpath', '//*'), 15000);
+                const elements = await timeout(client.findElements('xpath', '//*'), 60000);
                 for (const el of elements) {
                     // Only consider elements that the user can actually see.
                     if (!client.isElementDisplayed(el.ELEMENT)) continue;
