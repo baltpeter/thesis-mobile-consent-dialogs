@@ -265,11 +265,18 @@ async function main() {
                 main_run_id = await start_mitmproxy('initial');
             });
 
-            console.log(`Waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`);
-            await pause(run_for_open_app_only ? 10000 : app_timeout * 1000);
+            const assert_app_in_foreground = async () => {
+                if ((await client.queryAppState(app_id)) !== 4) throw new Error("App isn't in foreground anymore.");
+            };
+
+            const pause_time = run_for_open_app_only ? 10000 : app_timeout * 1000;
+            console.log(`Waiting for ${pause_time / 1000} seconds…`);
+            await pause(pause_time / 3);
+            await assert_app_in_foreground();
+            await pause(pause_time - pause_time / 3);
 
             // Ensure app is still running and in foreground after timeout.
-            if ((await client.queryAppState(app_id)) !== 4) throw new Error("App isn't in foreground anymore.");
+            await assert_app_in_foreground();
 
             // For some reason, the first `findElements()` call in a session doesn't find elements inside webviews. As a
             // workaround, we can just do any `findElements()` call with results we don't care about first.
