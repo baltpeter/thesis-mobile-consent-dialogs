@@ -1,5 +1,6 @@
 # Results
 
+TODO: TCF data
 
 ## Consent Dialog Types and Frameworks
 

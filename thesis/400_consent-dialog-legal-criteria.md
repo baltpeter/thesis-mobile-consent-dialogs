@@ -2,7 +2,7 @@
 
 Before starting to look at actual consent dialogs in the wild, this chapter will develop a list of criteria a consent dialog needs to satisify in order to be compliant. For this purpose, two different legal sources need to be considered: criteria which are set in actual law, and therefore legally binding, and criteria from recommendations of the data protection authorities (DPAs), which are not directly legally binding but rather echo the DPAs' interpretation of the law.
 
-In this thesis, only EU-wide and German sources of law are considered.
+In this thesis, only EU-wide and German sources of law are considered, though DPAs from other EU countries have also issued similar guidance and/or decisions (cf. e.g. [ @commissionnationaledelinformatiqueetdeslibertesRefuserCookiesDoit2021; @commissionnationaledelinformatiqueetdeslibertesCookiesAutresTraceurs2020; @roseDatatilsynetDenmark202143101252021; @faCNILFranceSAN20210232022]).
 
 ## Laws
 

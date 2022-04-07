@@ -4,46 +4,54 @@ This chapter will explore how consent dialogs are actually implemented in the wi
 
 ## Situation on the Web
 
-* First look at the web, most prior research on that
+It makes sense to first take a look at consent dialogs on the web. Most prior research on the topic focusses exclusively on the web.
 
 ### Consent Management Platforms
 
-* Various companies offer so-called CMPs, TODO: define what that is.
-* Means that individual websites don't have to implement CD themselves and also helps with legal compliance: CMP should make sure that actions that require consent (like setting certain cookies) are only done after consent has been given.
-* Also conducive to research as one now only needs to handle a handful of CMPs instead of custom implementations on every website.
+Various companies offer so-called consent management platforms (CMPs), off-the-shelf solutions that website operators can embed into their site under the promise that they will ensure legal compliance for tracking and similar processing [@onetrustllc.OneTrustConsentManagement; @usercentricsgmbhWebsiteConsentManagement2022; @cookiebotCookiebotConsentManagement2020; @piwikprosaPiwikPROConsent2022]. Using a CMP means that individual websites don't have to implement consent dialogs themselves anymore. As such, CMPs are also conducive to research as one now only needs to handle a handful of CMPs instead of custom implementations on every website.
 
-* TODO: Examples of configuring a CMP, websites can set various options, including ones that make the dialog non-compliant.
+Theoretically, CMPs should also make it easier for websites to follow the law as the CMP is responsible for ensuring that processing that requires consent (like tracking or setting corresponding cookies) only happens after consent has been given by the user. However, most CMPs are highly configurable and allow the website operators to enable behaviour that violates the law; sometimes such settings are even the default [@noyb.euWeComplyGuideOneTrust2021].
 
-On the web, usage of CMPs is common. Recent research detected the use of CMPs on between 6&nbsp;% and 13&nbsp;% of European websites, depending on their Tranco rank [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020]. Ad tech companies Kevel reports the presence of a CMP on 44&nbsp;% of the top 10k US sites for Q1 2022 [@kevelConsentManagementPlatform2022].
+* TODO: Maybe include examples from actual CMPs that can be configured wrongly?
+
+On the web, usage of CMPs is common. Recent research detected the use of CMPs on between 6&nbsp;% and 13&nbsp;% of European websites, depending on their Tranco rank [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020]. Ad tech company Kevel reports the presence of a CMP on 44&nbsp;% of the top 10k US sites for Q1 2022 [@kevelConsentManagementPlatform2022].
 
 ### IAB Transparency & Consent Framework
 
-* Websites often use third-party scripts from many different vendors for all kinds of purposes, including advertising and tracking. Many of them require consent (see [@sec:legal-background]).
-* How does ensuring that those only start processing after consent has been given work? Without a common framework, either each CMP would have to implement custom handlers for each possible third-party script or each third-party script would need to know how to communicate with all possible CMPs.
-* IAB Europe, an association that represents the interests of the digital advertising and marketing industry in Europe [@iabeuropeUs2021], maintains TCF standard, which defines common interface for CMPs and third-party scripts to communicate. Defines how websites should store consent and legitimate interest records, as well as conditions on how to prompt the user for consent and inform them through CDs. For that, maintain list of purposes and vendors the website can ask users to consent to.
-* Timeline: "On 25 April 2018  the IAB Europe Transparency and Consent Framework (TCF) v1.1 was launched", "On 21 August 2019 a revised version of the TCF, TCF v2.0 was launched" (https://iabeurope.eu/transparency-consent-framework/). TODO: What about v1.0 (-> not public)?
-* CMPs typically implement TCF [@onetrustOneTrustPreferenceChoiceCMP2022; @usercentricsgmbhTCFExplainedMost2020; @iubendas.r.lCompleteGuideIubenda2020; @cookiebotIABTransparencyConsent2022]
+Websites often use third-party scripts from many different vendors for all kinds of purposes, including advertising and tracking. Many of these require consent (see [@sec:legal-background]). How do websites make sure that the scripts only start processing after consent has been given? Without a common framework, either each CMP would have to implement custom handlers for each possible third-party script or each third-party script would need to know how to communicate with all possible CMPs.
 
-* Explain TCF
-    * distinguishes: publisher (entity running the website), CMP (entity providing the CMP, can also be a publisher's in-house CMP if registered with IAB Europe), vendor (third-party embedded in publisher's website, e.g. ad or tracking provider)
-    * Both CMPs and vendors need to register with IAB Europe, annual fee of 1,500 € [@iabeuropeJoinTCF2021]
-    * Consent information is stored in TC string, which encodes^[IAB Europe offers a JavaScript library (<https://github.com/InteractiveAdvertisingBureau/iabtcf-es>) and an online tool (<https://iabtcf.com>) to decode and encode TC strings.] [@iabtechlabTransparencyConsentString2022]:
-        * Metadata: TCF version, last update time
-        * Consent records: per purpose and per vendor
-        * Legitimate interest records: objections to them by the user^[The fact that the TCF allows a publisher to use a legitimate interest for a certain processing doesn't necessarily mean that this is legal [@mattePurposesIABEurope2020a]. TODO: Move somewhere else.]
-        * Publisher restrictions: allow the publisher to specify custom requirements to restrict how vendors may process personal data
-        * Publisher transparency and consent data: Allows the publisher to store consent and legitimate interest data for their own purposes
-        * Jurisdiction data: country publisher is based in
-    * TC strings may only be created or changed by CMP [@iabtechlabTransparencyConsentString2022], CMP is free to choose where to store TC string [@iabtechlabIABEuropeTransparency2021]
-    * The CMP must expose the following API commands through a the `__tcfapi(command, version, callback, parameter)` function on the `window` object [@iabtechlabConsentManagementPlatform2021]:
-        * `getTCData`: to receive an object with an object representing the parsed TC string
-        * `ping`: to check whether the CMP has finished loading and whether it believes the GDPR applies in the context of this visit^[The TCF does not mandate how the CMP is supposed to determine whether the GPDR applies, it only mentions using the user's geolocation as one option. Vendors are required to adhere to the CMP's determination. [@iabtechlabConsentManagementPlatform2021] However, as explained in [@sec:bg-gdpr], the user's location alone is not necessarily sufficient for determining whether the GDPR applies.]
-        * `addEventListener`: to register an event listener for (among other things) changes to the TC string
-        * `removeEventListener`: to remove a registered event listener
-    * If script wants to start processing, it [@iabtechlabConsentManagementPlatform2021]:
-        1. Determine whether CMP is loaded on page by checking for the presence of the `__tcfapi()` function, otherwise assume no consent or legitimate interest. If the script is loaded in an iframe instead of directly on the page (common for ads), use `postMessage()` API
-        2. Request the TC data through the `getTCData` command, check whether legal basis for processing is available. Only if so, start processing.
-        3. Subscribe to change events through the `addEventListener` command, to notice if user withdrew consent for example and then stop processing accordingly
+IAB Europe, an association that represents the interests of the digital advertising and marketing industry in Europe [@iabeuropeUs2021], maintains the Transparency & Consent Framework (TCF), a standard that defines a common interface for CMPs and third-party scripts to communicate. It defines how websites should store consent and legitimate interest records, as well as conditions on how to prompt the user for consent and inform them through consent dialogs. For that, IAB Europe maintains a list of purposes and vendors the website can ask users to consent to. The first version, v1.1 (v1.0 was never published), was launched in April 2018, shortly before the GDPR went into force, and in August 2019, a revised v2.0 was published, with v1.1 now being deprecated [@iabeuropeTCFTransparencyConsent2021].  
+Most CMPs implement the TCF [@onetrustllc.OneTrustPreferenceChoiceCMP2022; @usercentricsgmbhTCFExplainedMost2020; @iubendas.r.lCompleteGuideIubenda2020; @cookiebotIABTransparencyConsent2022].
+
+TODO: Figure that illustrates how TCF works?
+
+The TCF distinguishes between publisher (the entity running the website), CMP (the entity providing the CMP—this can also be a publisher's in-house CMP if it is registered with IAB Europe), and vendors (the third-parties embedded in the publisher's website, e.g. ad or tracking providers). Both CMPs and vendors need to register with IAB Europe, for which there is an annual fee of 1,500 € [@iabeuropeJoinTCF2021].
+
+On a technical level, TCF mainly regulates two aspects. For one, it mandates that CMPs store consent records in the so-called TC string, which encodes^[IAB Europe offers a JavaScript library (<https://github.com/InteractiveAdvertisingBureau/iabtcf-es>) and an online tool (<https://iabtcf.com>) to decode and encode TC strings.] the following information (TODO!) [@iabtechlabTransparencyConsentString2022]:
+
+* Metadata: TCF version the TC string is based on, last update time
+* Consent records: per purpose and per vendor
+* Legitimate interest records: objections to them by the user^[The fact that the TCF allows a publisher to use a legitimate interest for a certain processing doesn't necessarily mean that this is legal [@mattePurposesIABEurope2020a]. TODO: Move somewhere else.]
+* Publisher restrictions: allow the publisher to specify custom requirements to restrict how vendors may process personal data
+* Publisher transparency and consent data: Allows the publisher to store consent and legitimate interest data for their own purposes
+* Jurisdiction data: country publisher is based in
+
+TC strings may only be created or changed by the CMP [@iabtechlabTransparencyConsentString2022], and the CMP is free to choose where and how to store the TC string [@iabtechlabIABEuropeTransparency2021].
+
+And secondly, it defines mechanisms for the different parties to communicate. For that, the CMP must expose the following API commands through a the `__tcfapi(command, version, callback, parameter)`{.js} function on the `window`{.js} object [@iabtechlabConsentManagementPlatform2021]:
+
+* `getTCData`: to receive an object representing the parsed TC string
+* `ping`: to check whether the CMP has finished loading and whether it believes the GDPR applies in the context of this visit^[The TCF does not mandate how the CMP is supposed to determine whether the GPDR applies, it only mentions using the user's geolocation as one option. Vendors are required to adhere to the CMP's determination. [@iabtechlabConsentManagementPlatform2021] However, as explained in [@sec:bg-gdpr], the user's location alone is not necessarily sufficient for determining whether the GDPR applies.]
+* `addEventListener`: to register an event listener for, among other things, changes to the TC string
+* `removeEventListener`: to remove a registered event listener
+
+If script then wants to start processing, it has to [@iabtechlabConsentManagementPlatform2021]:
+
+1. Determine whether a CMP is loaded on the page by checking for the presence of the `__tcfapi()`{.js} function. If no CMP is loaded, it has to assume that there is no consent or legitimate interest.
+
+   If the script is loaded in an iframe instead of directly on the page (common for ads), it can use a `postMessage()` API for the same purpose.
+2. Request the TC data through the `getTCData` command, and check whether a legal basis for the desired processing is available. Only if that's the case may it start processing.
+3. Subscribe to change events through the `addEventListener` command to notice if the user withdrew their consent for example and then stop processing accordingly.
 
 While not the TCF's intended purpose, the fact that the CMP data can be easily read programatically through the API that has to be provided, has also enabled research on consent dialogs on the web [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020; @aertsCookieDialogsTheir2021], and is even used by consumer protection organizations to automatically find violations in popular websites to pursue legal action against [@noyb.euNoybAimsEnd2021].
 
@@ -51,7 +59,7 @@ While not the TCF's intended purpose, the fact that the CMP data can be easily r
 
 If the situation were similar on mobile and apps also commonly implemented the TCF or at least used a limited number of CMPs, this would make the desired analysis easy. This section will now look at whether that's the case. (TODO: This is terrible, reword!)
 
-### Use of IAB TCF
+### Use of IAB TCF {#sec:cd-situation-mobile-tcf}
 
 Version 2.0 of the IAB TCF also supports CMPs in mobile apps on Android and iOS [@iabtechlabConsentManagementPlatform2021]. As native apps don't support running JavaScript code, a different API mechanism is used here. CMPs must instead store consent details (including the TC string) via the platform-specific per-app storage interfaces, namely `SharedPreferences` on Android and `NSUserDefaults` on iOS. Vendor SDKs can also access these stores to read the TCF data and set listeners to be informed of updates, thus the same steps as on the web can be used to determine whether an SDK can process the user's data on mobile, just with a slightly different implementation.
 
@@ -84,27 +92,32 @@ console.log(prefs.dictionaryRepresentation());
 
 In both cases, for automated analysis, the objects would still need to be converted from their respective platform-native representation to JSON but that step is omitted here for brevity.
 
-Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as the author is aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, a simple analysis was performed on 823 apps from a dataset of popular Android apps from November 2021: The apps were run in an Emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Afterwards, the screenshots were manually looked at to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
+Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as the author is aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, we performed a simple analysis on 823 apps from a dataset of popular Android apps from November 2021: The apps were run in the Android emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Then, the screenshots were manually looked at to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
 
-181 of the 823 (22&nbsp;%) apps displayed such a reference to data protection on screen after 5 seconds. However, only 21 of the 823 apps (3&nbsp;%) had set a corresponding privacy-related preference (i.e. one with a key that includes `IABTCF` or `GDPR`). This suggests that the IAB TCF is not commonly implemented on mobile.
+181 of the 823 ($\sim 22 \%$) apps displayed such a reference to data protection on screen after 5 seconds. However, only 21 of the 823 apps (3&nbsp;%) had set a corresponding privacy-related preference (i.e. one with a key that includes `IABTCF` or `GDPR`). This suggests that the IAB TCF is not commonly implemented on mobile.
 
 ### Use of CMPs
 
-* Sources for CMP list: [@iabeuropeCMPList2021; @udonisTop14Consent2022; @instabugTopMobileApp2021]
-* Approach used here is even an overapproximation!
-* Used same dataset as above, but all apps this time.
-* Exodus does `dexdump my.apk | grep "Class descriptor" | sort | uniq` to statically list class (and thus libraries) in an APK ([1](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/)).
-    * Can find things like `com/iabtcf` or `io/didomi`.
-    * regex: `/appconsent|BEDROCK|CommandersAct|consentdesk|consentmanager|didomi|Easybrain|FundingChoices|iubenda|madvertise|next14|ogury|onetrust|sibboventures|sourcepoint|uniconsent|TXGroup|usercentrics/i`.
-    * with iabtcf: 38, with any CMP: 234, total: 3271
-    * Seems to only be detectable in rather small subset of apps => motivation for dynamic analysis.
-* No prior art on iOS (that I found, anyway…) but can use `otool -L <binary_file_in_ipa>` to list shared libraries and `nm <binary_file_in_ipa>` or `symbols -w -noSources <binary_file_in_ipa>` to list symbol table (see https://stackoverflow.com/a/39668318, https://stackoverflow.com/a/32053076).
-    * Neither of those works on Linux. [jtool2](http://newosxbook.com/tools/jtool.html) is an alternative that sometimes crashes, though.
-    * For our purposes, this can easily be replicated on Linux: The only `otool` lines we are interested in, are the ones starting with `@rpath` (like `@rpath/AdjustSdk.framework/AdjustSdk`), the other ones (like `/usr/lib/swift/libswiftos.dylib`) are system libs.
-    * The former seem to be a subset of the directories in `Payload/<app_name>.app/Frameworks` in the IPA.
-    * Results (for old dataset from proj-ios): `with iabtcf: 0, with any CMP: 28, total: 1001`
+Even though it seems like mobile apps don't tend to make use of the TCF, it would still possible that they use off-the-shelf CMPs that just don't implement the TCF. To find out whether that is actually the case, we ran a simple static analysis to detect the presence of common CMP libraries in Android and iOS apps.
 
-## Consequences for Analysis
+On Android, the Exodus privacy project does something similar. They also check for the presence of libraries in Android apps, they just look at tracking libraries instead of CMPs. They have published their approach [@exodusprivacyExodusStaticAnalysis2018]: Essentially they run the `dexdump` tool on the APK file, which is the Android counterpart to the Linux `objdump` tool and can statically extract class and method names from an APK, among other things. They then compare the namespaces of the listed classes to a list of known tracker libraries.  
+The same approach can be used to detect CMPs. For example, the classes of Didomi CMP libary are in the `io/didomi` namespace. If we detect classes with this namespace in an app, we can assume that it uses the CMP^[Of course, this approach is very fuzzy. Even if an app includes a CMP library, that doesn't mean it actually uses it. In addition, it is possible that the list of namespaces we use is not strict enough and matches other non-CMP libraries. None of that is a problem for the purposes of this analysis, though. Its goal is only to provide an upper bound on the CMP usage in mobile apps and to evaluate whether it is feasible at all to rely on CMP-specific code for this thesis.].
+
+On iOS, the author is not aware of any similar work. It is however possible to list the shared libraries in an IPA file using the `otool` command [@benaneeshAnswerHowSearch2016], where the lines starting with `@rpath` are the libraries included in the IPA (lines without this prefix are system libraries). The symbol table can be listed using the `nm` and `symbols` commands [@columboAnswerFindSize2015]. All of these tools only run on macOS.  
+It is however possible to replicate the required functionality on any operating system: An IPA file is just a ZIP archive. All libraries included in an IPA are in subdirectories of `/Payload/<app name>.app/Frameworks`{.placeholders}. We simply list those directories and compare them against the list of CMP libraries.
+
+For this analysis, we compiled a list of identifiers for 18 CMPs (based on [@iabeuropeCMPList2021; @udonisTop14Consent2022; @instabugTopMobileApp2021]). For Android, we used the same dataset as in [@sec:cd-situation-mobile-tcf] but ran the analysis on all 3271 apps. For iOS, we used a dataset of 1001 apps from the App Store top charts from May 2021.
+
+We detected a potential CMP use in 234 of the 3271 Android apps ($\sim 7 \%$) and 28 of the 1001 iOS apps ($\sim 3 \%$). On Android, we also checked for the presence of IAB's TC string library (`com/iabtcf`). We detected that in 38 of the 3271 apps ($\sim 1 \%$). This suggests that mobile apps don't commonly use off-the-shelf CMPs either, especially given that the simple analysis we performed is even an overapproximation.
+
+### Consequences for Analysis
+
+The TCF would have provided a standardized and machine-readable way to detect the presence of a CMP in an app, read the settings of CMPs, and even interact with them. As such, this would of course have been the preferred approach for the analysis in this thesis. In the absence of that, had we found that there is a limited number of off-the-shelf CMP solutions commonly used by apps, it would have still been possible to write custom adapters for these CMPs that rely on the internal implementions^[For example, during testing we have found that the Didomi CMP also stores consent information in the OS per-app storage interfaces.] or characteristics of how they design their consent dialogs.
+
+As established in this section, neither of those is the case. As such, we need to use a much more general approach that detect and work with any kind of CMP, regardless of implementation details. This in turn means a loss in the amount of details we can extract from CMPs as we have to expect a large amount of completely different implementations.  
+The details of the method we use for the analysis are described in [@sec:analysis-method].
+
+For the few consent dialogs that _do_ implement the TCF, we will still extract the data from `NSUserDefaults` or `SharedPreferences` and perform an analysis on that.
 
 ---
 

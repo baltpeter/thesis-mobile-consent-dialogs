@@ -63,6 +63,8 @@ We repeat the same steps for the "reject" button analogously.
 
 TODO: Maybe include a sample screenshot for each violation?
 
+TODO: If we don't detect a violation in a CD, that doesn't mean that it is compliant. They only represent a minimum of compliance that can be reliably checked using automated methods. As such, our findings will only provide a lower bound in terms of violations but, conversely, an upper bound of compliance in mobile apps.
+
 We detect the following violations in apps determined to show a consent dialog:
 
 Processing before consent
