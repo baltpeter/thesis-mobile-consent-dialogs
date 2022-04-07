@@ -18,7 +18,7 @@ However, in actuality, most of these laws don't introduce their own conditions o
 
 This leaves the GDPR as the only law that defines applicable conditions for consent dialogs.
 
-### Criteria from the GDPR
+### Criteria from the GDPR {#sec:criteria-gdpr}
 
 Consent is one of the six possible legal bases for processing personal data from Art. 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking for example, see [@sec:bg-gdpr]), may thus only happen _after_ consent has been given and the controller needs to be able to demonstrate that consent has been given (Art. 7(1) GDPR).
 
@@ -56,12 +56,12 @@ Most of the criteria extracted directly from the GPDR are somewhat vague, making
 
 For this thesis, all current publications regarding consent and adjacent topics from all German data protection authorities (which includes all state DPAs, as well as the national DPA), the German data protection conference ("Datenschutzkonferenz", a council of the German DPAs that develops unified recommendations), and the European Data Protection Board (an EU body tasked with ensuring consistent application of data protection law across the EU), were searched for criteria on consent dialogs, resulting in the list presented below. Criteria that already directly follow from the text of the law are not included here again.
 
-#### Criteria for underlying circumstances
+#### Criteria for underlying circumstances {#sec:criteria-circum}
 
 * Consent has to be voluntary, i.e. it needs to be possible to use the app without consenting [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderEinwilligungNachDSGVO2019; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
 * A consent dialog may not make it impossible to access other required legal notices (like contact information or privacy policy) [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.1].
 
-#### Criteria for wording and design of consent dialogs
+#### Criteria for wording and design of consent dialogs {#sec:criteria-design}
 
 * The consent dialog needs to have a clear heading that accurately describes the impact of the processing on the data subject, like "Data disclosure to third parties for tracking purposes". Vague headings like "We respect your privacy." are not sufficient. [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.7]
 * The "consent" button cannot be highlighted compared to the "refuse" button (e.g. by making it bigger or using a more prominent colour for it) [@bayerischeslandesamtfurdatenschutzaufsichtPressemitteilungLanderubergreifendePrufung2021; @dielandesbeauftragtefurdendatenschutzniedersachsenTelekommunikationsTelemediendatenschutzGesetzTTDSGFragen2021; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.3].
@@ -79,7 +79,7 @@ For this thesis, all current publications regarding consent and adjacent topics 
 * Third-party recipients have to be mentioned explicitly [@dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
 * The consent notice needs to list concrete purposes, vague wordings like "to improve user experience" are not sufficient [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 16; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
 
-#### Criteria for buttons and interactive elements in consent dialogs
+#### Criteria for buttons and interactive elements in consent dialogs {#sec:criteria-buttons}
 
 * Refusing consent has to be possible through inaction or with the same number of clicks as consenting [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @bayerischeslandesamtfurdatenschutzaufsichtPressemitteilungLanderubergreifendePrufung2021; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @europeandataprotectionboardGuidelines0520202020, para. 114; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.3].
 * A button with the text "Okay" does not sufficiently convey that clicking it is supposed to agree to the consent dialog, and thus doesn't result in valid consent [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.12.1].

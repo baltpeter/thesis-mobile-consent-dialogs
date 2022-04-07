@@ -1,6 +1,5 @@
 # Discussion
 
-
 ## Comparison with Results for the Web
 
 ## Limitations
@@ -10,3 +9,5 @@
 * Only DE and EN supported
 * Appium can only access a very limited amount of element attributes
 * Analysis provides lower bound
+* Launching TODO % of Android apps failed due to certificate pinning bypass
+* Apps can trivally detect emulator/root/jailbreak, some change their behaviour based on that (e.g. make it impossible to use app)

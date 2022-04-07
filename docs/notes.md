@@ -854,16 +854,16 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
 * [ ] Can we fix incorrect country detections (`US`)?
 * [x] Set device name.
 * [x] Record failures.
-* [ ] For iOS:
+* [x] For iOS:
     * [ ] ~~There tend to be multiple nested elements with the same name/label that are displayed as a single element. This breaks the violation detection, which expects exactly one affirmative and negative button. While all of those elements are `visible`, it seems like only one of them is `accessible`.~~
     * [x] We need to make sure to always dismiss all modals as they can stick around after the app is uninstalled and Appium will then only see them.
     * [x] We sometimes get into a state where Appium sees the system UI and detects a "No SIM" "button". It seems like this can be resolved by getting rid of all modals.
         * Maybe we should throw if we detect that?
-    * [ ] Read IDFV using Frida and check for that.
-* [ ] More potential violations to detect:
-    * [ ] Consider US transfers without consent a violation, maybe go even deeper (scan consent notice for keywords)?
-    * [ ] Check consent dialog language.
-    * [ ] Check for "forbidden" heading (BaWü).
+    * [x] Read IDFV using Frida and check for that.
+* [ ] ~~More potential violations to detect:~~
+    * [ ] ~~Consider US transfers without consent a violation, maybe go even deeper (scan consent notice for keywords)?~~
+    * [ ] ~~Check consent dialog language.~~
+    * [ ] ~~Check for "forbidden" heading (BaWü).~~
 * [x] For button highlight violation detection: What if there is more than one of each button? For each positive button, go through all negative buttons and only note violation if it is highlighted compared to all of them?
 * Questions for Simon:
     * "the listed options (consent for which processing is requested?, which third-party tracking companies are used?) will be extracted" -> I can do that for the TCF apps, for everything else, this will be very difficult.

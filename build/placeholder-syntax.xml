@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="placeholders" version="1" extensions="*.placeholders;" author="Benjamin Altpeter (hi@bn.al)" license="CC0">
+    <highlighting>
+        <contexts>
+            <context name="nocontext">
+                <RegExpr attribute="Placeholder Tag" context="placeholdertag" String="&lt;[^>]+" />
+            </context>
+
+            <context name="placeholdertag">
+                <DetectChar attribute="Placeholder Tag" context="#pop" char="&gt;"/>
+            </context>
+        </contexts>
+        <itemDatas>
+            <itemData name="Placeholder Tag" defStyleNum="dsKeyword" />
+        </itemDatas>
+    </highlighting>
+</language>

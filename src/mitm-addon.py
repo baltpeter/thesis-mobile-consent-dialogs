@@ -27,10 +27,9 @@ def mdv_to_dict(mdv: multidict) -> dict:
         except TypeError:
             key = t[0]
         try:
-            tmp[key] = [str(x, encoding='utf-8', errors="replace") for x in t[1:]]
+            tmp[key] = [str(x, encoding='utf-8', errors="replace")
+                        for x in t[1:]]
         except TypeError:
-            # if only some are not bytestrings than the bytestrings won't be decoded
-            # I don't want to handle this here, if this occurs I'll write a clean-up script
             tmp[key] = [str(x) for x in t[1:]]
     return tmp
 
@@ -41,20 +40,20 @@ class MitmAddon:
         self.cur = None
         self.run_id = -1
 
-
     def request(self, flow: http.HTTPFlow):
         r: http.HTTPRequest = flow.request
         self.cur.execute(
             "INSERT INTO requests (run, start_time, host, port, method, scheme, authority, path, http_version, content_raw) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id;",
             (self.run_id, datetime.fromtimestamp(r.timestamp_start), r.pretty_host, r.port, r.method, r.scheme, r.authority,
-            r.path,
-            r.http_version, r.content))
+             r.path,
+             r.http_version, r.content))
         request_id: int = self.cur.fetchone()[0]
         self.conn.commit()
         # try to decode the content and update the row
         try:
             decoded: str = r.content.decode()
-            self.cur.execute("UPDATE requests SET content = %s  WHERE id = %s", (decoded, request_id))
+            self.cur.execute(
+                "UPDATE requests SET content = %s  WHERE id = %s", (decoded, request_id))
             self.conn.commit()
         except ValueError:
             pass
@@ -63,7 +62,7 @@ class MitmAddon:
         if len(decoded_headers) > 0:
             # print([(request_id, k, v) for k, v in decoded_headers.items()])
             execute_values(self.cur, "INSERT INTO headers (request, name, values) VALUES %s",
-                        [(request_id, k, v) for k, v in decoded_headers.items()])
+                           [(request_id, k, v) for k, v in decoded_headers.items()])
             self.conn.commit()
 
         # trailers
@@ -71,7 +70,7 @@ class MitmAddon:
         if decoded_trailers and len(decoded_trailers) > 0:
             # print([(request_id, k, v) for k, v in decoded_trailers.items()])
             execute_values(self.cur, "INSERT INTO trailers (request, name, values) VALUES %s",
-                        [(request_id, k, v) for k, v in decoded_trailers.items()])
+                           [(request_id, k, v) for k, v in decoded_trailers.items()])
             self.conn.commit()
 
         # cookies
@@ -79,21 +78,20 @@ class MitmAddon:
         if len(decoded_cookies) > 0:
             # print([(request_id, k, v) for k, v in decoded_headers.items()])
             execute_values(self.cur, "INSERT INTO cookies (request, name, values) VALUES %s",
-                        [(request_id, k, v) for k, v in decoded_cookies.items()])
+                           [(request_id, k, v) for k, v in decoded_cookies.items()])
             self.conn.commit()
-
 
     def load(self, loader: mitmproxy.addonmanager.Loader):
         loader.add_option(
             name="run",
-            typespec=str, # For int, I get: "TypeError: Expected <class 'int'> for run, but got <class 'str'>." *shrug*
+            typespec=str,  # For int, I get: "TypeError: Expected <class 'int'> for run, but got <class 'str'>." *shrug*
             default='',
             help="The ID of the run in the database"
         )
 
-        self.conn = psycopg2.connect(host=os.environ['POSTGRES_HOST'] or 'localhost', port=os.environ['HOST_PORT'], dbname=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], password=os.environ['POSTGRES_PASSWORD'])
+        self.conn = psycopg2.connect(host=os.environ['POSTGRES_HOST'] or 'localhost', port=os.environ['HOST_PORT'],
+                                     dbname=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], password=os.environ['POSTGRES_PASSWORD'])
         self.cur = self.conn.cursor()
-
 
     def running(self):
         if not ctx.options.run or not int(ctx.options.run):
@@ -102,10 +100,11 @@ class MitmAddon:
             sys.exit(1)
         self.run_id = int(ctx.options.run)
 
-
     def done(self):
-        self.cur.execute("UPDATE runs SET end_time = now() WHERE id=%s", (self.run_id,))
+        self.cur.execute(
+            "UPDATE runs SET end_time = now() WHERE id=%s", (self.run_id,))
         self.conn.commit()
         self.conn.close()
+
 
 addons = [MitmAddon()]

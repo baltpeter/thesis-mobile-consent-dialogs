@@ -47,7 +47,7 @@ On the web, usage of CMPs is common. Recent research detected the use of CMPs on
 
 While not the TCF's intended purpose, the fact that the CMP data can be easily read programatically through the API that has to be provided, has also enabled research on consent dialogs on the web [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020; @aertsCookieDialogsTheir2021], and is even used by consumer protection organizations to automatically find violations in popular websites to pursue legal action against [@noyb.euNoybAimsEnd2021].
 
-## Situation on Mobile
+## Situation on Mobile {#sec:cd-situation-mobile}
 
 If the situation were similar on mobile and apps also commonly implemented the TCF or at least used a limited number of CMPs, this would make the desired analysis easy. This section will now look at whether that's the case. (TODO: This is terrible, reword!)
 
