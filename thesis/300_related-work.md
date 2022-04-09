@@ -6,6 +6,7 @@
     * manually looked at screenshots of 1000 CD and identified 8 variables
     * survey that investigated effect of the variables on interaction and whether consent was given
     * prior study measuring the effects of the GDPR going into force on privacy policies and CDs: https://www.ndss-symposium.org/wp-content/uploads/2019/02/ndss2019_04B-2_Degeling_paper.pdf
+* Share First, Ask Later (or Never?) - Studying Violations of GDPR's Explicit Consent in Android Apps: https://publications.cispa.saarland/3400/
 * A Comparison of Users’ Perceptions of and Willingness to Use Google, Facebook, and Google+ Single-Sign-On Functionality (2013): https://dl.acm.org/doi/pdf/10.1145/2517881.2517886
 * Stop the Consent Theater (2021): https://sci-hub.se/https://dl.acm.org/doi/abs/10.1145/3411763.3451230
     * literature review

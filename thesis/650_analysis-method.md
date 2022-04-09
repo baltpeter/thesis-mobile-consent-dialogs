@@ -1,5 +1,7 @@
 # Analysis Method {#sec:analysis-method}
 
+TODO: Source code available in same repository as instrumentation framework
+
 ## Consent Dialog Detection
 
 ### Existing Research for the Web

@@ -2,6 +2,7 @@
 
 TODO:
 
+* Introduce ad IDs.
 * Introduce privacy labels on iOS.
 
 TODO (context):

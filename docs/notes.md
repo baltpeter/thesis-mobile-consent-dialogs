@@ -796,7 +796,7 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
         * Seems to cool down after a few days?
     * Download done on 2022-03-25T12:06:35 (with 5 apps that couldn't be downloaded, all not available on the App Store anymore)
 
-### Better method for aquiring IPAs
+### Better method for acquiring IPAs
 
 * [ipatool](https://github.com/majd/ipatool) seems promising, works for downloading already bought apps (on recent macOS) but cannot buy new apps
     * Replicating requests as defined in code and sending them manually doesn't work

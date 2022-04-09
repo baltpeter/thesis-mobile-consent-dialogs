@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
   <info>
-    <title>IEEE (with URL)</title>
+    <title>Benni's style, based on IEEE (with URL)</title>
     <id>http://www.zotero.org/styles/ieee-with-url</id>
     <link href="http://www.zotero.org/styles/ieee-with-url" rel="self"/>
     <link href="https://ieeeauthorcenter.ieee.org/wp-content/uploads/IEEE-Reference-Guide.pdf" rel="documentation"/>
@@ -28,7 +28,7 @@
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <category field="generic-base"/>
-    <summary>IEEE style with URLs as per the 2018 guidelines, V 11.12.2018.</summary>
+    <summary>Changed by Benni: IEEE style with URLs as per the 2018 guidelines, V 11.12.2018.</summary>
     <updated>2019-12-21T00:36:11+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
@@ -36,7 +36,6 @@
     <terms>
       <term name="chapter" form="short">ch.</term>
       <term name="presented at">presented at the</term>
-      <term name="available at">available</term>
     </terms>
   </locale>
   <!-- Macros -->
@@ -171,10 +170,7 @@
     <choose>
       <if variable="URL">
         <group delimiter=". ">
-          <group delimiter=": ">
-            <text term="available at" text-case="capitalize-first"/>
-            <text variable="URL"/>
-          </group>
+          <text variable="URL"/>
           <group prefix="[" suffix="]" delimiter=": ">
             <text term="accessed" text-case="capitalize-first"/>
             <date variable="accessed">
@@ -333,11 +329,6 @@
               <text macro="issued"/>
             </group>
           </else>
-        </choose>
-        <choose>
-          <if variable="URL">
-            <text value=" [Online]"/>
-          </if>
         </choose>
       </group>
       <text macro="access"/>
