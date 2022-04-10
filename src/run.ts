@@ -120,12 +120,12 @@ async function main() {
             }
         };
 
-        // Analyzing an app should never take more than 10 minutes, so we fail in that case to avoid getting stuck.
+        // Analyzing an app should never take more than 15 minutes, so we fail in that case to avoid getting stuck.
         if (per_app_timeout_id) clearTimeout(per_app_timeout_id);
         per_app_timeout_id = setTimeout(async () => {
             await cleanup(true);
             throw new Error('Analyzing app took too long.');
-        }, 10 * 60 * 1000);
+        }, 25 * 60 * 1000);
 
         try {
             const app_path_main =
@@ -280,6 +280,8 @@ async function main() {
                 port: 4723,
                 capabilities,
                 logLevel: 'warn',
+                connectionRetryTimeout: 240000,
+                connectionRetryCount: 5,
             });
             await client.setGeoLocation({ latitude: '52.23528', longitude: '10.56437', altitude: '77.23' });
 
@@ -297,12 +299,14 @@ async function main() {
             await assert_app_in_foreground();
             await pause(pause_time - pause_time / 3);
 
+            start_mitmproxy('ignore');
+
             // Ensure app is still running and in foreground after timeout.
             await assert_app_in_foreground();
 
             // For some reason, the first `findElements()` call in a session doesn't find elements inside webviews. As a
             // workaround, we can just do any `findElements()` call with results we don't care about first.
-            await timeout(client.findElements('xpath', '/invalid/webview-workaround-hack'), 15000);
+            await timeout(client.findElements('xpath', '/invalid/webview-workaround-hack'), 480000);
 
             // Collect indicators.
             const collect_indicators = async () => {
@@ -331,21 +335,21 @@ async function main() {
                 let has_link = false;
                 let keyword_score = 0;
 
-                const elements = await timeout(client.findElements('xpath', '//*'), 60000);
+                const elements = await timeout(client.findElements('xpath', '//*'), 960000);
                 for (const el of elements) {
                     // Only consider elements that the user can actually see.
                     if (!client.isElementDisplayed(el.ELEMENT)) continue;
 
                     const id = await timeout(
                         client.getElementAttribute(el.ELEMENT, argv.platform === 'android' ? 'resource-id' : 'name'),
-                        5000
+                        25000
                     );
                     if (id) {
                         // if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
                         if (testAndLog(dialog_id_fragments, id, 'has dialog ID')) has_dialog = true;
                     }
 
-                    const text = await timeout(client.getElementText(el.ELEMENT), 5000);
+                    const text = await timeout(client.getElementText(el.ELEMENT), 25000);
                     if (text) {
                         if (argv.debug_text) console.log(text);
 
@@ -411,8 +415,8 @@ async function main() {
                 // "Accept" button not highlighted compared to "reject" button.
                 if (buttons.all_affirmative.length > 0 && buttons.all_negative.length > 0) {
                     const element_size_factor = async (el1: string, el2: string) => {
-                        const el1_rect = await timeout(client.getElementRect(el1), 5000);
-                        const el2_rect = await timeout(client.getElementRect(el2), 5000);
+                        const el1_rect = await timeout(client.getElementRect(el1), 25000);
+                        const el2_rect = await timeout(client.getElementRect(el2), 25000);
 
                         const el1_size = el1_rect.width * el1_rect.height;
                         const el2_size = el2_rect.width * el2_rect.height;
@@ -518,14 +522,16 @@ async function main() {
                     }
 
                     const { buttons: buttons2 } = await collect_indicators();
-                    console.log(
-                        `Rejecting dialog and waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`
-                    );
-                    await start_mitmproxy('rejected');
-                    await client.elementClick(buttons2.clear_negative[0].ELEMENT);
-                    await pause(app_timeout * 1000);
+                    if (buttons2.clear_negative.length > 0) {
+                        console.log(
+                            `Rejecting dialog and waiting for ${run_for_open_app_only ? 10 : app_timeout} seconds…`
+                        );
+                        await start_mitmproxy('rejected');
+                        await client.elementClick(buttons2.clear_negative[0].ELEMENT);
+                        await pause(app_timeout * 1000);
 
-                    res.prefs.rejected = await api.get_prefs(app_id);
+                        res.prefs.rejected = await api.get_prefs(app_id);
+                    }
                 }
             }
 
@@ -565,6 +571,7 @@ async function main() {
             console.log();
         }
     }
+    console.log('Done.');
 
     pg.end();
 }
