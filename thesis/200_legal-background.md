@@ -1,55 +1,68 @@
 # Legal Background {#sec:legal-background}
 
-This chapter will introduce the legal framework that regulates data protection for mobile apps in the EU and Germany. It will explain under which conditions data collection and processing are lawful or unlawful with a focus on data used for tracking purposes, as well as how consent dialogs fit into this.
+In this chapter, we introduce the legal framework that regulates data protection for mobile apps in the EU and Germany. We explain under which conditions data collection and processing are lawful or unlawful with a focus on data used for tracking purposes, as well as how consent dialogs fit into this.
 
 ## Processing of Personal Data {#sec:bg-gdpr}
 
-TODO: Introduce "data subject" and "controller".
+The most important law for data protection in the EU is the General Data Protection Regulation (GDPR), which went into force in 2018 and mandates a data protection framework that is consistent across the whole EU and also more strict than previous regulation in this area. As a regulation, it is applicable law in all EU member states without them needing to implement it in their national laws.
 
-* GDPR
-    * GDPR (general data protection regulation) went into force in 2018, mandates a data protection framework that is consistent across the whole EU and also more strict than previous regulation in this area. 
-    * Territorial scope
-    * Deals with "Processing" of "personal data" (Art. 2(1) GDPR)
-        * defined in Art. 4 GDPR
-        * explicitly broad terms
-        * in essence any data that can somehow be connected to a natural person and that a company deals with in some way is covered by the GDPR
-        * includes pseudonymous data (i.e. TODO)
-    * Legal basis for processing
-        * conclusive list of them defined in Art. 6(1)(a–f) GDPR, any processing of PD can only be legal if it fulfills one of these conditions:
-            * list them
-        * In the context of tracking, c), d), e) obviously not applicable [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 27]
-        * Law itself doesn't directly answer the question which of the remaining three can be used. For that, one can look to the data protection authorities. Those are public authorities in each member state tasked with enforcing the GDPR in their respective jurisdiction. They publish their interpretation of unclear aspects of the law like this in recommendations. While those recommendations aren't legally binding in and of themselves, the DPAs can issue sanctations (including fines) to companies who don't follow them.
-        * EDPB is TODO
-        * EDPB says that b) and f) can typically not be used for tracking.
-            * https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-22019-processing-personal-data-under-article-61b_en
-            * So does BAWÜ (https://www.baden-wuerttemberg.datenschutz.de/faq-zu-cookies-und-tracking-2/, B.3.1.1.5, B.3.2.10.3); DSK [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, sec. IV]; and others (TODO)
-        * That leaves only consent as a potential legal basis for tracking. The GDPR has high conditions for what is considered valid consent. Chapter TODO will deal with this in detail.
+The GDPR deals with the "processing" of "personal data" (Art. 2(1) GDPR). These legal terms are defined in Art. 4 GDPR:
+
+> (1) ‘personal data’ means any information relating to an identified or identifiable natural person […]; [i.e.] one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or […] the physical, physiological, genetic, mental, economic, cultural or social identity […]
+
+> (2) ‘processing’ means any operation […] performed on personal data […], such as collection, recording, organisation, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction;
+
+Both terms are explicitly very broad. In essence any data that can somehow be connected to a natural person (the data subject) and that a company or other organisation (the controller) deals with in some way is covered by the GDPR. This even applies to pseudonymous data (Recital 26(2) GDPR), i.e. data that can only be attributed to a person using additional, separately kept information (Art. 5(4) GDPR). Examples for data that can pseudonymously be linked to a person include user IDs and IP addresses. A user ID alone cannot identify a person. But that ID in combination with the database that stores the corresponding user information certainly can. Similarly, most companies will not be able to trace back an IP address to a person on there own. But in combination with the customer data held by the person's ISP (which can for example be obtained through a court order in many jurisdictions), this is possible [@PatrickBreyerBundesrepublik2016].  
+In addition, data not covered by the GDPR like the settings of an application become personal data if they are linked with other personal data like a user ID.
+
+As an EU law, the GDPR is binding for all companies in the EU. But its territorial scope, as defined in Art. 3 GPDR, also includes companies outside the EU if they deliberately process the data of people in the EU related to the offering of goods and services or for the monitoring of their behaviour, as is the case for tracking [@munizschiebertTerritorialScopeGDPR2020].
+
+Under the GDPR, processing personal data is generally prohibited unless there is a valid legal basis in the law for it. A conclusive list of those is defined in Art. 6(1)(a–f) GDPR. A processing of personal data can only lawful if it fulfills one of these conditions:
+
+a) The data subject has given their consent.
+b) The processing is necessary for performing a contract that the data subject is a party to.
+c) The processing is necessary for the controller to fulfill a legal obligation it is subject to.
+d) The processing is necessary to protect a person's vital interests.
+e) The processing is necessary for an official task in the public interest, usually by public authorities.
+f) The processing is necessary for a legitimate interest of the controller, given it outweighs the data subject's interests and fundamental rights.
+
+In the context of tracking or other processing typically performed by apps, lit. c), d), and e) are obviously not applicable except in rare exceptions [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021]. The GDPR itself doesn't answer which of the remaining three can be used. For that, one can look to the data protection authorities. Those are public authorities in each member state tasked with enforcing the GDPR in their respective jurisdiction (Art. 51 GDPR). They publish their interpretation of unclear aspects of the law like this in recommendations. While those recommendations aren't legally binding in and of themselves, the DPAs can issue sanctions (including fines) to companies who don't follow them (Art. 58 GDPR).  
+According to the data protection authorities, lit. b) and f) can typically not be used as a legal basis for tracking [@europeandataprotectionboardGuidelines2019Processing2019; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022; @konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021].
+
+That leaves only consent as a potential legal basis for tracking. The GDPR has high conditions for what is considered valid consent. [@Sec:critera] will deal with this in detail.
 
 ## Storing and Accessing Information on Terminal Equipment
 
-* ePD/TTDSG
-    * Came before GDPR, introduced in 2009?
-    * Unlike GDPR, doesn't deal with data protection but integrity of a person's terminal equipment
-    * As a directive not directly legally binding, needs to be implemented into national law by member states
-    * In this context, only Art. 5(3) ePD relevant
-    * Not just personal data but TODO
-    * For a long time, Germany didn't properly implement the ePD, TODO, Planet49
-    * In Dec 2021: TTDSG. § 25 TTDSG now implements Art. 5(3) ePD.
-    * ePD and TTDSG don't know legitimate interest or contractual necessity => even stricter conditions for not needing consent
+Another law to consider is the ePrivacy Directive (ePD), which went into force back in 2002 and was last amended in 2009. As a directive, it is not directly legally binding but needs to be transposed into national law by the member states.
+
+In the context of this thesis, only Art. 5(3) ePD is relevant:
+
+> Member States shall ensure that the storing of information, or the gaining of access to information already stored, in the terminal equipment of a subscriber or user is only allowed on condition that the subscriber or user concerned has given his or her consent, having been provided with clear and comprehensive information […]. This shall not prevent any technical storage or access for the sole purpose of carrying out the transmission of a communication over an electronic communications network, or as strictly necessary in order for the provider of an information society service explicitly requested by the subscriber or user to provide the service.
+
+Unlike the GDPR, Art. 5(3) ePD doesn't deal with data protection but protects the integrity of a person's terminal equipment. It doesn't just cover personal data but _any_ data that is read from or stored on a user's device. While this provision is most commonly discussed in the context of cookies (earning the ePD its informal nickname of "the cookie law"), it also applies to any other reading or storing of information on a user's device [@cliffordEUDataProtection2014].
+
+Also unlike the GDPR, Art. 5(3) ePD does not provide multiple possible legal bases that could apply. There are only two options: Either the reading or storing falls under the exception of being strictly necessary (a clause that has to be interpreted narrowly, with for example tracking and advertising not being strictly necessary despite many publishers' insistence [@article29dataprotectionworkingpartyOpinion0420122012]), or it requires prior informed consent by the user.
+
+For a long time, Germany had not actually properly implemented Art. 5(3) ePD into national law. § 15(3) TMG instead directly contradicted it, allowing an opt-out mechanism for cookies. [@hesselForceDecember20212021] In its October 2019 Planet49 decision, the European Court of Justice ruled that § 15(3) TMG had to be interpreted in line with Art. 5(3) ePD, even against the explicit wording of that provision [@BundesverbandVerbraucherzentralenUnd2019; @schremsCJEUC673172022].
+
+This finally resulted in Germany changing the law. Since December 2021, Germany implements Art. 5(3) ePD through the "Gesetz zur Regelung des Datenschutzes und des Schutzes der Privatsphäre in der Telekommunikation und bei Telemedien" (TTDSG). In particular, § 25 TTDSG defines privacy protections for terminal equipment. § 25(1) TTDSG mandates that information may only be stored on or accessed from a user's terminal equipment if the user has given consent based on clear and comprehensive information, which is to be provided in accordance with the GDPR. § 25(2) TTDSG then provides two exceptions from that rule, namely if (1) the sole purpose of the storing or access is to carry out the transmission of a communication over a public telecommunications network, or if (2) it is necessary to provide a telemedia service that is explicitly requested by the user.
+
+As such, neither Art. 5(3) ePD nor § 25 TTDSG allow using a contractual necessity or legitimate interest of the controller as a legal basis, placing even stricter conditions on the exception of not needing consent than the GDPR.
 
 ## Transferring Personal Data to Third Countries
 
-* Schrems II
-    * generally, transferring data to country outside the EU is forbidden unless it there is an exception that allows it (Art. 44–50 GDPR)
-    * Most simply, transfers to third countries (i.e. countries not in the EU) can be based on a so-called adequacy decision, one of the those exceptions (Art. TODO GDPR). The EC? has issued suchs AD for a number of third countries (including TODO). Based on an AD, data transfers to the respective third country can happen without any special additional safeguards.
-    * Previously, there was also such an AD for the US (where most tracking providers, and many other internet infrastructure companies, are based), the so-called Privacy Shield
-    * Invalidated by the ECJ in July 2020 Schrems II ruling due to TODO
-    * As such, legal data transfers to the US now much harder or even impossible in many cases [https://diercks-digital-recht.de/2021/01/die-rechtslage-im-transatlantischen-datenverkehr-teil-1-von-4-wie-ordnet-die-us-regierung-das-schrems-ii-urteil-des-eugh-ein/ https://diercks-digital-recht.de/2021/02/rechtslage-im-transatlantischen-datenverkehr-teil-2-von-5-loesungen-der-aufsichtsbehoerden-aus-dem-elfenbeinturm/ https://noyb.eu/en/next-steps-users-faqs]
+Finally, we need to consider the case of transferring data to a country outside the EU (a so-called third country). The GDPR generally forbids this unless there is an exception in the law that allows it (Art. 44 – 50 GDPR).
 
-    * TODO: https://www.baden-wuerttemberg.datenschutz.de/wp-content/uploads/2021/10/OH-int-Datentransfer.pdf
+Most simply, transfers to third countries can be based on a so-called adequacy decision, one of those exceptions (Art. 45 GDPR). As of the time of writing, the European Commission has issued such adequacy decisions for the following countries: Andorra, Argentina, Canada, Faroe Islands, Guernsey, Israel, Isle of Man, Japan, Jersey, New Zealand, Republic of Korea, Switzerland, the United Kingdom, and Uruguay [@europeancommissiondirectorate-generalforcommunicationAdequacyDecisions2021].  
+With an adequacy decision, the European Commission attests an adequate level of data protection to the respective country considering the standards of the GDPR. Based on that, data transfers to those countries can happen without any special additional safeguards.
+
+Previously, there was also such an adequacy decision for the United States (where most tracking providers, and many other internet infrastructure companies are based), the so-called Privacy Shield. However, the Privacy Shield was invalidated by the European Court of Justice in its July 2020 Schrems II ruling due to the overbearing US surveillance programs and lack of effective judicial remedies in the US for data subjects from the EU [@DataProtectionCommissioner2020; @fennessySchremsIIDecision2020], just as its predecessor Safe Harbour was invalidated in the European Court of Justice's October 2015 Schrems I ruling [@MaximillianSchremsData2015], both over data transfers from Facebook Ireland to the US^[A new "Trans-Atlantic Data Privacy Framework" is in the works as of the time of writing, with an "agreement in principle" having been reached between the EU and US but few details having been published and no actual legal documents having been written yet [@europeancommissionTransAtlanticDataPrivacy2022; @thewhitehouseFACTSHEETUnited2022]. The announcement has been met with cautious optimism by the European Data Protection Board and European Data Protection Supervisor [@europeandataprotectionboardStatement0120222022; @europeandataprotectionsupervisorEDPSWelcomesPrinciple2022], while Max Schrems, the lead litigant between the Schrems I and II cases questions whether the new deal actually contains any meaningful changes compared to the previous deals [@noyb.euPrivacyShieldFirst2022]. Regardless, for the time being, controllers cannot rely on an adequacy decision for US transfers.].
+
+Thus, legal data transfers to the US are now significantly harder or even impossible in many cases and at the very least least require additional safeguards by the controller [@europeandataprotectionboardRecommendations0120202021a; @blocherDSBAustria202102022; @faCNILFranceGoogle2022; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergOrientierungshilfeWasJetzt2021].
 
 ---
 
 TODO:
-    * Consent dialogs (maybe merge into something else)
-    * Consent notices (don't have much of an effect, other than maybe Art. 13/14 GDPR)
+
+* Consent dialogs (maybe merge into something else)
+* Consent notices (don't have much of an effect, other than maybe Art. 13/14 GDPR)

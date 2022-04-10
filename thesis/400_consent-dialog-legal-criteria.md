@@ -46,7 +46,9 @@ Art. 7 GDPR then lists a number of additional conditions for consent:
 * Before giving consent, the data subject needs to be informed that they have the right to withdraw their consent at any time (Art. 7(3) GDPR).
 * Later withdrawing consent needs to be as easy as giving it in the first place (Art. 7(3) GDPR).
 
-TODO: Explicit consent for special categories (Art. 9 GDPR), third-country transfer without adequacy decision (Art. 49 GDPR)
+In addition to that, the GDPR places even stricter conditions on consent for special categories of personal data (this includes, among other things, political opinions, biometric and genetic data, as well as data on a person's health and sex life, Art. 9 GDPR) and third-country transfers without an adequacy decision (Art. 49(1)(a) GDPR), requiring an express statement, separate for this specific purpose [@europeandataprotectionboardGuidelines0520202020].  
+Children under the age of 16 years cannot give consent themselves, it needs to be given or authorised by their legal guardians (Art. 8(1) GDPR).  
+We don't consider these cases in this thesis as we can't reliably detect them automatically.
 
 ## DPA recommendations
 
