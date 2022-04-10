@@ -1,4 +1,4 @@
-# Criteria for Compliant Consent Dialogs
+# Criteria for Compliant Consent Dialogs {#sec:critera}
 
 Before starting to look at actual consent dialogs in the wild, this chapter will develop a list of criteria a consent dialog needs to satisify in order to be compliant. For this purpose, two different legal sources need to be considered: criteria which are set in actual law, and therefore legally binding, and criteria from recommendations of the data protection authorities (DPAs), which are not directly legally binding but rather echo the DPAs' interpretation of the law.
 

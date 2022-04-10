@@ -4,54 +4,43 @@ TODO: Source code available in same repository as instrumentation framework
 
 ## Consent Dialog Detection
 
-### Existing Research for the Web
+As it is not feasible to detect consent dialogs on mobile based on the IAB TCF framework or CMP library-specific adapters (see [@sec:cd-situation-mobile]), we need to use an approach that is based on common elements of consent dialogs. Looking at existing research for the web and disregarding TCF- and library-based approaches [@papadogiannakisUserTrackingPostcookie2021b; @matteCookieBannersRespect2020; @noyb.euNoybAimsEnd2021], many approaches for consent dialog detection are purely manual [@sanchez-rolaCanOptOut2019; @trevisanYearsEUCookie2019a; @utzInformedConsentStudying2019a]. Some research relies on adblock filter lists like [*Easylist Cookies*](https://secure.fanboy.co.nz/fanboy-cookiemonster.txt) and [*I don't care about cookies*](https://www.i-dont-care-about-cookies.eu/abp/) to detect HTML elements belonging to consent dialogs based on their ID or class [@aertsCookieDialogsTheir2021; @eijkImpactUserLocation2019a]. These lists are _very_ broad, e.g. detecting any element with `CNIL` (the French data protection authority) or `Cookie` in its ID. Finally, privacy policy detection tends to be keyword-based [@libertAutomatedApproachAuditing2018; @degelingWeValueYour2019], matching on general terms like "policy" and "GDPR"^[See: <https://github.com/RUB-SysSec/we-value-your-privacy/blob/181cbffb62ce2dcc89ff9b467401093aa10f0cd8/privacy_wording.json>], or use natural language processing [@hosseiniUnifyingPrivacyPolicy2021].
 
-* Many purely manual approaches (https://www.researchgate.net/publication/332888923_4_Years_of_EU_Cookie_Law_Results_and_Lessons_Learned, https://sci-hub.se/https://dl.acm.org/doi/abs/10.1145/3321705.3329806, https://www.researchgate.net/profile/Martin-Degeling/publication/334965379_Uninformed_Consent_Studying_GDPR_Consent_Notices_in_the_Field/links/5d638e6c458515d610253bb1/Uninformed-Consent-Studying-GDPR-Consent-Notices-in-the-Field.pdf)
-* Some with CMP-specific adapters: https://sci-hub.se/https://dl.acm.org/doi/abs/10.1145/3442381.3450056
-    * Uses: https://github.com/cavi-au/Consent-O-Matic
-* Via TCF: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9152617
-* Noyb (https://noyb.eu/en/noyb-aims-end-cookie-banner-terror-and-issues-more-500-gdpr-complaints) don't explain their approach but based on available details (esp. https://wecomply.noyb.eu/en/app/faq#how-can-i-make-my-banner-compliant) likely use CMP-specific adapters, maybe in combination with TCF.
-* Privacy policy detection tends to be keyword-based: https://www.ndss-symposium.org/wp-content/uploads/2019/02/ndss2019_04B-2_Degeling_paper.pdf, https://dl.acm.org/doi/pdf/10.1145/3178876.3186087
-    * Keyword list: https://github.com/RUB-SysSec/we-value-your-privacy/blob/master/privacy_wording.json
-* https://www.open.ou.nl/hjo/supervision/2021-koen-aerts-msc-thesis.pdf and https://pure.tudelft.nl/ws/files/57080768/vaneijk_conpro19.pdf rely on adblock filter lists (like https://secure.fanboy.co.nz/fanboy-cookiemonster.txt), which are _very_ broad, e.g. detecting any element with `CNIL` or `Cookie` in its ID. Manual check revealed error margin of ~15%, interestingly skewed towards false-negatives.
+The approach we use for our analysis should be automatic, with manual steps required at most for validation. We found that while some elements in mobile apps have descriptive IDs (e.g. `de.zalando.prive:id/consent_button_accept_all`), this is not as common on the web, with most elements IDs not containing enough information to discern whether they contain a consent dialog (e.g. `com.zhiliao.musically.livewallpaper:id/content_tv` does contain one). This means that we cannot rely on element IDs alone and won't be able to use adblock filter lists. The ones described for the web are too broad anyway. We found many apps displaying a dialog that at first glance looks like a consent dialog but actually just concerns the company's terms of service or similar. These need to be filtered out correctly^[Even if those apps bury data protection information somewhere in their terms of service, it doesn't make a terms of service dialog into a consent dialog, so we can safely ignore those cases.].
 
-### Observations in Mobile Apps
+Based on those considerations, we use a text-based approach that matches on the elements' text content. We encountered three main types of apps referencing data protection, which we want to distinguish, motivating the following taxonomy for this thesis:
 
-* Element IDs are sometimes helpful (`de.zalando.prive:id/consent_button_accept_all`) but tend not to be (`com.zhiliao.musically.livewallpaper:id/content_tv`).
-* Some consent dialogs are in webviews, Appium does support that be we encountered weird bug whereby you need to issue one `findElements()` call for anything at all before subsequent calls include webview elements.
-* Often, apps have something that at first glance looks like a CD but actually just concerns their TOS or similar, not data protection. We will need to filter those out correctly. Note: Even if TOS says something about DP, that doesn't matter legally, so we can safely ignore those cases.
+Link
+:   Some apps only contain a link to a privacy policy in a menu or the footer. While this can be enough to satisfy a controller's information obligations under Art. 12–14 GDPR, a link can obviously not be used to obtain consent from a user.
 
-* Different kind of data protection notices, motivating the following taxonomy for this thesis: dialog, notice, link (TODO: explain why)
+Notice
+:   Some apps inform users that the app processes their data, not seldom claiming that the users agrees to this by continuing to use the app. The notices are often in the form of a banner or a short sentence tucked away under a form. As established in [@sec:critera], consent in the context of data protection cannot be given through inaction, so apps may not assume consent based on only such a notice. It can however be used by the controller to meet their duty to inform the user of the processing.
+
+Dialog
+:   Finally, some apps not only inform the user about their data processing but actively solicit their consent through a button or a checkbox that needs to be clicked. This is the only way that apps can actually obtain valid consent under the GDPR.
 
 ### Our Approach {#sec:method-our-approach}
 
-* Approach should be automatic, manual at most for validation or small parts.
-* As determined in [@sec:cd-situation-mobile], TCF or CMP-specific approach won't work (only for very few apps), nonetheless we will (additionally) implement TCF stuff for those apps that use it to access more detailed data.
-* Few detailed IDs, so filter lists won't work either, too broad anyway.
+Based on manually looking at many apps, we have collected a list of common phrases that German and English apps use to refer to data protection like "we care about your privacy" or "by continuing to use our app, you acknowledge that we may process your data in line with out data protection statement". We extracted the key elements from these phrases and compiled them into compact regexes that only match on the important words, leaving out as much of the app-specific wording as possible.
 
-* TODO: Not sure whether this makes sense. Maybe merge the following two paragraphs.
-* Thus: Only option is text-based matching.
-* Distinction between dialog and notice only through interactive elements. In addition to the criteria for a notice, a dialog needs to have at least one button.
-* If an app has neither a dialog nor a notice but we did detect a link to a privacy policy, we classify it as "link".
-* Use keyword score as additional criterion to weed out TOS notices.
-* Alternatively: if notice has privacy policy link, that is also sufficient. Unfortunately, also has to be done based on text only, as Appium doesn't support reading link targets.
+We detect a dialog or notice in an app if we encounter at least one match for one of those regexes in an element. We distinguish between notices and dialogs only by whether they contain an interactive element. In addition to the criteria for a notice, a dialog also needs to have at least one button. For that, we have compiled another list of regexes for buttons typically found in consent dialogs, matching on labels like "accept", "okay", or "reject".  
+If an app has neither a dialog nor a notice but we detect a link to a privacy policy, we classify it as "link". Unfortunately, search for privacy policy links also has to be done based on text only, as Appium doesn't support reading link targets.
 
-* Based on manual analysis of apps, list of common phrases and keywords in notices compiled, made into compact regexes that only match on the important words and leave out CD-specific wording as much as possible.
-* Main criterion for those: Avoid false-positives! Better to provide under-approximation than to wrongly detect non-CDs as CDs.
-* One example of a regex to detect typical consent dialog texts:
+To weed out notices and dialogs not referring to data protection, we introduce another criterion: We have compiled a list of keywords commonly found in consent dialogs and assign a keyword score based on how many of those we find in an app. We differentiate between keywords that are clearly related to data protection like `/(ad(vertising|s)?|content|experience) personali(s|z)ation/`{.js} or `/(necessary|essential|needed) cookies/`{.js}, which yield one point, and ones that are commonly but not necessarily related to data protection like `'geolocation data'`{.js} or `'IP address'`{.js}, which only yield half a point.  
+We only detect a dialog or notice if the keyword score is at least one. Alternatively, if we find a privacy policy link, that is also sufficient. Conversely, even if we don't detect one of the dialog phrases, if an app reaches a keyword score of at least three, we classify it as "maybe dialog/notice".
 
-  ```js
-  /have read( and understood)? [^.]{3,35} (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/
-  ```
+One of those phrase regexes looks like this for example:
 
-  Tries to anticipate all possible word choices for "privacy policy" that could come up. As explained before, we leave out any words that aren't strictly necessary to classify a sentence as coming from a consent dialog. We don't care whether a dialog says "You hereby confirm that you have read our aforementioned privacy policy." or simply "I have read the privacy policy." However, it is important that the "have read" and "privacy policy" parts belong to a single statement and aren't parts of entirely separate sentences. Thus, we limit the number of characters that may occur between them and disallow any periods between the parts.
-* Full list in Appendix.
-* Text matching is done case-insensitively.
-* Button and privacy policy link texts need to be at word boundaries, to avoid matching "acknowledge" as "no" for example.
-* Appium has no general way of distinguishing between buttons and other elements. Of course, a text element that happens to contain the word "no", shouldn't be detected as a reject button, either. Thus, we additionally only match buttons if their text is at most twice as long as the respective matcher.
-* For the keywords, we differentiate between ones that are clearly related to data protection like `/(ad(vertising|s)?|content|experience) personali(s|z)ation/`{.js} or `/(necessary|essential|needed) cookies/`{.js}, which yield one point, and ones that are commonly but not necessarily related to data protection like `'geolocation data'`{.js} or `'IP address'`{.js}, which only yield half a point.
-* Even if we don't detect a dialog/notice text, if an app reaches a keyword score of at least 3, we classify it as "maybe dialog/notice".
-* Only consider visible elements.
+```js
+/have read( and understood)? [^.]{3,35}
+    (privacy|cookie|data protection|GDPR) (policy|notice|information|statement)/
+```
+
+This regex tries to anticipate all possible word choices for "privacy policy" that could come up. As explained, we leave out any words that aren't strictly necessary to classify a sentence as coming from a consent dialog. For our purposes, it isn't important whether a dialog says "You hereby confirm that you have read our aforementioned privacy policy." or simply "I have read the privacy policy." However, it is important that the "read" and "privacy policy" parts belong to a single statement and aren't parts of entirely separate sentences. Thus, we limit the number of characters that may occur between them and disallow periods between the parts.  
+The main criterion when compiling the regexes was to avoid false-positives under the assumption that it is better to provide an under-approximation of consent dialog prevalence than to wrongly detect other elements as consent dialogs. A full list of the regexes we used can be found in Appendix TODO.
+
+All text matching is done case-insensitively. We only consider visible elements. Button and privacy policy link texts additionally need to be at word boundaries, to avoid matching "acknowledge" as "no" for example.  
+Appium has no general way of distinguishing between buttons and other elements. Of course, a text element that happens to contain the word "no", shouldn't be detected as a reject button, either. Thus, we additionally only match buttons if their text is at most twice as long as the respective matcher.
 
 ### Interaction with Consent Dialogs
 
@@ -98,6 +87,10 @@ App stops after refusing consent
 :   It needs to be possible to use an app without consenting (potentially with a reduced feature set), so an app may not quit after the user has refused their consent (cf. [@sec:criteria-circum]). To detect violations, we first ensure that the app is still running and in the foreground, then click the "reject" button, wait for ten seconds and record a violation if the app is not running and in the foreground anymore afterwards. In the case of multiple "reject" buttons, we click the first one, preferring a "reject" button with clear label, if available.
 
 TODO: US transfers?
+
+## Analysis of IAB TCF data
+
+Even though only comparatively few apps implement the IAB TCF (cf. [@sec:cd-situation-mobile]), we nonetheless analyse the TCF data for those apps that do use it in addition to the approach described above to leverage the more detailed data.
 
 ## Tracking Content Extraction
 
