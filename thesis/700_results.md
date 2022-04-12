@@ -2,17 +2,19 @@
 
 TODO: TCF data
 
-## Consent Dialog Types and Frameworks
+* UpSet diagram for violations (https://people.csail.mit.edu/ilaria/papers/Midas-MITCHI2020.pdf, p. 6)?
 
-## Violations
+## Prevalence of Consent Dialogs
 
-## Effect of user choices
+## Violations in Consent Dialogs
+
+## Effect of User Choices
 
 * Transmitted data
     * Indicators
     * Adapters
 * Tracking companies
 
-## Privacy labels
+## Privacy Labels
 
 ## Validation

@@ -39,7 +39,7 @@ In the context of this thesis, only Art. 5(3) ePD is relevant:
 
 > Member States shall ensure that the storing of information, or the gaining of access to information already stored, in the terminal equipment of a subscriber or user is only allowed on condition that the subscriber or user concerned has given his or her consent, having been provided with clear and comprehensive information […]. This shall not prevent any technical storage or access for the sole purpose of carrying out the transmission of a communication over an electronic communications network, or as strictly necessary in order for the provider of an information society service explicitly requested by the subscriber or user to provide the service.
 
-Unlike the GDPR, Art. 5(3) ePD doesn't deal with data protection but protects the integrity of a person's terminal equipment. It doesn't just cover personal data but _any_ data that is read from or stored on a user's device. While this provision is most commonly discussed in the context of cookies (earning the ePD its informal nickname of "the cookie law"), it also applies to any other reading or storing of information on a user's device [@cliffordEUDataProtection2014].
+Unlike the GDPR, Art. 5(3) ePD doesn't deal with data protection but protects the integrity of a person's terminal equipment. It doesn't just cover personal data but _any_ data that is read from or stored on a user's device. While this provision is most commonly discussed in the context of cookies (earning the ePD its informal nickname of "the cookie law"), it also applies to any other reading or storing of information on a user's device, for example through fingerprinting or tracking pixels [@europeandataprotectionboardGuidelines2020Targeting2021; @cliffordEUDataProtection2014].
 
 Also unlike the GDPR, Art. 5(3) ePD does not provide multiple possible legal bases that could apply. There are only two options: Either the reading or storing falls under the exception of being strictly necessary (a clause that has to be interpreted narrowly, with for example tracking and advertising not being strictly necessary despite many publishers' insistence [@article29dataprotectionworkingpartyOpinion0420122012]), or it requires prior informed consent by the user.
 
@@ -64,5 +64,7 @@ Thus, legal data transfers to the US are now significantly harder or even imposs
 
 TODO:
 
+* Art. 5 GDPR
 * Consent dialogs (maybe merge into something else)
+    * Art. 25 GDPR
 * Consent notices (don't have much of an effect, other than maybe Art. 13/14 GDPR)

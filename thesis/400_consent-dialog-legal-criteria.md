@@ -4,6 +4,8 @@ Before starting to look at actual consent dialogs in the wild, this chapter will
 
 In this thesis, only EU-wide and German sources of law are considered, though DPAs from other EU countries have also issued similar guidance and/or decisions (cf. e.g. [ @commissionnationaledelinformatiqueetdeslibertesRefuserCookiesDoit2021; @commissionnationaledelinformatiqueetdeslibertesCookiesAutresTraceurs2020; @roseDatatilsynetDenmark202143101252021; @faCNILFranceSAN20210232022]).
 
+TODO: Also cite a few court cases (Planet49, Advocado)
+
 ## Laws
 
 Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@sec:legal-background]: the GPDR, the ePrivacy Directive (ePD), and its national implementation in Germany, the TTDSG.
@@ -52,7 +54,7 @@ We don't consider these cases in this thesis as we can't reliably detect them au
 
 ## DPA recommendations
 
-Most of the criteria extracted directly from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in concrete cases and are also commonly used in similar research (TODO: cite).
+Most of the criteria extracted directly from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in concrete cases and are also used in similar research ([@nouwensDarkPatternsGDPR2020; @mattePurposesIABEurope2020a]).
 
 ### Criteria from DPA recommendations
 
