@@ -2,7 +2,7 @@
 
 # Appendix
 
-## TODO
+## Additional Figures and Tables {#sec:appendix-figures-tables}
 
 | iOS                          | Android                              |
 |------------------------------|--------------------------------------|

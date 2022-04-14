@@ -58,5 +58,6 @@ TODO: Probably move this to the end, we need to talk about many concepts that ar
 * Dark and Bright Patterns in Cookie Consent Requests: https://jdsr.se/ojs/index.php/jdsr/article/view/54
 * Purposes in IAB Europe’s TCF: which legal basis and how are they used by advertisers? [@mattePurposesIABEurope2020a]
 * Unifying Privacy Policy Detection: https://www.sciendo.com/article/10.2478/popets-2021-0081
+* The AppChk Crowd-Sourcing Platform: Which third parties are iOS apps talking to?: https://arxiv.org/abs/2104.06167
 
 * TODO: noyb

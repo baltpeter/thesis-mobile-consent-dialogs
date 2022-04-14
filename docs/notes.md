@@ -220,17 +220,6 @@ nano .env
 
 * Clipboard: `LDDsvPqQdT`
 
-### Read
-
-TODO
-
-* WiFi network: WLAN3.ALTPETER.ME
-* IMEI: 356395106788056
-* BSSID: 34:81:c4:dc:36:1
-* WiFi addr: 3C:CD:36:D4:CC:E4
-* Bluetooth addr: 3C:CD:36:D2:BD:B2
-* Local IP: `10.0.0.68`
-
 ## Mobile CMPs
 
 * IAB TCF
