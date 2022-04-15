@@ -17,7 +17,6 @@ import { argv } from './common/argv.js';
 import { db, pg } from './common/db.js';
 import { platform_api, PlatformApiIos } from './common/platform.js';
 import {
-    dialog_id_fragments,
     button_text_fragments,
     dialog_text_fragments,
     link_text_fragments,
@@ -334,20 +333,12 @@ async function main() {
                 };
                 let has_link = false;
                 let keyword_score = 0;
+                const seen_keywords: RegExp[] = [];
 
                 const elements = await timeout(client.findElements('xpath', '//*'), 960000);
                 for (const el of elements) {
                     // Only consider elements that the user can actually see.
-                    if (!client.isElementDisplayed(el.ELEMENT)) continue;
-
-                    const id = await timeout(
-                        client.getElementAttribute(el.ELEMENT, argv.platform === 'android' ? 'resource-id' : 'name'),
-                        25000
-                    );
-                    if (id) {
-                        // if (testAndLog(button_id_fragments, id, 'has button ID', 4)) button_count++;
-                        if (testAndLog(dialog_id_fragments, id, 'has dialog ID')) has_dialog = true;
-                    }
+                    if (!(await client.isElementDisplayed(el.ELEMENT))) continue;
 
                     const text = await timeout(client.getElementText(el.ELEMENT), 25000);
                     if (text) {
@@ -374,7 +365,17 @@ async function main() {
 
                         const regular_keywords = testAndLog(keywords_regular, text, 'has 1p keyword', false, true);
                         const half_keywords = testAndLog(keywords_half, text, 'has 1/2p keyword', false, true);
-                        keyword_score += (regular_keywords as RegExp[]).length + (half_keywords as RegExp[]).length / 2;
+                        for (const [keywords, points] of [
+                            [regular_keywords, 1],
+                            [half_keywords, 0.5],
+                        ] as const) {
+                            for (const keyword of Array.isArray(keywords) ? keywords : keywords ? [keywords] : []) {
+                                if (!seen_keywords.includes(keyword)) {
+                                    keyword_score += points;
+                                    seen_keywords.push(keyword);
+                                }
+                            }
+                        }
                     }
                 }
 
