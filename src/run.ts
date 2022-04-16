@@ -465,26 +465,26 @@ async function main() {
                     for (const affirmative_button of buttons.all_affirmative) {
                         // Compare button sizes.
                         if (!res.violations.accept_larger_than_reject) {
-                            const violates_size = await buttons.all_negative.reduce(
+                            const violates_size = await buttons.all_negative.reduce<Promise<boolean | number>>(
                                 async (acc, cur) =>
-                                    (await acc) ||
+                                    (await acc) &&
                                     (await element_size_factor(affirmative_button.ELEMENT, cur.ELEMENT)) >
                                         max_button_size_factor,
-                                Promise.resolve(false)
+                                Promise.resolve(1)
                             );
-                            if (violates_size) res.violations.accept_larger_than_reject = true;
+                            if (violates_size === true) res.violations.accept_larger_than_reject = true;
                         }
 
                         // Compare button colors.
                         if (!res.violations.accept_color_highlight) {
-                            const violates_color = await buttons.all_negative.reduce(
+                            const violates_color = await buttons.all_negative.reduce<Promise<boolean | number>>(
                                 async (acc, cur) =>
-                                    (await acc) ||
+                                    (await acc) &&
                                     (await element_color_difference(affirmative_button.ELEMENT, cur.ELEMENT)) >
                                         max_button_color_difference,
-                                Promise.resolve(false)
+                                Promise.resolve(1)
                             );
-                            if (violates_color) res.violations.accept_color_highlight = true;
+                            if (violates_color === true) res.violations.accept_color_highlight = true;
                         }
                     }
                 }
