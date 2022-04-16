@@ -18,6 +18,7 @@ import { db, pg } from './common/db.js';
 import { platform_api, PlatformApiIos } from './common/platform.js';
 import {
     button_text_fragments,
+    button_negator_text_fragments,
     dialog_text_fragments,
     link_text_fragments,
     keywords_regular,
@@ -37,18 +38,29 @@ const err_dir = join(dirname(), '../data/failed-apps.tmp');
 const run_for_open_app_only = argv.dev;
 let log_indicators = true;
 
-const fragmentTest = (frags: RegExp[], val: string, length_factor: false | number = false, multiple_matches = false) =>
+const fragmentTest = (
+    frags: RegExp[],
+    val: string,
+    length_factor: false | number = false,
+    multiple_matches = false,
+    blocked_frags?: RegExp[]
+) =>
     frags[multiple_matches ? 'filter' : 'find'](
-        (frag) => frag.test(val) && (length_factor ? val.length < length_factor * frag.source.length : true) && frag
+        (frag) =>
+            frag.test(val) &&
+            (length_factor ? val.length < length_factor * frag.source.length : true) &&
+            (blocked_frags ? !blocked_frags.some((frag) => frag.test(val)) : true) &&
+            frag
     );
 const testAndLog = (
     frags: RegExp[],
     val: string,
     msg: string,
     length_factor: false | number = false,
-    multiple_matches = false
+    multiple_matches = false,
+    blocked_frags?: RegExp[]
 ) => {
-    const res = fragmentTest(frags, val, length_factor, multiple_matches);
+    const res = fragmentTest(frags, val, length_factor, multiple_matches, blocked_frags);
     if (res) {
         for (const r of Array.isArray(res) ? res : [res]) {
             if (log_indicators) console.log(chalk.bold(`${msg}:`), val.replace(/\n/g, ' '), chalk.underline(`(${r})`));
@@ -353,11 +365,12 @@ async function main() {
                                 'Found "No SIM" indicator. There is likely a stuck modal that blocks the actual app.'
                             );
 
-                        if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2))
+                        // prettier-ignore
+                        if (testAndLog(button_text_fragments.clear_affirmative, text, 'has ca button text', 2, undefined, button_negator_text_fragments))
                             buttons.push('clear_affirmative', el);
                         else if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
                             buttons.push('clear_negative', el);
-                        else if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2))
+                        else if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2, undefined, button_negator_text_fragments.concat(/continue (with|as)/)))
                             buttons.push('hidden_affirmative', el);
                         else if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
                             buttons.push('hidden_negative', el);
