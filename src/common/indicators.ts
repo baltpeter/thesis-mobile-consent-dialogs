@@ -16,12 +16,16 @@ export const button_id_fragments = normalizeFragments(['decline', 'reject', 'acc
 export const dialog_id_fragments = normalizeFragments(['gdpr', 'consent', /cookie_settings/, 'iab', 'opt_in', 'user_choice', 'vendors?_list'], true);
 
 // prettier-ignore
+const clear_negative_words = ['disagree', 'decline', 'reject', 'refuse', 'deny', /opt(- )?out/, 'no', /widersprechen?/, 'ablehnen', /verweiger(n|e)/, 'nein'];
+// prettier-ignore
 export const button_text_fragments = {
-    clear_affirmative: normalizeFragments(['accept', 'agree', 'allow', 'consent', 'permit', /(select|choose) all/, 'yes', 'akzeptieren', 'zustimmen', 'annehmen', 'erlauben', 'einwilligen', 'genehmigen', /alle (aus)?wählen/, 'ja'], true),
-    hidden_affirmative: normalizeFragments(['ok', 'okay', 'next', 'continue', 'weiter', 'fortfahren'], true),
-    clear_negative: normalizeFragments(['decline', 'reject', 'refuse', 'no', 'widersprechen', 'ablehnen', 'verweigern', 'nein'], true),
-    hidden_negative: normalizeFragments([/customi(z|s)e/, /personali(z|s)e/, /more (choices|details)/, 'settings', 'options', /(show|more) details/, 'exit', 'cancel', 'learn more', 'anpassen', 'personalisieren', 'einstellungen', 'optionen', 'mehr details', 'details anzeigen', 'anpassen', /schlie(ß|ss)en/, 'beenden', 'abbrechen', 'mehr erfahren'], true),
+    clear_affirmative: normalizeFragments(['accept', 'agree', 'allow', 'consent', 'permit', /(select|choose) all/, 'yes', /akzeptieren?/, 'zustimmen', 'annehmen', /erlauben?/, 'einwilligen', /genehmigen?/, /alle (aus)?wählen/, /stimm[^.]{0,4} zu/, /nehm[^.]{0,4} an/, /willig[^.]{0,4} ein/, 'ja'], true),
+    hidden_affirmative: normalizeFragments(['ok', 'okay', 'got it', 'confirm', 'next', 'continue', 'yes, continue to see relevant ads', 'weiter', 'fortfahren', 'bestätigen'], true),
+    clear_negative: normalizeFragments([...clear_negative_words, /(do not|don't) (accept|agree|allow|consent|permit)/, /no,? thanks?( you)?/, /nicht (akzeptieren|zustimmen|annehmen|erlauben|einwilligen|genehmigen)/, /lehn[^.]{0,4} ab/, /nein,? danke/], true),
+    hidden_negative: normalizeFragments([/customi(z|s)e/, /personali(z|s)e/, /more (choices|details|info|information)/, 'settings', 'options', 'preferences', /(adjust|change|manage)[^.]{0,10} (settings|options|preferences|cookies|choices)/, /(show|more) details/, 'exit', 'cancel', /(learn|read) more/, 'not now', 'no, see ads that are less relevant', 'anpassen', 'personalisieren', 'einstellungen', 'optionen', /(einstellungen|optionen|cookies|auswahl) (anpassen|ändern|verwalten)/, /mehr (details|infos|information)/, 'details anzeigen', 'anpassen', /schlie(ß|ss)en/, 'beenden', 'abbrechen', /mehr (erfahren|lesen)/, 'jetzt nicht'], true),
 };
+// prettier-ignore
+export const button_negator_text_fragments = normalizeFragments([...clear_negative_words, "don't", 'not', 'nicht', 'kein'], true);
 
 export const button_text_fragments_all = Object.values(button_text_fragments).flat();
 export const dialog_text_fragments = normalizeFragments([
