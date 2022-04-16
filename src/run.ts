@@ -349,13 +349,20 @@ async function main() {
                 let keyword_score = 0;
                 const seen_keywords: RegExp[] = [];
 
-                const elements = await timeout(client.findElements('xpath', '//*'), 960000);
+                const elements: (ElementReference & {
+                    text?: string;
+                    'element-6066-11e4-a52e-4f735466cecf'?: string;
+                })[] = await timeout(client.findElements('xpath', '//*'), 960000);
                 for (const el of elements) {
                     // Only consider elements that the user can actually see.
                     if (!(await client.isElementDisplayed(el.ELEMENT))) continue;
 
                     const text = await timeout(client.getElementText(el.ELEMENT), 25000);
                     if (text) {
+                        // Save text and remove duplicated property to make these easier for debugging.
+                        el.text = text.substring(0, 10000);
+                        delete el['element-6066-11e4-a52e-4f735466cecf'];
+
                         if (argv.debug_text) console.log(text);
 
                         // On iOS, we sometimes get into a state where Appium sees the system UI, which we can
