@@ -6,7 +6,7 @@ import _ipaInfo from 'ipa-extract-info';
 import frida from 'frida';
 // @ts-ignore
 import dirname from 'es-dirname';
-import { ArgvType } from './argv.js';
+import { RunArgvType } from './argv.js';
 import { kill_process, pause } from './util.js';
 
 type PlatformApi = {
@@ -137,7 +137,7 @@ export type PlatformApiIos = PlatformApi & {
     _internal: { get_app_id: (app_path: string) => Promise<string | undefined> };
 };
 
-export const platform_api = (argv: ArgvType): { android: PlatformApiAndroid; ios: PlatformApiIos } => ({
+export const platform_api = (argv: RunArgvType): { android: PlatformApiAndroid; ios: PlatformApiIos } => ({
     android: {
         _internal: {
             emu_process: undefined,

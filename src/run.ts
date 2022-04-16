@@ -13,7 +13,7 @@ import { timeout } from 'promise-timeout';
 import getImageColors from 'get-image-colors';
 import { serializeError } from 'serialize-error';
 import chroma from 'chroma-js';
-import { argv } from './common/argv.js';
+import { run_argv } from './common/argv.js';
 import { db, pg } from './common/db.js';
 import { platform_api, PlatformApiIos } from './common/platform.js';
 import {
@@ -24,6 +24,8 @@ import {
     keywords_half,
 } from './common/indicators.js';
 import { shuffle, pause, await_proc_start, kill_process } from './common/util.js';
+
+const argv = run_argv();
 
 const required_score = 1;
 const app_timeout = 60;
