@@ -377,7 +377,7 @@ async function main() {
                             buttons.push('clear_affirmative', el);
                         else if (testAndLog(button_text_fragments.clear_negative, text, 'has cn button text', 2))
                             buttons.push('clear_negative', el);
-                        else if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2, undefined, button_negator_text_fragments.concat(/continue (with|as)/)))
+                        else if (testAndLog(button_text_fragments.hidden_affirmative, text, 'has ha button text', 2, undefined, button_negator_text_fragments.concat(/continue (with|as)/i)))
                             buttons.push('hidden_affirmative', el);
                         else if (testAndLog(button_text_fragments.hidden_negative, text, 'has hn button text', 2))
                             buttons.push('hidden_negative', el);
