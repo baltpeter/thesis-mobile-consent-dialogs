@@ -19,4 +19,4 @@ TODO (context):
 Contributions
 :   In particular, we make the following contributions:
 
-1. First ever automated way to reliably download iOS apps as IPA files, contributed in PR to ipatool.
+1. First automated way to reliably download iOS apps as IPA files, contributed in PR to ipatool.

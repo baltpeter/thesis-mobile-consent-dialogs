@@ -15,6 +15,15 @@
     * accept highlighted: p. 56 et seq.
 * Do Cookie Banners Respect my Choice?: Measuring Legal Compliance of Banners from IAB Europe’s Transparency and Consent Framework (2020) [@matteCookieBannersRespect2020]
     * TODO
+* A Cross-Platform Evaluation of Privacy Notices and Tracking Practices [@mehrnezhadCrossPlatformEvaluationPrivacy2020]
+    * Privacy notice in 32% of apps, but not just the very first page: also manually dismissed alerts and skipped first run wizards
+    * Only 2% (of all apps) with link only. (TODO: We probably match too many links but not that extreme). Might be due to only analysing 101 apps based on Alexa top 150 websites. Their reporting of 91% CDs on websites is also a lot higher than other literature. (TODO: analyse verdict vs. position)
+    * TODO: accept highlight, no accept
+* Can I Opt Out Yet?: GDPR and the Global Illusion of Cookie Control [@sanchez-rolaCanOptOut2019]
+    * ~50% with any dialog or notice
+    * ~30% notices
+* The Impact of User Location on Cookie Notices (Inside and Outside of the European Union) [@eijkImpactUserLocation2019a]
+    * 40.2% with any dialog or notice
 * noyb aims to end “cookie banner terror” and issues more than 500 GDPR complaints [@noyb.euNoybAimsEnd2021]
     * violations graph (note: percentage of complaints, not all sites!)
 
