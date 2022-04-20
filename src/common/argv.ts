@@ -120,3 +120,41 @@ export const run_argv = () =>
         })
         .parseSync();
 export type RunArgvType = ReturnType<typeof run_argv>;
+
+export const data_argv = () =>
+    yargs(process.argv.slice(2))
+        .options({
+            privacy_labels_dir: { type: 'string', demandOption: true, group: 'Analysis parameters:' },
+
+            all: {
+                type: 'boolean',
+                default: false,
+                describe: 'Run all steps',
+                group: 'Choose steps to run:',
+            },
+            overview: {
+                type: 'boolean',
+                default: false,
+                describe: 'Print dialog and violation overview',
+                group: 'Choose steps to run:',
+            },
+            dialog_data: {
+                type: 'boolean',
+                default: false,
+                describe: 'Compute and save dialog data',
+                group: 'Choose steps to run:',
+            },
+            indicator_data: {
+                type: 'boolean',
+                default: false,
+                describe: 'Compute and save indicator data',
+                group: 'Choose steps to run:',
+            },
+            tcf_data: {
+                type: 'boolean',
+                default: false,
+                describe: 'Compute and save TCF data',
+                group: 'Choose steps to run:',
+            },
+        })
+        .parseSync();

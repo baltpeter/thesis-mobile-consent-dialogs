@@ -35,3 +35,22 @@ export const kill_process = async (proc?: ExecaChildProcess) => {
         await timeout(proc, 5000).catch(() => proc.kill(9));
     }
 };
+
+type SortType = `${'key' | 'value'}_${'asc' | 'desc'}`;
+type SortFunction = <ValT extends string | number>(a: [string, ValT], b: [string, ValT]) => number;
+export const obj_sort = <T extends Record<string, string> | Record<string, number>>(
+    obj: T,
+    sort_by: SortType | SortFunction
+) => {
+    const sort_by_functions: Record<SortType, SortFunction> = {
+        // @ts-ignore
+        value_asc: ([, a], [, b]) => (typeof a === 'string' ? a.localeCompare(b) : a - b),
+        key_asc: ([a], [b]) => a.localeCompare(b),
+        // @ts-ignore
+        value_desc: ([, a], [, b]) => (typeof a === 'string' ? b.localeCompare(a) : b - a),
+        key_desc: ([a], [b]) => b.localeCompare(a),
+    };
+    return Object.fromEntries(
+        Object.entries(obj).sort(typeof sort_by === 'string' ? sort_by_functions[sort_by] : sort_by)
+    ) as T;
+};
