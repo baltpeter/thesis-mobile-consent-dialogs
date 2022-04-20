@@ -16,7 +16,7 @@ TODO: Maybe include examples from actual CMPs that can be configured wrongly?
 
 On the web, usage of CMPs is common. Recent research detected the use of CMPs on between 6&nbsp;% and 13&nbsp;% of European websites, depending on their Tranco rank [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020]. Ad tech company Kevel reports the presence of a CMP on 44&nbsp;% of the top 10k US sites for Q1 2022 [@kevelConsentManagementPlatform2022].
 
-### IAB Transparency & Consent Framework
+### IAB Transparency & Consent Framework {#sec:cd-tcf-web}
 
 Websites often use third-party scripts from many different vendors for all kinds of purposes, including advertising and tracking. Many of these require consent (see [@Sec:legal-background]). How do websites make sure that the scripts only start processing after consent has been given? Without a common framework, either each CMP would have to implement custom handlers for each possible third-party script or each third-party script would need to know how to communicate with all possible CMPs.
 
@@ -112,7 +112,7 @@ We detected a potential CMP use in 234 of the 3271 Android apps ($\sim 7$ %) and
 
 ### Consequences for Analysis {#sec:cd-situation-consequences}
 
-The TCF would have provided a standardized and machine-readable way to detect the presence of a CMP in an app, read the settings of CMPs, and even interact with them. As such, this would of course have been the preferred approach for the analysis in this thesis. In the absence of that, had we found that there is a limited number of off-the-shelf CMP solutions commonly used by apps, it would have still been possible to write custom adapters for these CMPs that rely on the internal implementions^[For example, during testing we found that the Didomi CMP also stores consent information in the OS per-app storage interfaces.] or characteristics of how they design their consent dialogs.
+The TCF would have provided a standardized and machine-readable way to detect the presence of a CMP in an app, read the settings of CMPs, and even interact with them. As such, this would of course have been the preferred approach for the analysis in this thesis. In the absence of that, had we found that there is a limited number of off-the-shelf CMP solutions commonly used by apps, it would have still been possible to write custom adapters for these CMPs that rely on the internal implementions^[For example, during testing we found that the Didomi and OneTrust CMPs also store consent information in the OS per-app storage interfaces.] or characteristics of how they design their consent dialogs.
 
 As established in this section, neither of those is the case. As such, we need to use a much more general approach that detects and works with any kind of CMP, regardless of implementation details. This in turn means a loss in the amount of details we can extract from CMPs as we have to expect a large amount of completely different implementations. It also means that we will likely miss some consent dialogs.  
 The details of the method we use for the analysis are described in [@Sec:analysis-method].

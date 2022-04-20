@@ -4,7 +4,11 @@
 
 ## Violations in Consent Dialogs
 
-## Effect of User Choices
+## Tracking and Effect of User Choices
+
+To gain insights into the tracking going on in apps and how different choices in the consent dialogs affect this, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 337 apps after accepting and 29 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.
+
+Note that it is possible that apps (try to) re-identify our device through fingerprinting for example and thus change their behaviour even after we reset the app (see [@sec:discussion-limitations] for a more detailed discussion of this limitation). Given this and the low number of apps for which we have traffic after rejecting, which would not be representative anyway, we don't analyse the change in tracking after rejected. The likelihood of a re-identified device skewing the results is significantly lower for the accepted runs as those came immediately after the initial run without interaction, which should not have affected a potential server-side consent status.
 
 * Transmitted data
     * Indicators
@@ -15,8 +19,9 @@
 
 ## IAB TCF data
 
-165 of the analysed apps have saved `IABTCF` preferences. Of those, 60 were not detected as having a consent dialog but our approach. Manually analysing those showed that 15 do in fact show a dialog that we didn't detect but the remaining 45 do not. It could be that those only show a dialog later in the user flow or maybe they include CMP libraries without actually using them.  
+165 of the analysed apps have saved `IABTCF` preferences (65 on Android, and 100 on iOS). Of those, 60 were not detected as having a consent dialog by our approach. Manually analysing those showed that 15 do in fact show a dialog that we didn't detect but the remaining 45 do not. It could be that those only show a dialog later in the user flow or maybe they include CMP libraries without actually using them.  
 Conversely, 291 apps were detected as showing a dialog but have not saved `IABTCF` preferences, confirming our assumption that only relying on TCF data for the analysis would not have been viable (cf. [@sec:cd-situation-mobile-tcf]).
+<!-- select platform, count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where cast(prefs as text) ~* 'IABTCF' group by platform; -->
 <!-- select * from dialogs where cast(prefs as text) ~* 'IABTCF' and not (verdict = 'dialog' or verdict = 'maybe_dialog'); -->
 <!-- select * from dialogs where not cast(prefs as text) ~* 'IABTCF' and (verdict = 'dialog' or verdict = 'maybe_dialog'); -->
 
@@ -32,12 +37,45 @@ The apps most often set the `IABTCF_gdprApplies` property, with 128 apps setting
 <!-- select * from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where prefs->'initial'->>'IABTCF_gdprApplies' not in ('0', '1'); -->
 <!-- select * from dialogs where prefs->'initial'->>'IABTCF_gdprApplies' != prefs->'accepted'->>'IABTCF_gdprApplies' or prefs->'initial'->>'IABTCF_gdprApplies' != prefs->'rejected'->>'IABTCF_gdprApplies' or prefs->'accepted'->>'IABTCF_gdprApplies' != prefs->'rejected'->>'IABTCF_gdprApplies'; -->
 
-`IABTCF_CmpSdkID` specifies which CMP is being used and is set by 113 apps, with 5 apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far. TODO: The mapping from the numeric IDs happened using the [CMP list](https://cmplist.consensu.org/v2/cmp-list.json), all invalid CMP IDs were merged into a single group.
+`IABTCF_CmpSdkID` specifies which CMP is being used and is set by 113 apps, with 5 apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. In our dataset, [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far. TODO: The mapping from the numeric IDs happened using the [CMP list](https://cmplist.consensu.org/v2/cmp-list.json), all invalid CMP IDs were merged into a single group.
 
 ![Prevalence of CMP providers according to IAB TCF data.](../graphs/tcf_cmps.pdf){#fig:results-tcf-cmps}
 
 `IABTCF_PublisherCC` specifies the app publisher's country. 61 apps are from Germany according to this, for 22 the CMP didn't know the country, 6 are from the US, 5 from the Netherlands, and 3 from Spain. The following countries are represented once: Luxembourg, United Kingdom, Australia, Hong Kong, Denmark, and Japan.
 <!-- select upper(coalesce(prefs->'initial'->>'IABTCF_PublisherCC', prefs->'accepted'->>'IABTCF_PublisherCC', prefs->'rejected'->>'IABTCF_PublisherCC')) val, count(1) from dialogs group by val order by count(1) desc; -->
+
+Finally, using `IABTCF_TCString`, it is possible to determine the exact consent state the apps are saving. We have collected the accepted state for 62 apps. The TCF allows apps to request consent for ten different purposes like "Store and/or access information on a device" or "Measure ad performance". Most apps store consent for all ten purposes, with an average of 9 and a median of 10. Apps can also request consent for vendors, with 860 possible vendors on the [global vendor list](https://vendor-list.consensu.org/v2/archives/vendor-list-v139.json) as of the time of writing. The average for the amount of stored vendor consents is 345.9, the median is 171.5. All possible vendors were requested by at least 7 apps. [@Tbl:results-tcf-vendors] lists the vendors that more than 50 apps stored consent for.
+
+| Vendor                                            | Count |
+|---------------------------------------------------|-------|
+| Google Advertising Products                       | 55    |
+| The Trade Desk                                    | 53    |
+| Adform                                            | 53    |
+| Amazon Advertising                                | 53    |
+| Index Exchange, Inc.                              | 52    |
+| RTB House S.A.                                    | 52    |
+| Yahoo EMEA Limited                                | 52    |
+| Xandr, Inc.                                       | 52    |
+| Smart Adserver                                    | 52    |
+| Magnite, Inc.                                     | 52    |
+| Flashtalking, Inc.                                | 52    |
+| MediaMath, Inc.                                   | 52    |
+| Criteo SA                                         | 52    |
+| SpotX, Inc                                        | 52    |
+| Amobee Inc.                                       | 51    |
+| Taboola Europe Limited                            | 51    |
+| Sizmek by Amazon                                  | 51    |
+| OpenX                                             | 51    |
+| PubMatic, Inc.                                    | 51    |
+| Meetrics GmbH                                     | 51    |
+| advanced store GmbH                               | 51    |
+| Publicis Media GmbH                               | 51    |
+| TabMo SAS                                         | 51    |
+| Otto (GmbH &amp; Co KG)                           | 51    |
+
+:   Counts of vendors apps request consent for according to IAB TCF data. Only vendors requested by more than 50 apps are included. {#tbl:results-tcf-vendors}
+
+The TC string also encodes the language of the consent dialog. Of the 67 apps that initially store a TC string, 62 showed an English consent dialog (our devices were set to English), and 5 showed a dialog in German. Due to the small sample size of apps implementing the TCF we don't go into the remaining information TC strings hold (cf. [@sec:cd-tcf-web]).
 
 There is also an older, deprecated TCF specification specifically for mobile apps, the *[Mobile In-App CMP API v1.0](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/b7164119d6b281ac0efb06cb9717e0793fc1f9d0/Mobile%20In-App%20Consent%20APIs%20v1.0%20Final.md)*, which uses `IABConsent` as the prefix for the saved preferences. Only 4 apps set preferences for this specification without also setting `IABTCF` preferences for the new TCF 2.0 specification. Of those, 3 only set `IABConsent_SubjectToGDPR` (with one wrongly determining the GDPR not to be applicable), disregarding empty properties. One app additionally set `IABConsent_CMPPresent` to `true` but didn't actually show a consent dialog.
 <!-- select * from dialogs where cast(prefs as text) ~* 'IABConsent' and not cast(prefs as text) ~* 'IABTCF'; -->
@@ -62,3 +100,5 @@ We manually validated the classification for a random set of 250 apps with scree
 The discovered false negatives are expected and don't impact the validity of the detected violations. As explained in [@sec:cd-situation-consequences], our approach necessarily misses consent elements due to more detailed information to base an analysis on not being sufficiently available in mobile apps. Not detecting a consent dialog does not cause us to wrongly attribute violations to an app. In these cases, all detected tracking has happened without any user interaction. This means that the apps, regardless of whether a consent dialog is being shown on screen, cannot have obtained valid consent and thus have no legal basis for the tracking. We only perform detection of the other violations in apps where we detected a consent dialog.
 
 We also manually validated all cases where we detected the "accept" having a significantly different colour than the "reject" button, as our approach cannot determine which of the two is actually highlighted compared to the other. We were able to confirm that it is indeed the "accept" button that's highlighted in all cases.
+
+TODO: Compare with initial manual analysis.

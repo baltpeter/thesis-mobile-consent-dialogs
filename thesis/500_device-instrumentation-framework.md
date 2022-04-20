@@ -97,15 +97,6 @@ Reset app
 Get app preferences
 :   This fetches the app's preferences from the operating system's per-app storage interfaces (`SharedPreferences` on Android, and `NSUserDefaults` on iOS) by injecting the Frida scripts described in [@sec:cd-situation-mobile-tcf] and converting their results to JSON.
 
-Get platform specific data
-:   This fetches the IDFV for the app's vendor on iOS using this Frida script:
-
-    ```js
-    ObjC.classes.UIDevice.currentDevice().identifierForVendor().toString();
-    ```
-
-    On Android, this is a no-op as Android has no vendor-specific device identifier (yet).
-
 Get app version
 :   On Android, this returns an APK's version by running `aapt dump badging $apk_path`{.sh} and extracting the `versionName` field [@androidopensourceprojectcontributorsAAPT22020].
 

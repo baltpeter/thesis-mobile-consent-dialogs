@@ -1,5 +1,7 @@
 import { join } from 'path';
 import fs from 'fs-extra';
+import { TCString } from '@iabtcf/core';
+import Papa from 'papaparse';
 import mapObject from 'map-obj';
 // @ts-ignore
 import dirname from 'es-dirname';
@@ -69,34 +71,29 @@ const computeDialogData = async () => {
     const top_apps = getTopApps();
 
     // Dialog data
-    const dialogs = await db.many(
-        `select name, platform, version, verdict, violations from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app;`
-    );
-    const dialogs_csv =
-        'name,platform,version,categories,best_position,best_position_set,verdict,stops_after_reject,accept_color_highlight,ambiguous_accept_button,ambiguous_reject_button,accept_larger_than_reject,accept_button_without_reject_button\n' +
-        dialogs
-            .map((d) => {
-                const top_data = top_apps[`${d.platform as 'android' | 'ios'}::${d.name as string}`];
-                return `${[
-                    d.name,
-                    d.platform,
-                    d.version,
-                    top_data.categories.length === 1 ? top_data.categories[0] : '<multiple>',
-                    top_data.best_position,
-                    Math.floor(top_data.best_position / 10) * 10,
-                    d.verdict,
-                    ...[
-                        'stops_after_reject',
-                        'accept_color_highlight',
-                        'ambiguous_accept_button',
-                        'ambiguous_reject_button',
-                        'accept_larger_than_reject',
-                        'accept_button_without_reject_button',
-                    ].map((v) => d.violations[v]),
-                ].join(',')}`;
-            })
-            .join('\n');
-    await fs.writeFile(join(data_dir, 'dialogs.csv'), dialogs_csv);
+    const dialogs = (
+        await db.many(
+            `select name, platform, version, verdict, violations from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app;`
+        )
+    ).map((d) => {
+        const top_data = top_apps[`${d.platform as 'android' | 'ios'}::${d.name as string}`];
+        return {
+            name: d.name,
+            platform: d.platform,
+            version: d.version,
+            categories: top_data.categories.length === 1 ? top_data.categories[0] : '<multiple>',
+            best_position: top_data.best_position,
+            best_position_set: Math.floor(top_data.best_position / 10) * 10,
+            verdict: d.verdict,
+            stops_after_reject: d.violations.stops_after_reject,
+            accept_color_highlight: d.violations.accept_color_highlight,
+            ambiguous_accept_button: d.violations.ambiguous_accept_button,
+            ambiguous_reject_button: d.violations.ambiguous_reject_button,
+            accept_larger_than_reject: d.violations.accept_larger_than_reject,
+            accept_button_without_reject_button: d.violations.accept_button_without_reject_button,
+        };
+    });
+    await fs.writeFile(join(data_dir, 'dialogs.csv'), Papa.unparse(dialogs));
 };
 
 const computeIndicatorData = async () => {
@@ -146,7 +143,7 @@ const computeTcfData = async () => {
     const tcf_cmps = obj_sort(
         (
             await db.many(
-                "select prefs->'initial'->'IABTCF_CmpSdkID' cmp_id, count(1) from dialogs where prefs->'initial'->'IABTCF_CmpSdkID' is not null group by cmp_id order by count(1) desc;"
+                "select coalesce(prefs->'initial'->'IABTCF_CmpSdkID', prefs->'accepted'->'IABTCF_CmpSdkID', prefs->'rejected'->'IABTCF_CmpSdkID') cmp_id, count(1) from dialogs where coalesce(prefs->'initial'->'IABTCF_CmpSdkID', prefs->'accepted'->'IABTCF_CmpSdkID', prefs->'rejected'->'IABTCF_CmpSdkID') is not null group by cmp_id order by count(1) desc;"
             )
         )
             .map((r) => ({ ...r, cmp_name: cmp_list.cmps[r.cmp_id]?.name }))
@@ -160,6 +157,74 @@ const computeTcfData = async () => {
         'value_desc'
     );
     await fs.writeFile(join(data_dir, 'tcf_cmps.json'), JSON.stringify(tcf_cmps, null, 4));
+
+    const get_tc_data = async (type: 'initial' | 'accepted' | 'rejected') =>
+        (
+            await db.many<{ name: string; platform: 'ios' | 'android'; version: string; tc_string: string }>(
+                `select name, platform, version, prefs->'${type}'->'IABTCF_TCString' tc_string from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where prefs->'${type}'->>'IABTCF_TCString' <> '';`
+            )
+        )
+            .map((a) => ({ ...a, tc_data: TCString.decode(a.tc_string) }))
+            .map((a) => ({
+                ...a,
+                vendorConsents: Array.from(a.tc_data.vendorConsents.values()),
+                purposeConsents: Array.from(a.tc_data.purposeConsents.values()),
+                publisherConsents: Array.from(a.tc_data.publisherConsents.values()),
+                publisherCustomConsents: Array.from(a.tc_data.publisherCustomConsents.values()),
+            }));
+    const tc_data = { initial: await get_tc_data('initial'), accepted: await get_tc_data('accepted') };
+    const tcf_accepted_counts = tc_data.accepted.map((a) => ({
+        name: a.name,
+        platform: a.platform,
+        version: a.version,
+        vendorConsents: a.vendorConsents.length,
+        purposeConsents: a.purposeConsents.length,
+        publisherConsents: a.publisherConsents.length,
+        publisherCustomConsents: a.publisherCustomConsents.length,
+    }));
+    await fs.writeFile(join(data_dir, 'tcf_accepted_counts.csv'), Papa.unparse(tcf_accepted_counts));
+
+    const vendor_list = JSON.parse(await fs.readFile(join(data_dir, 'tcf-upstream/vendor-list.json'), 'utf-8'));
+    const vendors_empty = Object.values<{ name: string; id: number }>(vendor_list.vendors).map((v) => ({
+        name: v.name,
+        id: v.id,
+        count: 0,
+    }));
+    const tcf_vendors = tc_data.accepted
+        .reduce<typeof vendors_empty>((acc, cur) => {
+            for (const vendor_id of cur.vendorConsents) {
+                acc.find((v) => v.id === vendor_id)!.count++;
+            }
+            return acc;
+        }, vendors_empty)
+        .sort((a, b) => b.count - a.count);
+
+    await fs.writeFile(join(data_dir, 'tcf_vendors.csv'), Papa.unparse(tcf_vendors));
+
+    console.log(tc_data.initial.length);
+
+    const tcf_languages = obj_sort(
+        tc_data.initial.reduce<Record<string, number>>(
+            (acc, cur) => ({
+                ...acc,
+                [cur.tc_data.consentLanguage]: (acc[cur.tc_data.consentLanguage] || 0) + 1,
+            }),
+            {}
+        ),
+        'value_desc'
+    );
+    await fs.writeFile(join(data_dir, 'tcf_languages.json'), JSON.stringify(tcf_languages, null, 4));
+
+    // const tcf_gvl_version = obj_sort(
+    //     tc_data.initial.reduce<Record<string, number>>(
+    //         (acc, cur) => ({
+    //             ...acc,
+    //             [cur.tc_data.vendorListVersion]: (acc[cur.tc_data.vendorListVersion] || 0) + 1,
+    //         }),
+    //         {}
+    //     ),
+    //     'value_desc'
+    // );
 };
 
 (async () => {
