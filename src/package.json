@@ -21,6 +21,7 @@
         "dotenv": "^16.0.0",
         "es-dirname": "^0.1.0",
         "execa": "^6.0.0",
+        "filter-anything": "^3.0.3",
         "frida": "^15.1.17",
         "fs-extra": "^10.0.0",
         "get-image-colors": "^4.0.0",

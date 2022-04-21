@@ -1,10 +1,12 @@
 import { writeFileSync } from 'fs';
+import { gunzipSync } from 'zlib';
 import deepmerge from 'deepmerge';
 import { match } from 'ts-pattern';
+import { omit } from 'filter-anything';
 import qs from 'qs';
 import { PartialDeep } from 'type-fest';
 import { db, pg } from './common/db.js';
-import { base64_decode, concat, str2bool } from './common/util.js';
+import { base64_decode, concat, str2bool, remove_empty } from './common/util.js';
 
 type Request = {
     id: number;
@@ -34,7 +36,10 @@ type TrackerDataResult = PartialDeep<{
         sdk_version: string;
     };
     device: {
-        adid: string;
+        idfa: string;
+        idfv: string;
+        hashed_adid: string;
+        other_uuids: string[];
         model: string;
         os: string;
         name: string;
@@ -80,24 +85,44 @@ type TrackerDataResult = PartialDeep<{
 
 // TODO: This is only for developing the adapters. In the end, we will match on an individual request and need to
 // identify the correct endpoint ourselves.
-const getRequestsForEndpoint = (endpoint: string) =>
-    db.many(
-        "select * from (select *, regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') endpoint_url from requests r) t where endpoint_url = ${endpoint};",
-        { endpoint }
+const getRequestsForEndpoint = (endpoint: string | RegExp) =>
+    db.manyOrNone(
+        "select * from (select *, regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') endpoint_url from requests r) t where " +
+            (endpoint instanceof RegExp ? 'endpoint_url ~ ${endpoint};' : 'endpoint_url = ${endpoint};'),
+        { endpoint: endpoint instanceof RegExp ? endpoint.source : endpoint }
     );
 
 const adapters: {
-    endpoint_urls: string[];
+    endpoint_urls: (string | RegExp)[];
     tracker: string;
-    match?: (r: Request) => boolean;
+    match?: (r: Request) => boolean | undefined;
     prepare: 'json_body' | 'qs_path' | 'qs_body' | PrepareFunction;
     extract: (pr: Record<string, any>) => TrackerDataResult;
 }[] = [
     {
-        endpoint_urls: ['https://live.chartboost.com/api/install', 'https://live.chartboost.com/api/config'],
+        endpoint_urls: [
+            'https://live.chartboost.com/api/install',
+            'https://live.chartboost.com/api/config',
+            'https://live.chartboost.com/banner/show',
+            'https://live.chartboost.com/webview/v2/prefetch',
+            'https://live.chartboost.com/webview/v2/reward/get',
+            'https://live.chartboost.com/webview/v2/interstitial/get',
+            'https://da.chartboost.com/auction/sdk/banner',
+        ],
         tracker: 'chartboost',
-        prepare: 'json_body',
-        // TODO: session, reachability, mobile_network, certification_providers, mediation
+        prepare: (r) => {
+            const json = JSON.parse(r.content!);
+            if (
+                [
+                    'https://live.chartboost.com/webview/v2/prefetch',
+                    'https://live.chartboost.com/webview/v2/reward/get',
+                    'https://live.chartboost.com/webview/v2/interstitial/get',
+                    'https://da.chartboost.com/auction/sdk/banner',
+                ].includes(r.endpoint_url)
+            )
+                return { ...json.app, ...json.device, ...json.sdk, ...json.ad };
+            return json;
+        },
         extract: (pr) => ({
             app: {
                 id: pr.bundle_id,
@@ -107,7 +132,8 @@ const adapters: {
                 sdk_version: pr.sdk,
             },
             device: {
-                adid: JSON.parse(base64_decode(pr.identity))?.gaid,
+                idfa: pr.identity ? JSON.parse(base64_decode(pr.identity))?.gaid : undefined,
+                other_uuids: [pr.session_id || pr.session_ID],
                 model: pr.device_type,
                 os: pr.os,
                 language: pr.language,
@@ -132,16 +158,21 @@ const adapters: {
         endpoint_urls: ['https://config.ioam.de/appcfg.php'],
         tracker: 'ioam',
         prepare: 'json_body',
-        // TODO: client.{uuids,network}
         extract: (pr) => ({
             app: {
-                id: pr.application?.package,
-                version: pr.application?.versionName,
+                id: pr.application?.package || pr.application?.bundleIdentifier,
+                version: pr.application?.versionName || pr.application?.bundleVersion,
             },
             tracker: {
                 sdk_version: pr.library.libVersion,
             },
             device: {
+                hashed_adid: pr.client.uuids.advertisingIdentifier, // md5(adid)
+                other_uuids: [
+                    pr.client.uuids.installationId,
+                    pr.client.uuids.vendorIdentifier,
+                    pr.client.uuids.androidId,
+                ],
                 model: pr.client.platform,
                 os: concat(pr.client.osIdentifier, pr.client.osVersion),
                 language: pr.client.language,
@@ -154,12 +185,6 @@ const adapters: {
             },
         }),
     },
-    // {
-    //     endpoint_urls: ['https://api.segment.io/v1/import'],
-    //     tracker: 'segment',
-    //     prepare: (r) => deepmerge.all(JSON.parse(r.content!).batch),
-    //     extract: (pr) => ({}),
-    // },
     {
         endpoint_urls: [
             'https://infoevent.startappservice.com/tracking/infoEvent',
@@ -171,7 +196,6 @@ const adapters: {
             r.endpoint_url === 'https://trackdownload.startappservice.com/trackdownload/api/1.0/trackdownload'
                 ? qs.parse(r.path!.replace(/.+\?/, ''))
                 : JSON.parse(r.content!),
-        // TODO: flavor, outsource, fgApp, clientSessionId, appCode, udbg, smltr, isddbg, tsh, category, value, details, cellScanRes, cid, lac, pas, isService, prm, placement
         extract: (pr) => ({
             app: {
                 id: pr.packageId,
@@ -183,8 +207,9 @@ const adapters: {
                 sdk_version: pr.sdkVersion,
             },
             device: {
+                other_uuids: [pr.clientSessionId],
                 os: concat(pr.os, ['API level', pr.deviceVersion]),
-                adid: pr.userAdvertisingId,
+                idfa: pr.userAdvertisingId,
                 model: concat(pr.manufacturer, pr.model),
                 language: pr.locale,
                 width: pr.width,
@@ -193,7 +218,7 @@ const adapters: {
                 uptime: pr.timeSinceBoot,
                 rooted: str2bool(pr.root),
                 orientation: pr.orientation,
-                carrier: pr.ispName,
+                carrier: pr.ispName || pr.ispCarrIdName,
                 ram_total: pr.usedRam + pr.freeRam,
                 ram_free: pr.freeRam,
                 network_connection_type: pr.grid,
@@ -203,42 +228,84 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://www.facebook.com/adnw_sync2', 'https://graph.facebook.com/network_ads_common'],
+        endpoint_urls: [
+            /^https:\/\/(www|web)\.facebook\.com\/adnw_sync2$/,
+            'https://graph.facebook.com/network_ads_common',
+        ],
         tracker: 'facebook',
         prepare: (r) => {
             if (r.endpoint_url === 'https://graph.facebook.com/network_ads_common') return qs.parse(r.content!);
             const b = JSON.parse(qs.parse(r.content!).payload as string);
-            return deepmerge(b, {
-                context: { VALPARAMS: JSON.parse(b.context.VALPARAMS), ANALOG: JSON.parse(b.context.ANALOG) },
+            // Sometimes, the data is directly on the object, other times it's in the `context` property.
+            const b2: any = omit(deepmerge(b, b.context) as Record<string, unknown>, ['context']);
+            return deepmerge(b2, {
+                VALPARAMS: JSON.parse(b2.VALPARAMS || 'null'),
+                ANALOG: JSON.parse(b2.ANALOG || 'null'),
             });
         },
-        // TODO: request, KG_RESTRICTED, app_started_reason, UNITY, ACCESSIBILITY_ENABLED, HAS_EXOPLAYER, AFP, CLIENT_REQUEST_ID, FUNNEL_CORE_EVENTS, ASHAS, NETWORK_TYPE, RTF_FB_APP_INSTALLED, SESSION_ID, MEDIATION_SERVICE
         extract: (pr) => ({
             app: {
-                id: pr.context.BUNDLE,
-                version: pr.context.APPVERS,
+                id: pr.BUNDLE,
+                version: pr.APPVERS,
             },
             device: {
-                model: concat(pr.context.MAKE, pr.context.MODEL),
-                emulator: str2bool(pr.context.VALPARAMS.is_emu),
-                rooted: str2bool(pr.context.ROOTED),
-                carrier: pr.context.CARRIER,
-                height: pr.context.SCREEN_HEIGHT,
-                width: pr.context.SCREEN_WIDTH,
-                os: concat(pr.context.OS, pr.context.OSVERS),
-                is_charging: str2bool(pr.context.ANALOG.charging),
-                battery_percentage: pr.context.ANALOG.battery,
-                ram_total: pr.context.ANALOG.total_memory,
-                ram_free: pr.context.ANALOG.available_memory,
-                disk_free: pr.context.ANALOG.free_space,
-                accelerometer_x: pr.context.ANALOG.accelerometer_x,
-                accelerometer_y: pr.context.ANALOG.accelerometer_y,
-                accelerometer_z: pr.context.ANALOG.accelerometer_z,
-                rotation_x: pr.context.ANALOG.rotation_x,
-                rotation_y: pr.context.ANALOG.rotation_y,
-                rotation_z: pr.context.ANALOG.rotation_z,
-                language: pr.context.LOCALE,
-                adid: pr.context.IDFA,
+                idfa: pr.IDFA,
+                other_uuids: [pr.SESSION_ID, pr.ANON_ID],
+                model: concat(pr.MAKE, pr.MODEL),
+                emulator: str2bool(pr.VALPARAMS?.is_emu),
+                rooted: str2bool(pr.ROOTED),
+                carrier: pr.CARRIER,
+                height: pr.SCREEN_HEIGHT,
+                width: pr.SCREEN_WIDTH,
+                os: concat(pr.OS, pr.OSVERS),
+                is_charging: str2bool(pr.ANALOG?.charging),
+                battery_percentage: pr.ANALOG?.battery,
+                ram_total: pr.ANALOG?.total_memory,
+                ram_free: pr.ANALOG?.available_memory,
+                disk_free: pr.ANALOG?.free_space,
+                accelerometer_x: pr.ANALOG?.accelerometer_x,
+                accelerometer_y: pr.ANALOG?.accelerometer_y,
+                accelerometer_z: pr.ANALOG?.accelerometer_z,
+                rotation_x: pr.ANALOG?.rotation_x,
+                rotation_y: pr.ANALOG?.rotation_y,
+                rotation_z: pr.ANALOG?.rotation_z,
+                language: pr.LOCALE,
+            },
+        }),
+    },
+    {
+        endpoint_urls: [
+            /^https:\/\/graph\.facebook\.com\/v\d{1,2}.\d$/,
+            /^https:\/\/graph\.facebook\.com\/v\d{1,2}.\d\/\d+\/activities$/,
+        ],
+        match(r) {
+            return r.content?.startsWith('{"') || r.content?.startsWith('format=json&');
+        },
+        tracker: 'facebook',
+        prepare: (r) => {
+            if (r.endpoint_url.endsWith('/activities')) {
+                if (r.content?.startsWith('{')) return JSON.parse(r.content!);
+
+                return qs.parse(r.content!);
+            }
+
+            const b = JSON.parse(r.content!);
+            const batch = JSON.parse(b.batch).map((btch: { relative_url: string }) =>
+                qs.parse(btch.relative_url.replace(/^.+?\?/, ''))
+            );
+            return { batch_app_id: b.batch_app_id, ...deepmerge.all(batch) };
+        },
+        extract: (pr) => ({
+            app: {
+                id: pr.application_package_name,
+            },
+            tracker: {
+                sdk_version: pr.sdk_version,
+            },
+            device: {
+                idfa: pr.advertiser_id,
+                other_uuids: [pr.anon_id, pr.app_user_id],
+                os: concat(pr.platform || pr.sdk, pr.os_version),
             },
         }),
     },
@@ -249,14 +316,14 @@ const adapters: {
         ],
         tracker: 'unity',
         prepare: 'qs_path',
-        // TODO: idfi, encrypted, analyticsSessionId, first, analyticsUserId, stores, networkType
         extract: (pr) => ({
             app: {
                 id: pr.bundleId,
             },
             device: {
                 model: concat(pr.deviceMake, pr.deviceModel),
-                adid: pr.advertisingTrackingId,
+                idfa: pr.advertisingTrackingId,
+                other_uuids: [pr.analyticsUserId],
                 network_connection_type: pr.connectionType,
                 width: pr.screenWidth,
                 height: pr.screenHeight,
@@ -268,26 +335,78 @@ const adapters: {
     },
     {
         endpoint_urls: [
-            'https://app.adjust.com/session',
-            'https://app.adjust.com/attribution',
-            'https://app.adjust.com/event',
+            'https://cdp.cloud.unity3d.com/v1/events',
+            'https://config.uca.cloud.unity3d.com/',
+            'https://httpkafka.unityads.unity3d.com/v1/events',
+            'https://thind.unityads.unity3d.com/v1/events',
+        ],
+        tracker: 'unity',
+        // The bodies hold multiple events. We only support the first one, which is identified by the `common` property.
+        prepare: (r) =>
+            r
+                .content!.split('\n')
+                .filter((l) => l)
+                .map((l) => JSON.parse(l))
+                .find((o) => o.common)?.common,
+        extract: (pr) => ({
+            app: {
+                id: pr.client?.bundleId || pr.storeId,
+                version: pr.client?.bundleVersion,
+            },
+            tracker: {
+                sdk_version: concat(pr.sdk_ver, pr.sdk_rev) || pr.adsSdkVersion,
+            },
+            device: {
+                other_uuids: [pr.userid, pr.deviceid, pr.device_id, pr.analyticsUserId],
+                model: concat(pr.device?.deviceMake, pr.device?.deviceModel) || concat(pr.deviceMake, pr.deviceModel),
+                network_connection_type: pr.device?.connectionType || pr.connectionType,
+                width: pr.device?.screenWidth,
+                height: pr.device?.screenHeight,
+                carrier: pr.device?.networkOperatorName,
+                timezone: pr.device?.timeZone,
+                language: pr.device?.language,
+                volume: pr.device?.deviceVolume,
+                disk_free: pr.device?.freeSpaceInternal,
+                disk_total: pr.device?.totalSpaceInternal,
+                battery_percentage: pr.device?.batteryLevel * 100,
+                ram_free: pr.device?.freeMemory,
+                ram_total: pr.device?.totalMemory,
+                rooted: str2bool(pr.device?.rooted),
+                user_agent: pr.device?.userAgent,
+            },
+            user: {
+                country: pr.country,
+            },
+        }),
+    },
+    {
+        endpoint_urls: [
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/session/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/attribution/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/event/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/sdk_click/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/sdk_info/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/third_party_sharing/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/ad_revenue/,
+            /https:\/\/app(\.eu)?\.adjust\.(com|net\.in|world)\/sdk_click/,
         ],
         tracker: 'adjust',
         prepare: (r) => {
-            const b = qs.parse(r.content!);
+            const b = qs.parse(r.endpoint_url.endsWith('/attribution') ? r.path : r.content!);
             return deepmerge(b, {
                 ...(b.partner_params && { partner_params: JSON.parse(b.partner_params as string) }),
                 ...(b.callback_params && { callback_params: JSON.parse(b.callback_params as string) }),
             });
         },
-        // TODO: gps_adid_attempt, partner_params, callback_params, hardware_name, installed_at, connectivity_type, mcc, os_build, cpu_type, mnc,android_uuid, session_count, network_type, ui_mode, time_spent, revenue?, currency?
         extract: (pr) => ({
             app: {
-                id: pr.package_name,
+                id: pr.package_name || pr.bundle_id,
                 version: pr.app_version,
             },
             device: {
-                adid: pr.gps_adid,
+                idfa: pr.gps_adid || pr.idfa,
+                idfv: pr.idfv,
+                other_uuids: [pr.android_uuid, pr.ios_uuid, pr.fb_anon_id],
                 language: pr.language,
                 model: concat(pr.device_manufacturer, pr.device_name),
                 width: pr.display_width,
@@ -303,7 +422,6 @@ const adapters: {
         endpoint_urls: ['https://in.appcenter.ms/logs'],
         tracker: 'ms_appcenter',
         prepare: (r) => deepmerge.all(JSON.parse(r.content!).logs),
-        // TODO: type, sid, actual event data, userId
         extract: (pr) => ({
             app: {
                 id: pr.device.appNamespace,
@@ -313,6 +431,7 @@ const adapters: {
                 sdk_version: pr.device.sdkVersion,
             },
             device: {
+                other_uuids: [pr.sid, pr.userId],
                 model: concat(pr.device.oemName, pr.device.model),
                 os: concat(pr.device.osName, pr.device.osVersion, ['build', pr.device.osBuild]),
                 language: pr.device.locale,
@@ -324,25 +443,42 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://api.onesignal.com/players'],
+        endpoint_urls: [
+            'https://api.onesignal.com/players',
+            'https://onesignal.com/api/v1/players',
+            /https:\/\/api\.onesignal\.com\/players\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/,
+        ],
         tracker: 'onesignal',
-        prepare: 'json_body',
-        // TODO: game_version, net_type, device_type, notification_types, identifier, external_user_id
+        prepare: (r) => {
+            const player_id = r.path.match(
+                /\/players\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/
+            )?.[1];
+            const b = r.content ? JSON.parse(r.content) : {};
+            return { ...b, player_id };
+        },
         extract: (pr) => ({
             tracker: {
                 sdk_version: pr.sdk,
             },
             app: {
-                id: pr.android_package,
+                id: pr.android_package || pr.ios_bundle || pr.app_id,
             },
             device: {
-                adid: pr.ad_id,
+                idfa: pr.ad_id,
+                other_uuids: [
+                    pr.device?.device_id,
+                    pr.identifier,
+                    pr.external_user_id,
+                    pr.tags?.device_id,
+                    pr.player_id,
+                ],
                 os: concat(pr.device_os),
                 timezone: pr.timezone_id,
                 model: pr.device_model,
                 carrier: pr.carrier,
                 rooted: str2bool(pr.rooted),
-                language: pr.tags?.lang,
+                language: pr.language || pr.tags?.lang || pr.tags?.language,
+                name: pr.device?.deviceName,
             },
             user: {
                 lat: pr.lat,
@@ -351,19 +487,22 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://outcome-ssp.supersonicads.com/mediation'],
+        endpoint_urls: ['https://outcome-ssp.supersonicads.com/mediation', 'TODO'],
         tracker: 'supersonic',
-        // TODO: Deal with the ones with base64 blob.
-        match(r) {
-            return (this.endpoint_urls.includes(r.endpoint_url) && r.content?.startsWith('{"')) || false;
-        },
         prepare: (r) => {
-            const json = JSON.parse(r.content!);
+            let blob: string;
+            try {
+                blob = r.content?.startsWith('{"')
+                    ? r.content
+                    : gunzipSync(Buffer.from(r.content!, 'base64')).toString('utf-8');
+            } catch {
+                return {};
+            }
+            const json = JSON.parse(blob);
             const query = qs.parse(r.path.replace(/.+\?/, ''));
             if (json.table && json.data) return { table: json.table, ...JSON.parse(json.data), ...query };
             return { ...json, ...query };
         },
-        // TODO: icc, mcc, firstSession, auid, mnc, mt, sessionId, abt, groupId*, internalTestId, adUnit, events, InterstitialEvents, user_id
         extract: (pr) => ({
             app: {
                 version: pr.appVersion,
@@ -372,12 +511,14 @@ const adapters: {
             device: {
                 carrier: pr.mobileCarrier,
                 timezone: pr.tz,
-                adid: pr.advertisingId,
+                idfa: pr.advertisingId,
+                idfv: pr.idfv,
+                other_uuids: [pr.sessionId, pr.userId],
                 language: pr.language,
                 battery_percentage: pr.battery,
                 network_connection_type: pr.connectionType,
                 ram_free: pr.internalFreeMemory,
-                os: concat(pr.deviceOS, pr.osVersion.match(/\d+\((\d+)\)/)[1]),
+                os: concat(pr.deviceOS, pr.osVersion?.match(/\d+\((\d+)\)/)?.[1]),
                 model: concat(pr.deviceOEM, pr.deviceModel),
                 rooted: str2bool(pr.jb),
             },
@@ -406,7 +547,7 @@ const adapters: {
                 timezone: pr.timezone_ietf,
                 orientation: pr.current_orientation === 0 ? 'portrait' : 'landscape',
                 dark_mode: str2bool(pr.dark_mode),
-                adid: pr.advertiser_id,
+                idfa: pr.advertiser_id,
             },
             tracker: {
                 sdk_version: pr.sdk_version,
@@ -429,7 +570,7 @@ const adapters: {
             },
             device: {
                 os: concat(pr.os_name, pr.os_version),
-                adid: pr.advertiser_id,
+                idfa: pr.advertiser_id,
                 carrier: pr.carrier,
                 language: pr.ln,
                 model: concat(pr.device_brand || pr.manufacturer, pr.device_model),
@@ -459,7 +600,7 @@ const adapters: {
                 sdk_version: pr.nv, // #L19
             },
             device: {
-                adid: pr.consent_ifa || (pr.udid?.startsWith('ifa:') ? pr.udid : undefined),
+                idfa: pr.consent_ifa || (pr.udid?.startsWith('ifa:') ? pr.udid : undefined),
                 os: concat(pr.os, pr.osv),
                 model: concat(pr.make, pr.model),
                 name: pr.dn, // #L24
@@ -480,7 +621,7 @@ const adapters: {
                 os: concat(pr.os, pr.os_version_android, ['API level:', pr.os_version]),
                 language: pr.language,
                 local_ips: [pr.local_ip],
-                adid: pr.google_advertising_id || pr.advertising_ids?.aaid,
+                idfa: pr.google_advertising_id || pr.advertising_ids?.aaid,
                 architecture: pr.cpu_type,
                 carrier: pr.device_carrier,
             },
@@ -503,7 +644,7 @@ const adapters: {
         // TODO: app_id (is sometimes (but usually not) the bundle ID)
         extract: (pr) => ({
             device: {
-                adid: pr.ifa,
+                idfa: pr.ifa,
             },
         }),
     },
@@ -523,7 +664,7 @@ const adapters: {
                 carrier: pr.device?.carrier,
                 width: pr.device?.w,
                 height: pr.device?.h,
-                adid: pr.device?.ifa || pr.device?.ext?.vungle?.android?.gaid,
+                idfa: pr.device?.ifa || pr.device?.ext?.vungle?.android?.gaid,
                 battery_percentage: pr.device?.ext?.vungle?.android?.battery_level,
                 is_charging: pr.device?.ext?.vungle?.android?.battery_state === 'NOT_CHARGING' ? false : true,
                 network_connection_type: pr.device?.ext?.vungle?.android?.connection_type,
@@ -549,7 +690,7 @@ const adapters: {
         // TODO: deviceid, deviceid2, device_type, features, uuid
         extract: (pr) => ({
             device: {
-                adid: pr.adv_id,
+                idfa: pr.adv_id,
                 os: concat(pr.app_platform, pr.os_version),
                 model: concat(pr.manufacturer, pr.model),
                 width: pr.screen_width,
@@ -570,7 +711,7 @@ const adapters: {
         endpoint_urls: ['https://sessions.bugsnag.com/'],
         tracker: 'bugsnag',
         match(r) {
-            return this.endpoint_urls.includes(r.endpoint_url) && r.method === 'POST';
+            return r.method === 'POST';
         },
         prepare: 'json_body',
         // TODO: locationStatus, sessions
@@ -620,7 +761,7 @@ const adapters: {
                 os: concat(pr.os || pr.db, pr.os_version || pr.osv),
                 orientation: pr.orientation && pr.orientation === '1' ? 'portrait' : 'landscape' || undefined,
                 model: concat(pr.brand, pr.model),
-                adid: pr.gaid || pr.data?.gaid,
+                idfa: pr.gaid || pr.data?.gaid,
                 language: pr.language,
                 timezone: pr.timezone,
                 user_agent: pr.useragent || pr.ua?.replace('+', ' '),
@@ -648,7 +789,7 @@ const adapters: {
             device: {
                 model: concat(pr.data?.deviceoem, pr.data?.devicemodel),
                 os: concat(pr.data?.deviceos, pr.data?.deviceosversion, ['API level:', pr.data?.deviceapilevel]),
-                adid: pr.data?.applicationuserid || pr.data?.deviceid,
+                idfa: pr.data?.applicationuserid || pr.data?.deviceid,
                 network_connection_type: pr.data?.connectiontype,
             },
             app: {
@@ -664,12 +805,19 @@ const adapters: {
 
 async function main() {
     const requests: Request[] = (
-        await Promise.all(['https://logs.ironsrc.mobi/logs'].map((e) => getRequestsForEndpoint(e)))
+        await Promise.all(
+            adapters.find((a) => a.endpoint_urls.includes('TODO'))!.endpoint_urls.map((e) => getRequestsForEndpoint(e))
+        )
     ).flat();
 
     const prepared_requests_for_debugging: any[] = [];
     const results = requests.map((r) => {
-        const adapter = adapters.find((a) => (a.match ? a.match(r) : a.endpoint_urls.includes(r.endpoint_url)));
+        const adapter = adapters.find(
+            (a) =>
+                a.endpoint_urls.some((url) =>
+                    url instanceof RegExp ? url.test(r.endpoint_url) : url === r.endpoint_url
+                ) && (a.match ? a.match(r) : true)
+        );
         if (!adapter) return -1; // TODO
 
         const prepared_request = match(adapter.prepare)
@@ -677,13 +825,15 @@ async function main() {
                 (x): x is PrepareFunction => typeof x === 'function',
                 (x) => x(r)
             )
-            .with('json_body', () => JSON.parse(r.content!))
+            .with('json_body', () => (r.content ? JSON.parse(r.content) : {}))
             .with('qs_path', () => qs.parse(r.path.replace(/.+\?/, '')))
             .with('qs_body', () => qs.parse(r.content!))
             .exhaustive();
         prepared_requests_for_debugging.push(prepared_request);
 
+        // TODO: v
         const res = adapter.extract(prepared_request);
+        // const res = remove_empty(adapter.extract(prepared_request));
         return deepmerge({ tracker: { name: adapter.tracker, endpoint_url: r.endpoint_url } }, res);
     });
     console.dir(results, { depth: null });

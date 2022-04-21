@@ -7,7 +7,7 @@ export const base64_decode = (base64: string) => Buffer.from(base64, 'base64').t
 
 export const str2bool = (val?: string | boolean) => {
     if (typeof val === 'boolean' || val === undefined) return val;
-    return ['true', 'yes', '1', 'y', 't'].includes(val.toLowerCase());
+    return ['true', 'yes', '1', 'y', 't'].includes(val.toString().toLowerCase());
 };
 
 export const concat = (...strs: (string | undefined | (string | undefined)[])[]) =>
@@ -35,6 +35,28 @@ export const kill_process = async (proc?: ExecaChildProcess) => {
         await timeout(proc, 5000).catch(() => proc.kill(9));
     }
 };
+
+// Adapted after: https://stackoverflow.com/a/51458052
+export const is_object = (obj: any): obj is {} => obj && (obj as {}).constructor.name === 'Object';
+
+export const is_not_empty = (value: unknown): boolean =>
+    value !== null &&
+    value !== undefined &&
+    !Number.isNaN(value) &&
+    (is_object(value) ? Object.keys(value).length > 0 : true) &&
+    (Array.isArray(value) ? value.filter((e) => is_not_empty(e)).length > 0 : true) &&
+    value !== '';
+
+// Adapted after: https://stackoverflow.com/a/38340730
+export const remove_empty = <T extends Parameters<typeof Object.entries>[0]>(obj: T): Partial<T> =>
+    Object.fromEntries(
+        Object.entries(obj)
+            .filter(([_, v]) => is_not_empty(v))
+            .map(([k, v]) => [
+                k,
+                is_object(v) ? remove_empty(v as {}) : Array.isArray(v) ? v.filter((e) => is_not_empty(e)) : v,
+            ])
+    ) as Partial<T>;
 
 type SortType = `${'key' | 'value'}_${'asc' | 'desc'}`;
 type SortFunction = <ValT extends string | number>(a: [string, ValT], b: [string, ValT]) => number;
