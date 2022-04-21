@@ -487,7 +487,7 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://outcome-ssp.supersonicads.com/mediation', 'TODO'],
+        endpoint_urls: ['https://outcome-ssp.supersonicads.com/mediation'],
         tracker: 'supersonic',
         prepare: (r) => {
             let blob: string;
@@ -531,13 +531,14 @@ const adapters: {
         endpoint_urls: ['https://adc3-launch.adcolony.com/v4/launch'],
         tracker: 'adcolony',
         prepare: 'json_body',
-        // TODO: device_type, *_path, memory_class, memory_used, cleartext_permitted, available_stores, adc_alt_id, network_speed, launch_metadata, permissions, device_id, immersion
         extract: (pr) => ({
             device: {
+                idfa: pr.advertiser_id,
+                other_uuids: [pr.device_id],
                 carrier: pr.carrier_name,
                 width: pr.screen_width,
                 height: pr.screen_height,
-                language: pr.locale_language_code,
+                language: pr.locale_language_code || pr.ln,
                 mac_address: pr.mac_address,
                 model: concat(pr.manufacturer || pr.device_brand, pr.model || pr.device_model),
                 network_connection_type: pr.network_type,
@@ -547,7 +548,6 @@ const adapters: {
                 timezone: pr.timezone_ietf,
                 orientation: pr.current_orientation === 0 ? 'portrait' : 'landscape',
                 dark_mode: str2bool(pr.dark_mode),
-                idfa: pr.advertiser_id,
             },
             tracker: {
                 sdk_version: pr.sdk_version,
@@ -559,10 +559,9 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://androidads4-6.adcolony.com/configure'],
+        endpoint_urls: [/https:\/\/(android|ios)?ads\d-?\d\.adcolony\.com\/configure/],
         tracker: 'adcolony',
         prepare: 'json_body',
-        // TODO: origin_store, mediation_network, *_path, device_type, adc_alt_id, zones, ad_history, ad_playing, ad_queue, sid, memory_used_mb, available_stores, device_audio
         extract: (pr) => ({
             app: {
                 id: pr.bundle_id,
@@ -571,6 +570,8 @@ const adapters: {
             device: {
                 os: concat(pr.os_name, pr.os_version),
                 idfa: pr.advertiser_id,
+                idfv: pr.vendor_id,
+                other_uuids: [pr.sid],
                 carrier: pr.carrier,
                 language: pr.ln,
                 model: concat(pr.device_brand || pr.manufacturer, pr.device_model),
@@ -586,51 +587,83 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://ads.mopub.com/m/open', 'https://ads.mopub.com/m/gdpr_sync'],
+        endpoint_urls: [
+            'https://ads.mopub.com/m/open',
+            'https://ads.mopub.com/m/gdpr_sync',
+            'https://ads.mopub.com/m/ad',
+        ],
         tracker: 'mopub',
         prepare: 'json_body',
-        // Key documentation: https://github.com/mopub/mopub-ios-sdk/blob/4b5e70e4ff69b0c3f4ab71a8791f5e7351ad2828/MoPubSDK/Internal/MPAdServerKeys.m
-        // TODO: tas (tracking authorization status, #L18), adunit, e_name, last_consent_status, consent_change_reason
+        // Key documentation: https://web.archive.org/web/20220222115549/https://github.com/mopub/mopub-ios-sdk/blob/4b5e70e4ff69b0c3f4ab71a8791f5e7351ad2828/MoPubSDK/Internal/MPAdServerKeys.m
         extract: (pr) => ({
             app: {
                 version: pr.av, // #L14
-                id: pr.bundle,
+                id: pr.bundle || pr.id,
             },
             tracker: {
                 sdk_version: pr.nv, // #L19
             },
             device: {
                 idfa: pr.consent_ifa || (pr.udid?.startsWith('ifa:') ? pr.udid : undefined),
+                idfv: pr.ifv, // #L31
+                other_uuids: [pr.udid],
                 os: concat(pr.os, pr.osv),
-                model: concat(pr.make, pr.model),
-                name: pr.dn, // #L24
+                model: concat(pr.make || pr.hwv, pr.model) || pr.dn, // #L24
+                timezone: pr.z, // #L36
+                carrier: pr.cn, // #L39
+                height: pr.h,
+                width: pr.w,
             },
         }),
     },
     {
-        endpoint_urls: ['https://api2.branch.io/v1/install'],
+        endpoint_urls: [
+            /https:\/\/api2?\.branch\.io\/v1\/install/,
+            /https:\/\/api2?\.branch\.io\/v1\/open/,
+            /https:\/\/api2?\.branch\.io\/v1\/profile/,
+            /https:\/\/api2?\.branch\.io\/v1\/logout/,
+        ],
+        match(r) {
+            return r.content?.startsWith('{"');
+        },
         tracker: 'branchio',
         prepare: 'json_body',
-        // TODO: hardware_id, ui_mode, facebook_app_link_checked, is_referrable, *_install_time, environment, metadata, branch_key, partner_data, initial_referrer
         extract: (pr) => ({
             device: {
+                idfa: pr.google_advertising_id || pr.advertising_ids?.aaid,
+                idfv: pr.ios_vendor_id,
+                other_uuids: [
+                    pr.hardware_id,
+                    pr.metadata?.$marketing_cloud_visitor_id,
+                    pr.metadata?.$braze_install_id,
+                    pr.metadata?.device_id,
+                    pr.metadata?.uuid,
+                    pr.metadata?.$google_analytics_client_id,
+                    pr.metadata?.$mixpanel_distinct_id,
+                    pr.metadata?.$segment_anonymous_id,
+                    pr.metadata?.transaction_id,
+                    pr.metadata?.user_id,
+                    pr.UDID,
+                    pr.device_fingerprint_id,
+                    pr.identity_id,
+                ],
                 model: concat(pr.brand, pr.model),
                 width: pr.screen_width,
                 height: pr.screen_height,
                 network_connection_type: pr.connection_type,
                 os: concat(pr.os, pr.os_version_android, ['API level:', pr.os_version]),
-                language: pr.language,
+                language: pr.language || pr.locale,
                 local_ips: [pr.local_ip],
-                idfa: pr.google_advertising_id || pr.advertising_ids?.aaid,
                 architecture: pr.cpu_type,
                 carrier: pr.device_carrier,
+                user_agent: pr.user_agent,
             },
             user: {
                 country: pr.country,
             },
             app: {
                 version: pr.app_version,
-                id: pr.cd?.pn,
+                id: pr.cd?.pn || pr.ios_bundle_id,
             },
             tracker: {
                 sdk_version: pr.sdk,
@@ -638,10 +671,9 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://api.vungle.com/api/v5/new'],
+        endpoint_urls: [/https:\/\/api\.vungle.com\/api\/v\d\/new/],
         tracker: 'vungle',
         prepare: 'qs_path',
-        // TODO: app_id (is sometimes (but usually not) the bundle ID)
         extract: (pr) => ({
             device: {
                 idfa: pr.ifa,
@@ -656,7 +688,6 @@ const adapters: {
         ],
         tracker: 'vungle',
         prepare: 'json_body',
-        // TODO: is_google_play_services_available, battery_saver_enabled, data_saver_status, network_metered, sound_enabled, is_sideload_enabled, sd_card_available, lmt, vision, request
         extract: (pr) => ({
             device: {
                 model: concat(pr.device?.make, pr.device?.model),
@@ -664,14 +695,27 @@ const adapters: {
                 carrier: pr.device?.carrier,
                 width: pr.device?.w,
                 height: pr.device?.h,
-                idfa: pr.device?.ifa || pr.device?.ext?.vungle?.android?.gaid,
-                battery_percentage: pr.device?.ext?.vungle?.android?.battery_level,
-                is_charging: pr.device?.ext?.vungle?.android?.battery_state === 'NOT_CHARGING' ? false : true,
-                network_connection_type: pr.device?.ext?.vungle?.android?.connection_type,
-                language: pr.device?.ext?.vungle?.android?.language,
-                timezone: pr.device?.ext?.vungle?.android?.time_zone,
-                volume: pr.device?.ext?.vungle?.android?.volume_level,
-                disk_free: pr.device?.ext?.vungle?.android?.storage_bytes_available,
+                idfa: pr.device?.ifa || pr.device?.ext?.vungle?.android?.gaid || pr.device?.ext?.vungle?.ios?.idfa,
+                idfv: pr.device?.ext?.vungle?.ios?.idfv,
+                battery_percentage:
+                    pr.device?.ext?.vungle?.android?.battery_level || pr.device?.ext?.vungle?.ios?.battery_level,
+                is_charging: pr.device?.ext?.vungle?.android
+                    ? pr.device?.ext?.vungle?.android?.battery_state.toLowerCase() === 'not_charging'
+                        ? false
+                        : true
+                    : pr.device?.ext?.vungle?.ios
+                    ? pr.device?.ext?.vungle?.ios?.battery_state.toLowerCase() === 'charging'
+                        ? true
+                        : false
+                    : undefined,
+                network_connection_type:
+                    pr.device?.ext?.vungle?.android?.connection_type || pr.device?.ext?.vungle?.ios?.connection_type,
+                language: pr.device?.ext?.vungle?.android?.language || pr.device?.ext?.vungle?.ios?.language,
+                timezone: pr.device?.ext?.vungle?.android?.time_zone || pr.device?.ext?.vungle?.ios?.time_zone,
+                volume: pr.device?.ext?.vungle?.android?.volume_level || pr.device?.ext?.vungle?.ios?.volume_level,
+                disk_free:
+                    pr.device?.ext?.vungle?.android?.storage_bytes_available ||
+                    pr.device?.ext?.vungle?.ios?.storage_bytes_available,
                 user_agent: pr.device?.ua,
             },
             app: {
@@ -687,10 +731,11 @@ const adapters: {
         ],
         tracker: 'yandex',
         prepare: 'qs_path',
-        // TODO: deviceid, deviceid2, device_type, features, uuid
         extract: (pr) => ({
             device: {
-                idfa: pr.adv_id,
+                idfa: pr.adv_id || pr.ifa,
+                idfv: pr.ifv,
+                other_uuids: [pr.deviceid, pr.deviceid2, pr.android_id, pr.yandex_adv_id],
                 os: concat(pr.app_platform, pr.os_version),
                 model: concat(pr.manufacturer, pr.model),
                 width: pr.screen_width,
@@ -714,7 +759,6 @@ const adapters: {
             return r.method === 'POST';
         },
         prepare: 'json_body',
-        // TODO: locationStatus, sessions
         extract: (pr) => ({
             tracker: {
                 sdk_version: pr.notifier?.version,
@@ -755,13 +799,13 @@ const adapters: {
             const json = qs.parse(decodeURIComponent(r.content!)) as Record<string, any>;
             return deepmerge(json, { data: qs.parse(json.data) });
         },
-        // TODO: sign, open, channel, band_width, platform, network_type, st
         extract: (pr) => ({
             device: {
                 os: concat(pr.os || pr.db, pr.os_version || pr.osv),
                 orientation: pr.orientation && pr.orientation === '1' ? 'portrait' : 'landscape' || undefined,
                 model: concat(pr.brand, pr.model),
-                idfa: pr.gaid || pr.data?.gaid,
+                idfa: pr.gaid || pr.data?.gaid || pr.idfa,
+                idfv: pr.idfv,
                 language: pr.language,
                 timezone: pr.timezone,
                 user_agent: pr.useragent || pr.ua?.replace('+', ' '),
@@ -789,7 +833,7 @@ const adapters: {
             device: {
                 model: concat(pr.data?.deviceoem, pr.data?.devicemodel),
                 os: concat(pr.data?.deviceos, pr.data?.deviceosversion, ['API level:', pr.data?.deviceapilevel]),
-                idfa: pr.data?.applicationuserid || pr.data?.deviceid,
+                idfa: pr.data?.deviceos === 'android' ? pr.data?.deviceid : undefined,
                 network_connection_type: pr.data?.connectiontype,
             },
             app: {
