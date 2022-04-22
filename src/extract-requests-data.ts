@@ -93,6 +93,8 @@ const getRequestsForEndpoint = (endpoint: string | RegExp) =>
         { endpoint: endpoint instanceof RegExp ? endpoint.source : endpoint }
     );
 
+const extract_query_params_from_path = (path: string) => path.replace(/^.+?\?/, '');
+
 const adapters: {
     endpoint_urls: (string | RegExp)[];
     tracker: string;
@@ -195,7 +197,7 @@ const adapters: {
         tracker: 'startio',
         prepare: (r) =>
             r.endpoint_url === 'https://trackdownload.startappservice.com/trackdownload/api/1.0/trackdownload'
-                ? qs.parse(r.path!.replace(/.+\?/, ''))
+                ? qs.parse(extract_query_params_from_path(r.path))
                 : JSON.parse(r.content!),
         extract: (pr) => ({
             app: {
@@ -292,7 +294,7 @@ const adapters: {
 
             const b = JSON.parse(r.content!);
             const batch = JSON.parse(b.batch).map((btch: { relative_url: string }) =>
-                qs.parse(btch.relative_url.replace(/^.+?\?/, ''))
+                qs.parse(extract_query_params_from_path(btch.relative_url))
             );
             return { batch_app_id: b.batch_app_id, ...deepmerge.all(batch) };
         },
@@ -500,7 +502,7 @@ const adapters: {
                 return {};
             }
             const json = JSON.parse(blob);
-            const query = qs.parse(r.path.replace(/.+\?/, ''));
+            const query = qs.parse(extract_query_params_from_path(r.path));
             if (json.table && json.data) return { table: json.table, ...JSON.parse(json.data), ...query };
             return { ...json, ...query };
         },
@@ -795,7 +797,8 @@ const adapters: {
         endpoint_urls: ['https://configure.rayjump.com/setting', 'https://analytics.rayjump.com/'],
         tracker: 'rayjump',
         prepare: (r) => {
-            if (r.endpoint_url === 'https://configure.rayjump.com/setting') return qs.parse(r.path.replace(/.+\?/, ''));
+            if (r.endpoint_url === 'https://configure.rayjump.com/setting')
+                return qs.parse(extract_query_params_from_path(r.path));
 
             const json = qs.parse(decodeURIComponent(r.content!)) as Record<string, any>;
             return deepmerge(json, { data: qs.parse(json.data) });
@@ -829,7 +832,8 @@ const adapters: {
     {
         endpoint_urls: ['https://logs.ironsrc.mobi/logs'],
         tracker: 'ironsource',
-        prepare: (r) => JSON.parse(base64_decode((qs.parse(r.path.replace(/.+\?/, '')) as { data: string }).data)),
+        prepare: (r) =>
+            JSON.parse(base64_decode((qs.parse(extract_query_params_from_path(r.path)) as { data: string }).data)),
         extract: (pr) => ({
             device: {
                 model: concat(pr.data?.deviceoem, pr.data?.devicemodel),
@@ -871,6 +875,72 @@ const adapters: {
             },
         }),
     },
+    {
+        endpoint_urls: ['https://device-provisioning.googleapis.com/checkin'],
+        tracker: 'firebase',
+        prepare: 'json_body',
+        extract: (pr) => ({
+            device: {
+                language: pr.locale,
+                model: pr.checkin?.iosbuild?.model,
+                os: pr.checkin?.iosbuild?.os_version?.replace('_', ' '),
+                timezone: pr.time_zone || pr.timezone,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://fcmtoken.googleapis.com/register', 'TODO'],
+        tracker: 'firebase',
+        prepare: 'qs_body',
+        extract: (pr) => ({
+            device: {
+                os: concat(pr.plat === '2' ? 'iOS' : undefined, pr['X-osv']),
+                other_uuids: [pr.device],
+            },
+            app: {
+                id: pr.app,
+                version: pr.app_ver,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://googleads.g.doubleclick.net/mads/gma'],
+        tracker: 'doubleclick',
+        prepare: (r) => {
+            if (r.method === 'POST') return qs.parse(r.content!);
+            return qs.parse(extract_query_params_from_path(r.path));
+        },
+        extract: (pr) => ({
+            device: {
+                model: concat(pr.platform, pr.submodel),
+                os: concat(pr.sys_name, pr.os_version),
+                volume: pr.android_app_volume || pr.ios_app_volume,
+                language: pr.hl,
+                network_connection_type: pr.net,
+                architecture: pr.binary_arch,
+                rooted: pr.ios_jb ? pr.ios_jb === '1' : undefined,
+            },
+            app: {
+                name: pr.app_name || pr._package_name || pr.an || pr.msid,
+            },
+            tracker: {
+                sdk_version: pr.dtsdk,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://ca.iadsdk.apple.com/adserver/attribution/v2'],
+        tracker: 'apple',
+        prepare: 'json_body',
+        extract: (pr) => ({
+            device: {
+                other_uuids: [pr.toroId, pr.anonymousDemandId],
+            },
+            app: {
+                id: pr.bundleId,
+            },
+        }),
+    },
 ];
 
 async function main() {
@@ -896,7 +966,7 @@ async function main() {
                 (x) => x(r)
             )
             .with('json_body', () => (r.content ? JSON.parse(r.content) : {}))
-            .with('qs_path', () => qs.parse(r.path.replace(/.+\?/, '')))
+            .with('qs_path', () => qs.parse(extract_query_params_from_path(r.path)))
             .with('qs_body', () => qs.parse(r.content!))
             .exhaustive();
         prepared_requests_for_debugging.push(prepared_request);
