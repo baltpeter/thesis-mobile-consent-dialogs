@@ -5,6 +5,7 @@ import { match } from 'ts-pattern';
 import { omit } from 'filter-anything';
 import qs from 'qs';
 import { PartialDeep } from 'type-fest';
+import { Protobuf } from './common/Protobuf.mjs';
 import { db, pg } from './common/db.js';
 import { base64_decode, concat, str2bool, remove_empty } from './common/util.js';
 
@@ -87,7 +88,7 @@ type TrackerDataResult = PartialDeep<{
 // identify the correct endpoint ourselves.
 const getRequestsForEndpoint = (endpoint: string | RegExp) =>
     db.manyOrNone(
-        "select * from (select *, regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') endpoint_url from requests r) t where " +
+        "select * from (select *, regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') endpoint_url from filtered_requests r) t where " +
             (endpoint instanceof RegExp ? 'endpoint_url ~ ${endpoint};' : 'endpoint_url = ${endpoint};'),
         { endpoint: endpoint instanceof RegExp ? endpoint.source : endpoint }
     );
@@ -842,6 +843,31 @@ const adapters: {
             },
             tracker: {
                 sdk_version: pr.data?.sdkversion,
+            },
+        }),
+    },
+    {
+        endpoint_urls: ['https://app-measurement.com/a'],
+        tracker: 'firebase',
+        prepare: (r) => {
+            const protobuf: any = Protobuf.decode(r.content_raw, ['', false, false]);
+            const messages = Array.isArray(protobuf['1']) ? protobuf['1'] : [protobuf['1']];
+            const merged: any = deepmerge.all(messages);
+            // These are long arrays that we don't know the meaning of anyway.
+            delete merged['2'];
+            delete merged['3'];
+            delete merged['29'];
+            return merged;
+        },
+        extract: (pr) => ({
+            app: {
+                id: pr['14'],
+                version: pr['16'],
+            },
+            device: {
+                idfa: pr['19'],
+                os: concat(pr['8'], pr['9']),
+                idfv: pr['27'],
             },
         }),
     },

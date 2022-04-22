@@ -1,3 +1,5 @@
+drop view filtered_requests;
+
 create view filtered_requests as
 select name, platform, requests.* from apps join runs r on apps.id = r.app join requests on r.id = requests.run where
 
@@ -102,6 +104,9 @@ or
     and not requests.host = 'accounts.google.com'
     and not requests.host = 'safebrowsing.googleapis.com'
     and not requests.path ~ '/v1/projects/chime-sdk/installations'
-);
+)
+
+-- On Android, plenty of system apps also transmit to app-measurement.com. This way, we only filter out those caused by our current app.
+and not (requests.host = 'app-measurement.com' and not encode(requests.content_raw, 'escape') like concat('%', apps.name, '%'));
 
 alter table filtered_requests owner to ma;
