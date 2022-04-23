@@ -1,7 +1,8 @@
 drop view filtered_requests;
 
 create view filtered_requests as
-select name, platform, requests.* from apps join runs r on apps.id = r.app join requests on r.id = requests.run where
+select name, platform, version, run_type, requests.*, regexp_replace(concat(requests.scheme, '://', requests.host, requests.path), '\?.+$', '') endpoint_url from apps
+    join runs r on apps.id = r.app join requests on r.id = requests.run where
 
 (
     platform = 'ios'
@@ -110,3 +111,29 @@ or
 and not (requests.host = 'app-measurement.com' and not encode(requests.content_raw, 'escape') like concat('%', apps.name, '%'));
 
 alter table filtered_requests owner to ma;
+
+-- The filters for Android are based on the work for the "Do they track? Automated analysis of Android apps for privacy
+-- violations" research project (https://benjamin-altpeter.de/doc/presentation-android-privacy.pdf). The initial version
+-- is licensed under the following license:
+--
+-- The MIT License
+--
+-- Copyright 2020 – 2021 Malte Wessels and Benjamin Altpeter
+--
+-- Permission is hereby granted, free of charge, to any person obtaining a copy
+-- of this software and associated documentation files (the "Software"), to deal
+-- in the Software without restriction, including without limitation the rights
+-- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-- copies of the Software, and to permit persons to whom the Software is
+-- furnished to do so, subject to the following conditions:
+--
+-- The above copyright notice and this permission notice shall be included in all
+-- copies or substantial portions of the Software.
+--
+-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-- SOFTWARE.
