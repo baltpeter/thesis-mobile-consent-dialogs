@@ -1,19 +1,37 @@
 # Results
 
+<!-- TODO:
+
+* How many apps succeeded?
+* Why did the failing ones fail?
+* Time analysis took to run. -->
+
+## Network Traffic and Tracking
+
+![Number of requests and unique hosts contacted per app without any user interaction. Three apps which did more than 1000 requests are omitted in this graph. Those are: `com.prequel.app` on Android with 2500 requests, and `com.audiomack.iphone` and `com.storycover` on iOS with 2383 and 1019 requests, respectively.](../graphs/requests_hosts_per_app.pdf){#fig:results-requests-hosts-per-app}
+
+![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022]. The trackers are coloured by the country they are based in.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
+
+* Tracking companies
+* Transmitted data
+    * Indicators
+    * Adapters
+
+<!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests group by name, version, platform) as c group by c.platform; -->
+
 ## Prevalence of Consent Dialogs
 
 ## Violations in Consent Dialogs
 
-## Tracking and Effect of User Choices
+## Effect of User Choices
 
-To gain insights into the tracking going on in apps and how different choices in the consent dialogs affect this, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 337 apps after accepting and 29 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.
+To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 337 apps after accepting and 29 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.
 
 Note that it is possible that apps (try to) re-identify our device through fingerprinting for example and thus change their behaviour even after we reset the app (see [@sec:discussion-limitations] for a more detailed discussion of this limitation). Given this and the low number of apps for which we have traffic after rejecting, which would not be representative anyway, we don't analyse the change in tracking after rejected. The likelihood of a re-identified device skewing the results is significantly lower for the accepted runs as those came immediately after the initial run without interaction, which should not have affected a potential server-side consent status.
 
-* Transmitted data
-    * Indicators
-    * Adapters
-* Tracking companies
+<!-- select count(1) from filtered_requests where run_type = 'initial'; -->
+<!-- select count(1) from filtered_requests where run_type = 'accepted'; -->
+<!-- select count(1) from filtered_requests where run_type = 'rejected'; -->
 
 ## Privacy Labels
 

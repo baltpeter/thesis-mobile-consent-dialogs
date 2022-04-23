@@ -17,7 +17,8 @@ create table if not exists apps
     platform platform_enum not null,
     id serial
         constraint apps_pk
-            primary key
+            primary key,
+    unique (name, version, platform)
 );
 
 alter table apps owner to ma;
@@ -33,7 +34,8 @@ create table if not exists runs
         constraint runs_apps_id_fk
             references apps
                 on delete cascade,
-    run_type run_type not null
+    run_type run_type not null,
+    unique (app, run_type)
 );
 
 alter table runs owner to ma;

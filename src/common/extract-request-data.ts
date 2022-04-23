@@ -5,11 +5,15 @@ import { match } from 'ts-pattern';
 import { omit } from 'filter-anything';
 import qs from 'qs';
 import { PartialDeep } from 'type-fest';
-import { Protobuf } from './common/Protobuf.mjs';
-import { db, pg } from './common/db.js';
-import { base64_decode, concat, str2bool, remove_empty } from './common/util.js';
+import { Protobuf } from './Protobuf.mjs';
+import { db, pg } from './db.js';
+import { base64_decode, concat, str2bool, remove_empty } from './util.js';
 
-type Request = {
+export type Request = {
+    name: string;
+    platform: 'android' | 'ios';
+    version: string;
+    run_type: 'initial' | 'accepted' | 'rejected';
     id: number;
     run: number;
     start_time: Date;
@@ -39,7 +43,7 @@ type TrackerDataResult = PartialDeep<{
     device: {
         idfa: string;
         idfv: string;
-        hashed_adid: string;
+        hashed_idfa: string;
         other_uuids: string[];
         model: string;
         os: string;
@@ -83,17 +87,6 @@ type TrackerDataResult = PartialDeep<{
         public_ip: string;
     };
 }>;
-
-// TODO: This is only for developing the adapters. In the end, we will match on an individual request and need to
-// identify the correct endpoint ourselves.
-const getRequestsForEndpoint = (endpoint: string | RegExp) =>
-    db.manyOrNone(
-        "select * from (select *, regexp_replace(concat(r.scheme, '://', r.host, r.path), '\\?.+$', '') endpoint_url from filtered_requests r) t where " +
-            (endpoint instanceof RegExp ? 'endpoint_url ~ ${endpoint};' : 'endpoint_url = ${endpoint};'),
-        { endpoint: endpoint instanceof RegExp ? endpoint.source : endpoint }
-    );
-
-const extract_query_params_from_path = (path: string) => path.replace(/^.+?\?/, '');
 
 const adapters: {
     endpoint_urls: (string | RegExp)[];
@@ -170,7 +163,7 @@ const adapters: {
                 sdk_version: pr.library.libVersion,
             },
             device: {
-                hashed_adid: pr.client.uuids.advertisingIdentifier, // md5(adid)
+                hashed_idfa: pr.client.uuids.advertisingIdentifier, // md5(adid)
                 other_uuids: [
                     pr.client.uuids.installationId,
                     pr.client.uuids.vendorIdentifier,
@@ -889,7 +882,7 @@ const adapters: {
         }),
     },
     {
-        endpoint_urls: ['https://fcmtoken.googleapis.com/register', 'TODO'],
+        endpoint_urls: ['https://fcmtoken.googleapis.com/register'],
         tracker: 'firebase',
         prepare: 'qs_body',
         extract: (pr) => ({
@@ -943,50 +936,62 @@ const adapters: {
     },
 ];
 
-async function main() {
+const prepared_requests_for_debugging: any[] = [];
+
+const getRequestsForEndpoint = (endpoint: string | RegExp) =>
+    db.manyOrNone(
+        'select * from filtered_requests ' +
+            (endpoint instanceof RegExp ? 'endpoint_url ~ ${endpoint};' : 'endpoint_url = ${endpoint};'),
+        { endpoint: endpoint instanceof RegExp ? endpoint.source : endpoint }
+    );
+
+const extract_query_params_from_path = (path: string) => path.replace(/^.+?\?/, '');
+
+export const adapterForRequest = (r: Request) =>
+    adapters.find(
+        (a) =>
+            a.endpoint_urls.some((url) =>
+                url instanceof RegExp ? url.test(r.endpoint_url) : url === r.endpoint_url
+            ) && (a.match ? a.match(r) : true)
+    );
+export const processRequest = (r: Request, for_debugging = false) => {
+    const adapter = adapterForRequest(r);
+    if (!adapter) return false;
+
+    const prepared_request = match(adapter.prepare)
+        .when(
+            (x): x is PrepareFunction => typeof x === 'function',
+            (x) => x(r)
+        )
+        .with('json_body', () => (r.content ? JSON.parse(r.content) : {}))
+        .with('qs_path', () => qs.parse(extract_query_params_from_path(r.path)))
+        .with('qs_body', () => qs.parse(r.content!))
+        .exhaustive();
+    if (for_debugging) prepared_requests_for_debugging.push(prepared_request);
+
+    const res = remove_empty(adapter.extract(prepared_request));
+    return deepmerge({ tracker: { name: adapter.tracker, endpoint_url: r.endpoint_url } }, res);
+};
+
+async function debugNewAdapter() {
+    process.on('unhandledRejection', (err) => {
+        console.error('An unhandled promise rejection occurred:', err);
+
+        pg.end();
+        process.exit(1);
+    });
+
     const requests: Request[] = (
         await Promise.all(
             adapters.find((a) => a.endpoint_urls.includes('TODO'))!.endpoint_urls.map((e) => getRequestsForEndpoint(e))
         )
     ).flat();
 
-    const prepared_requests_for_debugging: any[] = [];
-    const results = requests.map((r) => {
-        const adapter = adapters.find(
-            (a) =>
-                a.endpoint_urls.some((url) =>
-                    url instanceof RegExp ? url.test(r.endpoint_url) : url === r.endpoint_url
-                ) && (a.match ? a.match(r) : true)
-        );
-        if (!adapter) return -1; // TODO
-
-        const prepared_request = match(adapter.prepare)
-            .when(
-                (x): x is PrepareFunction => typeof x === 'function',
-                (x) => x(r)
-            )
-            .with('json_body', () => (r.content ? JSON.parse(r.content) : {}))
-            .with('qs_path', () => qs.parse(extract_query_params_from_path(r.path)))
-            .with('qs_body', () => qs.parse(r.content!))
-            .exhaustive();
-        prepared_requests_for_debugging.push(prepared_request);
-
-        // TODO: v
-        const res = adapter.extract(prepared_request);
-        // const res = remove_empty(adapter.extract(prepared_request));
-        return deepmerge({ tracker: { name: adapter.tracker, endpoint_url: r.endpoint_url } }, res);
-    });
+    const results = requests.map((r) => processRequest(r, true));
     console.dir(results, { depth: null });
     writeFileSync('./merged-reqs.tmp.json', JSON.stringify(deepmerge.all(prepared_requests_for_debugging), null, 4));
 
     pg.end();
 }
 
-process.on('unhandledRejection', (err) => {
-    console.error('An unhandled promise rejection occurred:', err);
-
-    pg.end();
-    process.exit(1);
-});
-
-main();
+// debugNewAdapter();

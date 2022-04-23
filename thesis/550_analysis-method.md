@@ -2,6 +2,8 @@
 
 TODO: Source code available in same repository as instrumentation framework
 
+TODO: General steps for analysis, maybe even as a diagram?
+
 ## Consent Dialog Detection
 
 As it is not feasible to detect consent dialogs on mobile based on the IAB TCF framework or CMP library-specific adapters (see [@sec:cd-situation-mobile]), we need to use an approach that is based on common elements of consent dialogs. Looking at existing research for the web and disregarding TCF- and library-based approaches [@papadogiannakisUserTrackingPostcookie2021b; @matteCookieBannersRespect2020; @nouwensDarkPatternsGDPR2020; @noyb.euNoybAimsEnd2021], most approaches for consent dialog detection are purely manual [@sanchez-rolaCanOptOut2019; @trevisanYearsEUCookie2019a; @utzInformedConsentStudying2019a; @mehrnezhadCrossPlatformEvaluationPrivacy2020]. Some research relies on adblock filter lists like [*Easylist Cookies*](https://secure.fanboy.co.nz/fanboy-cookiemonster.txt) and [*I don't care about cookies*](https://www.i-dont-care-about-cookies.eu/abp/) to detect HTML elements belonging to consent dialogs based on their ID or class [@aertsCookieDialogsTheir2021; @eijkImpactUserLocation2019a]. These lists are _very_ broad, e.g. detecting any element with `CNIL` (the French data protection authority) or `Cookie` in its ID. Finally, privacy policy detection tends to be keyword-based [@libertAutomatedApproachAuditing2018; @degelingWeValueYour2019], matching on general terms like "policy" and "GDPR"^[See: <https://github.com/RUB-SysSec/we-value-your-privacy/blob/181cbffb62ce2dcc89ff9b467401093aa10f0cd8/privacy_wording.json>], or use natural language processing [@hosseiniUnifyingPrivacyPolicy2021].
@@ -98,7 +100,7 @@ Even though only comparatively few apps implement the IAB TCF (cf. [@sec:cd-situ
 ### Endpoint-Specific Adapters
 
 * Definition of "endpoint"
-* Ordered endpoints by how often they were contacted by apps, went through all contacted by at least TODO apps
+* Developed 26 adapters that can extract data in a common format for a set of endpoints. Those are enough to process 17276 of 162350 (10.64 %) requests.
 
 ### Indicator Matching in Network Traffic
 

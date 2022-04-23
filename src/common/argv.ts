@@ -156,5 +156,11 @@ export const data_argv = () =>
                 describe: 'Compute and save TCF data',
                 group: 'Choose steps to run:',
             },
+            request_data: {
+                type: 'boolean',
+                default: false,
+                describe: 'Compute and save request data',
+                group: 'Choose steps to run:',
+            },
         })
         .parseSync();

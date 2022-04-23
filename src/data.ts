@@ -17,6 +17,7 @@ import {
     indicators,
     getRequestsForIndicator,
 } from './common/query.js';
+import { Request, processRequest, adapterForRequest } from './common/extract-request-data.js';
 
 const argv = data_argv();
 
@@ -139,7 +140,7 @@ const computeTcfData = async () => {
         )
     );
 
-    const cmp_list = JSON.parse(await fs.readFile(join(data_dir, 'tcf-upstream/cmp-list.json'), 'utf-8'));
+    const cmp_list = JSON.parse(await fs.readFile(join(data_dir, 'upstream/cmp-list.json'), 'utf-8'));
     const tcf_cmps = obj_sort(
         (
             await db.many(
@@ -184,7 +185,7 @@ const computeTcfData = async () => {
     }));
     await fs.writeFile(join(data_dir, 'tcf_accepted_counts.csv'), Papa.unparse(tcf_accepted_counts));
 
-    const vendor_list = JSON.parse(await fs.readFile(join(data_dir, 'tcf-upstream/vendor-list.json'), 'utf-8'));
+    const vendor_list = JSON.parse(await fs.readFile(join(data_dir, 'upstream/vendor-list.json'), 'utf-8'));
     const vendors_empty = Object.values<{ name: string; id: number }>(vendor_list.vendors).map((v) => ({
         name: v.name,
         id: v.id,
@@ -227,11 +228,103 @@ const computeTcfData = async () => {
     // );
 };
 
+const computeRequestData = async () => {
+    const getRequests = (run_type: Request['run_type'] | 'all') =>
+        db.manyOrNone<Request>(
+            `select * from filtered_requests${run_type === 'all' ? '' : ` where run_type='${run_type}'`};`
+        );
+
+    // const requests = {
+    //     all: await getRequests('all'),
+    //     initial: await getRequests('initial'),
+    //     accepted: await getRequests('accepted'),
+    //     rejected: await getRequests('rejected'),
+    // };
+
+    // const all_requests_with_adapter = requests.all.filter((r) => adapterForRequest(r));
+    // console.log(
+    //     `Total requests: ${requests.all.length}, requests with adapter: ${
+    //         all_requests_with_adapter.length
+    //     } (${percentage(all_requests_with_adapter.length, requests.all.length)})`
+    // );
+
+    const computeAppData = (requests: Request[]) => {
+        const apps: Record<string, Record<string, Set<string>>> = {};
+        for (const r of requests) {
+            const app = `${r.platform}::${r.name}`;
+            const data = processRequest(r);
+            if (data) {
+                const data_types = Object.entries(data)
+                    .filter(([key]) => key !== 'tracker')
+                    .flatMap(([_, d]) => Object.keys(d));
+
+                const tracker = data.tracker.name;
+
+                if (!apps[app]) apps[app] = {};
+                if (!apps[app][tracker]) apps[app][tracker] = new Set();
+                for (const data_type of data_types) apps[app][tracker].add(data_type);
+            } else apps[app] = {};
+        }
+        return apps;
+    };
+    const isPseudonymous = (data_types: Set<string>) =>
+        data_types.has('idfa') ||
+        data_types.has('idfv') ||
+        data_types.has('hashed_idfa') ||
+        data_types.has('other_uuids') ||
+        data_types.has('public_ip');
+
+    // for (const run_type of ['initial', 'accepted', 'rejected'] as const) {
+    //     const apps = computeAppData(requests[run_type]);
+    //     await fs.writeFile(
+    //         join(data_dir, `apps_trackers_data_types_${run_type}.json`),
+    //         JSON.stringify(apps, (_, v) => (v instanceof Set ? [...v].sort() : v), 4)
+    //     );
+
+    //     const apps_with_id = Object.values(apps).filter((a) => Object.values(a).some((s) => isPseudonymous(s)));
+    //     console.log(
+    //         `For ${run_type} runs: ${apps_with_id.length} of ${Object.keys(apps).length} apps (${percentage(
+    //             apps_with_id.length,
+    //             Object.keys(apps).length
+    //         )}) transmit pseudonymous data.`
+    //     );
+    // }
+
+    // Requests/hosts per app
+    const traffic_counts = await db.many(
+        "select name, version, platform, count(1) request_count, count(distinct(host)) host_count from filtered_requests where run_type='initial' group by name, version, platform order by request_count desc, name;"
+    );
+    await fs.writeFile(join(data_dir, 'app_traffic.csv'), Papa.unparse(traffic_counts));
+
+    // Exodus companies
+    const exodus: { name: string; is_in_exodus: boolean; network_signature: string; category: string[] }[] = JSON.parse(
+        await fs.readFile(join(data_dir, 'upstream/exodus-trackers.json'), 'utf-8')
+    ).trackers;
+    const exodus_trackers = exodus.filter((r) => r.is_in_exodus && r.network_signature !== '');
+
+    const tracker_counts: Record<string, number> = {};
+    await Promise.all(
+        exodus_trackers.map(async ({ name, network_signature }) => {
+            const res = await db.one(
+                "select count(distinct name) as count from filtered_requests where host ~ ${regex} and run_type='initial';",
+                { regex: `${network_signature}$` }
+            );
+
+            tracker_counts[name.replace(/ \(.+\)/, '')] = +res.count;
+        })
+    );
+    await fs.writeFile(
+        join(data_dir, 'exodus_tracker_counts.json'),
+        JSON.stringify(obj_sort(tracker_counts, 'value_desc'), null, 4)
+    );
+};
+
 (async () => {
     if (argv.overview || argv.all) await printDialogAndViolationOverview();
     if (argv.dialog_data || argv.all) await computeDialogData();
     if (argv.indicator_data || argv.all) await computeIndicatorData();
     if (argv.tcf_data || argv.all) await computeTcfData();
+    if (argv.request_data || argv.all) await computeRequestData();
 
     pg.end();
 })();
