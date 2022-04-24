@@ -31,9 +31,9 @@ export type Request = {
 type PrepareFunction = (r: Request) => Record<string, any>;
 type TrackerDataResult = PartialDeep<{
     app: {
-        id: string;
-        name: string;
-        version: string;
+        app_id: string;
+        app_name: string;
+        app_version: string;
         viewed_page: string;
         in_foreground: boolean;
     };
@@ -47,7 +47,7 @@ type TrackerDataResult = PartialDeep<{
         other_uuids: string[];
         model: string;
         os: string;
-        name: string;
+        device_name: string;
         language: string;
         timezone: string;
         user_agent: string;
@@ -121,8 +121,8 @@ const adapters: {
         },
         extract: (pr) => ({
             app: {
-                id: pr.bundle_id,
-                version: pr.bundle,
+                app_id: pr.bundle_id,
+                app_version: pr.bundle,
             },
             tracker: {
                 sdk_version: pr.sdk,
@@ -156,8 +156,8 @@ const adapters: {
         prepare: 'json_body',
         extract: (pr) => ({
             app: {
-                id: pr.application?.package || pr.application?.bundleIdentifier,
-                version: pr.application?.versionName || pr.application?.bundleVersion,
+                app_id: pr.application?.package || pr.application?.bundleIdentifier,
+                app_version: pr.application?.versionName || pr.application?.bundleVersion,
             },
             tracker: {
                 sdk_version: pr.library.libVersion,
@@ -194,8 +194,8 @@ const adapters: {
                 : JSON.parse(r.content!),
         extract: (pr) => ({
             app: {
-                id: pr.packageId,
-                version: pr.appVersion,
+                app_id: pr.packageId,
+                app_version: pr.appVersion,
                 viewed_page: pr.appActivity,
                 in_foreground: str2bool(pr.fgApp),
             },
@@ -241,8 +241,8 @@ const adapters: {
         },
         extract: (pr) => ({
             app: {
-                id: pr.BUNDLE,
-                version: pr.APPVERS,
+                app_id: pr.BUNDLE,
+                app_version: pr.APPVERS,
             },
             device: {
                 idfa: pr.IDFA,
@@ -293,7 +293,7 @@ const adapters: {
         },
         extract: (pr) => ({
             app: {
-                id: pr.application_package_name,
+                app_id: pr.application_package_name,
             },
             tracker: {
                 sdk_version: pr.sdk_version,
@@ -314,7 +314,7 @@ const adapters: {
         prepare: 'qs_path',
         extract: (pr) => ({
             app: {
-                id: pr.bundleId,
+                app_id: pr.bundleId,
             },
             device: {
                 model: concat(pr.deviceMake, pr.deviceModel),
@@ -346,8 +346,8 @@ const adapters: {
                 .find((o) => o.common)?.common,
         extract: (pr) => ({
             app: {
-                id: pr.client?.bundleId || pr.storeId,
-                version: pr.client?.bundleVersion,
+                app_id: pr.client?.bundleId || pr.storeId,
+                app_version: pr.client?.bundleVersion,
             },
             tracker: {
                 sdk_version: concat(pr.sdk_ver, pr.sdk_rev) || pr.adsSdkVersion,
@@ -396,8 +396,8 @@ const adapters: {
         },
         extract: (pr) => ({
             app: {
-                id: pr.package_name || pr.bundle_id,
-                version: pr.app_version,
+                app_id: pr.package_name || pr.bundle_id,
+                app_version: pr.app_version,
             },
             device: {
                 idfa: pr.gps_adid || pr.idfa,
@@ -420,8 +420,8 @@ const adapters: {
         prepare: (r) => deepmerge.all(JSON.parse(r.content!).logs),
         extract: (pr) => ({
             app: {
-                id: pr.device.appNamespace,
-                version: pr.device.appVersion,
+                app_id: pr.device.appNamespace,
+                app_version: pr.device.appVersion,
             },
             tracker: {
                 sdk_version: pr.device.sdkVersion,
@@ -457,7 +457,7 @@ const adapters: {
                 sdk_version: pr.sdk,
             },
             app: {
-                id: pr.android_package || pr.ios_bundle || pr.app_id,
+                app_id: pr.android_package || pr.ios_bundle || pr.app_id,
             },
             device: {
                 idfa: pr.ad_id,
@@ -474,7 +474,7 @@ const adapters: {
                 carrier: pr.carrier,
                 rooted: str2bool(pr.rooted),
                 language: pr.language || pr.tags?.lang || pr.tags?.language,
-                name: pr.device?.deviceName,
+                device_name: pr.device?.deviceName,
             },
             user: {
                 lat: pr.lat,
@@ -501,8 +501,8 @@ const adapters: {
         },
         extract: (pr) => ({
             app: {
-                version: pr.appVersion,
-                id: pr.bundleId,
+                app_version: pr.appVersion,
+                app_id: pr.bundleId,
             },
             device: {
                 carrier: pr.mobileCarrier,
@@ -549,8 +549,8 @@ const adapters: {
                 sdk_version: pr.sdk_version,
             },
             app: {
-                name: pr.app_bundle_name,
-                version: pr.app_bundle_version,
+                app_name: pr.app_bundle_name,
+                app_version: pr.app_bundle_version,
             },
         }),
     },
@@ -560,8 +560,8 @@ const adapters: {
         prepare: 'json_body',
         extract: (pr) => ({
             app: {
-                id: pr.bundle_id,
-                version: pr.bundle_version_short,
+                app_id: pr.bundle_id,
+                app_version: pr.bundle_version_short,
             },
             device: {
                 os: concat(pr.os_name, pr.os_version),
@@ -593,8 +593,8 @@ const adapters: {
         // Key documentation: https://web.archive.org/web/20220222115549/https://github.com/mopub/mopub-ios-sdk/blob/4b5e70e4ff69b0c3f4ab71a8791f5e7351ad2828/MoPubSDK/Internal/MPAdServerKeys.m
         extract: (pr) => ({
             app: {
-                version: pr.av, // #L14
-                id: pr.bundle || pr.id,
+                app_version: pr.av, // #L14
+                app_id: pr.bundle || pr.id,
             },
             tracker: {
                 sdk_version: pr.nv, // #L19
@@ -658,8 +658,8 @@ const adapters: {
                 country: pr.country,
             },
             app: {
-                version: pr.app_version,
-                id: pr.cd?.pn || pr.ios_bundle_id,
+                app_version: pr.app_version,
+                app_id: pr.cd?.pn || pr.ios_bundle_id,
             },
             tracker: {
                 sdk_version: pr.sdk,
@@ -715,8 +715,8 @@ const adapters: {
                 user_agent: pr.device?.ua,
             },
             app: {
-                id: pr.app?.bundle,
-                version: pr.app?.ver,
+                app_id: pr.app?.bundle,
+                app_version: pr.app?.ver,
             },
         }),
     },
@@ -743,8 +743,8 @@ const adapters: {
                 sdk_version: pr.analytics_sdk_version_name,
             },
             app: {
-                id: pr.app_id,
-                version: pr.app_version_name,
+                app_id: pr.app_id,
+                app_version: pr.app_version_name,
             },
         }),
     },
@@ -760,8 +760,8 @@ const adapters: {
                 sdk_version: pr.notifier?.version,
             },
             app: {
-                version: pr.app?.version,
-                id: pr.app?.id || pr.app?.packageName,
+                app_version: pr.app?.version,
+                app_id: pr.app?.id || pr.app?.packageName,
                 in_foreground: str2bool(pr.app?.inForeground),
                 viewed_page: pr.app?.activeScreen,
             },
@@ -810,8 +810,8 @@ const adapters: {
                 height: pr.screen_size?.split('x')[1],
             },
             app: {
-                id: pr.package_name || pr.pn,
-                version: pr.app_version_name,
+                app_id: pr.package_name || pr.pn,
+                app_version: pr.app_version_name,
             },
             tracker: {
                 sdk_version: pr.sdk_version,
@@ -835,8 +835,8 @@ const adapters: {
                 network_connection_type: pr.data?.connectiontype,
             },
             app: {
-                id: pr.data?.bundleid,
-                version: pr.data?.appversion,
+                app_id: pr.data?.bundleid,
+                app_version: pr.data?.appversion,
             },
             tracker: {
                 sdk_version: pr.data?.sdkversion,
@@ -858,8 +858,8 @@ const adapters: {
         },
         extract: (pr) => ({
             app: {
-                id: pr['14'],
-                version: pr['16'],
+                app_id: pr['14'],
+                app_version: pr['16'],
             },
             device: {
                 idfa: pr['19'],
@@ -891,8 +891,8 @@ const adapters: {
                 other_uuids: [pr.device],
             },
             app: {
-                id: pr.app,
-                version: pr.app_ver,
+                app_id: pr.app,
+                app_version: pr.app_ver,
             },
         }),
     },
@@ -914,7 +914,7 @@ const adapters: {
                 rooted: pr.ios_jb ? pr.ios_jb === '1' : undefined,
             },
             app: {
-                name: pr.app_name || pr._package_name || pr.an || pr.msid,
+                app_name: pr.app_name || pr._package_name || pr.an || pr.msid,
             },
             tracker: {
                 sdk_version: pr.dtsdk,
@@ -930,7 +930,7 @@ const adapters: {
                 other_uuids: [pr.toroId, pr.anonymousDemandId],
             },
             app: {
-                id: pr.bundleId,
+                app_id: pr.bundleId,
             },
         }),
     },

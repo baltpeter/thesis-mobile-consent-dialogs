@@ -12,12 +12,15 @@
 
 ![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022]. The trackers are coloured by the country they are based in.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
 
-* Tracking companies
+* Percentage of traffic that Exodus classifies as tracking
 * Transmitted data
     * Indicators
     * Adapters
 
 <!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests group by name, version, platform) as c group by c.platform; -->
+
+<!-- select count(1) from apps where platform='ios' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
+<!-- select count(1) from apps where platform='android' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
 
 ## Prevalence of Consent Dialogs
 
@@ -26,12 +29,20 @@
 ## Effect of User Choices
 
 To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 337 apps after accepting and 29 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.
+<!-- select count(1) from runs where run_type='accepted'; -->
+<!-- select count(1) from runs where run_type='rejected'; -->
 
 Note that it is possible that apps (try to) re-identify our device through fingerprinting for example and thus change their behaviour even after we reset the app (see [@sec:discussion-limitations] for a more detailed discussion of this limitation). Given this and the low number of apps for which we have traffic after rejecting, which would not be representative anyway, we don't analyse the change in tracking after rejected. The likelihood of a re-identified device skewing the results is significantly lower for the accepted runs as those came immediately after the initial run without interaction, which should not have affected a potential server-side consent status.
 
 <!-- select count(1) from filtered_requests where run_type = 'initial'; -->
 <!-- select count(1) from filtered_requests where run_type = 'accepted'; -->
 <!-- select count(1) from filtered_requests where run_type = 'rejected'; -->
+
+<!-- For initial runs: 2811 of 4399 apps (63.90 %) transmit pseudonymous data.
+For accepted runs: 70 of 337 apps (20.77 %) transmit pseudonymous data.
+    -> Of those, 20 apps didn't transmit pseudonymous data initially.
+For rejected runs: 8 of 29 apps (27.59 %) transmit pseudonymous data.
+    -> Of those, 1 apps didn't transmit pseudonymous data initially. -->
 
 ## Privacy Labels
 

@@ -8,6 +8,7 @@ import { match } from 'ts-pattern';
 import { base64Regex } from 'base64-search';
 import { db } from './db.js';
 import { data_argv } from './argv.js';
+import type { Request } from './extract-request-data.js';
 
 const argv = data_argv();
 
@@ -26,22 +27,44 @@ export const indicators = {
     calendar: ['fWAs4GFbpN', 'urscf2178L'],
     reminders: ['b5jHg3Eh1k', 'HQBOdx4kx2'],
     notes: ['S0Ei7sFP9b'],
-    'health data': ['DkwIXobsJN', 't5TfTlezmn', '1973-05-15'],
-    'Apple Home data': ['bEZf1h06j1', 'DX7BgPtH99', 'g1bVNue3On'],
-    SSID: ['ALTPETER'],
-    'device name': ['R2Gl5OLv20'],
-    'phone number': ['85834346'],
-    'Apple ID': ['vanessa.amsel@icloud.com'],
+    health_data: ['DkwIXobsJN', 't5TfTlezmn', '1973-05-15'],
+    apple_home_data: ['bEZf1h06j1', 'DX7BgPtH99', 'g1bVNue3On'],
+    ssid: ['ALTPETER'],
+    device_name: ['R2Gl5OLv20'],
+    phone_number: ['85834346'],
+    apple_id: ['vanessa.amsel@icloud.com'],
+    os: ['Android 11', 'iOS 14.8'],
+    model: ['sdk_gphone_x86_64_arm64', 'iPhone9,3'],
 
-    'serial no.': ['DNPV9C95HG7J', 'EMULATOR30X9X5X0'],
-    'WiFi address': ['D0:81:7A:6E:4C:6F', '02:15:b2:00:00:00'],
-    BSSID: ['02:15:b2:00:01:00', '86:2a:a8:58:56:a8'],
-    'Bluetooth address': ['D0:81:7A:6E:4C:70', '3c:5a:b4:01:02:03'],
-    IMEI: ['356557088105639', '358240051111110'],
-    IDFA: ['00000000-0000-0000-0000-000000000000', 'ea70edc1-ac05-481c-8d2a-66b1be496a7e'],
-    'local IPv4 address': ['10.0.0.68', '10.0.2.18', '10.0.2.16', '10.0.0.22', '10.0.0.16'],
-    'local IPv6 address': [
+    serial_number: ['DNPV9C95HG7J', 'EMULATOR30X9X5X0'],
+    mac_address: [
+        // WiFi
+        'D0:81:7A:6E:4C:6F',
+        '02:15:b2:00:00:00',
+        // Bluetooth
+        'D0:81:7A:6E:4C:70',
+        '3c:5a:b4:01:02:03',
+    ],
+    bssid: ['02:15:b2:00:01:00', '86:2a:a8:58:56:a8'],
+    imei: ['356557088105639', '358240051111110'],
+    idfa: ['00000000-0000-0000-0000-000000000000', 'ea70edc1-ac05-481c-8d2a-66b1be496a7e'],
+    hashed_idfa: [
+        '9f89c84a559f573636a47ff8daed0d33',
+        'ab9930d1100c818f669304e60d39e4e7',
+        'b602d594afd2b0b327e07a06f36ca6a7e42546d0',
+        '401b7ec6420b220e2e18cf643027a5f853e0a77d',
+        '12b9377cbe7e5c94e8a70d9d23929523d14afa954793130f8a3959c7b849aca8',
+        'bcaa6dccfdd08085005c7bc6b92c1f56fd0069b57c5643c66e2a184aa3f48c4b',
+        '70255c353a82bc55634a251d657f1813a74b3eca31dde11df99017f1de7504820fb054d1853b6e5f53251aaeb66d0469',
+        'c6ce8fab0c476f96cd426dd99ed7b1f9a1a1342343e2b3193c28e5087b1dbf8b4483af733de56b76c53b0cdc6edefcd8',
+        'a13dc074b31564a6a3cf4a605bff19fade6c19992a4123a7022d5a07c2e2d2d5e059ff0ba25ae0750d709fdb0ac757a1c615199a1c1422902d33c41e45b9f9d5',
+        'fe62765267def303de48182576c4051ac661b210a2467e7c8ae2cd26b8de9e0e6abd0f6529a9b436c11b99b9495112a94c87c69bd9297151e4e38bb791fadec8',
+    ],
+    local_ips: [
         // Android
+        '10.0.0.68',
+        '10.0.2.18',
+        '10.0.2.16',
         'fe80::c835:dcff:fe51:4104',
         'fe80::b826:2e05:6938:9257',
         'fec0::58d0:4c1e:1865:42a1',
@@ -51,6 +74,8 @@ export const indicators = {
         'fec0::780e:8b16:a8d8:c083',
 
         // iOS
+        '10.0.0.22',
+        '10.0.0.16',
         'fe80::1080:5cb1:c586:6d1',
         '169.254.103.80',
         'fe80::4d0:8c8a:efe0:98f4',
@@ -242,12 +267,12 @@ export const getTopApps = () => {
     return _top_apps;
 };
 
-export const getRequestsForIndicator = async (strings: string[], condition?: string) => {
-    const raw_conditions = strings.map(
-        (s) => `content ilike '%${s}%' OR content_raw like '%${s}%' OR path ilike '%${s}%'`
-    );
-    const base64_conditions = strings.map((s) => base64Regex(s)).map((r) => `content ~ '${r}' OR path ~ '${r}'`);
-    const query = `select name, id from filtered_requests
-    where ${condition || 'True'} and (${[...raw_conditions, ...base64_conditions].join('\n       or ')});`;
-    return await db.manyOrNone(query);
+export const requestHasIndicator = (r: Request, indicators: string[]) => {
+    const plain_indicators = indicators.map((i) => i.toLowerCase());
+    const base64_indicators = plain_indicators.map((i) => new RegExp(base64Regex(i), 'i'));
+    for (const property of ['content', 'content_raw', 'path'] as const) {
+        if (indicators.some((i) => r[property]?.toString().toLowerCase().includes(i))) return true;
+        if (base64_indicators.some((i) => i.test(r[property]?.toString() || ''))) return true;
+    }
+    return false;
 };

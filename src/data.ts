@@ -15,7 +15,7 @@ import {
     getViolationCounts,
     getTopApps,
     indicators,
-    getRequestsForIndicator,
+    requestHasIndicator,
 } from './common/query.js';
 import { Request, processRequest, adapterForRequest } from './common/extract-request-data.js';
 
@@ -95,28 +95,6 @@ const computeDialogData = async () => {
         };
     });
     await fs.writeFile(join(data_dir, 'dialogs.csv'), Papa.unparse(dialogs));
-};
-
-const computeIndicatorData = async () => {
-    // Indicator data
-    const indicator_occurrences: Record<string, number> = {};
-    const indicator_apps: Record<string, number> = {};
-    for (const [name, strings] of Object.entries(indicators)) {
-        const requests = await getRequestsForIndicator(strings);
-        const app_count = [...new Set(requests.map((r) => r.name))].length;
-        if (app_count > 1) {
-            indicator_occurrences[name] = requests.length;
-            indicator_apps[name] = app_count;
-        }
-    }
-    await fs.writeFile(
-        join(data_dir, 'indicator_occurrences.json'),
-        JSON.stringify(obj_sort(indicator_occurrences, 'value_desc'), null, 4)
-    );
-    await fs.writeFile(
-        join(data_dir, 'indicator_apps.json'),
-        JSON.stringify(obj_sort(indicator_apps, 'value_desc'), null, 4)
-    );
 };
 
 const computeTcfData = async () => {
@@ -229,67 +207,6 @@ const computeTcfData = async () => {
 };
 
 const computeRequestData = async () => {
-    const getRequests = (run_type: Request['run_type'] | 'all') =>
-        db.manyOrNone<Request>(
-            `select * from filtered_requests${run_type === 'all' ? '' : ` where run_type='${run_type}'`};`
-        );
-
-    // const requests = {
-    //     all: await getRequests('all'),
-    //     initial: await getRequests('initial'),
-    //     accepted: await getRequests('accepted'),
-    //     rejected: await getRequests('rejected'),
-    // };
-
-    // const all_requests_with_adapter = requests.all.filter((r) => adapterForRequest(r));
-    // console.log(
-    //     `Total requests: ${requests.all.length}, requests with adapter: ${
-    //         all_requests_with_adapter.length
-    //     } (${percentage(all_requests_with_adapter.length, requests.all.length)})`
-    // );
-
-    const computeAppData = (requests: Request[]) => {
-        const apps: Record<string, Record<string, Set<string>>> = {};
-        for (const r of requests) {
-            const app = `${r.platform}::${r.name}`;
-            const data = processRequest(r);
-            if (data) {
-                const data_types = Object.entries(data)
-                    .filter(([key]) => key !== 'tracker')
-                    .flatMap(([_, d]) => Object.keys(d));
-
-                const tracker = data.tracker.name;
-
-                if (!apps[app]) apps[app] = {};
-                if (!apps[app][tracker]) apps[app][tracker] = new Set();
-                for (const data_type of data_types) apps[app][tracker].add(data_type);
-            } else apps[app] = {};
-        }
-        return apps;
-    };
-    const isPseudonymous = (data_types: Set<string>) =>
-        data_types.has('idfa') ||
-        data_types.has('idfv') ||
-        data_types.has('hashed_idfa') ||
-        data_types.has('other_uuids') ||
-        data_types.has('public_ip');
-
-    // for (const run_type of ['initial', 'accepted', 'rejected'] as const) {
-    //     const apps = computeAppData(requests[run_type]);
-    //     await fs.writeFile(
-    //         join(data_dir, `apps_trackers_data_types_${run_type}.json`),
-    //         JSON.stringify(apps, (_, v) => (v instanceof Set ? [...v].sort() : v), 4)
-    //     );
-
-    //     const apps_with_id = Object.values(apps).filter((a) => Object.values(a).some((s) => isPseudonymous(s)));
-    //     console.log(
-    //         `For ${run_type} runs: ${apps_with_id.length} of ${Object.keys(apps).length} apps (${percentage(
-    //             apps_with_id.length,
-    //             Object.keys(apps).length
-    //         )}) transmit pseudonymous data.`
-    //     );
-    // }
-
     // Requests/hosts per app
     const traffic_counts = await db.many(
         "select name, version, platform, count(1) request_count, count(distinct(host)) host_count from filtered_requests where run_type='initial' group by name, version, platform order by request_count desc, name;"
@@ -317,12 +234,121 @@ const computeRequestData = async () => {
         join(data_dir, 'exodus_tracker_counts.json'),
         JSON.stringify(obj_sort(tracker_counts, 'value_desc'), null, 4)
     );
+
+    const apps = {
+        all: await db.many('select * from apps;'),
+        accepted: await db.many("select a.* from runs join apps a on a.id = runs.app where run_type='accepted';"),
+        rejected: await db.many("select a.* from runs join apps a on a.id = runs.app where run_type='rejected';"),
+    };
+    const getRequests = (run_type: Request['run_type'] | 'all') =>
+        db.manyOrNone<Request>(
+            `select * from filtered_requests${run_type === 'all' ? '' : ` where run_type='${run_type}'`};`
+        );
+
+    const requests = {
+        all: await getRequests('all'),
+        initial: await getRequests('initial'),
+        accepted: await getRequests('accepted'),
+        rejected: await getRequests('rejected'),
+    };
+
+    const all_requests_with_adapter = requests.all.filter((r) => adapterForRequest(r));
+    console.log(
+        `Total requests: ${requests.all.length}, requests with adapter: ${
+            all_requests_with_adapter.length
+        } (${percentage(all_requests_with_adapter.length, requests.all.length)})`
+    );
+
+    const computeAppData = (run_type: keyof typeof requests) => {
+        const app_tracker_data: Record<string, Record<string, Set<string>>> = apps[
+            run_type === 'initial' ? 'all' : run_type
+        ].reduce<Record<string, {}>>((acc, cur) => ({ ...acc, [`${cur.platform}::${cur.name}`]: {} }), {});
+        for (const r of requests[run_type]) {
+            const app = `${r.platform}::${r.name}`;
+            const adapter_data = processRequest(r);
+
+            // One of our adapters was able to process the request.
+            if (adapter_data) {
+                const data_types = Object.entries(adapter_data)
+                    .filter(([key]) => key !== 'tracker')
+                    .flatMap(([_, d]) => Object.keys(d));
+
+                const tracker = adapter_data.tracker.name;
+
+                if (!app_tracker_data[app][tracker]) app_tracker_data[app][tracker] = new Set();
+                for (const data_type of data_types)
+                    app_tracker_data[app][tracker].add(['lat', 'long'].includes(data_type) ? 'location' : data_type);
+            }
+            // None of our adapters could process the request, so we do indicator matching.
+            else {
+                for (const [name, strings] of Object.entries({ ...indicators, app_id: [r.name] })) {
+                    if (requestHasIndicator(r, strings)) {
+                        if (!app_tracker_data[app]['<indicators>']) app_tracker_data[app]['<indicators>'] = new Set();
+                        app_tracker_data[app]['<indicators>'].add(name);
+                    }
+                }
+            }
+        }
+
+        return app_tracker_data;
+    };
+    const app_tracker_data = {
+        initial: computeAppData('initial'),
+        accepted: computeAppData('accepted'),
+        rejected: computeAppData('rejected'),
+    };
+
+    const hasPseudonymousData = (data_types: Set<string>) =>
+        data_types.has('idfa') ||
+        data_types.has('idfv') ||
+        data_types.has('hashed_idfa') ||
+        data_types.has('other_uuids') ||
+        data_types.has('public_ip');
+    const appTransmitsPseudonymousData = (app: typeof app_tracker_data.initial[string]) =>
+        Object.values(app).some((s) => hasPseudonymousData(s));
+
+    for (const run_type of Object.keys(app_tracker_data) as (keyof typeof app_tracker_data)[]) {
+        await fs.writeFile(
+            join(data_dir, `apps_trackers_data_types_${run_type}.json`),
+            JSON.stringify(app_tracker_data[run_type], (_, v) => (v instanceof Set ? [...v].sort() : v), 4)
+        );
+
+        const apps_with_id = Object.values(app_tracker_data[run_type]).filter((a) => appTransmitsPseudonymousData(a));
+        console.log(
+            `For ${run_type} runs: ${apps_with_id.length} of ${
+                Object.keys(app_tracker_data[run_type]).length
+            } apps (${percentage(
+                apps_with_id.length,
+                Object.keys(app_tracker_data[run_type]).length
+            )}) transmit pseudonymous data.`
+        );
+
+        if (run_type !== 'initial') {
+            const new_apps = Object.entries(app_tracker_data[run_type]).filter(
+                ([app, tracker_data]) =>
+                    appTransmitsPseudonymousData(tracker_data) &&
+                    !appTransmitsPseudonymousData(app_tracker_data.initial[app])
+            );
+            console.log(`    -> Of those, ${new_apps.length} apps didn't transmit pseudonymous data initially.`);
+        }
+
+        const csv_data = Object.entries(app_tracker_data[run_type]).flatMap(([app, data]) =>
+            Object.entries(data).flatMap(([tracker, data_types]) =>
+                [...data_types].flatMap((data_type) => ({
+                    app_id: app.split('::')[1],
+                    tracker,
+                    data_type,
+                    platform: app.split('::')[0],
+                }))
+            )
+        );
+        await fs.writeFile(join(data_dir, `apps_trackers_data_types_${run_type}.csv`), Papa.unparse(csv_data));
+    }
 };
 
 (async () => {
     if (argv.overview || argv.all) await printDialogAndViolationOverview();
     if (argv.dialog_data || argv.all) await computeDialogData();
-    if (argv.indicator_data || argv.all) await computeIndicatorData();
     if (argv.tcf_data || argv.all) await computeTcfData();
     if (argv.request_data || argv.all) await computeRequestData();
 

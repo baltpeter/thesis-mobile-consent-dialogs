@@ -144,12 +144,6 @@ export const data_argv = () =>
                 describe: 'Compute and save dialog data',
                 group: 'Choose steps to run:',
             },
-            indicator_data: {
-                type: 'boolean',
-                default: false,
-                describe: 'Compute and save indicator data',
-                group: 'Choose steps to run:',
-            },
             tcf_data: {
                 type: 'boolean',
                 default: false,
