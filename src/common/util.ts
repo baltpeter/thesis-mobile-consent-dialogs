@@ -1,3 +1,5 @@
+import { promisify } from 'util';
+import dns from 'dns';
 import { ExecaChildProcess } from 'execa';
 import { timeout } from 'promise-timeout';
 
@@ -18,6 +20,8 @@ export const concat = (...strs: (string | undefined | (string | undefined)[])[])
         .join(' ') || undefined;
 
 export const pause = (duration_in_ms: number) => new Promise((res) => setTimeout(res, duration_in_ms));
+
+export const dnsLookup = promisify(dns.lookup);
 
 export const await_proc_start = (proc: ExecaChildProcess<string>, start_message: string) => {
     return new Promise<true>((res) => {

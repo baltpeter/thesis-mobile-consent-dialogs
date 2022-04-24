@@ -24,7 +24,7 @@ import {
     keywords_regular,
     keywords_half,
 } from './common/indicators.js';
-import { shuffle, pause, await_proc_start, kill_process } from './common/util.js';
+import { shuffle, pause, await_proc_start, kill_process, dnsLookup } from './common/util.js';
 
 const argv = run_argv();
 
@@ -85,11 +85,6 @@ const decide = (keyword_score: number, has_dialog: boolean, button_count: number
 };
 
 async function main() {
-    if (!run_for_open_app_only) {
-        const ok = await yesno({ question: 'Have you disabled PiHole?' });
-        if (!ok) process.exit(1);
-    }
-
     const api = platform_api(argv)[argv.platform];
 
     const app_ids =
@@ -110,6 +105,12 @@ async function main() {
 
     let per_app_timeout_id: NodeJS.Timeout | undefined = undefined;
     for (let app_id of shuffle(app_ids)) {
+        // Ensure that we can resolve tracker domains.
+        const tracker_domains = ['doubleclick.net', 'graph.facebook.com', 'branch.io', 'app-measurement.com'];
+        const res = await dnsLookup(shuffle(tracker_domains)[0]);
+        if (['0.0.0.0', '127.0.0.1'].includes(res.address))
+            throw new Error("Could not resolve tracker domain. Ensure that you don't have DNS blocking enabled.");
+
         // This isn't exactly clean but I don't know how else to convince TS that `mitmdump` will be assigned a value
         // below.
         let client: WebdriverIO.Browser,
