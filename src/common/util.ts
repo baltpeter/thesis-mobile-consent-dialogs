@@ -33,6 +33,7 @@ export const kill_process = async (proc?: ExecaChildProcess) => {
     if (proc) {
         proc.kill();
         await timeout(proc, 5000).catch(() => proc.kill(9));
+        await timeout(proc, 60000);
     }
 };
 
