@@ -4,6 +4,7 @@ import glob from 'glob';
 // @ts-ignore
 import dirname from 'es-dirname';
 import pReduce from 'p-reduce';
+import { z } from 'zod';
 import { match } from 'ts-pattern';
 import { base64Regex } from 'base64-search';
 import { db } from './db.js';
@@ -11,6 +12,7 @@ import { data_argv } from './argv.js';
 import type { Request } from './extract-request-data.js';
 
 const argv = data_argv();
+const data_dir = join(dirname(), '../../data');
 
 export const platforms = ['android', 'ios'] as const;
 export const dialog_types = ['dialog', 'maybe_dialog', 'notice', 'maybe_notice', 'link', 'neither'] as const;
@@ -276,3 +278,76 @@ export const requestHasIndicator = (r: Request, indicators: string[]) => {
     }
     return false;
 };
+export const hasPseudonymousData = (data_types: Set<string> | string[]) =>
+    ['idfa', 'idfv', 'hashed_idfa', 'other_uuids', 'public_ip'].some((type) =>
+        Array.isArray(data_types) ? data_types.includes(type) : data_types.has(type)
+    );
+
+const data_catgories_schema = z.array(
+    z
+        .object({
+            dataCategory: z.string(),
+            identifier: z.string(),
+            dataTypes: z.array(z.string()),
+        })
+        .strict()
+);
+export const privacy_types_schema = z.array(
+    z
+        .object({
+            privacyType: z.string(),
+            identifier: z.enum([
+                'DATA_NOT_COLLECTED',
+                'DATA_USED_TO_TRACK_YOU',
+                'DATA_LINKED_TO_YOU',
+                'DATA_NOT_LINKED_TO_YOU',
+            ]),
+            description: z.string(),
+            dataCategories: data_catgories_schema,
+            purposes: z.array(
+                z
+                    .object({
+                        purpose: z.string(),
+                        identifier: z.string(),
+                        dataCategories: data_catgories_schema,
+                    })
+                    .strict()
+            ),
+        })
+        .strict()
+);
+// Maps from Apple's privacy label "types of data" (https://developer.apple.com/app-store/app-privacy-details/) to our
+// data types.
+export const privacy_label_data_type_mapping = {
+    'Email Address': ['apple_id'],
+    'Phone number': ['phone_number'],
+    Health: ['health_data'],
+    Location: ['lat', 'long', 'location'],
+    Contacts: ['contacts'],
+    'Emails or Text Messages': ['messages'],
+    'Other User Content': ['clipboard', 'reminders', 'calendar', 'notes', 'apple_home_data'],
+    'Product Interaction': ['viewed_page', 'in_foreground'],
+    'Performance Data': ['ram_total', 'ram_free', 'disk_total', 'disk_free', 'uptime'],
+    'Device ID': ['idfa', 'idfv', 'hashed_idfa'],
+    'Other Diagnostic Data': [
+        'rooted',
+        'emulator',
+        'network_connection_type',
+        'signal_strength_cellular',
+        'signal_strength_wifi',
+        'is_charging',
+        'battery_percentage',
+        'accelerometer_x',
+        'accelerometer_y',
+        'accelerometer_z',
+        'rotation_x',
+        'rotation_y',
+        'rotation_z',
+    ],
+    'Other Data Types': ['device_name', 'carrier', 'roaming', 'mac_address', 'bssid', 'local_ips', 'volume'],
+};
+
+export const getFilterList = (list: 'easylist' | 'easyprivacy') =>
+    fs
+        .readFile(join(data_dir, 'upstream', `${list}.txt`), 'utf-8')
+        .then((f) => f.split('\n').filter((l) => !l.startsWith('#')));

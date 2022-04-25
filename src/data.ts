@@ -3,10 +3,13 @@ import fs from 'fs-extra';
 import { TCString } from '@iabtcf/core';
 import Papa from 'papaparse';
 import mapObject from 'map-obj';
+import { match } from 'ts-pattern';
+import glob from 'glob';
 // @ts-ignore
 import dirname from 'es-dirname';
+import { z } from 'zod';
 import { db, pg } from './common/db.js';
-import { obj_sort } from './common/util.js';
+import { obj_sort, jsonify_obj_with_sets } from './common/util.js';
 import { data_argv } from './common/argv.js';
 import {
     platforms,
@@ -16,6 +19,10 @@ import {
     getTopApps,
     indicators,
     requestHasIndicator,
+    hasPseudonymousData,
+    privacy_types_schema,
+    privacy_label_data_type_mapping,
+    getFilterList,
 } from './common/query.js';
 import { Request, processRequest, adapterForRequest } from './common/extract-request-data.js';
 
@@ -298,19 +305,13 @@ const computeRequestData = async () => {
         rejected: computeAppData('rejected'),
     };
 
-    const hasPseudonymousData = (data_types: Set<string>) =>
-        data_types.has('idfa') ||
-        data_types.has('idfv') ||
-        data_types.has('hashed_idfa') ||
-        data_types.has('other_uuids') ||
-        data_types.has('public_ip');
     const appTransmitsPseudonymousData = (app: typeof app_tracker_data.initial[string]) =>
         Object.values(app).some((s) => hasPseudonymousData(s));
 
     for (const run_type of Object.keys(app_tracker_data) as (keyof typeof app_tracker_data)[]) {
         await fs.writeFile(
             join(data_dir, `apps_trackers_data_types_${run_type}.json`),
-            JSON.stringify(app_tracker_data[run_type], (_, v) => (v instanceof Set ? [...v].sort() : v), 4)
+            jsonify_obj_with_sets(app_tracker_data[run_type])
         );
 
         const apps_with_id = Object.values(app_tracker_data[run_type]).filter((a) => appTransmitsPseudonymousData(a));
@@ -346,11 +347,223 @@ const computeRequestData = async () => {
     }
 };
 
+const computePrivacyLabelData = async () => {
+    const jsons = await Promise.all(
+        glob
+            .sync(join(argv.privacy_labels_dir, '*.json'), { absolute: true })
+            .map(async (p) => JSON.parse(await fs.readFile(p, 'utf-8')))
+    );
+    const errors = jsons.filter((j) => j.errors || !j.data[0].attributes.privacyDetails);
+    if (errors.length) {
+        console.log(errors);
+        throw new Error('Some app metadata has errors or no privacy labels.');
+    }
+    const all_privacy_labels = jsons
+        .map((j) => j.data[0])
+        .map((d) => ({
+            app_id: z.string().parse(d.id),
+            bundle_id: z.string().parse(d.attributes.platformAttributes.ios.bundleId),
+            privacy_types: privacy_types_schema.parse(d.attributes.privacyDetails.privacyTypes),
+        }));
+    const empty_labels = all_privacy_labels.filter((p) => p.privacy_types.length === 0);
+    console.log(
+        empty_labels.length,
+        'of',
+        jsons.length,
+        'apps',
+        `(${percentage(empty_labels.length, jsons.length)})`,
+        'have an empty privacy label.'
+    );
+    const privacy_labels = all_privacy_labels.filter((p) => p.privacy_types.length > 0);
+    const no_data_labels = privacy_labels.filter(
+        (a) => a.privacy_types.length === 1 && a.privacy_types[0].identifier === 'DATA_NOT_COLLECTED'
+    );
+    console.log(
+        no_data_labels.length,
+        'of',
+        privacy_labels.length,
+        `(${percentage(no_data_labels.length, privacy_labels.length)})`,
+        'claim not to collect any data:',
+        no_data_labels.map((d) => `${d.bundle_id} (${d.app_id})`).join(', ')
+    );
+
+    const app_tracker_data: Record<string, Record<string, string[]>> = JSON.parse(
+        await fs.readFile(join(data_dir, 'apps_trackers_data_types_initial.json'), 'utf-8')
+    );
+
+    const ads_filter_list = await getFilterList('easylist');
+    const tracking_filter_list = await getFilterList('easyprivacy');
+
+    type TransmissionType = 'no' | 'anonymously' | 'pseudonymously';
+    type DeclarationType =
+        | 'correctly_declared'
+        | 'correctly_undeclared'
+        | 'wrongly_declared_as_anonymous'
+        | 'wrongly_undeclared'
+        | 'unnecessarily_declared'
+        | 'unnecessarily_declared_as_pseudonymous';
+    type DataTypeInstances = {
+        data_type: string;
+        our_data_types: Set<string>;
+        transmitted: TransmissionType;
+        declared: DeclarationType;
+    }[];
+    const data_type_instances: Record<string, DataTypeInstances> = {};
+    const purpose_instances: Record<
+        string,
+        { tracking_used: boolean; tracking_declared: boolean; ads_used: boolean; ads_declared: boolean }
+    > = {};
+    for (const app of privacy_labels) {
+        const { declared_pseudonymous, declared_anonymous } = app.privacy_types.reduce<{
+            declared_pseudonymous: { purposes: Set<string>; data_types: Set<string> };
+            declared_anonymous: { purposes: Set<string>; data_types: Set<string> };
+        }>(
+            (acc, cur) => {
+                const purposes = cur.purposes.map((p) => p.purpose);
+                const data_types = [
+                    ...cur.dataCategories.flatMap((c) => c.dataTypes),
+                    ...cur.purposes.flatMap((p) => p.dataCategories.flatMap((c) => c.dataTypes)),
+                ].map((d) => (['Precise Location', 'Coarse Location'].includes(d) ? 'Location' : d));
+
+                if (cur.identifier === 'DATA_NOT_COLLECTED' && (purposes.length > 0 || data_types.length > 0))
+                    throw new Error('Label has "DATA_NOT_COLLECTED" but specifies data.');
+                if (
+                    ![
+                        'DATA_NOT_LINKED_TO_YOU',
+                        'DATA_NOT_COLLECTED',
+                        'DATA_LINKED_TO_YOU',
+                        'DATA_USED_TO_TRACK_YOU',
+                    ].includes(cur.identifier)
+                )
+                    throw new Error('Unknown privacy type: ' + cur.identifier);
+
+                for (const purpose of purposes)
+                    (cur.identifier === 'DATA_NOT_LINKED_TO_YOU'
+                        ? acc.declared_anonymous.purposes
+                        : acc.declared_pseudonymous.purposes
+                    ).add(purpose);
+                for (const data_type of data_types)
+                    (cur.identifier === 'DATA_NOT_LINKED_TO_YOU'
+                        ? acc.declared_anonymous.data_types
+                        : acc.declared_pseudonymous.data_types
+                    ).add(data_type);
+
+                return acc;
+            },
+            {
+                declared_pseudonymous: { purposes: new Set(), data_types: new Set() },
+                declared_anonymous: { purposes: new Set(), data_types: new Set() },
+            }
+        );
+
+        const transmitted_data_per_tracker = app_tracker_data[`ios::${app.bundle_id}`];
+        if (!transmitted_data_per_tracker) continue;
+        for (const [pl_data_type, our_data_types] of Object.entries(privacy_label_data_type_mapping)) {
+            const { transmitted, matched_data_types } = Object.values(transmitted_data_per_tracker).reduce<{
+                transmitted: TransmissionType;
+                matched_data_types: Set<string>;
+            }>(
+                (acc, transmitted_data_types) => {
+                    const matched_data_types = our_data_types.filter((our_data_type) =>
+                        transmitted_data_types.includes(our_data_type)
+                    );
+
+                    const tracker_received_data_in_pl = matched_data_types.length > 0;
+                    const tracker_received_id = hasPseudonymousData(transmitted_data_types);
+
+                    for (const data_type of matched_data_types) acc.matched_data_types.add(data_type);
+
+                    if (tracker_received_data_in_pl && tracker_received_id) acc.transmitted = 'pseudonymously';
+                    else if (tracker_received_data_in_pl && !tracker_received_id)
+                        acc.transmitted = acc.transmitted === 'pseudonymously' ? 'pseudonymously' : 'anonymously';
+                    return acc;
+                },
+                { transmitted: 'no', matched_data_types: new Set() }
+            );
+
+            const declared_label_pseudo = declared_pseudonymous.data_types.has(pl_data_type);
+            const declared_label_ano = declared_anonymous.data_types.has(pl_data_type);
+
+            const declared: DeclarationType = match(transmitted)
+                .with('no', () =>
+                    declared_label_ano || declared_label_pseudo ? 'unnecessarily_declared' : 'correctly_undeclared'
+                )
+                .with('anonymously', () =>
+                    declared_label_ano
+                        ? 'correctly_declared'
+                        : declared_label_pseudo
+                        ? 'unnecessarily_declared_as_pseudonymous'
+                        : 'wrongly_undeclared'
+                )
+                .with('pseudonymously', () =>
+                    declared_label_pseudo
+                        ? 'correctly_declared'
+                        : declared_label_ano
+                        ? 'wrongly_declared_as_anonymous'
+                        : 'wrongly_undeclared'
+                )
+                .exhaustive();
+
+            if (!data_type_instances[app.bundle_id]) data_type_instances[app.bundle_id] = [];
+            data_type_instances[app.bundle_id].push({
+                data_type: pl_data_type,
+                our_data_types: matched_data_types,
+                transmitted,
+                declared,
+            });
+        }
+
+        const requests = await db.manyOrNone(
+            "select host, endpoint_url from filtered_requests where name = ${bundle_id} and platform = 'ios';",
+            { bundle_id: app.bundle_id }
+        );
+        const tracking_used = requests.some((r) => tracking_filter_list.includes(r.host));
+        const tracking_declared =
+            declared_pseudonymous.purposes.has('Analytics') || declared_anonymous.purposes.has('Analytics');
+        const ads_used = requests.some((r) => ads_filter_list.includes(r.host));
+        const ads_declared =
+            declared_pseudonymous.purposes.has('Third-Party Advertising') ||
+            declared_anonymous.purposes.has('Developer’s Advertising or Marketing');
+        declared_pseudonymous.purposes.has('Third-Party Advertising') ||
+            declared_anonymous.purposes.has('Developer’s Advertising or Marketing');
+        purpose_instances[app.bundle_id] = {
+            tracking_used,
+            tracking_declared,
+            ads_used,
+            ads_declared,
+        };
+    }
+
+    await fs.writeFile(join(data_dir, `privacy_label_types.json`), jsonify_obj_with_sets(data_type_instances));
+    const data_type_instances_csv = Object.entries(data_type_instances).flatMap(([app, data]) =>
+        data.map((entry) => ({ app, data_type: entry.data_type, declared: entry.declared }))
+    );
+    await fs.writeFile(join(data_dir, `privacy_label_types.csv`), Papa.unparse(data_type_instances_csv));
+
+    await fs.writeFile(join(data_dir, `privacy_label_purposes.json`), jsonify_obj_with_sets(purpose_instances));
+    const purpose_instances_csv = Object.entries(purpose_instances).flatMap(([app, data]) =>
+        (['tracking', 'ads'] as const).map((type) => ({
+            app,
+            purpose: type,
+            declared:
+                !data[`${type}_used`] && !data[`${type}_declared`]
+                    ? 'correctly_undeclared'
+                    : !data[`${type}_used`] && data[`${type}_declared`]
+                    ? 'unnecessarily_declared'
+                    : data[`${type}_used`] && data[`${type}_declared`]
+                    ? 'correctly_declared'
+                    : 'wrongly_undeclared',
+        }))
+    );
+    await fs.writeFile(join(data_dir, `privacy_label_purposes.csv`), Papa.unparse(purpose_instances_csv));
+};
+
 (async () => {
     if (argv.overview || argv.all) await printDialogAndViolationOverview();
     if (argv.dialog_data || argv.all) await computeDialogData();
     if (argv.tcf_data || argv.all) await computeTcfData();
     if (argv.request_data || argv.all) await computeRequestData();
+    if (argv.privacy_label_data || argv.all) await computePrivacyLabelData();
 
     pg.end();
 })();

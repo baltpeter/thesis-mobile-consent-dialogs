@@ -37,7 +37,6 @@ export const kill_process = async (proc?: ExecaChildProcess) => {
     if (proc) {
         proc.kill();
         await timeout(proc, 5000).catch(() => proc.kill(9));
-        await timeout(proc, 60000);
     }
 };
 
@@ -81,3 +80,6 @@ export const obj_sort = <T extends Record<string, string> | Record<string, numbe
         Object.entries(obj).sort(typeof sort_by === 'string' ? sort_by_functions[sort_by] : sort_by)
     ) as T;
 };
+
+export const jsonify_obj_with_sets = (obj: unknown) =>
+    JSON.stringify(obj, (_, v) => (v instanceof Set ? [...v].sort() : v), 4);
