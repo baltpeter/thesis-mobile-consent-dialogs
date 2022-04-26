@@ -162,5 +162,11 @@ export const data_argv = () =>
                 describe: 'Compute and save privacy label data',
                 group: 'Choose steps to run:',
             },
+            cookie_data: {
+                type: 'boolean',
+                default: false,
+                describe: 'Compute and save cookie data',
+                group: 'Choose steps to run:',
+            },
         })
         .parseSync();

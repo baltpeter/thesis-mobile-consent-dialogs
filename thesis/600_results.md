@@ -17,7 +17,7 @@
     * Indicators
     * Adapters
 
-<!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests group by name, version, platform) as c group by c.platform; -->
+<!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
 
 <!-- select count(1) from apps where platform='ios' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
 <!-- select count(1) from apps where platform='android' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
@@ -111,23 +111,24 @@ There is also an older, deprecated TCF specification specifically for mobile app
 
 ## Validation
 
-For each app, we saved a screenshot immediately after all elements on screen had been analysed to allow us to validate the results afterwards. Apps can prevent screenshots from being taken [@androidopensourceprojectcontributorsWindowManagerLayoutParams2022], in these cases we were not able to take one. This was the case for  43 apps on Android and 56 apps on iOS.
+For each app, we saved a screenshot immediately after all elements on screen had been analysed to allow us to validate the results afterwards. Apps can prevent screenshots from being taken [@androidopensourceprojectcontributorsWindowManagerLayoutParams2022], in these cases we were not able to take one. This was the case for  42 apps on Android and 50 apps on iOS.
 
-We manually validated the classification for a random set of 250 apps with screenshots. [@Tbl:results-verdict-validation] shows the results of this validation. Notably, we didn't encounter a single false positive, all classifications where either correct or our analysis missed the consent elements. 29 of the 250 classifications were false negatives.
+We manually validated the classification for a random set of 250 apps with screenshots. [@Tbl:results-verdict-validation] shows the results of this validation. Notably, we didn't encounter a single false positive, all classifications where either correct or our analysis missed the consent elements. 25 of the 250 classifications were false negatives.
 
 | Detected | Actual | Count |
 |----------|--------|-------|
-| neither  | link   | 5     |
-| neither  | notice | 6     |
-| neither  | dialog | 9     |
-| link     | notice | 3     |
+| neither  | link   | 1     |
+| neither  | notice | 2     |
+| neither  | dialog | 15    |
+| link     | notice | 2     |
 | link     | dialog | 5     |
-| notice   | dialog | 1     |
 
 :   Counts of wrong classifications from manually validating a random set of 250 apps. {#tbl:results-verdict-validation}
 
 The discovered false negatives are expected and don't impact the validity of the detected violations. As explained in [@sec:cd-situation-consequences], our approach necessarily misses consent elements due to more detailed information to base an analysis on not being sufficiently available in mobile apps. Not detecting a consent dialog does not cause us to wrongly attribute violations to an app. In these cases, all detected tracking has happened without any user interaction. This means that the apps, regardless of whether a consent dialog is being shown on screen, cannot have obtained valid consent and thus have no legal basis for the tracking. We only perform detection of the other violations in apps where we detected a consent dialog.
 
 We also manually validated all cases where we detected the "accept" having a significantly different colour than the "reject" button, as our approach cannot determine which of the two is actually highlighted compared to the other. We were able to confirm that it is indeed the "accept" button that's highlighted in all cases.
+
+Finally, we manually validated the remaining violations for 25 randomly selected apps. We found no false positives here, either. There was one app where the "accept" button was larger than the "reject" button but we didn't detect the violation.
 
 TODO: Compare with initial manual analysis.

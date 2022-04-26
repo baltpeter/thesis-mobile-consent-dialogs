@@ -351,3 +351,143 @@ export const getFilterList = (list: 'easylist' | 'easyprivacy') =>
     fs
         .readFile(join(data_dir, 'upstream', `${list}.txt`), 'utf-8')
         .then((f) => f.split('\n').filter((l) => !l.startsWith('#')));
+
+const uuid_regex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+// Ignored: locale, uuid, uid, cid, uuid2, pid, pxrc, CMRUM3
+export const cookie_regexes = {
+    // AHWqTUmFvw__WeRDSraQp2NhCalU41eikkyUfIOEMxI7Vp0p0sdcLDIv8EMNduxt
+    // AHWqTUlgfB7wedtxoSrNgRqeZ31wPsZiS99c7xMN_XzTxtQMWlvw_rvikbcbQMQF214
+    IDE: /^([A-Za-z0-9_-]{64}|[A-Za-z0-9_-]{67})$/,
+
+    // GA1.1.1044166033.1650905135
+    // GA1.2.1892128189.1648899285
+    // GA1.1.123924100.1650905000
+    // GA1.2.431873635.1649584464
+    // GA1.2.14aaf149-0c05-4ea7-8dcb-6f3ab5ac9af4
+    _ga: /^GA1\.(1|2)\.(\d{9,10}\.\d{10}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/,
+
+    // GA1.2.2125670171.1649340080
+    // GA1.2.380813265.1648923339
+    _gid: /^GA1\.2\.\d{9,10}\.\d{10}$/,
+
+    // 511=vVNkk3lJFeyIIRpT-pJvrUlZ9j_fUhW3Mp_oKnHE7Bw5GGSiRunnUdhOp5qf4ajdEMXsw1EkzlHQjwJA88l11flFMmA2NySQrqVn4iYn9HP_3qbceuidEz5q8yAO1ymNKFQUylWYbeXCX2N_S6ajGx1OAzzp3oKMrj7ewH8ZxPk
+    // 511=EY3gnUzXNdG6Zj1FPtWLO5p9-MAYnao7ndvgKRmmiqvvGymFs6P39HSDuq-mk7f7camJ0zFlK38J0ef1k-fj-qHXzslYje0B6l__4sDltCet-GjZox99_BiTPwFd7RAHEIeNjdT-AKiDLKN2VCE1eIg7X4n218FAOruli64IYEA
+    NID: /^511=[A-Za-z0-9_-]{171}$/,
+
+    // fb.0.1648593215708.483913480
+    // fb.0.1649351528615.1751747275
+    // fb.1.1649249967885.487756718
+    // fb.1.1649231165901.1946893986
+    _fbp: /^fb\.(0|1)\.\d{13}\.\d{9,10}$/,
+
+    // 20144213787487035316227840375497882459
+    // 21905346236469297217484294380831727438
+    // 25270196951928601723369969275854194336
+    demdex: /^\d{38}$/,
+
+    // 1.1.2142681364.1649278161
+    // 1.1.361264100.1650855090
+    _gcl_au: /^1\.1\.\d{9,10}\.\d{10}$/,
+
+    // 454da3cc-9ac6-4723-b5ce-ecd8b800dd4e
+    // 5a108622-ed5b-41c9-ac21-92e54883d3cb
+    sp: uuid_regex,
+
+    // d=ABIBBOiXQWICEMvEvqs-vks7P395Wb5RElc
+    // d=AQIBBNrVRGICEIIv8N3FCD7dQbXXE6KLSxcFEgABBgDjRGJGYuA9b2UBACAAAAYsQVFBQkJnQmlST05pUmxhVXFRZjgmcz1BUUFBQUpxUmtZMm8mZz1Za1RWNlE&S=AQAAAhUQV2SkFTKH3Miew_mRK2I
+    A3: /^d=(([A-Za-z0-9_-]{123}&S=[A-Za-z0-9_-]{27})|[A-Za-z0-9_-]{35})$/,
+
+    // 5MWshy95gnI
+    // BPzNEm7H87c
+    VISITOR_INFO1_LIVE: /^[A-Za-z0-9_-]{11}$/,
+
+    // 1
+    _gat: /^\d+$/,
+
+    // 2744a80f-f392-47ff-855c-2eff65dd263f
+    // 86d19652-83c9-4ee6-b9f7-fd11d0b0ef28
+    __scid: uuid_regex,
+
+    // 0a0886c1-a9f3-461b-a097-98004f13d18d
+    // 18b7e46f-3249-42e8-a2ea-7ede605a1dc2
+    ajs_anonymous_id: uuid_regex,
+
+    // 39539352017897559004135855554440358653
+    // 72072443767493302251417414226993333656
+    aam_uuid: /^\d{38}$/,
+
+    // true
+    s_cc: /^true|false$/,
+
+    // [CS]v1|31259867B996551A-6000054F29364FD0[CE]
+    // [CS]v1|3132FD7994855084-60000E05D9FABC8C[CE]
+    s_vi: /^\[CS]v1\|[0-9A-F]{16}-[0-9A-F]{16}\[CE]$/,
+
+    // lX+JpZkm9FAd6HMZavWAbmjR2IPfg3WYzgFHrcyR2bVvYrEKqzEqbuH1fY5r+PMmWI7QzMzpvN+J5tIYxlXX3HlEuts=
+    // Ne2QUSP2T1W1mFjhoUb1wqUy4K4YHh5rBJOiPR/7gajvV9kiHXVjjn85Cax/Q+ZkVtX8tH7HJh7sNG5wbtvZKH8Ol7w=
+    i: /^[A-Za-z0-9+/]{91}=$/,
+
+    // 43bd9d10c4c111eca241411e2351186a
+    // 627af290b5a911ecb757732605cff123
+    _uetsid: /^[a-f0-9]{32}$/,
+
+    // 43bdf6e0c4c111ecbd25eb4a21d4a107
+    // 627afc40b5a911ec88db893e269636b8
+    _uetvid: /^[a-f0-9]{32}$/,
+
+    // 5187
+    // 5191
+    CMPS: /^\d{4}$/,
+
+    // b723afac-6fea-4bdd-a61b-f66884193d1e
+    // c952811c-fce3-525d-895d-0bc8eb15da1e
+    tuuid: uuid_regex,
+
+    // 1649231167
+    // 1649231168
+    tuuid_lu: /^\d{10}$/,
+
+    // 03F99123130C6C4A332D80B312DE6DB4
+    // 1F00A68C6B166B3C22B2B7F26A7D6A58
+    MUID: /^[0-9A-F]{32}$/,
+
+    // GUID=9fa8cc28fe274d199fbc668c613e9728
+    // GUID=fc24242544124f208ff15ddb8e02cf56
+    MC1: /^GUID=[a-f0-9]{32}$/,
+
+    // 34373079556147294712325758697589361813
+    // 39539352017897559004135855554440358653
+    dpm: /^\d{38}$/,
+
+    // Yk1FP2JNRT8A
+    // YkjR2GJI0dgA
+    CMST: /^[A-Za-z0-9]{12}$/,
+
+    // a9413911-3e12-41af-aefa-ec5a13dcad0d
+    // ce648074-fa8a-4503-aaab-03f10ff3914a
+    BCSessionID: uuid_regex,
+
+    // ID=554d7edead3ca147:T=1650850692:S=ALNI_MbPlymzIiYQ2wj62AdGI1Y6MjtXqQ
+    // ID=5ea395d114cb397b:T=1650864736:S=ALNI_MYu7TdN46YN14OAiv_VTmtTeEUyDg
+    __gads: /^ID=[0-9a-f]{16}:T=\d{10}:S=[0-9A-Za-z_]{34}$/,
+
+    // g_surferid~Yk1FQQAGX7zHaQA-
+    // g_surferid~YmYyYAAAAI3gSAP0
+    everest_g_v2: /^g_surferid~[0-9A-Za-z-]{16}$/,
+
+    // session#02f92aec3c4e4ef5ba8643af8d595e20#1650852405
+    // session#02f92aec3c4e4ef5ba8643af8d595e20#1650852405|PC#02f92aec3c4e4ef5ba8643af8d595e20.37_0#1650852348
+    mbox: /^session#[0-9a-f]{32}#\d{10}(\|PC#[0-9a-f]{32}\.\d{2}_\d#\d{10})?$/,
+
+    // 3NRGhDiFx42f7bZibIGghuW5lskVG0XbykTb1M20et0=
+    // Zjm8Fbur0L0Te6nOOEU68i1j1B4ktgblPhh77UxK5jE=
+    rlas3: /^[A-Za-z0-9+]{43}=$/,
+
+    // Yk1FP2MKpmaD726iy7KYewAA
+    // YkjR2BvNGy60bdsr1ibkmwAA
+    CMID: /^[A-Za-z0-9]{24}$/,
+
+    // 1132
+    // 1146
+    CMPRO: /^\d{4}$/,
+};

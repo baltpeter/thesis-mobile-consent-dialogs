@@ -23,6 +23,7 @@ import {
     privacy_types_schema,
     privacy_label_data_type_mapping,
     getFilterList,
+    cookie_regexes,
 } from './common/query.js';
 import { Request, processRequest, adapterForRequest } from './common/extract-request-data.js';
 
@@ -558,12 +559,85 @@ const computePrivacyLabelData = async () => {
     await fs.writeFile(join(data_dir, `privacy_label_purposes.csv`), Papa.unparse(purpose_instances_csv));
 };
 
+const computeCookieData = async () => {
+    const cookie_db_csv = await fs.readFile(join(data_dir, 'upstream', 'open-cookie-database.csv'), 'utf-8');
+    const cookie_db = Papa.parse<
+        Record<
+            | 'ID'
+            | 'Platform'
+            | 'Category'
+            | 'Cookie / Data Key name'
+            | 'Domain'
+            | 'Description'
+            | 'Retention period'
+            | 'Data Controller'
+            | 'User Privacy & GDPR Rights Portals'
+            | 'Wildcard match',
+            string
+        >
+    >(cookie_db_csv, { header: true, comments: '#' }).data;
+
+    const platform_to_company: Record<string, string> = {
+        'Google Analytics': 'Google',
+        'Bing / Microsoft': 'Microsoft',
+        Youtube: 'Google',
+        'Adobe Analytics': 'Adobe',
+        'Adobe Audience Manager': 'Adobe',
+        'DoubleClick/Google Marketing': 'Google',
+    };
+
+    const cookies = (
+        await Promise.all(
+            Object.keys(cookie_regexes).map(
+                async (cookie_name) =>
+                    await db.manyOrNone<{
+                        cookie_name: string;
+                        cookie_value: string;
+                        app_id: string;
+                        platform: 'android' | 'ios';
+                    }>(
+                        'select cookies.name cookie_name, cookies.values[1] cookie_value, filtered_requests.name app_id, filtered_requests.platform platform from cookies join filtered_requests on cookies.request = filtered_requests.id where cookies.name=${cookie_name} group by cookie_name, cookie_value, app_id, platform',
+                        { cookie_name }
+                    )
+            )
+        )
+    )
+        .flat()
+        .filter((c) => cookie_regexes[c.cookie_name as '_ga'].test(c.cookie_value))
+        .map((c) => {
+            const db_entry = cookie_db.find((e) => e['Cookie / Data Key name'] === c.cookie_name);
+            return {
+                ...c,
+                category: db_entry?.Category,
+                company: platform_to_company[db_entry?.Platform!] || db_entry?.Platform,
+            };
+        });
+    await fs.writeFile(join(data_dir, `cookies.csv`), Papa.unparse(cookies));
+
+    // const cookie_counts = cookies.reduce<
+    //     Record<string, { platform: 'android' | 'ios'; category: string; company: string; count: number }>
+    // >((acc, cur) => {
+    //     const key = `${cur.platform}::${cur.category}::${cur.company}`;
+    //     if (!acc[key])
+    //         acc[key] = {
+    //             platform: cur.platform,
+    //             category: `${cur.platform}::${cur.category}`,
+    //             company: cur.company!,
+    //             count: 0,
+    //         };
+    //     acc[key].count++;
+    //     return acc;
+    // }, {});
+    // await fs.writeFile(join(data_dir, `cookie_counts.csv`), Papa.unparse(Object.values(cookie_counts)));
+};
+
 (async () => {
     if (argv.overview || argv.all) await printDialogAndViolationOverview();
     if (argv.dialog_data || argv.all) await computeDialogData();
     if (argv.tcf_data || argv.all) await computeTcfData();
     if (argv.request_data || argv.all) await computeRequestData();
     if (argv.privacy_label_data || argv.all) await computePrivacyLabelData();
+    if (argv.cookie_data || argv.all) await computeCookieData();
 
     pg.end();
 })();
