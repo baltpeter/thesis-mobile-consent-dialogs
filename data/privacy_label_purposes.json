@@ -510,7 +510,7 @@
         "ads_declared": false
     },
     "la.unum.unum-ios": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -582,7 +582,7 @@
         "ads_declared": false
     },
     "com.reddit.Reddit": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -846,7 +846,7 @@
         "ads_declared": false
     },
     "de.develappers.scoolio": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -918,7 +918,7 @@
         "ads_declared": false
     },
     "de.penny.ios.app": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -936,7 +936,7 @@
         "ads_declared": true
     },
     "com.apalonapps.planesfree": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -996,9 +996,9 @@
         "ads_declared": true
     },
     "com.mobisystems.MSTranslator": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "io.erna": {
@@ -1074,7 +1074,7 @@
         "ads_declared": false
     },
     "at.wienerlinien.wienmobillab": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -1146,7 +1146,7 @@
         "ads_declared": false
     },
     "com.telefonica.de.meinblau": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -1218,9 +1218,9 @@
         "ads_declared": true
     },
     "com.impalastudios.pianofree": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "com.huami.watch": {
@@ -1285,12 +1285,6 @@
     },
     "de.identity.video": {
         "tracking_used": true,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
-    "com.duo.cloudmusic": {
-        "tracking_used": false,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -1494,7 +1488,7 @@
         "ads_declared": false
     },
     "com.dietclub.dietclub": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -1608,20 +1602,8 @@
         "ads_declared": false
     },
     "de.regiocast.80s80s": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
-    "de.falkemedia.zaubertopf.pdf.kiosk": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
-    "com.goomaps.goomaps": {
-        "tracking_used": false,
-        "tracking_declared": false,
         "ads_used": false,
         "ads_declared": true
     },
@@ -1662,7 +1644,7 @@
         "ads_declared": false
     },
     "com.fansup.followersplus": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -2052,7 +2034,7 @@
         "ads_declared": false
     },
     "com.dh3games.wouldyourather": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -2060,7 +2042,7 @@
     "com.contentarcade.LogoMaker": {
         "tracking_used": false,
         "tracking_declared": false,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.buzzfeed.tasty": {
@@ -2274,7 +2256,7 @@
         "ads_declared": false
     },
     "com.economist.lamarr": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -2322,7 +2304,7 @@
         "ads_declared": false
     },
     "fm.castbox.audiobook.radio.podcast": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -2442,7 +2424,7 @@
         "ads_declared": false
     },
     "co.bird.Ride": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -2699,12 +2681,6 @@
         "ads_used": false,
         "ads_declared": true
     },
-    "com.verycoolapp.epubreader": {
-        "tracking_used": false,
-        "tracking_declared": false,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.boohoo.boohooMAN": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -2754,9 +2730,9 @@
         "ads_declared": false
     },
     "com.oliver.SpeechToText": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.abishkking.maleworkout": {
@@ -2766,7 +2742,7 @@
         "ads_declared": true
     },
     "com.hejfish.mobileapp": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -3077,14 +3053,8 @@
         "ads_used": false,
         "ads_declared": false
     },
-    "com.csj.ling": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.photo.beautytuneapp": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -3160,12 +3130,6 @@
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
-    },
-    "com.bose.bosemusic": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
     },
     "com.dreamappstudio.dialogfree": {
         "tracking_used": true,
@@ -3623,6 +3587,12 @@
         "ads_used": false,
         "ads_declared": false
     },
+    "app.tier.sharing": {
+        "tracking_used": true,
+        "tracking_declared": true,
+        "ads_used": false,
+        "ads_declared": true
+    },
     "com.playstation.psremoteplay": {
         "tracking_used": false,
         "tracking_declared": true,
@@ -4068,7 +4038,7 @@
         "ads_declared": false
     },
     "com.verv.app": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -4404,7 +4374,7 @@
         "ads_declared": true
     },
     "de.onvista.onvistaV2": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -4680,14 +4650,8 @@
         "ads_declared": false
     },
     "com.github.stormbreaker.prod": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
-        "ads_used": false,
-        "ads_declared": false
-    },
-    "com.epson.Epson-Smart": {
-        "tracking_used": false,
-        "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
     },
@@ -4696,12 +4660,6 @@
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
-    },
-    "com.mind.quiz.brain.out": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
     },
     "com.unity.virtualcamera": {
         "tracking_used": false,
@@ -4818,7 +4776,7 @@
         "ads_declared": true
     },
     "com.deezer.Audiobooks": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -4968,7 +4926,7 @@
         "ads_declared": false
     },
     "com.apalonapps.plants": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -4980,7 +4938,7 @@
         "ads_declared": false
     },
     "com.neocortext.doublicatapp": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -5007,12 +4965,6 @@
         "tracking_used": false,
         "tracking_declared": false,
         "ads_used": false,
-        "ads_declared": false
-    },
-    "com.veravoice.parodistapp": {
-        "tracking_used": true,
-        "tracking_declared": true,
-        "ads_used": true,
         "ads_declared": false
     },
     "de.hallesche4u.app": {
@@ -5064,12 +5016,6 @@
         "ads_declared": false
     },
     "avk.Symbols": {
-        "tracking_used": false,
-        "tracking_declared": false,
-        "ads_used": false,
-        "ads_declared": false
-    },
-    "com.dimakomar.splitPhoto": {
         "tracking_used": false,
         "tracking_declared": false,
         "ads_used": false,
@@ -5237,12 +5183,6 @@
         "ads_used": false,
         "ads_declared": true
     },
-    "com.hbs.broadcast.ometv": {
-        "tracking_used": false,
-        "tracking_declared": false,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.pronetis.ironballride2": {
         "tracking_used": false,
         "tracking_declared": true,
@@ -5280,7 +5220,7 @@
         "ads_declared": false
     },
     "com.lemon.lvoverseas": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -5446,12 +5386,6 @@
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
-    },
-    "com.minichat": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": true,
-        "ads_declared": false
     },
     "forecast.barometer.storm.radar.Weather3": {
         "tracking_used": false,
@@ -5682,9 +5616,9 @@
         "ads_declared": true
     },
     "com.connect.screenrecording": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.body.temperature.app": {
@@ -5790,15 +5724,15 @@
         "ads_declared": false
     },
     "com.xplora.XploraO2O": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
         "ads_used": false,
         "ads_declared": false
     },
     "com.apps.utils.hashtags": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "com.zlineman.Jellyfish": {
@@ -5897,12 +5831,6 @@
         "ads_used": false,
         "ads_declared": false
     },
-    "spa.games": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.arvato.afterpay.international": {
         "tracking_used": false,
         "tracking_declared": true,
@@ -5924,7 +5852,7 @@
     "com.vietphaptravelvn.tvremote": {
         "tracking_used": false,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.ppzv.pareygo": {
@@ -6546,7 +6474,7 @@
         "ads_declared": true
     },
     "de.bioscientia.docnet.app.corona": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
         "ads_used": false,
         "ads_declared": false
@@ -6648,7 +6576,7 @@
         "ads_declared": true
     },
     "cz.Ionity.app": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -6672,9 +6600,9 @@
         "ads_declared": false
     },
     "com.hihoriya.storymaker": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.hey.lingo.ios": {
@@ -6840,9 +6768,9 @@
         "ads_declared": true
     },
     "com.water.sort.puzzles": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.apps.dualtext": {
@@ -7097,12 +7025,6 @@
         "ads_used": false,
         "ads_declared": false
     },
-    "com.promium2.sochott": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.mingkun.mintAI": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -7295,12 +7217,6 @@
         "ads_used": false,
         "ads_declared": false
     },
-    "click.azurescanxiii.scan": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "de.barmenia.meinebarmenia": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -7434,7 +7350,7 @@
         "ads_declared": true
     },
     "removebackground.com.RemoveBackground": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -7614,7 +7530,7 @@
         "ads_declared": false
     },
     "com.metr": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -7661,12 +7577,6 @@
         "ads_used": false,
         "ads_declared": false
     },
-    "com.unicostudio.fakeisland": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
     "com.lzpxf.cn": {
         "tracking_used": false,
         "tracking_declared": false,
@@ -7703,16 +7613,10 @@
         "ads_used": false,
         "ads_declared": true
     },
-    "com.mondayoff.wantedfish": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
     "com.convert.mp3": {
         "tracking_used": false,
         "tracking_declared": false,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "com.freeplay.twerk": {
@@ -7793,12 +7697,6 @@
         "ads_used": true,
         "ads_declared": false
     },
-    "play.roshka.junkyard": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "net.jgu.ios.jguidcardsapp": {
         "tracking_used": false,
         "tracking_declared": false,
@@ -7806,13 +7704,7 @@
         "ads_declared": false
     },
     "com.erasoft.swift.app.Gpsnavigation": {
-        "tracking_used": false,
-        "tracking_declared": false,
-        "ads_used": false,
-        "ads_declared": false
-    },
-    "com.nguyenmanhthang.tudongbam": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
         "ads_used": false,
         "ads_declared": false
@@ -7844,7 +7736,7 @@
     "com.hanhdam.audiovoice": {
         "tracking_used": false,
         "tracking_declared": false,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "de.codivo.waswohin": {
@@ -8045,12 +7937,6 @@
         "ads_used": false,
         "ads_declared": true
     },
-    "com.amazon.Lassen": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.allesklar.meinestadt": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -8082,7 +7968,7 @@
         "ads_declared": false
     },
     "com.indeed.JobSearch": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -8106,7 +7992,7 @@
         "ads_declared": true
     },
     "com.autoscout24.lab": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -8184,7 +8070,7 @@
         "ads_declared": true
     },
     "com.waze.iphone": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -8346,7 +8232,7 @@
         "ads_declared": true
     },
     "de.traveliq.Hotelsuche": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -8358,7 +8244,7 @@
         "ads_declared": true
     },
     "com.okcupid.app": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -8394,7 +8280,7 @@
         "ads_declared": true
     },
     "com.liquidairlab.sunshineliveiphone": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -8406,7 +8292,7 @@
         "ads_declared": true
     },
     "com.comuto.comuto": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -8442,7 +8328,7 @@
         "ads_declared": false
     },
     "de.immoscout.immoscout": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -8490,12 +8376,6 @@
         "ads_declared": false
     },
     "com.tribab.tricount.test": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
-    "com.badoo.Badoo": {
         "tracking_used": false,
         "tracking_declared": true,
         "ads_used": false,
@@ -8718,7 +8598,7 @@
         "ads_declared": false
     },
     "com.o2.meino2": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -9090,9 +8970,9 @@
         "ads_declared": true
     },
     "com.itwcalculator.calculatorforipadfree": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "MeinVodafone": {
@@ -9234,7 +9114,7 @@
         "ads_declared": true
     },
     "com.path36.SpliceFree": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -9335,12 +9215,6 @@
         "ads_used": false,
         "ads_declared": true
     },
-    "com.plus500.plus500": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
     "de.ernstingsfamily.app": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -9386,7 +9260,7 @@
     "com.outfit7.talkingtom2": {
         "tracking_used": false,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "com.etecture.ekz.onleihe.ios.app": {
@@ -9930,7 +9804,7 @@
         "ads_declared": false
     },
     "com.hp.printer.control": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -10193,12 +10067,6 @@
         "ads_used": false,
         "ads_declared": false
     },
-    "net.nextbike.official2012": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
-    },
     "org.islamicfinder.Athan1": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -10236,7 +10104,7 @@
         "ads_declared": false
     },
     "com.lileping.photoframepro": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -10518,9 +10386,9 @@
         "ads_declared": false
     },
     "ios.aplicacion.tiempo-com": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "nl.v12.visplanner": {
@@ -10631,12 +10499,6 @@
         "ads_used": false,
         "ads_declared": true
     },
-    "com.helloTalk.helloTalk": {
-        "tracking_used": true,
-        "tracking_declared": false,
-        "ads_used": false,
-        "ads_declared": false
-    },
     "com.finderly.shpock": {
         "tracking_used": true,
         "tracking_declared": true,
@@ -10680,7 +10542,7 @@
         "ads_declared": false
     },
     "com.udemy": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -10812,9 +10674,9 @@
         "ads_declared": true
     },
     "eu.pons.dictionary": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "com.commerzbank.photoTAN": {
@@ -10956,7 +10818,7 @@
         "ads_declared": false
     },
     "com.picsart.studio": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -11064,7 +10926,7 @@
         "ads_declared": true
     },
     "es.eltiempo.weatherapphd": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -11346,9 +11208,9 @@
         "ads_declared": false
     },
     "com.itwcalculator.worldradarfree": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "salvatore.f.rocca.GymBook": {
@@ -11574,9 +11436,9 @@
         "ads_declared": false
     },
     "com.vinnov.Living-Weather-HD-free": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "de.bottledsoftware.123Tanken": {
@@ -11710,12 +11572,6 @@
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
-    },
-    "de.check24.check24": {
-        "tracking_used": false,
-        "tracking_declared": true,
-        "ads_used": false,
-        "ads_declared": true
     },
     "doordash.DoorDashConsumer": {
         "tracking_used": true,
@@ -11853,6 +11709,12 @@
         "tracking_used": false,
         "tracking_declared": true,
         "ads_used": false,
+        "ads_declared": false
+    },
+    "vsmedia.de.photoblend": {
+        "tracking_used": false,
+        "tracking_declared": true,
+        "ads_used": true,
         "ads_declared": false
     },
     "eu.livesport.FlashScore-com": {
@@ -12282,7 +12144,7 @@
         "ads_declared": false
     },
     "com.pingidentity.pingid.prod": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": false,
         "ads_used": false,
         "ads_declared": false
@@ -12332,7 +12194,7 @@
     "com.economist.darwin": {
         "tracking_used": false,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": true
     },
     "com.appliedphasor.working-copy": {
@@ -12522,7 +12384,7 @@
         "ads_declared": false
     },
     "de.congstar.meincongstar": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -13019,6 +12881,12 @@
         "ads_used": false,
         "ads_declared": false
     },
+    "com.NH.Secret-Messenger": {
+        "tracking_used": false,
+        "tracking_declared": true,
+        "ads_used": false,
+        "ads_declared": false
+    },
     "com.facebook.MAdMan": {
         "tracking_used": false,
         "tracking_declared": true,
@@ -13068,7 +12936,7 @@
         "ads_declared": false
     },
     "swc": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
@@ -13338,13 +13206,13 @@
         "ads_declared": false
     },
     "com.nextory.nextoryapp": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": true
     },
     "com.jbl.connect": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
         "ads_used": false,
         "ads_declared": false
@@ -13386,9 +13254,9 @@
         "ads_declared": false
     },
     "com.camerasideas.InstaShot": {
-        "tracking_used": false,
+        "tracking_used": true,
         "tracking_declared": true,
-        "ads_used": false,
+        "ads_used": true,
         "ads_declared": false
     },
     "de.meteogroup.WeatherProFree": {

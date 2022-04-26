@@ -180,7 +180,7 @@ const computeTcfData = async () => {
     const tcf_vendors = tc_data.accepted
         .reduce<typeof vendors_empty>((acc, cur) => {
             for (const vendor_id of cur.vendorConsents) {
-                acc.find((v) => v.id === vendor_id)!.count++;
+                if (acc.find((v) => v.id === vendor_id)) acc.find((v) => v.id === vendor_id)!.count++;
             }
             return acc;
         }, vendors_empty)

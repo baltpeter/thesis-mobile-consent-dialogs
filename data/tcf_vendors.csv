@@ -1,694 +1,691 @@
 name,id,count
-Google Advertising Products,755,55
-The Trade Desk,21,53
-Adform,50,53
-Amazon Advertising,793,53
-"Index Exchange, Inc. ",10,52
-RTB House S.A.,16,52
-Yahoo EMEA Limited,25,52
-"Xandr, Inc.",32,52
-Smart Adserver,45,52
-"Magnite, Inc. ",52,52
-"Flashtalking, Inc.",78,52
-"MediaMath, Inc.",79,52
-Criteo SA,91,52
-"SpotX, Inc",165,52
-Amobee Inc.,23,51
-Taboola Europe Limited,42,51
-Sizmek by Amazon,68,51
-OpenX,69,51
-"PubMatic, Inc.",76,51
-Meetrics GmbH,152,51
-advanced store GmbH,195,51
-Publicis Media GmbH,226,51
-TabMo SAS,275,51
-Otto (GmbH &amp; Co KG),559,51
-ADITION technologies GmbH,39,50
-Yieldlab AG,70,50
-"Teads ",132,50
-emetriq GmbH,213,50
-Improve Digital,253,50
-Exactag GmbH,312,50
-Active Agent (ADITION technologies GmbH),40,49
-Semasio GmbH,84,49
-"LiveRamp, Inc.",97,49
-Platform161 B.V.,140,49
-Mobile Professionals BV,302,49
-AudienceProject Aps,394,49
-Online Solution,602,49
-Dynata LLC,110,48
-The Kantar Group Limited,345,48
-RevJet,759,48
-Unruly Group LLC,36,47
-Comscore B.V.,77,47
-GroupM UK Limited,98,47
-BIDSWITCH GmbH,128,47
-"Adobe Audience Manager, Adobe Experience Platform",565,47
-"TripleLift, Inc.",28,46
-Oracle Data Cloud,385,46
-Sovrn Holdings Inc,13,45
-admetrics GmbH,22,45
-The ADEX GmbH,44,45
-Wizaly,281,45
-Nielsen Marketing Cloud,373,45
-The Reach Group GmbH,382,45
-"Salesforce.com, Inc.",506,45
-MindTake Research GmbH,703,45
-GfK SE,758,45
+Google Advertising Products,755,52
+The Trade Desk,21,50
+Smart Adserver,45,50
+Adform,50,50
+"Flashtalking, Inc.",78,50
+Amazon Advertising,793,50
+RTB House S.A.,16,49
+Yahoo EMEA Limited,25,49
+"Xandr, Inc.",32,49
+"Magnite, Inc. ",52,49
+Sizmek by Amazon,68,49
+OpenX,69,49
+"PubMatic, Inc.",76,49
+"MediaMath, Inc.",79,49
+Criteo SA,91,49
+Meetrics GmbH,152,49
+"SpotX, Inc",165,49
+advanced store GmbH,195,49
+Publicis Media GmbH,226,49
+TabMo SAS,275,49
+Exactag GmbH,312,49
+Otto (GmbH &amp; Co KG),559,49
+"Index Exchange, Inc. ",10,48
+Amobee Inc.,23,48
+Active Agent (ADITION technologies GmbH),40,48
+emetriq GmbH,213,48
+AudienceProject Aps,394,48
+ADITION technologies GmbH,39,47
+Taboola Europe Limited,42,47
+Yieldlab AG,70,47
+Platform161 B.V.,140,47
+Improve Digital,253,47
+Semasio GmbH,84,46
+"LiveRamp, Inc.",97,46
+"Teads ",132,46
+Mobile Professionals BV,302,46
+"Adobe Audience Manager, Adobe Experience Platform",565,46
+Online Solution,602,46
+GroupM UK Limited,98,45
+Dynata LLC,110,45
+The Kantar Group Limited,345,45
+RevJet,759,45
 agof studies,785,45
-Nielsen International SA,812,45
-Quantcast International Limited,11,44
-BeeswaxIO Corporation,12,44
-NEORY GmbH,34,44
-Nano Interactive GmbH,72,44
-Showheroes SE,111,44
-smartclip Europe GmbH,115,44
-EASYmedia GmbH,168,44
-Delta Projects AB,209,44
-Gemius SA,328,44
-Commanders Act,416,44
-AdSpirit GmbH,6,43
-adsquare GmbH,66,43
-"NextRoll, Inc.",130,43
-Outbrain UK Ltd,164,43
-Rakuten Marketing LLC,60,42
-"Smaato, Inc.",82,42
-1plusX AG,92,42
-Weborama,284,42
-"Celtra, Inc.",315,42
-travel audience GmbH,423,42
-INFOnline GmbH,730,42
-Hearts &amp; Science München GmbH,787,42
-Blis Media Limited,94,41
-IPONWEB GmbH,129,41
-Ströer SSP GmbH (SSP),136,41
-Smartology Limited,246,41
-Roq.ad Inc.,4,40
-Roku Advertising Services,71,40
-DoubleVerify Inc.​,126,40
-Adobe Advertising Cloud,264,40
-zeotap GmbH,301,40
-AdDefend GmbH,539,40
-plista GmbH,177,39
-Cloud Technologies S.A.,243,39
-Opinary GmbH,488,39
-"Exponential Interactive, Inc d/b/a VDX.tv",1,38
-Widespace AB,18,38
-Justpremium BV,62,38
-SMARTSTREAM.TV GmbH,134,38
-"SMADEX, S.L.U.",161,38
-OneTag Limited,241,38
-adality GmbH,649,38
-"Liftoff Mobile, Inc.",667,38
-Epsilon,24,37
-NEURAL.ONE,37,37
-Simplifi Holdings Inc,73,37
-Crimtan Holdings Limited,85,37
-LoopMe Limited,109,37
-Fusio by S4M,119,37
-Adacado Technologies Inc. (DBA Adacado),147,37
-remerge GmbH,192,37
-Jivox Corporation,294,37
-On Device Research Limited,304,37
-numberly,388,37
-Adludio Ltd.,447,37
-Neodata Group srl,450,37
-Relay42 Netherlands B.V.,631,37
-GP One GmbH,657,37
-Cint AB,734,37
-Factor Eleven GmbH,795,37
-Objective Partners BV,832,37
-LifeStreet Corporation,67,36
-Adloox SA,93,36
-Teemo SA,124,36
+admetrics GmbH,22,44
+Unruly Group LLC,36,44
+The ADEX GmbH,44,44
+BIDSWITCH GmbH,128,44
+The Reach Group GmbH,382,44
+Oracle Data Cloud,385,44
+Nielsen International SA,812,44
+Sovrn Holdings Inc,13,43
+"TripleLift, Inc.",28,43
+Nano Interactive GmbH,72,43
+Comscore B.V.,77,43
+smartclip Europe GmbH,115,43
+Nielsen Marketing Cloud,373,43
+MindTake Research GmbH,703,43
+INFOnline GmbH,730,43
+AdSpirit GmbH,6,42
+Quantcast International Limited,11,42
+BeeswaxIO Corporation,12,42
+NEORY GmbH,34,42
+adsquare GmbH,66,42
+Showheroes SE,111,42
+Outbrain UK Ltd,164,42
+EASYmedia GmbH,168,42
+Delta Projects AB,209,42
+Wizaly,281,42
+Gemius SA,328,42
+Commanders Act,416,42
+"Salesforce.com, Inc.",506,42
+GfK SE,758,42
+1plusX AG,92,41
+Weborama,284,41
+travel audience GmbH,423,41
+Rakuten Marketing LLC,60,40
+"Smaato, Inc.",82,40
+"Celtra, Inc.",315,40
+Hearts &amp; Science München GmbH,787,40
+"NextRoll, Inc.",130,39
+zeotap GmbH,301,39
+AdDefend GmbH,539,39
+Blis Media Limited,94,38
+IPONWEB GmbH,129,38
+Ströer SSP GmbH (SSP),136,38
+plista GmbH,177,38
+Smartology Limited,246,38
+Adobe Advertising Cloud,264,38
+Opinary GmbH,488,38
+Roq.ad Inc.,4,37
+Roku Advertising Services,71,37
+SMARTSTREAM.TV GmbH,134,37
+adality GmbH,649,37
+DoubleVerify Inc.​,126,36
 Permodo GmbH,139,36
-Bombora Inc.,163,36
-"Integral Ad Science, Inc.",278,36
-Comcast International France SAS,285,36
-Polar Mobile Group Inc.,297,36
-mainADV Srl,317,36
-Localsensor B.V.,587,36
-"M,P,NEWMEDIA, GmbH",846,36
-eBay Inc,929,36
-"Sift Media, Inc",59,35
-Betgenius Ltd,87,35
-"TreSensa Technologies, Inc.",88,35
-Inskin Media LTD,150,35
+Cloud Technologies S.A.,243,36
+Jaduda GmbH,252,36
+KUPONA GmbH,424,36
+"Exponential Interactive, Inc d/b/a VDX.tv",1,35
+Widespace AB,18,35
+Justpremium BV,62,35
+"SMADEX, S.L.U.",161,35
 "Magnite CTV, Inc.",202,35
-"Zemanta, Inc.",210,35
-Jaduda GmbH,252,35
-Bannerflow AB,273,35
-KUPONA GmbH,424,35
-DEFINE MEDIA GMBH,440,35
-Digiseg ApS,761,35
-cynapsis interactive GmbH,875,35
-SoD ScreenOnDemand GmbH,937,35
-Scene Stealer Limited,86,34
-"Lotame Solutions, inc",95,34
-Sublime,114,34
-Ströer SSP GmbH (DSP),137,34
+OneTag Limited,241,35
+Jivox Corporation,294,35
+Polar Mobile Group Inc.,297,35
+"bam! interactive marketing GmbH ",771,35
+Objective Partners BV,832,35
+"M,P,NEWMEDIA, GmbH",846,35
+Epsilon,24,34
+NEURAL.ONE,37,34
+Simplifi Holdings Inc,73,34
+Crimtan Holdings Limited,85,34
+Adloox SA,93,34
+LoopMe Limited,109,34
+Fusio by S4M,119,34
+Adacado Technologies Inc. (DBA Adacado),147,34
 video intelligence AG,190,34
-Innovid Inc.,452,34
+remerge GmbH,192,34
+"Integral Ad Science, Inc.",278,34
+On Device Research Limited,304,34
+numberly,388,34
+Adludio Ltd.,447,34
+Neodata Group srl,450,34
 AdsWizz Inc.,507,34
-One Tech Group GmbH,509,34
-The Procter & Gamble Company,577,34
-Axel Springer Teaser Ad GmbH,647,34
-Adikteev,15,33
-ADARA MEDIA UNLIMITED,57,33
-Avocet Systems Limited,63,33
-Fifty Technology Limited,100,33
+Relay42 Netherlands B.V.,631,34
+Sportradar AG,655,34
+GP One GmbH,657,34
+"Liftoff Mobile, Inc.",667,34
+Cint AB,734,34
+Factor Eleven GmbH,795,34
+SoD ScreenOnDemand GmbH,937,34
+LifeStreet Corporation,67,33
+"TreSensa Technologies, Inc.",88,33
 MiQ,101,33
 Eyeota Pte Ltd,120,33
-Unruly Group Ltd,162,33
-usemax advertisement (Emego GmbH),212,33
-Apester Ltd,354,33
-Effiliation / Effinity,402,33
-"NeuStar, Inc.",468,33
-Verve Group Europe GmbH,512,33
-Kochava Inc.,544,33
-Clinch Labs LTD,767,33
-"bam! interactive marketing GmbH ",771,33
-Ad Alliance GmbH,788,33
-Reppublika- The Research Toolbox GmbH,800,33
-ADventori SAS,27,32
-YOC AG,154,32
-EMX Digital LLC,183,32
-Goldbach Group AG,580,32
-Dentsu Italia SpA,707,32
+Teemo SA,124,33
+Inskin Media LTD,150,33
+EMX Digital LLC,183,33
+"Zemanta, Inc.",210,33
+Comcast International France SAS,285,33
+mainADV Srl,317,33
+DEFINE MEDIA GMBH,440,33
+One Tech Group GmbH,509,33
+The Procter & Gamble Company,577,33
+Localsensor B.V.,587,33
+Digiseg ApS,761,33
+cynapsis interactive GmbH,875,33
+eBay Inc,929,33
+"Sift Media, Inc",59,32
+Betgenius Ltd,87,32
+Sublime,114,32
+Ströer SSP GmbH (DSP),137,32
+Bombora Inc.,163,32
+twiago GmbH,242,32
+Bannerflow AB,273,32
+Effiliation / Effinity,402,32
+Verve Group Europe GmbH,512,32
+Axel Springer Teaser Ad GmbH,647,32
+Clinch Labs LTD,767,32
 EASY Marketing GmbH,796,32
-"Moloco, Inc.",807,32
-dataXtrade GmbH,938,32
-Vibrant Media Limited,7,31
-BidTheatre AB,30,31
-"Tapad, Inc.",89,31
-McCann Discipline LTD,228,31
-Signal Digital Inc.,261,31
-Optomaton UG,349,31
-Seeding Alliance GmbH,371,31
-Solocal,381,31
-GlobalWebIndex,536,31
-Contact Impact GmbH,630,31
-Sportradar AG,655,31
-YouGov,726,31
+Avocet Systems Limited,63,31
+Scene Stealer Limited,86,31
+"Lotame Solutions, inc",95,31
+Fifty Technology Limited,100,31
+Apester Ltd,354,31
+Innovid Inc.,452,31
+"NeuStar, Inc.",468,31
+Goldbach Group AG,580,31
+Reppublika- The Research Toolbox GmbH,800,31
 "Bannernow, Inc.",801,31
-ID5 Technology Ltd,131,30
-MADVERTISE MEDIA,153,30
+Adikteev,15,30
+ADventori SAS,27,30
+ADARA MEDIA UNLIMITED,57,30
+YOC AG,154,30
+Unruly Group Ltd,162,30
 mediarithmics SAS,184,30
-"Bidtellect, Inc",185,30
-twiago GmbH,242,30
-Arrivalist Co,409,30
+usemax advertisement (Emego GmbH),212,30
+McCann Discipline LTD,228,30
+Optomaton UG,349,30
+Seeding Alliance GmbH,371,30
+Kochava Inc.,544,30
 BILENDI SA,625,30
+Contact Impact GmbH,630,30
+Dentsu Italia SpA,707,30
 Deutsche Post AG,735,30
+Ad Alliance GmbH,788,30
 BritePool Inc,792,30
-"GumGum, Inc.",61,29
-"Sharethrough, Inc",80,29
+Dianomi PLC,885,30
+dataXtrade GmbH,938,30
+Vibrant Media Limited,7,29
+BidTheatre AB,30,29
+"Tapad, Inc.",89,29
 "Yieldmo, Inc.",173,29
-StackAdapt,238,29
+adrule mobile GmbH,224,29
+Signal Digital Inc.,261,29
 A.Mob,272,29
-InMobi Pte Ltd,333,29
-Permutive Limited,361,29
+Solocal,381,29
+netzeffekt GmbH,521,29
+GlobalWebIndex,536,29
 audio content &amp; control GmbH,598,29
-Adtriba GmbH,827,29
-Quality Media Network GmbH,835,29
+YouGov,726,29
+"Moloco, Inc.",807,29
 "diva-e products ",852,29
-Dianomi PLC,885,29
-LiquidM Technology GmbH,254,28
-"Nativo, Inc.",263,28
-"Sojern, Inc.",295,28
-AddApptr GmbH,377,28
+"Magnite, Inc. (Outstream)",102,28
+ID5 Technology Ltd,131,28
+ShowHeroes SRL,276,28
+InMobi Pte Ltd,333,28
 DynAdmic,434,28
-Zeta Global,469,28
-GeistM Technologies LTD,731,28
-Artefact Deutschland GmbH,797,28
+PLAYGROUND XYZ EMEA LTD,490,28
 LinkedIn Ireland Unlimited Company,804,28
-Adjust GmbH,813,28
-TV SQUARED LIMITED,985,28
-"Magnite, Inc. (Outstream)",102,27
-Media.net Advertising FZ-LLC,142,27
+"GumGum, Inc.",61,27
+"Sharethrough, Inc",80,27
+Dentsu London Limited,122,27
+MADVERTISE MEDIA,153,27
+Audience Solutions S.A.,160,27
+Hybrid Theory,178,27
+"Bidtellect, Inc",185,27
 "AdTheorent, Inc",211,27
-adrule mobile GmbH,224,27
+StackAdapt,238,27
+LiquidM Technology GmbH,254,27
+"Nativo, Inc.",263,27
+"Sojern, Inc.",295,27
 "Permutive Technologies, Inc.",360,27
-communicationAds GmbH &amp; Co. KG,378,27
-"Demandbase, Inc.",397,27
-Brand Metrics Sweden AB,422,27
-PLAYGROUND XYZ EMEA LTD,490,27
-netzeffekt GmbH,521,27
-Dynamic 1001 GmbH,584,27
+Permutive Limited,361,27
+Arrivalist Co,409,27
+Zeta Global,469,27
+INFINIA MOBILE S.L.,479,27
+Pubfinity LLC,725,27
 Appier PTE Ltd,728,27
+GeistM Technologies LTD,731,27
+"6Sense Insights, Inc.",740,27
+Artefact Deutschland GmbH,797,27
 Pure Local Media GmbH,808,27
+Adtriba GmbH,827,27
+Quality Media Network GmbH,835,27
 AWIN AG,907,27
+TV SQUARED LIMITED,985,27
+Captify Technologies Limited,2,26
 Emerse Sverige AB,8,26
+33Across,58,26
+Media.net Advertising FZ-LLC,142,26
 Seedtag Advertising S.L,157,26
-"Opt Out Advertising B.V. ",227,26
+Mediasmart Mobile S.L.,193,26
+"VGI CTV, Inc",237,26
 ADYOULIKE SA,259,26
-"Fyber ",262,26
-ShowHeroes SRL,276,26
-Browsi,329,26
-"Lucid Holdings, LLC",508,26
+AerServ LLC,359,26
+VECTAURY,368,26
+communicationAds GmbH &amp; Co. KG,378,26
+Adtelligent Inc.,410,26
+Piano Software Inc,412,26
+PROXISTORE,418,26
+Brand Metrics Sweden AB,422,26
 Admixer EU GmbH,511,26
+WebAds B.V,601,26
 "Impactify ",606,26
+Mobsuccess,663,26
+Go.pl sp. z o.o.,690,26
 Vidazoo Ltd,744,26
-ADCELL | Firstlead GmbH,766,26
 TX Group AG,828,26
-Adkernel LLC,14,25
-33Across,58,25
-Dentsu London Limited,122,25
-district m inc.,144,25
+Amnet GmbH,922,26
+socoto gmbh &amp; co. kg,966,26
 ADman Interactive SLU,149,25
-Audience Solutions S.A.,160,25
-Hybrid Theory,178,25
-Mediasmart Mobile S.L.,193,25
-Adssets AB,205,25
 Hybrid Adtech GmbH,206,25
+"Opt Out Advertising B.V. ",227,25
 Triton Digital Canada Inc.,239,25
-Rockabox Media Ltd t/a Scoota,308,25
-AerServ LLC,359,25
-VECTAURY,368,25
-Adtelligent Inc.,410,25
-Piano Software Inc,412,25
-PROXISTORE,418,25
-"AdColony, Inc.",458,25
-INFINIA MOBILE S.L.,479,25
-WebAds B.V,601,25
-Mobsuccess,663,25
-Go.pl sp. z o.o.,690,25
-HyperTV Inc.,699,25
-Pubfinity LLC,725,25
-"6Sense Insights, Inc.",740,25
-Kairion GmbH,747,25
-Protected Media LTD,762,25
-Lucidity,764,25
-SelectMedia International LTD,775,25
+Yieldlove GmbH,251,25
+"Fyber ",262,25
+Welect GmbH,282,25
+Mobfox US LLC,311,25
+Browsi,329,25
+AddApptr GmbH,377,25
+"Demandbase, Inc.",397,25
+INVIBES GROUP,436,25
+TAPTAP Digital SL,475,25
+NEXD,502,25
+"Lucid Holdings, LLC",508,25
+Kayzen,528,25
+Onfocus (Adagio),617,25
+BEINTOO SPA,618,25
+AAX LLC,720,25
+Monet Engine Inc,737,25
+ADCELL | Firstlead GmbH,766,25
 Aniview LTD,780,25
+"AdGear Technologies, Inc.",790,25
+Adjust GmbH,813,25
 Kameleoon SAS,820,25
+HUAWEI Ads,856,25
+AdQuiver Media SL,859,25
 Bertelsmann Data Service GmbH,920,25
-socoto gmbh &amp; co. kg,966,25
-Havas Media (Artemis Alliance S.L.U.),1031,25
 dpa-infocom GmbH,1075,25
-C WIRE AG,1081,25
-Captify Technologies Limited,2,24
-AdMaxim Inc.,9,24
+Adkernel LLC,14,24
 Ogury Ltd.,31,24
+"ADMAN - Phaistos Networks, S.A.",47,24
+"PulsePoint, Inc.",81,24
 digitalAudience,133,24
-ConnectAd Realtime GmbH,138,24
-"VGI CTV, Inc",237,24
-Yieldlove GmbH,251,24
-Welect GmbH,282,24
-AdClear GmbH,299,24
-Mobfox US LLC,311,24
+district m inc.,144,24
+Adssets AB,205,24
+Converge-Digital,248,24
+Rockabox Media Ltd t/a Scoota,308,24
 Knorex,325,24
+Samba TV Inc.,350,24
+Samba TV UK Limited,351,24
 MGID Inc.,358,24
 Internet BillBoard a.s.,428,24
-INVIBES GROUP,436,24
-Haensel AMS GmbH,467,24
-TAPTAP Digital SL,475,24
-NEXD,502,24
-Jampp LTD,527,24
-Kayzen,528,24
+"AdColony, Inc.",458,24
+uppr GmbH,459,24
+Mediakeys Platform,498,24
 Smartclip Hispania SL,531,24
-adhood.com,556,24
+Dynamic 1001 GmbH,584,24
 Market Resource Partners LLC,614,24
-Onfocus (Adagio),617,24
-BEINTOO SPA,618,24
 Blue,620,24
-Telefonica Investigación y Desarrollo S.A.U,650,24
-AAX LLC,720,24
-Anzu Virtual Reality LTD,733,24
-Monet Engine Inc,737,24
-Global Media Group Services Limited,768,24
-MEDIAMETRIE,769,24
-"AdGear Technologies, Inc.",790,24
-"Aarki, Inc.",806,24
-HUAWEI Ads,856,24
-SOMQUERY SOMTAG - (SevenOne Media),857,24
-Webgains GmbH,870,24
-Amnet GmbH,922,24
+Hivestack Inc.,626,24
+The MediaGrid Inc.,686,24
+HyperTV Inc.,699,24
+OnAudience Ltd,716,24
+Kairion GmbH,747,24
+SelectMedia International LTD,775,24
+glomex GmbH,967,24
+Dentsu Denmark A/S,1029,24
+Havas Media (Artemis Alliance S.L.U.),1031,24
+Allegro.pl,1035,24
+C WIRE AG,1081,24
+AdMaxim Inc.,9,23
 N Technologies Inc.,20,23
-"ADMAN - Phaistos Networks, S.A.",47,23
-"PulsePoint, Inc.",81,23
+Jellyfish France,49,23
+Sirdata,53,23
+Location Sciences AI Ltd.,65,23
+Teroa S.A.,90,23
 "Sonobi, Inc",104,23
-Admedo Technology Ltd,151,23
+Rich Audience Technologies SL,108,23
+ConnectAd Realtime GmbH,138,23
+Connatix Native Exchange Inc.,143,23
+AntVoice,155,23
+A Million Ads Ltd,174,23
+ADUX,199,23
+"Tapjoy, Inc.",200,23
+Mindlytix SAS,216,23
+"2KDirect, Inc. (dba iPromote)",217,23
 AcuityAds Inc.,231,23
-PowerLinks Media Limited,236,23
-Converge-Digital,248,23
-Samba TV Inc.,350,23
-Samba TV UK Limited,351,23
-Playbuzz Ltd (aka EX.CO),444,23
-uppr GmbH,459,23
-Bidstack Limited,462,23
-Mediakeys Platform,498,23
+"Tri-table Sp. z o.o. ",249,23
+"SpringServe, LLC",293,23
+Keymantics,314,23
+Gamned,316,23
+DIGITEKA Technologies,343,23
+"Bmind a Sales Maker Company, S.L.",374,23
+Triapodi Ltd.,387,23
+Eulerian Technologies,413,23
+INVIDI technologies AB,438,23
+Madington,486,23
+ShinyStat S.p.a.,491,23
+Arcspire Limited,495,23
+Alliance Gravity Data Media,501,23
+Pexi B.V.,516,23
+"SunMedia ",517,23
+The Ozone Project Limited,524,23
+Jampp LTD,527,23
+Near Pte Ltd,530,23
+INNITY,535,23
 "DeepIntent, Inc.",541,23
-Hivestack Inc.,626,23
-The MediaGrid Inc.,686,23
-OnAudience Ltd,716,23
+Reignn Platform Ltd,545,23
+Smart Traffik,546,23
+Bandsintown Amplified LLC,549,23
+Adhese,553,23
+adhood.com,556,23
+AuDigent,561,23
+Next Media SRL,568,23
+ViewPay,571,23
+Dailymotion SA,573,23
+Realeyes OU,574,23
+Programatica de publicidad S.L.,593,23
+"ucfunnel Co., Ltd.",607,23
+Azerion Holding B.V.,610,23
+Adsolutions BV,615,23
+: Tappx,628,23
+Passendo Aps,638,23
+Smile Wanted Group,639,23
+Notify,646,23
+Telefonica Investigación y Desarrollo S.A.U,650,23
+Skaze,652,23
+SoundCast,662,23
+Digital East GmbH,665,23
+"WhatRocks Inc. ",668,23
+"Duration Media, LLC.",674,23
+BusinessClick,676,23
+MyTraffic,681,23
+Cookie Market LTD,683,23
+MISSENA,687,23
+Lifesight Pte. Ltd.,691,23
+Kwanko,702,23
+OneFootball GmbH,708,23
+"NC Audience Exchange, LLC (NewsIQ)",709,23
+SITU8ED SA,711,23
+Synkd Ltd.,712,23
+Dataseat Ltd,713,23
+Online Advertising Network Sp. z o.o.,719,23
+Beaconspark Ltd,721,23
 Between Exchange,724,23
-Wagawin GmbH,774,23
-AdQuiver Media SL,859,23
-glomex GmbH,967,23
-Netpoint Media GmbH,982,23
-Dentsu Denmark A/S,1029,23
+Pinpoll GmbH,727,23
+Cavai AS &amp; UK,729,23
+Anzu Virtual Reality LTD,733,23
+adbility media GmbH,738,23
+Blingby LLC,739,23
+Audiencerate LTD,742,23
+AUDIOMOB LTD,748,23
+THE NEWCO S.R.L.,750,23
+VEXPRO TECHNOLOGIES LTD,760,23
+Protected Media LTD,762,23
+Grabit Interactive Media Inc dba KERV Interctive,765,23
+Global Media Group Services Limited,768,23
+MEDIAMETRIE,769,23
+FeedAd GmbH,781,23
+"Aarki, Inc.",806,23
+SOMQUERY SOMTAG - (SevenOne Media),857,23
+Webgains GmbH,870,23
+Prebid.org,887,23
+Imonomy,921,23
+Exit Bee Limited,1027,23
+VIADS ADVERTISING S.L.,1036,23
 Ströer Digital Media GmbH,1057,23
-Jellyfish France,49,22
-Sirdata,53,22
-Location Sciences AI Ltd.,65,22
-Teroa S.A.,90,22
-Rich Audience Technologies SL,108,22
-Connatix Native Exchange Inc.,143,22
-AntVoice,155,22
-A Million Ads Ltd,174,22
-ADUX,199,22
-"Tapjoy, Inc.",200,22
-Spotad,208,22
-Mindlytix SAS,216,22
-"2KDirect, Inc. (dba iPromote)",217,22
-"Tri-table Sp. z o.o. ",249,22
-"SpringServe, LLC",293,22
-Keymantics,314,22
-Gamned,316,22
-DIGITEKA Technologies,343,22
-"Bmind a Sales Maker Company, S.L.",374,22
-Triapodi Ltd.,387,22
-Eulerian Technologies,413,22
-INVIDI technologies AB,438,22
-Madington,486,22
-ShinyStat S.p.a.,491,22
-Arcspire Limited,495,22
-Alliance Gravity Data Media,501,22
-Pexi B.V.,516,22
-"SunMedia ",517,22
-The Ozone Project Limited,524,22
-Near Pte Ltd,530,22
-INNITY,535,22
-Reignn Platform Ltd,545,22
-Smart Traffik,546,22
-Bandsintown Amplified LLC,549,22
-Adhese,553,22
-AuDigent,561,22
-Next Media SRL,568,22
-ViewPay,571,22
-Dailymotion SA,573,22
-Realeyes OU,574,22
-Programatica de publicidad S.L.,593,22
-"ucfunnel Co., Ltd.",607,22
-Azerion Holding B.V.,610,22
-Adsolutions BV,615,22
-: Tappx,628,22
-Passendo Aps,638,22
-Smile Wanted Group,639,22
-Notify,646,22
-Skaze,652,22
-SoundCast,662,22
-Digital East GmbH,665,22
-"WhatRocks Inc. ",668,22
-"Duration Media, LLC.",674,22
-BusinessClick,676,22
-MyTraffic,681,22
-Cookie Market LTD,683,22
-MISSENA,687,22
-Lifesight Pte. Ltd.,691,22
-Kwanko,702,22
-OneFootball GmbH,708,22
-"NC Audience Exchange, LLC (NewsIQ)",709,22
-SITU8ED SA,711,22
-Synkd Ltd.,712,22
-Dataseat Ltd,713,22
-Online Advertising Network Sp. z o.o.,719,22
-Beaconspark Ltd,721,22
-Pinpoll GmbH,727,22
-Cavai AS &amp; UK,729,22
-adbility media GmbH,738,22
-Blingby LLC,739,22
-Audiencerate LTD,742,22
-AUDIOMOB LTD,748,22
-THE NEWCO S.R.L.,750,22
-VEXPRO TECHNOLOGIES LTD,760,22
-Grabit Interactive Media Inc dba KERV Interctive,765,22
-FeedAd GmbH,781,22
-Adpone SL,799,22
-42 Ads GmbH,824,22
-Epom Ltd.,849,22
-Prebid.org,887,22
-Imonomy,921,22
-Adelaide Metrics Inc,1019,22
-Allegro.pl,1035,22
-VIADS ADVERTISING S.L.,1036,22
-onlineumfragen.com GmbH,1061,22
-Venatus Media Limited,26,21
-ETARGET SE,29,21
-"ShareThis, Inc",33,21
-Skimbit Ltd,46,21
-"NetSuccess, s.r.o.",48,21
-PIXIMEDIA SAS,127,21
-"Snapsort Inc., operating as Sortable",145,21
-Liveintent Inc.,148,21
-Reveal Mobile Inc,158,21
-"Underdog Media LLC ",159,21
-Collective Europe Ltd.,179,21
-Rezonence Limited,194,21
-AdElement Media Solutions Pvt Ltd,196,21
-"Revcontent, LLC",203,21
-ARMIS SAS,215,21
-MNTN,230,21
-Bucksense Inc,235,21
-7Hops.com Inc. (ZergNet),240,21
-Ermes,244,21
-Onnetwork Sp. z o.o.,255,21
-Wunderkind Corporation,256,21
-Rebold Marketing & Communication SLU,266,21
-"Marfeel Solutions, SL",270,21
-Golden Bees,274,21
-CentralNic Poland sp. z o.o.,277,21
-Readpeak Oy,290,21
-Cuebiq,298,21
-Adevinta Spain S.L.U.,310,21
-Accorp Sp. z o.o.,318,21
-"Clipcentric, Inc.",319,21
-Ziff Davis LLC,321,21
-Footballco Media Limited,323,21
-ad6media,331,21
-Beachfront Media LLC,335,21
-Telecoming S.A.,336,21
-"SheMedia, LLC",337,21
-Ezoic Inc.,347,21
-RevX,375,21
-Vidoomy Media SL,380,21
-Proxi.cloud sp. z.o.o,427,21
-"SINGLESPOT SAS ",435,21
-Targetspot Belgium SPRL,448,21
-"GDMServices, Inc. d/b/a FiksuDSP",455,21
-B2B Media Group GmbH,461,21
-"Flexoffers.com, LLC",471,21
-Sub2 Technologies Ltd,473,21
-"UberMedia, Inc.",482,21
-Carbon (AI) Limited,493,21
-Automattic Ads,496,21
-Newsroom AI Ltd,519,21
-RMSi Radio Marketing Service interactive GmbH,554,21
-Kairos Fire,569,21
-Czech Publisher Exchange z.s.p.o.,570,21
-Ve Global UK Limited,579,21
-"Sourcepoint Technologies, Inc. (non-CMP)",590,21
+onlineumfragen.com GmbH,1061,23
+Venatus Media Limited,26,22
+ETARGET SE,29,22
+"ShareThis, Inc",33,22
+Skimbit Ltd,46,22
+"NetSuccess, s.r.o.",48,22
+PIXIMEDIA SAS,127,22
+"Snapsort Inc., operating as Sortable",145,22
+Liveintent Inc.,148,22
+Reveal Mobile Inc,158,22
+"Underdog Media LLC ",159,22
+Collective Europe Ltd.,179,22
+Rezonence Limited,194,22
+AdElement Media Solutions Pvt Ltd,196,22
+"Revcontent, LLC",203,22
+ARMIS SAS,215,22
+MNTN,230,22
+Bucksense Inc,235,22
+PowerLinks Media Limited,236,22
+7Hops.com Inc. (ZergNet),240,22
+Ermes,244,22
+Onnetwork Sp. z o.o.,255,22
+Wunderkind Corporation,256,22
+Rebold Marketing & Communication SLU,266,22
+"Marfeel Solutions, SL",270,22
+Golden Bees,274,22
+CentralNic Poland sp. z o.o.,277,22
+Readpeak Oy,290,22
+Cuebiq,298,22
+AdClear GmbH,299,22
+Adevinta Spain S.L.U.,310,22
+Accorp Sp. z o.o.,318,22
+"Clipcentric, Inc.",319,22
+Ziff Davis LLC,321,22
+Footballco Media Limited,323,22
+ad6media,331,22
+Beachfront Media LLC,335,22
+Telecoming S.A.,336,22
+"SheMedia, LLC",337,22
+Ezoic Inc.,347,22
+RevX,375,22
+Vidoomy Media SL,380,22
+Proxi.cloud sp. z.o.o,427,22
+"SINGLESPOT SAS ",435,22
+Playbuzz Ltd (aka EX.CO),444,22
+Targetspot Belgium SPRL,448,22
+"GDMServices, Inc. d/b/a FiksuDSP",455,22
+B2B Media Group GmbH,461,22
+Bidstack Limited,462,22
+Haensel AMS GmbH,467,22
+"Flexoffers.com, LLC",471,22
+Sub2 Technologies Ltd,473,22
+"UberMedia, Inc.",482,22
+Carbon (AI) Limited,493,22
+Automattic Ads,496,22
+Newsroom AI Ltd,519,22
+RMSi Radio Marketing Service interactive GmbH,554,22
+Kairos Fire,569,22
+Czech Publisher Exchange z.s.p.o.,570,22
+Ve Global UK Limited,579,22
+"Sourcepoint Technologies, Inc. (non-CMP)",590,22
+InsurAds Technologies SA.,596,22
+Better Banners A/S,597,22
+Adserve.zone / Artworx AS,613,22
+"Seznam.cz, a.s.",621,22
+Norstat AS,624,22
+Gamoshi Ltd,644,22
+Noster Finance S.L.,645,22
+Content Ignite,656,22
+BLIINK SAS,658,22
+Research and Analysis of Media in Sweden AB,659,22
+"adMarketplace, Inc.",664,22
+BeOp,666,22
+"Timehop, Inc.",670,22
+Mediaforce LTD,671,22
+Radio Net Media Limited,682,22
+Arkeero,685,22
+ADWAYS SAS,697,22
+Upwave Inc.,714,22
+BidBerry SRL,715,22
+Audience Network,717,22
+XChange by SFBX®,718,22
+Brand Advance Ltd,741,22
+Justtag Sp. z o.o.,745,22
+Good-Loop Ltd,749,22
+"DistroScale, Inc.",754,22
+Lucidity,764,22
+MARKETPERF CORP,770,22
+360e-com Sp. z o.o.,773,22
+Wagawin GmbH,774,22
+Mars Media Group,776,22
+One Planet Only,777,22
+Discover-Tech ltd,778,22
+Adtarget Medya A.S.,779,22
+AirGrid LTD,782,22
+Audienzz AG,783,22
+lead alliance GmbH,810,22
+Eskimi,814,22
+retailAds GmbH &amp; Co. KG,819,22
+United Internet Media GmbH,831,22
+Bring! Labs AG,836,22
+Ingenious Technologies AG,871,22
+belboon GmbH,946,22
+Spoods GmbH,951,22
+Netpoint Media GmbH,982,22
+Axiom Media Connect,983,22
+iProspect GmbH,991,22
+Samsung Ads,1015,22
+UniCredit S.p.A.,1040,22
+"1020, Inc. dba Placecast and Ericsson Emodo",141,21
+Admedo Technology Ltd,151,21
+Bigabid Media ltd,218,21
+Little Big Data sp. z o.o.,497,21
 "Consumable, Inc.",591,21
-InsurAds Technologies SA.,596,21
-Better Banners A/S,597,21
-Adserve.zone / Artworx AS,613,21
-"Seznam.cz, a.s.",621,21
-Norstat AS,624,21
-Gamoshi Ltd,644,21
-Noster Finance S.L.,645,21
-Content Ignite,656,21
-BLIINK SAS,658,21
-Research and Analysis of Media in Sweden AB,659,21
-"adMarketplace, Inc.",664,21
-BeOp,666,21
-"Timehop, Inc.",670,21
-Mediaforce LTD,671,21
-Radio Net Media Limited,682,21
-Arkeero,685,21
-ADWAYS SAS,697,21
-Upwave Inc.,714,21
-BidBerry SRL,715,21
-Audience Network,717,21
-XChange by SFBX®,718,21
-Brand Advance Ltd,741,21
-Justtag Sp. z o.o.,745,21
-Good-Loop Ltd,749,21
-"DistroScale, Inc.",754,21
-MARKETPERF CORP,770,21
-360e-com Sp. z o.o.,773,21
-Mars Media Group,776,21
-One Planet Only,777,21
-Discover-Tech ltd,778,21
-Adtarget Medya A.S.,779,21
-AirGrid LTD,782,21
-Audienzz AG,783,21
-lead alliance GmbH,810,21
-Eskimi,814,21
-retailAds GmbH &amp; Co. KG,819,21
-United Internet Media GmbH,831,21
-Bring! Labs AG,836,21
-Ingenious Technologies AG,871,21
-belboon GmbH,946,21
-Spoods GmbH,951,21
+"Performax.cz, s.r.o.",732,21
+BidMachine Inc.,736,21
+"Fandom, Inc.",756,21
+Nubo LTD,784,21
+Media Square,791,21
+"Kubient Inc. ",794,21
+Adverticum cPlc.,798,21
+Adpone SL,799,21
+Click Tech Limited,803,21
+iPROM,811,21
+"NoBid, Inc.",816,21
+vitrado GmbH,821,21
+Adverty AB (publ),822,21
+42 Ads GmbH,824,21
+EDGE NPD Sp. z o.o.,825,21
+DNA-I.COM,826,21
+Unilever Polska sp. z o.o.,829,21
+Disqus,833,21
+ADRENALEAD,834,21
+Cazamba Serviços de Internet Ltda,840,21
+"PubWise, LLLP",842,21
+"LeadsRx, Inc.",843,21
+SPICY MOBILE Sp z o.o. Sp.k.,844,21
+Crowdy News Ltd,847,21
+BSmartData GmbH,848,21
+Epom Ltd.,849,21
+"Publisher First, Inc.",850,21
+Strossle International AB,851,21
+"eMarketingSolutions, Online Marketing S.L.",854,21
+Adnuntius AS,855,21
+"Mediavine, Inc.",858,21
+Publica LLC,860,21
+Triple13 Ltd,861,21
+Truvid Inc.,862,21
+I.R.V. D.O.O.,864,21
+HEIMSPIEL Medien GmbH & Co KG,865,21
+YieldLift LLC,866,21
+Converto AG,868,21
+Brave People Ltd.,869,21
+PRECISO SRL,874,21
+3Q nexx GmbH,876,21
+Experian Limited,877,21
+Natív Hirdetés Korlátolt Felelősségű Társaság,878,21
+Vidstart LTD,879,21
+Quantyoo GmbH &amp; Co. KG,880,21
+Hillside (Sports) GP Limited,881,21
+NumberEight Technologies Ltd,882,21
+Listonic Sp. z o.o.,884,21
+GADSME,888,21
+Admo.tv (Clickon),889,21
+Channel Pilot Solutions GmbH,890,21
+"ANINPRO-CREATIVE, S.L.",891,21
+TIMEONE PERFORMANCE,893,21
+Threedium,894,21
+Maiden Marketing Pte Ltd,895,21
+IPSOS MORI UK LTD,896,21
+Fido S.r.l,897,21
+digidip GmbH,899,21
+Advisible AB,900,21
+STUDIO GONG GmbH & Co. Studiobetriebs KG,901,21
+adQuery,902,21
+Placense Ltd,903,21
+"CAKE Software, Inc.",905,21
+Zoomd Ltd.,908,21
+MobileFuse LLC,909,21
+"Insticator, Inc.",910,21
+Opti Digital SAS,915,21
+SPORTORITY UK LTD,918,21
+Livewrapped AB,919,21
+Viewdeos 2015 LTD,924,21
+ZAM Network LLC dba Fanbyte,926,21
+"Parrable, Inc.",928,21
+IQM CORPORATION,930,21
+Traffective GmbH,931,21
+Brid Video DOO,934,21
+INIS sp. zo.o.,935,21
+Digital Squad,936,21
+Terminus Software Inc.,940,21
+ADSOCY,941,21
+JS Web Production,942,21
+"Marfeel Solutions, SL (Compass)",943,21
+AudienceRun corp,944,21
+Powerspace,947,21
+ProSiebenSat.1 Digital Data GmbH,952,21
+Konodrac S.L.,955,21
+Evolution Technologies Inc.,957,21
+Clipr,958,21
+adWMG,959,21
+Tangoo Srl,962,21
+CIBLECLIC,963,21
+Solution coupons,964,21
+Nexx360,965,21
+"WEMASS MEDIA AUDIENCE SAFE SOLUTIONS, S.L. ",968,21
+Frameplay Corporation,970,21
+Kargo Global Inc.,972,21
+Cluep LLC,973,21
+SpearAd GmbH,974,21
+Playrcart Limited,975,21
+Pelmorex Corp.,976,21
+ARKHEUS,978,21
 Mediascore mbH,979,21
-Axiom Media Connect,983,21
-iProspect GmbH,991,21
-Samsung Ads,1015,21
-Exit Bee Limited,1027,21
-UniCredit S.p.A.,1040,21
+"WAM Group Ltd, t/a Admix",980,21
+Pulse Innovations Limited,984,21
+BYTEDANCE PTE. LTD.,986,21
+Media16 ltd,987,21
+Habu,988,21
+SPEAKOL DMCC,989,21
+QuantumCast digital GmbH,990,21
+Rapid Performance GmbH,992,21
+QUARTER MEDIA GmbH,993,21
+Leadoo Marketing Technologies Ltd,994,21
+Hashtag Labs Inc.,995,21
+"CMI Marketing, Inc. d/b/a CafeMedia",996,21
+Luna Media Group LLC,998,21
+ADSTOURS SAS,999,21
+NETILUM (AFFILAE),1000,21
+wetter.com GmbH,1001,21
+"Extreme Reach, Inc",1002,21
+Mobility-Ads GmbH,1003,21
+VUUKLE DMCC,1004,21
+Onesoon Limited t/a Adalyser,1006,21
+Ketchup Adv Spa,1007,21
+Persona.ly,1010,21
+Videobyte Inc,1011,21
+Glimpse Protocol Limited,1012,21
+FUNKE Digital GmbH,1016,21
+MUSO TNT LIMITED,1018,21
+Adelaide Metrics Inc,1019,21
+Baidu USA,1020,21
+Ringier Axel Springer Polska sp. z o.o.,1021,21
+AdView,1022,21
+RDandX Group DMCC,1023,21
+THE LINEA 1 MKT SL,1024,21
+Realytics,1025,21
+crossvertise GmbH,1026,21
+BRICKS,1028,21
+Skoiy,1030,21
+Project Agora Ltd,1032,21
+Adlane LTD,1033,21
+ONEcount,1034,21
+Pressboard Media Inc,1037,21
+AA INTERNET-MEDIA Ltd,1038,21
+Sonic Odeeo ltd,1039,21
+Mars Inc.,1042,21
 "Longtail Ad Solutions, Inc dba JW Player",1046,21
 OnProspects Ltd,1049,21
 optimise-it GmbH,1064,21
-"xAd, Inc. dba GroundTruth",51,20
-"1020, Inc. dba Placecast and Ericsson Emodo",141,20
-Bigabid Media ltd,218,20
 "Rockerbox, Inc",232,20
 Next Media,429,20
-Little Big Data sp. z o.o.,497,20
 SmartyAds Inc.,534,20
-"Performax.cz, s.r.o.",732,20
-BidMachine Inc.,736,20
-"Fandom, Inc.",756,20
-Nubo LTD,784,20
-IP Deutschland GmbH,789,20
-Media Square,791,20
-"Kubient Inc. ",794,20
-Adverticum cPlc.,798,20
-NOW GmbH,802,20
-Click Tech Limited,803,20
-iPROM,811,20
-"NoBid, Inc.",816,20
-vitrado GmbH,821,20
-Adverty AB (publ),822,20
-EDGE NPD Sp. z o.o.,825,20
-DNA-I.COM,826,20
-Unilever Polska sp. z o.o.,829,20
-Disqus,833,20
-ADRENALEAD,834,20
-Cazamba Serviços de Internet Ltda,840,20
-"PubWise, LLLP",842,20
-"LeadsRx, Inc.",843,20
-SPICY MOBILE Sp z o.o. Sp.k.,844,20
-Crowdy News Ltd,847,20
-BSmartData GmbH,848,20
-"Publisher First, Inc.",850,20
-Strossle International AB,851,20
-"eMarketingSolutions, Online Marketing S.L.",854,20
-Adnuntius AS,855,20
-"Mediavine, Inc.",858,20
-Publica LLC,860,20
-Triple13 Ltd,861,20
-Truvid Inc.,862,20
-I.R.V. D.O.O.,864,20
-HEIMSPIEL Medien GmbH & Co KG,865,20
-YieldLift LLC,866,20
-Converto AG,868,20
-Brave People Ltd.,869,20
-PRECISO SRL,874,20
-3Q nexx GmbH,876,20
-Experian Limited,877,20
-Natív Hirdetés Korlátolt Felelősségű Társaság,878,20
-Vidstart LTD,879,20
-Quantyoo GmbH &amp; Co. KG,880,20
-Hillside (Sports) GP Limited,881,20
-NumberEight Technologies Ltd,882,20
-Listonic Sp. z o.o.,884,20
-GADSME,888,20
-Admo.tv (Clickon),889,20
-Channel Pilot Solutions GmbH,890,20
-"ANINPRO-CREATIVE, S.L.",891,20
-TIMEONE PERFORMANCE,893,20
-Threedium,894,20
-Maiden Marketing Pte Ltd,895,20
-IPSOS MORI UK LTD,896,20
-Fido S.r.l,897,20
-digidip GmbH,899,20
-Advisible AB,900,20
-STUDIO GONG GmbH & Co. Studiobetriebs KG,901,20
-adQuery,902,20
-Placense Ltd,903,20
-"CAKE Software, Inc.",905,20
-Zoomd Ltd.,908,20
-MobileFuse LLC,909,20
-"Insticator, Inc.",910,20
-Opti Digital SAS,915,20
-SPORTORITY UK LTD,918,20
-Livewrapped AB,919,20
-Viewdeos 2015 LTD,924,20
-ZAM Network LLC dba Fanbyte,926,20
-"Parrable, Inc.",928,20
-IQM CORPORATION,930,20
-Traffective GmbH,931,20
-Brid Video DOO,934,20
-INIS sp. zo.o.,935,20
-Digital Squad,936,20
-Terminus Software Inc.,940,20
-ADSOCY,941,20
-JS Web Production,942,20
-"Marfeel Solutions, SL (Compass)",943,20
-AudienceRun corp,944,20
-Powerspace,947,20
-ProSiebenSat.1 Digital Data GmbH,952,20
+"TrueData Solutions, Inc.",648,20
+adnanny.com SLU,809,20
 Caroda s.r.o.,954,20
-Konodrac S.L.,955,20
-Evolution Technologies Inc.,957,20
-Clipr,958,20
-adWMG,959,20
-PML Innovative Media,961,20
-Tangoo Srl,962,20
-CIBLECLIC,963,20
-Solution coupons,964,20
-Nexx360,965,20
-"WEMASS MEDIA AUDIENCE SAFE SOLUTIONS, S.L. ",968,20
-Frameplay Corporation,970,20
-Kargo Global Inc.,972,20
-Cluep LLC,973,20
-SpearAd GmbH,974,20
-Playrcart Limited,975,20
-Pelmorex Corp.,976,20
-ARKHEUS,978,20
-"WAM Group Ltd, t/a Admix",980,20
-Pulse Innovations Limited,984,20
-BYTEDANCE PTE. LTD.,986,20
-Media16 ltd,987,20
-Habu,988,20
-SPEAKOL DMCC,989,20
-QuantumCast digital GmbH,990,20
-Rapid Performance GmbH,992,20
-QUARTER MEDIA GmbH,993,20
-Leadoo Marketing Technologies Ltd,994,20
-Hashtag Labs Inc.,995,20
-"CMI Marketing, Inc. d/b/a CafeMedia",996,20
-Luna Media Group LLC,998,20
-ADSTOURS SAS,999,20
-NETILUM (AFFILAE),1000,20
-wetter.com GmbH,1001,20
-"Extreme Reach, Inc",1002,20
-Mobility-Ads GmbH,1003,20
-VUUKLE DMCC,1004,20
-Onesoon Limited t/a Adalyser,1006,20
-Ketchup Adv Spa,1007,20
-Persona.ly,1010,20
-Videobyte Inc,1011,20
-Glimpse Protocol Limited,1012,20
-FUNKE Digital GmbH,1016,20
-MUSO TNT LIMITED,1018,20
-Baidu USA,1020,20
-Ringier Axel Springer Polska sp. z o.o.,1021,20
-AdView,1022,20
-RDandX Group DMCC,1023,20
-THE LINEA 1 MKT SL,1024,20
-Realytics,1025,20
-crossvertise GmbH,1026,20
-BRICKS,1028,20
-Skoiy,1030,20
-Project Agora Ltd,1032,20
-Adlane LTD,1033,20
-ONEcount,1034,20
-Pressboard Media Inc,1037,20
-AA INTERNET-MEDIA Ltd,1038,20
-Sonic Odeeo ltd,1039,20
-Mars Inc.,1042,20
 TypeA Holdings Ltd,1043,20
 Resono B.V.,1045,20
 Viznet,1047,20
@@ -697,11 +694,8 @@ Playhill Limited,1070,20
 Octave IP Limited,1091,20
 Telefonica de España S.A.U,1095,20
 Telefonica Moviles España S.A.U,1096,20
-"TrueData Solutions, Inc.",648,19
-TargetVideo GmbH,786,19
-adnanny.com SLU,809,19
-respondi AG,863,19
-"Clever Advertising, Lda.",913,19
+Spotad,208,19
+NOW GmbH,802,19
 giosg.com Oy,1017,19
 Questpass Sp. z o.o.,1048,19
 Samoukale Enterprises Limited dba ADEX,1051,19
@@ -738,14 +732,24 @@ Score Media Group GmbH & Co. KG,1090,19
 Telefonica Audiovisual Digital S.L,1092,19
 Salestring ApS,1093,19
 ADMAX,1094,19
-MairDumont Netletix GmbH&amp;CoKG,578,18
+Ein Rad AB,1097,19
+"ACTV8, Inc.",1098,19
+Unacast Inc.,1099,19
+Relevant Digital Oy,1100,19
+PIA Advertising GmbH,1101,19
+"xAd, Inc. dba GroundTruth",51,18
+agof - daily campaign facts,722,18
+Adzymic Pte Ltd,723,18
 ScaleMonk Inc.,753,18
-Ein Rad AB,1097,18
-"ACTV8, Inc.",1098,18
-Unacast Inc.,1099,18
-Relevant Digital Oy,1100,18
-PIA Advertising GmbH,1101,18
+IP Deutschland GmbH,789,18
+1Agency,948,18
+Sayollo Media LTD,1102,18
+Schober Information Group Deutschland GmbH,1103,18
+Covatic Ltd,1104,18
+Blue Media Services LTDA,1105,18
+Better Ads GmbH,1106,18
 Adverline,41,17
+"Basis Global Technologies, Inc.",156,17
 Audiens S.r.l.,167,17
 Audience Trading Platform Ltd.,223,17
 Qriously Ltd,250,17
@@ -759,19 +763,13 @@ Predicio,609,17
 Smartme Analytics,653,17
 Instreamatic inc.,675,17
 Axonix LTD,678,17
-agof - daily campaign facts,722,17
-Adzymic Pte Ltd,723,17
 MOVIads Sp. z o.o. Sp. k.,743,17
 UAB Meazy,757,17
-1Agency,948,17
-Sparklit Networks Inc,977,17
-AREIA (ADLOOP),981,17
-Sayollo Media LTD,1102,17
-Schober Information Group Deutschland GmbH,1103,17
-Covatic Ltd,1104,17
-Blue Media Services LTDA,1105,17
-Better Ads GmbH,1106,17
-"Basis Global Technologies, Inc.",156,16
+TargetVideo GmbH,786,17
+respondi AG,863,17
+"Clever Advertising, Lda.",913,17
+FRVR Limited,1107,17
+Unblockia SL,1108,17
 "Goodway Group, Inc.",170,16
 SYNC,198,16
 ZBO Media,234,16
@@ -779,18 +777,18 @@ ZBO Media,234,16
 Fidelity Media,408,16
 "ChannelSight ",520,16
 "PaperG, Inc. dba Thunder Industries",543,16
-Adnami Aps,612,16
+MairDumont Netletix GmbH&amp;CoKG,578,16
 GRAPHINIUM,654,16
 Cedato Technologies Ltd,672,16
 SNAPUPP TECHNOLOGIES SL,694,16
-FRVR Limited,1107,16
-Unblockia SL,1108,16
-Impact Tech Inc.,365,15
-"Pixalate, Inc.",384,15
-Seenthis AB,415,15
-HUMAN,431,15
-TACTIC™ Real-Time Marketing AS,466,15
-SublimeSkinz - Adledge,484,15
+Unmatched Solutions Limited,932,16
+"Hindsight Technology Solutions, Inc.",933,16
+Goodeed,971,16
+Sparklit Networks Inc,977,16
+AREIA (ADLOOP),981,16
+TV Scientific Inc,1109,16
+KÖNIGSTEINER digital GmbH,1110,16
+152 Media LLC,1111,16
 Delidatax SL,763,15
 LEESTEN INC,805,15
 Miaozhen Information Technology Co. Ltd,817,15
@@ -798,31 +796,34 @@ ZEDO Inc.,818,15
 G+J Electronic Media Sales GmbH,823,15
 Trinity Audio,837,15
 PixFuture Media Inc.,839,15
-Ensighten,853,15
 Mintegral international limited,867,15
 "Remixd Media, Inc.",886,15
 Addrelevance,906,15
 Squared SAS,912,15
 Paypersale.ru,914,15
 Spotible,917,15
-Unmatched Solutions Limited,932,15
-"Hindsight Technology Solutions, Inc.",933,15
-Goodeed,971,15
 Yandex,1066,15
-TV Scientific Inc,1109,15
-KÖNIGSTEINER digital GmbH,1110,14
-152 Media LLC,1111,14
+Impact Tech Inc.,365,14
+"Pixalate, Inc.",384,14
+Seenthis AB,415,14
+HUMAN,431,14
+TACTIC™ Real-Time Marketing AS,466,14
+SublimeSkinz - Adledge,484,14
+Adnami Aps,612,14
+Ensighten,853,13
 OpenWeb LTD,280,12
 Blue Billywig BV,684,12
 Kiosked Ltd,751,12
-GeoEdge,845,12
 Mobkoi Ltd,898,12
 VLYBY Digital GmbH,1009,12
 Visarity Technologies GmbH,83,11
 Mirando GmbH & Co KG,279,11
+Adxperience SAS,746,11
 Acxiom,830,11
 Brandcom.inc AS,841,11
+GeoEdge,845,11
 Sirdata Cookieless,916,11
+PML Innovative Media,961,11
 "EXOCLICK, S.L.",997,11
 Aptivio Inc,1008,11
 Confiant Inc.,56,10
@@ -830,7 +831,6 @@ M32 Connect Inc,75,10
 "Mobilewalla, Inc.",581,10
 Maximus Live LLC,599,10
 VRTCAL Markets Inc,706,10
-Adxperience SAS,746,10
 Oracle Data Cloud - Moat,772,10
 "Blockthrough, Inc.",815,10
 Jetpack Digital LLC,838,10
@@ -853,9 +853,9 @@ TMT Digital Inc,1044,10
 Adsonica,1054,10
 Botman Networks (P) Ltd,1065,10
 AdTiming Technology Company Limited,326,9
-Effinity,688,9
-SmartFrame Technologies,969,8
 Cydersoft,334,7
+Effinity,688,7
 jsdelivr.com,945,7
 SMARTLINE SYSTEMS,949,7
 appTV Ltd.,960,7
+SmartFrame Technologies,969,7

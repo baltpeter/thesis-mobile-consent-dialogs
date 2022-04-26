@@ -1,0 +1,246 @@
+{
+    "android::de.sky.online": {},
+    "android::com.smartwatch.bluetooth.sync.notifications": {
+        "facebook": [
+            "accelerometer_x",
+            "accelerometer_y",
+            "accelerometer_z",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_free",
+            "emulator",
+            "height",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_free",
+            "ram_total",
+            "rooted",
+            "rotation_x",
+            "rotation_y",
+            "rotation_z",
+            "width"
+        ]
+    },
+    "ios::com.convert.mp3": {
+        "<indicators>": [
+            "app_id"
+        ],
+        "doubleclick": [
+            "app_name",
+            "architecture",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "rooted",
+            "volume"
+        ]
+    },
+    "ios::com.cardinalblue.PicCollage": {
+        "<indicators>": [
+            "location"
+        ]
+    },
+    "ios::com.valvesoftware.Steam": {},
+    "ios::com.com.convertermp3.player": {
+        "ironsource": [
+            "app_id",
+            "app_version",
+            "model",
+            "network_connection_type",
+            "os"
+        ],
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "location"
+        ],
+        "unity": [
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "country",
+            "disk_free",
+            "disk_total",
+            "height",
+            "language",
+            "model",
+            "network_connection_type",
+            "ram_free",
+            "ram_total",
+            "rooted",
+            "timezone",
+            "user_agent",
+            "volume",
+            "width"
+        ],
+        "supersonic": [
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "idfa",
+            "idfv",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "other_uuids",
+            "ram_free",
+            "rooted",
+            "timezone"
+        ]
+    },
+    "android::com.ror.removal": {},
+    "android::com.wave.livewallpaper": {
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ]
+    },
+    "android::com.mi.global.mimover": {},
+    "android::cyberpunk.wallpaper.live.keyboard.sci.fi": {
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ]
+    },
+    "ios::com.hp.printer.control": {},
+    "android::cool.wallpapers.live.keyboard.steampunk.pipes": {
+        "facebook": [
+            "app_id",
+            "idfa",
+            "os",
+            "other_uuids"
+        ],
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ]
+    },
+    "ios::de.otto.shop": {
+        "adjust": [
+            "app_id",
+            "app_version",
+            "idfv",
+            "model",
+            "os"
+        ],
+        "<indicators>": [
+            "app_id"
+        ]
+    },
+    "ios::de.mytoys.mytoys": {
+        "<indicators>": [
+            "app_id",
+            "idfa"
+        ]
+    },
+    "android::de.cellular.ottohybrid": {
+        "adjust": [
+            "app_id",
+            "app_version",
+            "country",
+            "height",
+            "idfa",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "width"
+        ]
+    },
+    "ios::com.reo.link": {},
+    "android::com.appxy.tinyscanner": {},
+    "android::com.mt.mtxx.mtxx": {
+        "facebook": [
+            "app_id",
+            "idfa",
+            "os",
+            "other_uuids"
+        ]
+    },
+    "android::cn.wps.moffice_eng": {},
+    "android::com.theappninjas.fakegpsjoystick": {
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfa",
+            "os"
+        ]
+    },
+    "android::sanity.freeaudiobooks": {},
+    "ios::com.drink.water.aquarium": {
+        "<indicators>": [
+            "app_id"
+        ],
+        "doubleclick": [
+            "app_name",
+            "architecture",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "rooted",
+            "volume"
+        ]
+    },
+    "android::com.dacia.mydacia.one.fr": {},
+    "ios::de.antenne.eple": {},
+    "android::io.cleanfox.android": {
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ]
+    },
+    "android::com.lbrc.PeriodCalendar": {
+        "facebook": [
+            "accelerometer_x",
+            "accelerometer_y",
+            "accelerometer_z",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_free",
+            "emulator",
+            "height",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_free",
+            "ram_total",
+            "rooted",
+            "rotation_x",
+            "rotation_y",
+            "rotation_z",
+            "width"
+        ],
+        "mopub": [
+            "app_id",
+            "app_version",
+            "model",
+            "os"
+        ]
+    },
+    "android::com.wave.keyboard.theme.diamondanimatedkeyboard": {
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ]
+    },
+    "ios::de.grunerundjahr.sternneu": {}
+}

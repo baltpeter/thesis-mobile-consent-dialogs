@@ -169,7 +169,7 @@ com.gemalto.mobilepassp,tracking,correctly_undeclared
 com.gemalto.mobilepassp,ads,correctly_undeclared
 com.bookbeat.ios,tracking,unnecessarily_declared
 com.bookbeat.ios,ads,correctly_undeclared
-la.unum.unum-ios,tracking,unnecessarily_declared
+la.unum.unum-ios,tracking,correctly_declared
 la.unum.unum-ios,ads,correctly_undeclared
 com.agminstruments.drumpadmachine,tracking,correctly_declared
 com.agminstruments.drumpadmachine,ads,unnecessarily_declared
@@ -193,7 +193,7 @@ com.wings.iPhone,tracking,unnecessarily_declared
 com.wings.iPhone,ads,correctly_undeclared
 com.marktguru.mg2.de,tracking,correctly_declared
 com.marktguru.mg2.de,ads,correctly_undeclared
-com.reddit.Reddit,tracking,unnecessarily_declared
+com.reddit.Reddit,tracking,correctly_declared
 com.reddit.Reddit,ads,unnecessarily_declared
 com.mentimeter.mentimeter,tracking,correctly_undeclared
 com.mentimeter.mentimeter,ads,correctly_undeclared
@@ -281,7 +281,7 @@ com.google.keyboard,tracking,unnecessarily_declared
 com.google.keyboard,ads,correctly_undeclared
 com.hypah.io.slither,tracking,correctly_undeclared
 com.hypah.io.slither,ads,correctly_undeclared
-de.develappers.scoolio,tracking,unnecessarily_declared
+de.develappers.scoolio,tracking,correctly_declared
 de.develappers.scoolio,ads,unnecessarily_declared
 com.letovaltsev.AuroraAlerts,tracking,correctly_undeclared
 com.letovaltsev.AuroraAlerts,ads,correctly_undeclared
@@ -305,13 +305,13 @@ com.echo-projects.alleangeln,tracking,unnecessarily_declared
 com.echo-projects.alleangeln,ads,unnecessarily_declared
 com.deutschebahn.streckenagent,tracking,unnecessarily_declared
 com.deutschebahn.streckenagent,ads,correctly_undeclared
-de.penny.ios.app,tracking,unnecessarily_declared
+de.penny.ios.app,tracking,correctly_declared
 de.penny.ios.app,ads,correctly_undeclared
 com.google.Tachyon,tracking,unnecessarily_declared
 com.google.Tachyon,ads,correctly_undeclared
 com.megalol.muttertag,tracking,unnecessarily_declared
 com.megalol.muttertag,ads,unnecessarily_declared
-com.apalonapps.planesfree,tracking,unnecessarily_declared
+com.apalonapps.planesfree,tracking,correctly_declared
 com.apalonapps.planesfree,ads,unnecessarily_declared
 com.topgamesinc.evony,tracking,correctly_declared
 com.topgamesinc.evony,ads,unnecessarily_declared
@@ -331,8 +331,8 @@ iMove.Bioscientia,tracking,correctly_undeclared
 iMove.Bioscientia,ads,correctly_undeclared
 com.holidu.holidu,tracking,correctly_declared
 com.holidu.holidu,ads,unnecessarily_declared
-com.mobisystems.MSTranslator,tracking,unnecessarily_declared
-com.mobisystems.MSTranslator,ads,correctly_undeclared
+com.mobisystems.MSTranslator,tracking,correctly_declared
+com.mobisystems.MSTranslator,ads,wrongly_undeclared
 io.erna,tracking,correctly_undeclared
 io.erna,ads,correctly_undeclared
 com.jrustonapps.My-Moon-Phase,tracking,correctly_undeclared
@@ -357,7 +357,7 @@ com.attapoll.ios,tracking,correctly_declared
 com.attapoll.ios,ads,unnecessarily_declared
 com.audioteka,tracking,unnecessarily_declared
 com.audioteka,ads,correctly_undeclared
-at.wienerlinien.wienmobillab,tracking,unnecessarily_declared
+at.wienerlinien.wienmobillab,tracking,correctly_declared
 at.wienerlinien.wienmobillab,ads,correctly_undeclared
 com.darknessproduction.darknessbot,tracking,correctly_undeclared
 com.darknessproduction.darknessbot,ads,correctly_undeclared
@@ -381,7 +381,7 @@ com.joom.joom,tracking,unnecessarily_declared
 com.joom.joom,ads,correctly_undeclared
 com.quran.ios,tracking,correctly_declared
 com.quran.ios,ads,correctly_undeclared
-com.telefonica.de.meinblau,tracking,unnecessarily_declared
+com.telefonica.de.meinblau,tracking,correctly_declared
 com.telefonica.de.meinblau,ads,correctly_undeclared
 de.exaring.waipu,tracking,correctly_declared
 de.exaring.waipu,ads,correctly_undeclared
@@ -405,8 +405,8 @@ com.werneroi.polyjamer,tracking,correctly_declared
 com.werneroi.polyjamer,ads,unnecessarily_declared
 com.kineticstars.Moon,tracking,unnecessarily_declared
 com.kineticstars.Moon,ads,correctly_declared
-com.impalastudios.pianofree,tracking,unnecessarily_declared
-com.impalastudios.pianofree,ads,unnecessarily_declared
+com.impalastudios.pianofree,tracking,correctly_declared
+com.impalastudios.pianofree,ads,correctly_declared
 com.huami.watch,tracking,unnecessarily_declared
 com.huami.watch,ads,correctly_undeclared
 de.rwth-aachen.physics.phyphox,tracking,correctly_undeclared
@@ -429,8 +429,6 @@ de.mytoys.mytoys,tracking,correctly_declared
 de.mytoys.mytoys,ads,unnecessarily_declared
 de.identity.video,tracking,correctly_declared
 de.identity.video,ads,correctly_undeclared
-com.duo.cloudmusic,tracking,unnecessarily_declared
-com.duo.cloudmusic,ads,correctly_undeclared
 ru.sexactions.SexActions,tracking,correctly_declared
 ru.sexactions.SexActions,ads,correctly_undeclared
 com.getmimo.mimo,tracking,correctly_declared
@@ -497,7 +495,7 @@ com.fitnesslabs.artword,tracking,unnecessarily_declared
 com.fitnesslabs.artword,ads,correctly_undeclared
 com.apptionlabs.meater,tracking,correctly_declared
 com.apptionlabs.meater,ads,correctly_undeclared
-com.dietclub.dietclub,tracking,unnecessarily_declared
+com.dietclub.dietclub,tracking,correctly_declared
 com.dietclub.dietclub,ads,correctly_undeclared
 com.dorna.officialMotoGP,tracking,unnecessarily_declared
 com.dorna.officialMotoGP,ads,unnecessarily_declared
@@ -535,12 +533,8 @@ com.decathlon.appmobile,tracking,unnecessarily_declared
 com.decathlon.appmobile,ads,correctly_undeclared
 de.swr.swraktuell,tracking,unnecessarily_declared
 de.swr.swraktuell,ads,correctly_undeclared
-de.regiocast.80s80s,tracking,unnecessarily_declared
+de.regiocast.80s80s,tracking,correctly_declared
 de.regiocast.80s80s,ads,unnecessarily_declared
-de.falkemedia.zaubertopf.pdf.kiosk,tracking,unnecessarily_declared
-de.falkemedia.zaubertopf.pdf.kiosk,ads,unnecessarily_declared
-com.goomaps.goomaps,tracking,correctly_undeclared
-com.goomaps.goomaps,ads,unnecessarily_declared
 one.mygym.app,tracking,correctly_undeclared
 one.mygym.app,ads,correctly_undeclared
 com.pg.pampersclubde.1617.am.0070,tracking,correctly_declared
@@ -553,7 +547,7 @@ de.dm.Foto-Paradies,tracking,unnecessarily_declared
 de.dm.Foto-Paradies,ads,correctly_undeclared
 com.jrustonapps.My-Lightning-Tracker,tracking,correctly_undeclared
 com.jrustonapps.My-Lightning-Tracker,ads,wrongly_undeclared
-com.fansup.followersplus,tracking,unnecessarily_declared
+com.fansup.followersplus,tracking,correctly_declared
 com.fansup.followersplus,ads,correctly_undeclared
 com.SofaScore.iOS,tracking,correctly_declared
 com.SofaScore.iOS,ads,unnecessarily_declared
@@ -683,10 +677,10 @@ de.ndr.app.ndrnds,tracking,unnecessarily_declared
 de.ndr.app.ndrnds,ads,correctly_undeclared
 de.ndr.app.ndr2,tracking,unnecessarily_declared
 de.ndr.app.ndr2,ads,correctly_undeclared
-com.dh3games.wouldyourather,tracking,unnecessarily_declared
+com.dh3games.wouldyourather,tracking,correctly_declared
 com.dh3games.wouldyourather,ads,unnecessarily_declared
 com.contentarcade.LogoMaker,tracking,correctly_undeclared
-com.contentarcade.LogoMaker,ads,correctly_undeclared
+com.contentarcade.LogoMaker,ads,wrongly_undeclared
 com.buzzfeed.tasty,tracking,correctly_declared
 com.buzzfeed.tasty,ads,correctly_undeclared
 com.mcdonalds.mobileapp,tracking,correctly_declared
@@ -757,7 +751,7 @@ de.sky.sportnews,tracking,unnecessarily_declared
 de.sky.sportnews,ads,unnecessarily_declared
 com.lidl.eci.lidl.plus,tracking,correctly_declared
 com.lidl.eci.lidl.plus,ads,correctly_undeclared
-com.economist.lamarr,tracking,unnecessarily_declared
+com.economist.lamarr,tracking,correctly_declared
 com.economist.lamarr,ads,unnecessarily_declared
 de.transfermarkt.v2,tracking,correctly_declared
 de.transfermarkt.v2,ads,wrongly_undeclared
@@ -773,7 +767,7 @@ com.medion.alditalk-freischaltung,tracking,correctly_undeclared
 com.medion.alditalk-freischaltung,ads,correctly_undeclared
 de.aestimium.EmpfohlenApp,tracking,correctly_declared
 de.aestimium.EmpfohlenApp,ads,correctly_undeclared
-fm.castbox.audiobook.radio.podcast,tracking,unnecessarily_declared
+fm.castbox.audiobook.radio.podcast,tracking,correctly_declared
 fm.castbox.audiobook.radio.podcast,ads,correctly_undeclared
 com.logmein.gotowebinar,tracking,unnecessarily_declared
 com.logmein.gotowebinar,ads,correctly_undeclared
@@ -813,7 +807,7 @@ com.engbright.bright,tracking,correctly_declared
 com.engbright.bright,ads,correctly_undeclared
 com.offlinemusic,tracking,correctly_declared
 com.offlinemusic,ads,wrongly_undeclared
-co.bird.Ride,tracking,unnecessarily_declared
+co.bird.Ride,tracking,correctly_declared
 co.bird.Ride,ads,correctly_undeclared
 de.leasingmarkt.app,tracking,unnecessarily_declared
 de.leasingmarkt.app,ads,unnecessarily_declared
@@ -899,8 +893,6 @@ de.mynfp.mobile,tracking,correctly_undeclared
 de.mynfp.mobile,ads,correctly_undeclared
 com.budgestudios.BarbieDreamhouse,tracking,unnecessarily_declared
 com.budgestudios.BarbieDreamhouse,ads,unnecessarily_declared
-com.verycoolapp.epubreader,tracking,correctly_undeclared
-com.verycoolapp.epubreader,ads,correctly_undeclared
 com.boohoo.boohooMAN,tracking,correctly_declared
 com.boohoo.boohooMAN,ads,unnecessarily_declared
 com.floraincognita.floraincognita,tracking,correctly_undeclared
@@ -917,11 +909,11 @@ net.conntac.o2de,tracking,unnecessarily_declared
 net.conntac.o2de,ads,correctly_undeclared
 tech.plink.PlinkApp,tracking,correctly_declared
 tech.plink.PlinkApp,ads,correctly_undeclared
-com.oliver.SpeechToText,tracking,unnecessarily_declared
-com.oliver.SpeechToText,ads,correctly_undeclared
+com.oliver.SpeechToText,tracking,correctly_declared
+com.oliver.SpeechToText,ads,wrongly_undeclared
 com.abishkking.maleworkout,tracking,correctly_declared
 com.abishkking.maleworkout,ads,unnecessarily_declared
-com.hejfish.mobileapp,tracking,unnecessarily_declared
+com.hejfish.mobileapp,tracking,correctly_declared
 com.hejfish.mobileapp,ads,correctly_undeclared
 com.formula1.ott,tracking,unnecessarily_declared
 com.formula1.ott,ads,unnecessarily_declared
@@ -1025,9 +1017,7 @@ baobaowang.Python3IDE,tracking,correctly_undeclared
 baobaowang.Python3IDE,ads,correctly_undeclared
 com.abishkking.womenworkout,tracking,correctly_declared
 com.abishkking.womenworkout,ads,correctly_undeclared
-com.csj.ling,tracking,unnecessarily_declared
-com.csj.ling,ads,correctly_undeclared
-com.photo.beautytuneapp,tracking,unnecessarily_declared
+com.photo.beautytuneapp,tracking,correctly_declared
 com.photo.beautytuneapp,ads,unnecessarily_declared
 com.yantech.zoomerang,tracking,correctly_declared
 com.yantech.zoomerang,ads,correctly_declared
@@ -1053,8 +1043,6 @@ com.outdooractive.Outdooractive,tracking,correctly_declared
 com.outdooractive.Outdooractive,ads,unnecessarily_declared
 be.ING.OneApp,tracking,unnecessarily_declared
 be.ING.OneApp,ads,unnecessarily_declared
-com.bose.bosemusic,tracking,unnecessarily_declared
-com.bose.bosemusic,ads,correctly_undeclared
 com.dreamappstudio.dialogfree,tracking,correctly_declared
 com.dreamappstudio.dialogfree,ads,unnecessarily_declared
 mobi.mobilejump.freevpn,tracking,correctly_declared
@@ -1207,6 +1195,8 @@ de.telearzt.tkchat,tracking,correctly_undeclared
 de.telearzt.tkchat,ads,correctly_undeclared
 de.bringmeister.prod,tracking,correctly_declared
 de.bringmeister.prod,ads,correctly_undeclared
+app.tier.sharing,tracking,correctly_declared
+app.tier.sharing,ads,unnecessarily_declared
 com.playstation.psremoteplay,tracking,unnecessarily_declared
 com.playstation.psremoteplay,ads,correctly_undeclared
 de.sovendus.voucher,tracking,correctly_declared
@@ -1355,7 +1345,7 @@ com.easybrain.blockudoku,tracking,correctly_declared
 com.easybrain.blockudoku,ads,unnecessarily_declared
 com.speed.test.internet,tracking,correctly_declared
 com.speed.test.internet,ads,correctly_undeclared
-com.verv.app,tracking,unnecessarily_declared
+com.verv.app,tracking,correctly_declared
 com.verv.app,ads,correctly_undeclared
 com.bitwala.app,tracking,unnecessarily_declared
 com.bitwala.app,ads,correctly_undeclared
@@ -1467,7 +1457,7 @@ de.2kit.Screen-Mirroring-Browser-Free,tracking,unnecessarily_declared
 de.2kit.Screen-Mirroring-Browser-Free,ads,correctly_undeclared
 com.laroapps.InstagramAnalytics,tracking,correctly_declared
 com.laroapps.InstagramAnalytics,ads,unnecessarily_declared
-de.onvista.onvistaV2,tracking,unnecessarily_declared
+de.onvista.onvistaV2,tracking,correctly_declared
 de.onvista.onvistaV2,ads,correctly_undeclared
 com.BuhlData.SteuerPhone,tracking,correctly_declared
 com.BuhlData.SteuerPhone,ads,correctly_undeclared
@@ -1559,14 +1549,10 @@ com.podimo.podimoapp,tracking,correctly_declared
 com.podimo.podimoapp,ads,correctly_undeclared
 com.wolt.partnerapp.production,tracking,unnecessarily_declared
 com.wolt.partnerapp.production,ads,correctly_undeclared
-com.github.stormbreaker.prod,tracking,correctly_undeclared
+com.github.stormbreaker.prod,tracking,wrongly_undeclared
 com.github.stormbreaker.prod,ads,correctly_undeclared
-com.epson.Epson-Smart,tracking,unnecessarily_declared
-com.epson.Epson-Smart,ads,correctly_undeclared
 de.avm.fritzappsmarthome,tracking,correctly_declared
 de.avm.fritzappsmarthome,ads,correctly_undeclared
-com.mind.quiz.brain.out,tracking,unnecessarily_declared
-com.mind.quiz.brain.out,ads,unnecessarily_declared
 com.unity.virtualcamera,tracking,correctly_undeclared
 com.unity.virtualcamera,ads,correctly_undeclared
 com.liebherr.hau.hngry,tracking,correctly_declared
@@ -1605,7 +1591,7 @@ co.9count.wink,tracking,correctly_declared
 co.9count.wink,ads,unnecessarily_declared
 com.polywise.weekly,tracking,correctly_declared
 com.polywise.weekly,ads,unnecessarily_declared
-com.deezer.Audiobooks,tracking,unnecessarily_declared
+com.deezer.Audiobooks,tracking,correctly_declared
 com.deezer.Audiobooks,ads,correctly_undeclared
 jp.co.celsys.clipstudiopaint-iphone,tracking,unnecessarily_declared
 jp.co.celsys.clipstudiopaint-iphone,ads,unnecessarily_declared
@@ -1655,11 +1641,11 @@ de.thieme.viamedici,tracking,correctly_declared
 de.thieme.viamedici,ads,correctly_undeclared
 de.telearzt.tkrus,tracking,unnecessarily_declared
 de.telearzt.tkrus,ads,correctly_undeclared
-com.apalonapps.plants,tracking,unnecessarily_declared
+com.apalonapps.plants,tracking,correctly_declared
 com.apalonapps.plants,ads,unnecessarily_declared
 com.daimler.ris.mercedesme.ece.ios,tracking,correctly_declared
 com.daimler.ris.mercedesme.ece.ios,ads,correctly_undeclared
-com.neocortext.doublicatapp,tracking,unnecessarily_declared
+com.neocortext.doublicatapp,tracking,correctly_declared
 com.neocortext.doublicatapp,ads,unnecessarily_declared
 com.vphuc.play.video.music,tracking,correctly_declared
 com.vphuc.play.video.music,ads,correctly_declared
@@ -1669,8 +1655,6 @@ com.broapplication1,tracking,correctly_undeclared
 com.broapplication1,ads,correctly_undeclared
 de.mainzer-mobilitaet.mainzer-mobilitaet,tracking,correctly_undeclared
 de.mainzer-mobilitaet.mainzer-mobilitaet,ads,correctly_undeclared
-com.veravoice.parodistapp,tracking,correctly_declared
-com.veravoice.parodistapp,ads,wrongly_undeclared
 de.hallesche4u.app,tracking,wrongly_undeclared
 de.hallesche4u.app,ads,correctly_undeclared
 com.emre.reportsGram,tracking,correctly_undeclared
@@ -1689,8 +1673,6 @@ com.iternio.abrpapp,tracking,correctly_undeclared
 com.iternio.abrpapp,ads,correctly_undeclared
 avk.Symbols,tracking,correctly_undeclared
 avk.Symbols,ads,correctly_undeclared
-com.dimakomar.splitPhoto,tracking,correctly_undeclared
-com.dimakomar.splitPhoto,ads,correctly_undeclared
 com.masomo.basketballarena,tracking,unnecessarily_declared
 com.masomo.basketballarena,ads,unnecessarily_declared
 com.mentz.vrrciboapp,tracking,unnecessarily_declared
@@ -1745,8 +1727,6 @@ com.teelyshop.pocketdl,tracking,correctly_declared
 com.teelyshop.pocketdl,ads,unnecessarily_declared
 com.firsttouch.hero2,tracking,correctly_declared
 com.firsttouch.hero2,ads,unnecessarily_declared
-com.hbs.broadcast.ometv,tracking,correctly_undeclared
-com.hbs.broadcast.ometv,ads,correctly_undeclared
 com.pronetis.ironballride2,tracking,unnecessarily_declared
 com.pronetis.ironballride2,ads,unnecessarily_declared
 com.leomehlig.today,tracking,unnecessarily_declared
@@ -1759,7 +1739,7 @@ com.gaiali.app,tracking,correctly_declared
 com.gaiali.app,ads,correctly_undeclared
 com.passport.photo.app,tracking,correctly_declared
 com.passport.photo.app,ads,correctly_undeclared
-com.lemon.lvoverseas,tracking,unnecessarily_declared
+com.lemon.lvoverseas,tracking,correctly_declared
 com.lemon.lvoverseas,ads,correctly_undeclared
 com.gls.glsone.hybridapp,tracking,unnecessarily_declared
 com.gls.glsone.hybridapp,ads,correctly_undeclared
@@ -1815,8 +1795,6 @@ com.app.reportspro,tracking,correctly_declared
 com.app.reportspro,ads,unnecessarily_declared
 com.appverse.wave,tracking,correctly_declared
 com.appverse.wave,ads,unnecessarily_declared
-com.minichat,tracking,unnecessarily_declared
-com.minichat,ads,wrongly_undeclared
 forecast.barometer.storm.radar.Weather3,tracking,correctly_undeclared
 forecast.barometer.storm.radar.Weather3,ads,wrongly_undeclared
 io.spck.SpckEditor,tracking,correctly_undeclared
@@ -1893,8 +1871,8 @@ at.helloagain.muellerde,tracking,correctly_declared
 at.helloagain.muellerde,ads,correctly_undeclared
 com.cricut.design,tracking,correctly_declared
 com.cricut.design,ads,unnecessarily_declared
-com.connect.screenrecording,tracking,unnecessarily_declared
-com.connect.screenrecording,ads,correctly_undeclared
+com.connect.screenrecording,tracking,correctly_declared
+com.connect.screenrecording,ads,wrongly_undeclared
 com.body.temperature.app,tracking,unnecessarily_declared
 com.body.temperature.app,ads,correctly_undeclared
 com.eat-commerce-limited.subway,tracking,correctly_declared
@@ -1929,10 +1907,10 @@ com.zype.oftv,tracking,correctly_undeclared
 com.zype.oftv,ads,correctly_undeclared
 de.gvh.hafas,tracking,correctly_undeclared
 de.gvh.hafas,ads,correctly_undeclared
-com.xplora.XploraO2O,tracking,correctly_undeclared
+com.xplora.XploraO2O,tracking,wrongly_undeclared
 com.xplora.XploraO2O,ads,correctly_undeclared
-com.apps.utils.hashtags,tracking,unnecessarily_declared
-com.apps.utils.hashtags,ads,unnecessarily_declared
+com.apps.utils.hashtags,tracking,correctly_declared
+com.apps.utils.hashtags,ads,correctly_declared
 com.zlineman.Jellyfish,tracking,correctly_undeclared
 com.zlineman.Jellyfish,ads,correctly_undeclared
 de.mainaqila.app,tracking,unnecessarily_declared
@@ -1965,8 +1943,6 @@ com.yzd.FlipClock,tracking,unnecessarily_declared
 com.yzd.FlipClock,ads,correctly_undeclared
 com.timeless.investments.app,tracking,correctly_declared
 com.timeless.investments.app,ads,correctly_undeclared
-spa.games,tracking,unnecessarily_declared
-spa.games,ads,correctly_undeclared
 com.arvato.afterpay.international,tracking,unnecessarily_declared
 com.arvato.afterpay.international,ads,correctly_undeclared
 com.braindom2riddle,tracking,unnecessarily_declared
@@ -1974,7 +1950,7 @@ com.braindom2riddle,ads,correctly_declared
 dev.netlob.spotistats,tracking,correctly_declared
 dev.netlob.spotistats,ads,unnecessarily_declared
 com.vietphaptravelvn.tvremote,tracking,unnecessarily_declared
-com.vietphaptravelvn.tvremote,ads,correctly_undeclared
+com.vietphaptravelvn.tvremote,ads,wrongly_undeclared
 com.ppzv.pareygo,tracking,unnecessarily_declared
 com.ppzv.pareygo,ads,correctly_undeclared
 de.babelli.app,tracking,correctly_declared
@@ -2181,7 +2157,7 @@ liit.photovideo.editor,tracking,unnecessarily_declared
 liit.photovideo.editor,ads,correctly_undeclared
 com.nodestree.app.tiksave,tracking,unnecessarily_declared
 com.nodestree.app.tiksave,ads,unnecessarily_declared
-de.bioscientia.docnet.app.corona,tracking,correctly_undeclared
+de.bioscientia.docnet.app.corona,tracking,wrongly_undeclared
 de.bioscientia.docnet.app.corona,ads,correctly_undeclared
 com.pdf.fill,tracking,correctly_declared
 com.pdf.fill,ads,correctly_undeclared
@@ -2215,7 +2191,7 @@ com.netease.vikingard,tracking,unnecessarily_declared
 com.netease.vikingard,ads,correctly_undeclared
 com.budgestudios.PawPatrolRescueWorld,tracking,unnecessarily_declared
 com.budgestudios.PawPatrolRescueWorld,ads,unnecessarily_declared
-cz.Ionity.app,tracking,unnecessarily_declared
+cz.Ionity.app,tracking,correctly_declared
 cz.Ionity.app,ads,unnecessarily_declared
 com.leapfitness.Sleeptracker,tracking,correctly_declared
 com.leapfitness.Sleeptracker,ads,correctly_undeclared
@@ -2223,8 +2199,8 @@ screen.mirroring.tv,tracking,correctly_undeclared
 screen.mirroring.tv,ads,wrongly_undeclared
 com.linguee.DeepLMobileTranslator,tracking,unnecessarily_declared
 com.linguee.DeepLMobileTranslator,ads,correctly_undeclared
-com.hihoriya.storymaker,tracking,correctly_undeclared
-com.hihoriya.storymaker,ads,correctly_undeclared
+com.hihoriya.storymaker,tracking,wrongly_undeclared
+com.hihoriya.storymaker,ads,wrongly_undeclared
 com.hey.lingo.ios,tracking,correctly_undeclared
 com.hey.lingo.ios,ads,correctly_undeclared
 com.dbwv.app,tracking,correctly_declared
@@ -2279,8 +2255,8 @@ com.mailjerry.app,tracking,correctly_undeclared
 com.mailjerry.app,ads,correctly_undeclared
 com.exoticmatch.game,tracking,unnecessarily_declared
 com.exoticmatch.game,ads,correctly_declared
-com.water.sort.puzzles,tracking,correctly_undeclared
-com.water.sort.puzzles,ads,correctly_undeclared
+com.water.sort.puzzles,tracking,wrongly_undeclared
+com.water.sort.puzzles,ads,wrongly_undeclared
 com.apps.dualtext,tracking,correctly_declared
 com.apps.dualtext,ads,wrongly_undeclared
 com.workforpizza.figmaproto,tracking,correctly_undeclared
@@ -2365,8 +2341,6 @@ starnest.com.goethetest,tracking,correctly_undeclared
 starnest.com.goethetest,ads,correctly_undeclared
 com.servicenow.lightstep,tracking,unnecessarily_declared
 com.servicenow.lightstep,ads,correctly_undeclared
-com.promium2.sochott,tracking,unnecessarily_declared
-com.promium2.sochott,ads,correctly_undeclared
 com.mingkun.mintAI,tracking,correctly_declared
 com.mingkun.mintAI,ads,correctly_undeclared
 de.sephora.sephoragermany,tracking,wrongly_undeclared
@@ -2431,8 +2405,6 @@ de.mixdichgluecklich.mobile,tracking,correctly_declared
 de.mixdichgluecklich.mobile,ads,correctly_undeclared
 com.funplus.coa,tracking,unnecessarily_declared
 com.funplus.coa,ads,correctly_undeclared
-click.azurescanxiii.scan,tracking,unnecessarily_declared
-click.azurescanxiii.scan,ads,correctly_undeclared
 de.barmenia.meinebarmenia,tracking,correctly_declared
 de.barmenia.meinebarmenia,ads,correctly_undeclared
 com.locApps.Art.Manga,tracking,wrongly_undeclared
@@ -2477,7 +2449,7 @@ Roulette.Chat,tracking,unnecessarily_declared
 Roulette.Chat,ads,correctly_undeclared
 com.spiketalenthouse.panda,tracking,correctly_declared
 com.spiketalenthouse.panda,ads,unnecessarily_declared
-removebackground.com.RemoveBackground,tracking,unnecessarily_declared
+removebackground.com.RemoveBackground,tracking,correctly_declared
 removebackground.com.RemoveBackground,ads,correctly_undeclared
 com.septudio.DockerAdmin,tracking,correctly_undeclared
 com.septudio.DockerAdmin,ads,correctly_undeclared
@@ -2537,7 +2509,7 @@ com.appicstars.blur,tracking,correctly_declared
 com.appicstars.blur,ads,correctly_undeclared
 com.bofrost,tracking,correctly_declared
 com.bofrost,ads,correctly_undeclared
-com.metr,tracking,unnecessarily_declared
+com.metr,tracking,correctly_declared
 com.metr,ads,correctly_undeclared
 com.NovlaSoft.NFTpixel,tracking,unnecessarily_declared
 com.NovlaSoft.NFTpixel,ads,correctly_undeclared
@@ -2553,8 +2525,6 @@ io.magiceden.ios,tracking,unnecessarily_declared
 io.magiceden.ios,ads,correctly_undeclared
 com.tritutriw.omegle,tracking,correctly_undeclared
 com.tritutriw.omegle,ads,correctly_undeclared
-com.unicostudio.fakeisland,tracking,unnecessarily_declared
-com.unicostudio.fakeisland,ads,unnecessarily_declared
 com.lzpxf.cn,tracking,correctly_undeclared
 com.lzpxf.cn,ads,correctly_undeclared
 com.musicasto.app,tracking,correctly_declared
@@ -2567,10 +2537,8 @@ com.GybeGames.FillTheFridgeTest,tracking,unnecessarily_declared
 com.GybeGames.FillTheFridgeTest,ads,unnecessarily_declared
 com.simple.cleaner.app,tracking,wrongly_undeclared
 com.simple.cleaner.app,ads,unnecessarily_declared
-com.mondayoff.wantedfish,tracking,unnecessarily_declared
-com.mondayoff.wantedfish,ads,unnecessarily_declared
 com.convert.mp3,tracking,correctly_undeclared
-com.convert.mp3,ads,unnecessarily_declared
+com.convert.mp3,ads,correctly_declared
 com.freeplay.twerk,tracking,unnecessarily_declared
 com.freeplay.twerk,ads,unnecessarily_declared
 penta.security.app.vpn.com,tracking,unnecessarily_declared
@@ -2597,14 +2565,10 @@ com.smartwidgetlabs.notetogether,tracking,correctly_declared
 com.smartwidgetlabs.notetogether,ads,wrongly_undeclared
 com.tipico.scores,tracking,correctly_declared
 com.tipico.scores,ads,wrongly_undeclared
-play.roshka.junkyard,tracking,unnecessarily_declared
-play.roshka.junkyard,ads,correctly_undeclared
 net.jgu.ios.jguidcardsapp,tracking,correctly_undeclared
 net.jgu.ios.jguidcardsapp,ads,correctly_undeclared
-com.erasoft.swift.app.Gpsnavigation,tracking,correctly_undeclared
+com.erasoft.swift.app.Gpsnavigation,tracking,wrongly_undeclared
 com.erasoft.swift.app.Gpsnavigation,ads,correctly_undeclared
-com.nguyenmanhthang.tudongbam,tracking,correctly_undeclared
-com.nguyenmanhthang.tudongbam,ads,correctly_undeclared
 com.vietphaptravelvn.autoclick,tracking,correctly_undeclared
 com.vietphaptravelvn.autoclick,ads,wrongly_undeclared
 com.pt.playdiary,tracking,unnecessarily_declared
@@ -2614,7 +2578,7 @@ com.lulatech.tariftabelle,ads,correctly_undeclared
 com.hubilo.cloudfest2022,tracking,correctly_undeclared
 com.hubilo.cloudfest2022,ads,correctly_undeclared
 com.hanhdam.audiovoice,tracking,correctly_undeclared
-com.hanhdam.audiovoice,ads,correctly_undeclared
+com.hanhdam.audiovoice,ads,wrongly_undeclared
 de.codivo.waswohin,tracking,correctly_undeclared
 de.codivo.waswohin,ads,correctly_undeclared
 com.bloomberg.Bloomberg,tracking,unnecessarily_declared
@@ -2681,8 +2645,6 @@ com.shortcovers.shortcovers,tracking,correctly_declared
 com.shortcovers.shortcovers,ads,correctly_undeclared
 com.nike.niketrainingclub,tracking,correctly_declared
 com.nike.niketrainingclub,ads,unnecessarily_declared
-com.amazon.Lassen,tracking,unnecessarily_declared
-com.amazon.Lassen,ads,correctly_undeclared
 com.allesklar.meinestadt,tracking,correctly_declared
 com.allesklar.meinestadt,ads,unnecessarily_declared
 com.skype.skype,tracking,correctly_declared
@@ -2693,7 +2655,7 @@ com.fivemobile.wattpad,tracking,correctly_declared
 com.fivemobile.wattpad,ads,unnecessarily_declared
 com.ideashower.ReadItLaterPro,tracking,correctly_declared
 com.ideashower.ReadItLaterPro,ads,correctly_undeclared
-com.indeed.JobSearch,tracking,unnecessarily_declared
+com.indeed.JobSearch,tracking,correctly_declared
 com.indeed.JobSearch,ads,correctly_undeclared
 net.whatsapp.WhatsApp,tracking,unnecessarily_declared
 net.whatsapp.WhatsApp,ads,correctly_undeclared
@@ -2701,7 +2663,7 @@ de.telekom.NiederschlagsRadar,tracking,correctly_declared
 de.telekom.NiederschlagsRadar,ads,correctly_undeclared
 de.radio.,tracking,correctly_declared
 de.radio.,ads,unnecessarily_declared
-com.autoscout24.lab,tracking,unnecessarily_declared
+com.autoscout24.lab,tracking,correctly_declared
 com.autoscout24.lab,ads,unnecessarily_declared
 de.telefonbuch.Telefonbuch,tracking,unnecessarily_declared
 de.telefonbuch.Telefonbuch,ads,unnecessarily_declared
@@ -2727,7 +2689,7 @@ com.rtlinteractive.wetter.de,tracking,correctly_declared
 com.rtlinteractive.wetter.de,ads,correctly_undeclared
 com.magicseaweed,tracking,unnecessarily_declared
 com.magicseaweed,ads,unnecessarily_declared
-com.waze.iphone,tracking,unnecessarily_declared
+com.waze.iphone,tracking,correctly_declared
 com.waze.iphone,ads,unnecessarily_declared
 com.spotify.client,tracking,correctly_declared
 com.spotify.client,ads,unnecessarily_declared
@@ -2781,11 +2743,11 @@ at.runtastic.gpssportapp,tracking,unnecessarily_declared
 at.runtastic.gpssportapp,ads,unnecessarily_declared
 net.windfinder.windfinderapp,tracking,correctly_declared
 net.windfinder.windfinderapp,ads,unnecessarily_declared
-de.traveliq.Hotelsuche,tracking,unnecessarily_declared
+de.traveliq.Hotelsuche,tracking,correctly_declared
 de.traveliq.Hotelsuche,ads,unnecessarily_declared
 de.n-tv.n-tvmobil,tracking,unnecessarily_declared
 de.n-tv.n-tvmobil,ads,unnecessarily_declared
-com.okcupid.app,tracking,unnecessarily_declared
+com.okcupid.app,tracking,correctly_declared
 com.okcupid.app,ads,unnecessarily_declared
 de.adesso.SZnewsreaderFree,tracking,correctly_declared
 de.adesso.SZnewsreaderFree,ads,wrongly_undeclared
@@ -2797,11 +2759,11 @@ de.telekom.t-online-de,tracking,correctly_declared
 de.telekom.t-online-de,ads,correctly_undeclared
 de.bild.newsapp,tracking,correctly_declared
 de.bild.newsapp,ads,unnecessarily_declared
-com.liquidairlab.sunshineliveiphone,tracking,unnecessarily_declared
+com.liquidairlab.sunshineliveiphone,tracking,correctly_declared
 com.liquidairlab.sunshineliveiphone,ads,unnecessarily_declared
 com.myfitnesspal.mfp,tracking,unnecessarily_declared
 com.myfitnesspal.mfp,ads,unnecessarily_declared
-com.comuto.comuto,tracking,unnecessarily_declared
+com.comuto.comuto,tracking,correctly_declared
 com.comuto.comuto,ads,correctly_undeclared
 de.axelspringer.ikiosk,tracking,unnecessarily_declared
 de.axelspringer.ikiosk,ads,correctly_undeclared
@@ -2813,7 +2775,7 @@ com.deutschebahn.navigator,tracking,unnecessarily_declared
 com.deutschebahn.navigator,ads,unnecessarily_declared
 de.fahrplanauskunft-muenchen.fahrinfo,tracking,correctly_undeclared
 de.fahrplanauskunft-muenchen.fahrinfo,ads,correctly_undeclared
-de.immoscout.immoscout,tracking,unnecessarily_declared
+de.immoscout.immoscout,tracking,correctly_declared
 de.immoscout.immoscout,ads,unnecessarily_declared
 com.mobiletechnics.NZZ,tracking,correctly_declared
 com.mobiletechnics.NZZ,ads,wrongly_undeclared
@@ -2831,8 +2793,6 @@ MW4X37V37K.com.webreservationsinternational.hostelworld,tracking,correctly_decla
 MW4X37V37K.com.webreservationsinternational.hostelworld,ads,correctly_undeclared
 com.tribab.tricount.test,tracking,unnecessarily_declared
 com.tribab.tricount.test,ads,unnecessarily_declared
-com.badoo.Badoo,tracking,unnecessarily_declared
-com.badoo.Badoo,ads,unnecessarily_declared
 com.pointabout.washingtonpost,tracking,unnecessarily_declared
 com.pointabout.washingtonpost,ads,unnecessarily_declared
 com.groupon.grouponapp,tracking,unnecessarily_declared
@@ -2905,7 +2865,7 @@ com.pyades.ifap,tracking,unnecessarily_declared
 com.pyades.ifap,ads,unnecessarily_declared
 com.jadedpixel.shopify,tracking,unnecessarily_declared
 com.jadedpixel.shopify,ads,correctly_undeclared
-com.o2.meino2,tracking,unnecessarily_declared
+com.o2.meino2,tracking,correctly_declared
 com.o2.meino2,ads,correctly_undeclared
 de.avm.FRITZApp,tracking,unnecessarily_declared
 de.avm.FRITZApp,ads,correctly_undeclared
@@ -3029,8 +2989,8 @@ fr.disneylandparis.iphone,tracking,unnecessarily_declared
 fr.disneylandparis.iphone,ads,unnecessarily_declared
 com.nbcuni.cnbc.cnbcrtipad,tracking,correctly_declared
 com.nbcuni.cnbc.cnbcrtipad,ads,unnecessarily_declared
-com.itwcalculator.calculatorforipadfree,tracking,unnecessarily_declared
-com.itwcalculator.calculatorforipadfree,ads,unnecessarily_declared
+com.itwcalculator.calculatorforipadfree,tracking,correctly_declared
+com.itwcalculator.calculatorforipadfree,ads,correctly_declared
 MeinVodafone,tracking,correctly_declared
 MeinVodafone,ads,unnecessarily_declared
 ru.odnoklassniki.iphone,tracking,correctly_declared
@@ -3077,7 +3037,7 @@ de.hacon.hafas.vbb,tracking,unnecessarily_declared
 de.hacon.hafas.vbb,ads,correctly_undeclared
 si.modula.instantheartrate.free,tracking,unnecessarily_declared
 si.modula.instantheartrate.free,ads,unnecessarily_declared
-com.path36.SpliceFree,tracking,unnecessarily_declared
+com.path36.SpliceFree,tracking,correctly_declared
 com.path36.SpliceFree,ads,correctly_undeclared
 com.dowjones.Barrons.ipad,tracking,unnecessarily_declared
 com.dowjones.Barrons.ipad,ads,unnecessarily_declared
@@ -3111,8 +3071,6 @@ com.unitedinternet.mmc.mobile.gmx.iosmailer,tracking,correctly_declared
 com.unitedinternet.mmc.mobile.gmx.iosmailer,ads,unnecessarily_declared
 com.enchantedcloud.photovault,tracking,unnecessarily_declared
 com.enchantedcloud.photovault,ads,unnecessarily_declared
-com.plus500.plus500,tracking,unnecessarily_declared
-com.plus500.plus500,ads,unnecessarily_declared
 de.ernstingsfamily.app,tracking,correctly_declared
 de.ernstingsfamily.app,ads,unnecessarily_declared
 com.tunein.TuneInRadio,tracking,unnecessarily_declared
@@ -3128,7 +3086,7 @@ de.theagentfactory.de.RNV.Start.Info,ads,correctly_undeclared
 com.xatori.plugshare,tracking,correctly_declared
 com.xatori.plugshare,ads,unnecessarily_declared
 com.outfit7.talkingtom2,tracking,unnecessarily_declared
-com.outfit7.talkingtom2,ads,unnecessarily_declared
+com.outfit7.talkingtom2,ads,correctly_declared
 com.etecture.ekz.onleihe.ios.app,tracking,unnecessarily_declared
 com.etecture.ekz.onleihe.ios.app,ads,correctly_undeclared
 com.duosecurity.DuoMobile,tracking,correctly_declared
@@ -3309,7 +3267,7 @@ com.cisco.jabberIM,tracking,correctly_undeclared
 com.cisco.jabberIM,ads,correctly_undeclared
 de.rbb.radioeins,tracking,unnecessarily_declared
 de.rbb.radioeins,ads,correctly_undeclared
-com.hp.printer.control,tracking,unnecessarily_declared
+com.hp.printer.control,tracking,correctly_declared
 com.hp.printer.control,ads,correctly_undeclared
 com.adobe.Adobe-Reader,tracking,wrongly_undeclared
 com.adobe.Adobe-Reader,ads,correctly_undeclared
@@ -3397,8 +3355,6 @@ com.alibaba.sourcing,tracking,correctly_declared
 com.alibaba.sourcing,ads,unnecessarily_declared
 com.ryanair.cheapflights,tracking,unnecessarily_declared
 com.ryanair.cheapflights,ads,correctly_undeclared
-net.nextbike.official2012,tracking,unnecessarily_declared
-net.nextbike.official2012,ads,unnecessarily_declared
 org.islamicfinder.Athan1,tracking,correctly_declared
 org.islamicfinder.Athan1,ads,correctly_declared
 com.HP.PregnancyiPhonelite,tracking,correctly_declared
@@ -3411,7 +3367,7 @@ com.ratp.ratp,tracking,correctly_declared
 com.ratp.ratp,ads,correctly_undeclared
 com.google.Drive,tracking,unnecessarily_declared
 com.google.Drive,ads,correctly_undeclared
-com.lileping.photoframepro,tracking,unnecessarily_declared
+com.lileping.photoframepro,tracking,correctly_declared
 com.lileping.photoframepro,ads,correctly_undeclared
 com.smule.sing,tracking,unnecessarily_declared
 com.smule.sing,ads,unnecessarily_declared
@@ -3505,8 +3461,8 @@ com.microsoft.officemobile,tracking,unnecessarily_declared
 com.microsoft.officemobile,ads,correctly_undeclared
 com.scribd.iscribd,tracking,correctly_declared
 com.scribd.iscribd,ads,correctly_undeclared
-ios.aplicacion.tiempo-com,tracking,unnecessarily_declared
-ios.aplicacion.tiempo-com,ads,unnecessarily_declared
+ios.aplicacion.tiempo-com,tracking,correctly_declared
+ios.aplicacion.tiempo-com,ads,correctly_declared
 nl.v12.visplanner,tracking,correctly_undeclared
 nl.v12.visplanner,ads,correctly_undeclared
 com.google.ios.youtube,tracking,unnecessarily_declared
@@ -3543,8 +3499,6 @@ com.midasplayer.apps.candycrushsaga,tracking,unnecessarily_declared
 com.midasplayer.apps.candycrushsaga,ads,unnecessarily_declared
 euronewsuniversal,tracking,correctly_declared
 euronewsuniversal,ads,unnecessarily_declared
-com.helloTalk.helloTalk,tracking,wrongly_undeclared
-com.helloTalk.helloTalk,ads,correctly_undeclared
 com.finderly.shpock,tracking,correctly_declared
 com.finderly.shpock,ads,correctly_declared
 com.sapient.Saturn,tracking,correctly_declared
@@ -3559,7 +3513,7 @@ com.tophatch.Concepts,tracking,unnecessarily_declared
 com.tophatch.Concepts,ads,correctly_undeclared
 com.gopro.GoPro,tracking,unnecessarily_declared
 com.gopro.GoPro,ads,correctly_undeclared
-com.udemy,tracking,unnecessarily_declared
+com.udemy,tracking,correctly_declared
 com.udemy,ads,correctly_undeclared
 com.legimi.reader.unlimited,tracking,unnecessarily_declared
 com.legimi.reader.unlimited,ads,correctly_undeclared
@@ -3603,8 +3557,8 @@ com.fifthstarlabs.skyguide,tracking,unnecessarily_declared
 com.fifthstarlabs.skyguide,ads,correctly_undeclared
 com.yahoo.Aerogram,tracking,unnecessarily_declared
 com.yahoo.Aerogram,ads,correctly_declared
-eu.pons.dictionary,tracking,unnecessarily_declared
-eu.pons.dictionary,ads,correctly_undeclared
+eu.pons.dictionary,tracking,correctly_declared
+eu.pons.dictionary,ads,wrongly_undeclared
 com.commerzbank.photoTAN,tracking,correctly_undeclared
 com.commerzbank.photoTAN,ads,correctly_undeclared
 uk.co.23.smokingdiary,tracking,unnecessarily_declared
@@ -3651,7 +3605,7 @@ com.microsoft.Office.Powerpoint,tracking,unnecessarily_declared
 com.microsoft.Office.Powerpoint,ads,correctly_undeclared
 com.microsoft.Office.Excel,tracking,unnecessarily_declared
 com.microsoft.Office.Excel,ads,correctly_undeclared
-com.picsart.studio,tracking,unnecessarily_declared
+com.picsart.studio,tracking,correctly_declared
 com.picsart.studio,ads,correctly_undeclared
 co.visualsupply.cam,tracking,correctly_declared
 co.visualsupply.cam,ads,correctly_undeclared
@@ -3687,7 +3641,7 @@ com.tplink.tether,tracking,unnecessarily_declared
 com.tplink.tether,ads,unnecessarily_declared
 com.myunidays.UNiDAYS,tracking,correctly_declared
 com.myunidays.UNiDAYS,ads,unnecessarily_declared
-es.eltiempo.weatherapphd,tracking,unnecessarily_declared
+es.eltiempo.weatherapphd,tracking,correctly_declared
 es.eltiempo.weatherapphd,ads,unnecessarily_declared
 com.buttonpublish.EnduroPro,tracking,unnecessarily_declared
 com.buttonpublish.EnduroPro,ads,unnecessarily_declared
@@ -3781,8 +3735,8 @@ com.grabtaxi.iphone,tracking,correctly_declared
 com.grabtaxi.iphone,ads,unnecessarily_declared
 com.polarapps.processing,tracking,unnecessarily_declared
 com.polarapps.processing,ads,correctly_undeclared
-com.itwcalculator.worldradarfree,tracking,unnecessarily_declared
-com.itwcalculator.worldradarfree,ads,unnecessarily_declared
+com.itwcalculator.worldradarfree,tracking,correctly_declared
+com.itwcalculator.worldradarfree,ads,correctly_declared
 salvatore.f.rocca.GymBook,tracking,correctly_undeclared
 salvatore.f.rocca.GymBook,ads,correctly_undeclared
 org.videolan.vlc-ios,tracking,correctly_undeclared
@@ -3857,8 +3811,8 @@ de.marungbaehr.dielosungen,tracking,correctly_undeclared
 de.marungbaehr.dielosungen,ads,correctly_undeclared
 ph.telegra.Telegraph,tracking,correctly_undeclared
 ph.telegra.Telegraph,ads,correctly_undeclared
-com.vinnov.Living-Weather-HD-free,tracking,unnecessarily_declared
-com.vinnov.Living-Weather-HD-free,ads,unnecessarily_declared
+com.vinnov.Living-Weather-HD-free,tracking,correctly_declared
+com.vinnov.Living-Weather-HD-free,ads,correctly_declared
 de.bottledsoftware.123Tanken,tracking,unnecessarily_declared
 de.bottledsoftware.123Tanken,ads,correctly_undeclared
 com.ankiapp.client,tracking,correctly_undeclared
@@ -3903,8 +3857,6 @@ com.nordcurrent.canteenhd,tracking,unnecessarily_declared
 com.nordcurrent.canteenhd,ads,unnecessarily_declared
 com.microsoft.CompanyPortal,tracking,unnecessarily_declared
 com.microsoft.CompanyPortal,ads,correctly_undeclared
-de.check24.check24,tracking,unnecessarily_declared
-de.check24.check24,ads,unnecessarily_declared
 doordash.DoorDashConsumer,tracking,correctly_declared
 doordash.DoorDashConsumer,ads,unnecessarily_declared
 com.firstclass.radiofree,tracking,wrongly_undeclared
@@ -3951,6 +3903,8 @@ com.spond,tracking,unnecessarily_declared
 com.spond,ads,correctly_undeclared
 de.adac.Fuehrerschein,tracking,unnecessarily_declared
 de.adac.Fuehrerschein,ads,correctly_undeclared
+vsmedia.de.photoblend,tracking,unnecessarily_declared
+vsmedia.de.photoblend,ads,wrongly_undeclared
 eu.livesport.FlashScore-com,tracking,unnecessarily_declared
 eu.livesport.FlashScore-com,ads,unnecessarily_declared
 com.cyberlink.youperfect,tracking,unnecessarily_declared
@@ -4093,7 +4047,7 @@ com.google.ios.ytcreator,tracking,unnecessarily_declared
 com.google.ios.ytcreator,ads,correctly_undeclared
 de.bundesregierung.bpa,tracking,unnecessarily_declared
 de.bundesregierung.bpa,ads,correctly_undeclared
-com.pingidentity.pingid.prod,tracking,correctly_undeclared
+com.pingidentity.pingid.prod,tracking,wrongly_undeclared
 com.pingidentity.pingid.prod,ads,correctly_undeclared
 de.77onlineshop.seventyseven,tracking,unnecessarily_declared
 de.77onlineshop.seventyseven,ads,unnecessarily_declared
@@ -4110,7 +4064,7 @@ com.smartloftapps.phototranslatefree,ads,unnecessarily_declared
 com.abishkking.periodcalendar,tracking,correctly_declared
 com.abishkking.periodcalendar,ads,unnecessarily_declared
 com.economist.darwin,tracking,unnecessarily_declared
-com.economist.darwin,ads,unnecessarily_declared
+com.economist.darwin,ads,correctly_declared
 com.appliedphasor.working-copy,tracking,unnecessarily_declared
 com.appliedphasor.working-copy,ads,correctly_undeclared
 com.canva.canvaeditor,tracking,correctly_declared
@@ -4173,7 +4127,7 @@ com.SpielerPlus.SpielerPlus,tracking,unnecessarily_declared
 com.SpielerPlus.SpielerPlus,ads,unnecessarily_declared
 de.truffls.mobile,tracking,correctly_declared
 de.truffls.mobile,ads,correctly_undeclared
-de.congstar.meincongstar,tracking,unnecessarily_declared
+de.congstar.meincongstar,tracking,correctly_declared
 de.congstar.meincongstar,ads,correctly_undeclared
 de.vsmedia.ios.passportphoto,tracking,unnecessarily_declared
 de.vsmedia.ios.passportphoto,ads,wrongly_undeclared
@@ -4339,6 +4293,8 @@ com.grailr.CARROTweather,tracking,correctly_undeclared
 com.grailr.CARROTweather,ads,correctly_undeclared
 com.google.photos,tracking,unnecessarily_declared
 com.google.photos,ads,correctly_undeclared
+com.NH.Secret-Messenger,tracking,unnecessarily_declared
+com.NH.Secret-Messenger,ads,correctly_undeclared
 com.facebook.MAdMan,tracking,unnecessarily_declared
 com.facebook.MAdMan,ads,unnecessarily_declared
 ru.rutube.main,tracking,unnecessarily_declared
@@ -4355,7 +4311,7 @@ su.bnet.lingo.production,tracking,correctly_declared
 su.bnet.lingo.production,ads,unnecessarily_declared
 com.hellofresh.HelloFresh,tracking,correctly_declared
 com.hellofresh.HelloFresh,ads,correctly_undeclared
-swc,tracking,unnecessarily_declared
+swc,tracking,correctly_declared
 swc,ads,unnecessarily_declared
 de.lapid.LapIDDriver,tracking,unnecessarily_declared
 de.lapid.LapIDDriver,ads,correctly_undeclared
@@ -4445,9 +4401,9 @@ com.davetech.todo,tracking,unnecessarily_declared
 com.davetech.todo,ads,correctly_undeclared
 com.sarrada.PDFPhotos,tracking,correctly_declared
 com.sarrada.PDFPhotos,ads,correctly_undeclared
-com.nextory.nextoryapp,tracking,unnecessarily_declared
+com.nextory.nextoryapp,tracking,correctly_declared
 com.nextory.nextoryapp,ads,unnecessarily_declared
-com.jbl.connect,tracking,unnecessarily_declared
+com.jbl.connect,tracking,correctly_declared
 com.jbl.connect,ads,correctly_undeclared
 com.wheremychildren.ios,tracking,correctly_declared
 com.wheremychildren.ios,ads,unnecessarily_declared
@@ -4461,8 +4417,8 @@ com.reo.link,tracking,unnecessarily_declared
 com.reo.link,ads,correctly_undeclared
 co.windyapp.Windy,tracking,correctly_declared
 co.windyapp.Windy,ads,correctly_undeclared
-com.camerasideas.InstaShot,tracking,unnecessarily_declared
-com.camerasideas.InstaShot,ads,correctly_undeclared
+com.camerasideas.InstaShot,tracking,correctly_declared
+com.camerasideas.InstaShot,ads,wrongly_undeclared
 de.meteogroup.WeatherProFree,tracking,correctly_declared
 de.meteogroup.WeatherProFree,ads,wrongly_undeclared
 com.urbansportclub.UrbanSportsClub,tracking,unnecessarily_declared
