@@ -267,6 +267,23 @@ const computeRequestData = async () => {
         } (${percentage(all_requests_with_adapter.length, requests.all.length)})`
     );
 
+    const data_type_replacers: Record<string, string> = {
+        accelerometer_x: 'accelerometer',
+        accelerometer_y: 'accelerometer',
+        accelerometer_z: 'accelerometer',
+        rotation_x: 'rotation',
+        rotation_y: 'rotation',
+        rotation_z: 'rotation',
+        signal_strength_wifi: 'signal_strength',
+        signal_strength_cellular: 'signal_strength',
+        disk_total: 'disk_usage',
+        disk_free: 'disk_usage',
+        ram_total: 'ram_usage',
+        ram_free: 'ram_usage',
+        width: 'screen_size',
+        height: 'screen_size',
+    };
+
     const computeAppData = (run_type: keyof typeof requests) => {
         const app_tracker_data: Record<string, Record<string, Set<string>>> = apps[
             run_type === 'initial' ? 'all' : run_type
@@ -279,7 +296,8 @@ const computeRequestData = async () => {
             if (adapter_data) {
                 const data_types = Object.entries(adapter_data)
                     .filter(([key]) => key !== 'tracker')
-                    .flatMap(([_, d]) => Object.keys(d));
+                    .flatMap(([_, d]) => Object.keys(d))
+                    .map((t) => data_type_replacers[t] || t);
 
                 const tracker = adapter_data.tracker.name;
 
@@ -614,21 +632,21 @@ const computeCookieData = async () => {
         });
     await fs.writeFile(join(data_dir, `cookies.csv`), Papa.unparse(cookies));
 
-    // const cookie_counts = cookies.reduce<
-    //     Record<string, { platform: 'android' | 'ios'; category: string; company: string; count: number }>
-    // >((acc, cur) => {
-    //     const key = `${cur.platform}::${cur.category}::${cur.company}`;
-    //     if (!acc[key])
-    //         acc[key] = {
-    //             platform: cur.platform,
-    //             category: `${cur.platform}::${cur.category}`,
-    //             company: cur.company!,
-    //             count: 0,
-    //         };
-    //     acc[key].count++;
-    //     return acc;
-    // }, {});
-    // await fs.writeFile(join(data_dir, `cookie_counts.csv`), Papa.unparse(Object.values(cookie_counts)));
+    const cookie_counts = cookies.reduce<
+        Record<string, { platform: 'android' | 'ios'; category: string; company: string; count: number }>
+    >((acc, cur) => {
+        const key = `${cur.platform}::${cur.category}::${cur.company}`;
+        if (!acc[key])
+            acc[key] = {
+                platform: cur.platform,
+                category: cur.category!,
+                company: cur.company!,
+                count: 0,
+            };
+        acc[key].count++;
+        return acc;
+    }, {});
+    await fs.writeFile(join(data_dir, `cookie_counts.csv`), Papa.unparse(Object.values(cookie_counts)));
 };
 
 (async () => {

@@ -2,28 +2,22 @@
     "android::de.sky.online": {},
     "android::com.smartwatch.bluetooth.sync.notifications": {
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::com.convert.mp3": {
@@ -66,19 +60,16 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "supersonic": [
             "app_id",
@@ -92,7 +83,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ]
@@ -150,13 +141,12 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "ios::com.reo.link": {},
@@ -204,35 +194,29 @@
         ]
     },
     "android::com.lbrc.PeriodCalendar": {
-        "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_free",
-            "emulator",
-            "height",
-            "is_charging",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "ram_free",
-            "ram_total",
-            "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
-        ],
         "mopub": [
             "app_id",
             "app_version",
             "model",
             "os"
+        ],
+        "facebook": [
+            "accelerometer",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "emulator",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "rotation",
+            "screen_size"
         ]
     },
     "android::com.wave.keyboard.theme.diamondanimatedkeyboard": {

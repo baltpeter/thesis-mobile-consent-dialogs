@@ -16,64 +16,15 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "ios::com.huawei.iosclone": {},
     "android::com.planner5d.planner5d": {
-        "<indicators>": [
-            "app_id",
-            "idfa",
-            "model"
-        ],
-        "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_free",
-            "emulator",
-            "height",
-            "idfa",
-            "is_charging",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "ram_free",
-            "ram_total",
-            "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
-        ],
-        "vungle": [
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_free",
-            "height",
-            "idfa",
-            "is_charging",
-            "language",
-            "model",
-            "network_connection_type",
-            "os",
-            "timezone",
-            "user_agent",
-            "volume",
-            "width"
-        ],
         "adcolony": [
             "app_id",
             "app_name",
@@ -82,7 +33,6 @@
             "battery_percentage",
             "carrier",
             "dark_mode",
-            "height",
             "idfa",
             "language",
             "model",
@@ -90,25 +40,65 @@
             "orientation",
             "os",
             "other_uuids",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ],
-        "unity": [
+        "<indicators>": [
             "app_id",
-            "height",
             "idfa",
-            "language",
-            "model",
-            "network_connection_type",
-            "os",
-            "rooted",
-            "width"
+            "model"
         ],
         "firebase": [
             "app_id",
             "app_version",
             "idfa",
             "os"
+        ],
+        "facebook": [
+            "accelerometer",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "emulator",
+            "idfa",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "rotation",
+            "screen_size"
+        ],
+        "vungle": [
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "idfa",
+            "is_charging",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "screen_size",
+            "timezone",
+            "user_agent",
+            "volume"
+        ],
+        "unity": [
+            "app_id",
+            "idfa",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "rooted",
+            "screen_size"
         ]
     },
     "ios::de.md.meinmd": {
@@ -132,28 +122,22 @@
             "app_id"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::aplicacion.tiempo": {
@@ -163,29 +147,23 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::com.iTankster.MagnifyGlassLite": {
@@ -233,39 +211,32 @@
             "carrier",
             "country",
             "hashed_idfa",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -327,7 +298,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfv",
             "language",
             "local_ips",
@@ -335,15 +305,24 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ]
     },
     "ios::com.werneroi.polyjamer": {
+        "mopub": [
+            "app_id",
+            "app_version",
+            "carrier",
+            "idfv",
+            "model",
+            "os",
+            "screen_size",
+            "timezone"
+        ],
         "yandex": [
             "app_id",
             "app_version",
-            "height",
             "idfa",
             "idfv",
             "language",
@@ -351,7 +330,7 @@
             "os",
             "other_uuids",
             "rooted",
-            "width"
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -362,17 +341,6 @@
         "<indicators>": [
             "app_id",
             "location"
-        ],
-        "mopub": [
-            "app_id",
-            "app_version",
-            "carrier",
-            "height",
-            "idfv",
-            "model",
-            "os",
-            "timezone",
-            "width"
         ]
     },
     "ios::de.inforoad.cleverTanken": {
@@ -391,12 +359,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "facebook": [
             "os"
@@ -422,29 +389,23 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "doubleclick": [
             "app_name",
@@ -478,28 +439,22 @@
             "app_id"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::de.leasingmarkt.app": {
@@ -510,13 +465,12 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "ios::com.tapstermedia.livelystoryreader": {},
@@ -528,15 +482,15 @@
         ]
     },
     "ios::la.unum.unum-ios": {
-        "<indicators>": [
-            "app_id",
-            "location"
-        ],
         "firebase": [
             "app_id",
             "app_version",
             "idfv",
             "os"
+        ],
+        "<indicators>": [
+            "app_id",
+            "location"
         ]
     },
     "ios::com.signia.myeverything": {},
@@ -565,29 +519,23 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::com.convert.mp3": {
@@ -799,19 +747,16 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "supersonic": [
             "app_id",
@@ -825,7 +770,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ]
@@ -867,28 +812,22 @@
             "os"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::com.tgtap.gtacheats": {
@@ -919,12 +858,11 @@
             "app_id",
             "app_version",
             "carrier",
-            "height",
             "language",
             "model",
             "os",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ],
         "firebase": [
             "app_id",
@@ -1052,7 +990,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfv",
             "language",
             "local_ips",
@@ -1060,8 +997,8 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ],
         "firebase": [
             "app_id",
@@ -1103,7 +1040,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfv",
             "language",
             "local_ips",
@@ -1111,8 +1047,8 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ],
         "<indicators>": [
             "app_id"
@@ -1145,29 +1081,23 @@
     },
     "android::com.kiwibrowser.browser": {
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::de.klarmobil.kundenservice": {
@@ -1209,12 +1139,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "ios::de.motorpresse.automotorundsportnews": {
@@ -1261,28 +1190,22 @@
             "location"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::com.hotornot.app": {
@@ -1305,29 +1228,23 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::de.flixbus.app": {
@@ -1335,13 +1252,12 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -1456,12 +1372,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "adjust": [
             "app_id",
@@ -1554,28 +1469,22 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::de.bvb09.android": {
@@ -1591,29 +1500,23 @@
     },
     "android::com.easybrain.art.puzzle": {
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -1625,14 +1528,13 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "language",
             "model",
             "orientation",
             "os",
+            "screen_size",
             "timezone",
-            "user_agent",
-            "width"
+            "user_agent"
         ],
         "supersonic": [
             "app_id",
@@ -1645,7 +1547,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ],
@@ -1655,20 +1557,17 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ]
     },
     "ios::vt.free": {
@@ -1791,12 +1690,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -1832,7 +1730,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfv",
             "language",
             "local_ips",
@@ -1840,8 +1737,8 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ]
     },
     "ios::com.myicon.themeiconchanger": {
@@ -1855,8 +1752,7 @@
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
-            "height",
+            "disk_usage",
             "idfa",
             "idfv",
             "is_charging",
@@ -1864,10 +1760,10 @@
             "model",
             "network_connection_type",
             "os",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "firebase": [
             "app_id",
@@ -1908,29 +1804,23 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::de.cellular.ottohybrid": {},
@@ -1963,7 +1853,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ]
@@ -2093,28 +1983,22 @@
             "app_id"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::es.eltiempo.weatherapphd": {
@@ -2161,23 +2045,21 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "idfv",
             "language",
             "model",
             "orientation",
             "os",
+            "screen_size",
             "timezone",
-            "user_agent",
-            "width"
+            "user_agent"
         ],
         "adcolony": [
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "height",
             "idfa",
             "idfv",
             "language",
@@ -2186,8 +2068,8 @@
             "orientation",
             "os",
             "other_uuids",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ],
         "unity": [
             "app_id",
@@ -2195,19 +2077,16 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "doubleclick": [
             "app_name",
@@ -2231,7 +2110,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ],
@@ -2247,8 +2126,7 @@
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
-            "height",
+            "disk_usage",
             "idfa",
             "idfv",
             "is_charging",
@@ -2256,10 +2134,10 @@
             "model",
             "network_connection_type",
             "os",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "firebase": [
             "app_id",
@@ -2306,36 +2184,30 @@
     "android::kr.jungrammer.randomchat": {},
     "ios::de.nrj.NRJDE": {},
     "android::com.timewarpscan.timewarpfilter.warpscan.slitscan.facescanner": {
-        "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_free",
-            "emulator",
-            "height",
-            "is_charging",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "ram_free",
-            "ram_total",
-            "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
-        ],
         "doubleclick": [
             "app_name",
             "language",
             "model",
             "network_connection_type",
             "volume"
+        ],
+        "facebook": [
+            "accelerometer",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "emulator",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::com.mailjerry.app": {},
@@ -2367,13 +2239,12 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -2417,19 +2288,16 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "firebase": [
             "app_id",
@@ -2471,7 +2339,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfv",
             "language",
             "local_ips",
@@ -2479,8 +2346,8 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ],
         "bugsnag": [
             "app_id",
@@ -2488,7 +2355,7 @@
             "language",
             "model",
             "os",
-            "ram_total",
+            "ram_usage",
             "rooted"
         ],
         "facebook": [
@@ -2558,12 +2425,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -2585,13 +2451,12 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -2612,7 +2477,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfa",
             "language",
             "local_ips",
@@ -2620,7 +2484,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -2629,29 +2493,23 @@
     },
     "android::com.mobisystems.office": {
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "<indicators>": [
             "app_id"
@@ -2701,28 +2559,22 @@
             "model"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -2746,7 +2598,6 @@
             "architecture",
             "carrier",
             "country",
-            "height",
             "idfv",
             "language",
             "local_ips",
@@ -2754,8 +2605,8 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ],
         "firebase": [
             "app_id",
@@ -2775,38 +2626,31 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -2817,31 +2661,29 @@
         "rayjump": [
             "app_id",
             "app_version",
-            "height",
             "language",
             "model",
             "orientation",
             "os",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ],
         "vungle": [
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
-            "height",
+            "disk_usage",
             "idfa",
             "is_charging",
             "language",
             "model",
             "network_connection_type",
             "os",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "supersonic": [
             "app_id",
@@ -2854,7 +2696,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ],
@@ -2864,20 +2706,17 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ]
     },
     "ios::com.flixbus.ios.Flixbus": {},
@@ -2886,13 +2725,12 @@
             "app_id",
             "app_version",
             "carrier",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ]
     },
     "android::com.theappninjas.fakegpsjoystick": {},
@@ -2976,12 +2814,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -3032,39 +2869,32 @@
         "yandex": [
             "app_id",
             "app_version",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
             "rooted",
-            "width"
+            "screen_size"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -3092,7 +2922,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ],
@@ -3100,32 +2930,29 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "language",
             "model",
             "orientation",
             "os",
+            "screen_size",
             "timezone",
-            "user_agent",
-            "width"
+            "user_agent"
         ],
         "facebook": [
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "width"
+            "screen_size"
         ]
     },
     "android::com.veraxen.colorbynumber.oilpainting": {
@@ -3137,41 +2964,34 @@
             "os"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "adjust": [
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -3185,19 +3005,16 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ]
     },
     "ios::de.olympiaverlag.kicker.kickeronline": {},
@@ -3229,29 +3046,23 @@
             "app_id"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::com.fgs.spider.miami.man.ropehero.fighter": {
@@ -3267,12 +3078,6 @@
         ]
     },
     "ios::cn.danatech.pictureInsect": {
-        "firebase": [
-            "app_id",
-            "app_version",
-            "idfv",
-            "os"
-        ],
         "adjust": [
             "app_id",
             "app_version",
@@ -3283,6 +3088,12 @@
         "apple": [
             "app_id",
             "other_uuids"
+        ],
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfv",
+            "os"
         ]
     },
     "ios::de.suedkurier.skmobil": {
@@ -3295,24 +3106,22 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "ms_appcenter": [
             "app_id",
             "app_version",
             "carrier",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ]
     },
     "android::com.dacia.mydacia.one.fr": {
@@ -3348,13 +3157,12 @@
             "app_id",
             "app_version",
             "carrier",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ]
     },
     "ios::net.zedge.wallpapers": {
@@ -3379,60 +3187,53 @@
             "volume"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::de.dfb.teampunkt": {},
     "android::com.getyourguide.android": {
-        "<indicators>": [
-            "app_id",
-            "model"
-        ],
         "adjust": [
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
-        "facebook": [
+        "<indicators>": [
             "app_id",
-            "idfa",
-            "os",
-            "other_uuids"
+            "model"
         ],
         "firebase": [
             "app_id",
             "app_version",
             "idfa",
             "os"
+        ],
+        "facebook": [
+            "app_id",
+            "idfa",
+            "os",
+            "other_uuids"
         ]
     },
     "android::com.omdigitalsolutions.oishare": {
@@ -3460,12 +3261,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "<indicators>": [
             "app_id",
@@ -3487,29 +3287,23 @@
     },
     "android::com.create.pottery.paint.by.color": {
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "idfa",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "android::com.brave.browser": {},
@@ -3566,18 +3360,17 @@
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
-            "height",
+            "disk_usage",
             "idfa",
             "is_charging",
             "language",
             "model",
             "network_connection_type",
             "os",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "unity": [
             "app_id",
@@ -3585,21 +3378,18 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "idfa",
             "language",
             "model",
             "network_connection_type",
             "os",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "firebase": [
             "app_id",
@@ -3617,7 +3407,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ]
@@ -3629,23 +3419,69 @@
             "idfa",
             "model"
         ],
+        "facebook": [
+            "accelerometer",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "emulator",
+            "idfa",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "rotation",
+            "screen_size"
+        ],
+        "rayjump": [
+            "app_id",
+            "app_version",
+            "language",
+            "model",
+            "orientation",
+            "os",
+            "screen_size",
+            "user_agent"
+        ],
+        "adcolony": [
+            "app_id",
+            "app_name",
+            "app_version",
+            "architecture",
+            "battery_percentage",
+            "carrier",
+            "dark_mode",
+            "idfa",
+            "language",
+            "model",
+            "network_connection_type",
+            "orientation",
+            "os",
+            "other_uuids",
+            "screen_size",
+            "timezone"
+        ],
         "vungle": [
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
-            "height",
+            "disk_usage",
             "idfa",
             "is_charging",
             "language",
             "model",
             "network_connection_type",
             "os",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "firebase": [
             "app_id",
@@ -3657,7 +3493,6 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
@@ -3665,9 +3500,9 @@
             "orientation",
             "os",
             "rooted",
+            "screen_size",
             "timezone",
-            "user_agent",
-            "width"
+            "user_agent"
         ],
         "unity": [
             "app_id",
@@ -3675,65 +3510,18 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "idfa",
             "language",
             "model",
             "network_connection_type",
             "os",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
-        ],
-        "adcolony": [
-            "app_id",
-            "app_name",
-            "app_version",
-            "architecture",
-            "battery_percentage",
-            "carrier",
-            "dark_mode",
-            "height",
-            "idfa",
-            "language",
-            "model",
-            "network_connection_type",
-            "orientation",
-            "os",
-            "other_uuids",
-            "timezone",
-            "width"
-        ],
-        "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_free",
-            "emulator",
-            "height",
-            "idfa",
-            "is_charging",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "ram_free",
-            "ram_total",
-            "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "volume"
         ],
         "supersonic": [
             "app_id",
@@ -3746,20 +3534,9 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
-        ],
-        "rayjump": [
-            "app_id",
-            "app_version",
-            "height",
-            "language",
-            "model",
-            "orientation",
-            "os",
-            "user_agent",
-            "width"
         ]
     },
     "ios::de.antenne.eple": {},
@@ -3808,12 +3585,11 @@
             "app_id",
             "app_version",
             "carrier",
-            "height",
             "language",
             "model",
             "os",
-            "timezone",
-            "width"
+            "screen_size",
+            "timezone"
         ]
     },
     "ios::de.bfv.teamapp.ios": {},
@@ -3852,28 +3628,22 @@
     },
     "android::com.mxtech.videoplayer.ad": {
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ]
     },
     "ios::com.futbin": {
@@ -3920,42 +3690,35 @@
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
-            "height",
+            "disk_usage",
             "idfa",
             "is_charging",
             "language",
             "model",
             "network_connection_type",
             "os",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
+            "accelerometer",
             "app_id",
             "app_version",
             "battery_percentage",
             "carrier",
-            "disk_free",
+            "disk_usage",
             "emulator",
-            "height",
             "is_charging",
             "language",
             "model",
             "os",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
+            "rotation",
+            "screen_size"
         ],
         "supersonic": [
             "app_id",
@@ -3968,7 +3731,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ],
@@ -3978,43 +3741,38 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
             "other_uuids",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ],
         "adjust": [
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "rayjump": [
             "app_id",
             "app_version",
-            "height",
             "language",
             "model",
             "orientation",
             "os",
-            "user_agent",
-            "width"
+            "screen_size",
+            "user_agent"
         ]
     },
     "ios::com.collage.belka": {
@@ -4035,55 +3793,48 @@
         ]
     },
     "android::io.cleanfox.android": {
-        "<indicators>": [
-            "app_id",
-            "idfa",
-            "model"
-        ],
         "adjust": [
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
+        ],
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
         ]
     },
     "ios::com.ryanair.cheapflights": {},
     "android::com.lbrc.PeriodCalendar": {
-        "facebook": [
-            "accelerometer_x",
-            "accelerometer_y",
-            "accelerometer_z",
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_free",
-            "emulator",
-            "height",
-            "is_charging",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "ram_free",
-            "ram_total",
-            "rooted",
-            "rotation_x",
-            "rotation_y",
-            "rotation_z",
-            "width"
-        ],
         "mopub": [
             "app_id",
             "app_version",
             "model",
             "os"
+        ],
+        "facebook": [
+            "accelerometer",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "emulator",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "rotation",
+            "screen_size"
         ],
         "firebase": [
             "app_id",
@@ -4116,12 +3867,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "android::com.tripadvisor.tripadvisor": {
@@ -4173,12 +3923,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "ios::de.mobile.iphone": {
@@ -4204,12 +3953,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "android::de.klingel.app": {
@@ -4228,13 +3976,12 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ]
     },
     "ios::de.bringmeister.prod": {
@@ -4301,12 +4048,11 @@
             "app_version",
             "carrier",
             "country",
-            "height",
             "language",
             "model",
             "os",
             "other_uuids",
-            "width"
+            "screen_size"
         ],
         "adjust": [
             "app_id",
@@ -4341,7 +4087,7 @@
             "network_connection_type",
             "os",
             "other_uuids",
-            "ram_free",
+            "ram_usage",
             "rooted",
             "timezone"
         ],
@@ -4376,16 +4122,15 @@
             "app_id",
             "app_version",
             "country",
-            "height",
             "idfa",
             "idfv",
             "language",
             "model",
             "orientation",
             "os",
+            "screen_size",
             "timezone",
-            "user_agent",
-            "width"
+            "user_agent"
         ],
         "unity": [
             "app_id",
@@ -4393,19 +4138,16 @@
             "battery_percentage",
             "carrier",
             "country",
-            "disk_free",
-            "disk_total",
-            "height",
+            "disk_usage",
             "language",
             "model",
             "network_connection_type",
-            "ram_free",
-            "ram_total",
+            "ram_usage",
             "rooted",
+            "screen_size",
             "timezone",
             "user_agent",
-            "volume",
-            "width"
+            "volume"
         ]
     },
     "ios::de.dfb-medien.fussball-de-2-0": {
