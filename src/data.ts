@@ -358,11 +358,30 @@ const computeRequestData = async () => {
                     app_id: app.split('::')[1],
                     tracker,
                     data_type,
-                    platform: app.split('::')[0],
+                    platform: app.split('::')[0] as 'android' | 'ios',
                 }))
             )
         );
         await fs.writeFile(join(data_dir, `apps_trackers_data_types_${run_type}.csv`), Papa.unparse(csv_data));
+
+        const csv_counts = csv_data.reduce<
+            Record<string, { tracker: string; data_type: string; platform: 'android' | 'ios'; count: number }>
+        >((acc, cur) => {
+            const key = `${cur.platform}::${cur.tracker}::${cur.data_type}`;
+            if (!acc[key])
+                acc[key] = {
+                    tracker: cur.tracker,
+                    data_type: cur.data_type,
+                    platform: cur.platform,
+                    count: 0,
+                };
+            acc[key].count++;
+            return acc;
+        }, {});
+        await fs.writeFile(
+            join(data_dir, `apps_trackers_data_types_${run_type}_counts.csv`),
+            Papa.unparse(Object.values(csv_counts))
+        );
     }
 };
 

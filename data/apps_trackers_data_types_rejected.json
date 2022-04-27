@@ -194,12 +194,6 @@
         ]
     },
     "android::com.lbrc.PeriodCalendar": {
-        "mopub": [
-            "app_id",
-            "app_version",
-            "model",
-            "os"
-        ],
         "facebook": [
             "accelerometer",
             "app_id",
@@ -217,6 +211,12 @@
             "rooted",
             "rotation",
             "screen_size"
+        ],
+        "mopub": [
+            "app_id",
+            "app_version",
+            "model",
+            "os"
         ]
     },
     "android::com.wave.keyboard.theme.diamondanimatedkeyboard": {

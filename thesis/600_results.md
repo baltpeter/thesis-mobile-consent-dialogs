@@ -1,26 +1,51 @@
 # Results
 
-<!-- TODO:
-
-* How many apps succeeded?
-* Why did the failing ones fail?
-* Time analysis took to run. -->
+In total, we successfully analysed 4388 apps with 2086 apps on Android and 2320 apps on iOS, corresponding to 62.96% and 93.51% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1162 of the Android apps failed to launch or quit immediately after launching with the certificate pinning bypass enabled. These apps are excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
+<!-- select count(1) from dialogs;
+select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
+select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
 
 ## Network Traffic and Tracking
 
 ![Number of requests and unique hosts contacted per app without any user interaction. Three apps which did more than 1000 requests are omitted in this graph. Those are: `com.prequel.app` on Android with 2500 requests, and `com.audiomack.iphone` and `com.storycover` on iOS with 2383 and 1019 requests, respectively.](../graphs/requests_hosts_per_app.pdf){#fig:results-requests-hosts-per-app}
 
+[@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50% of apps did less than 23 requests and 75% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.27 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
+53% of apps contacted less than 10 unique hosts, with 11.85 hosts on average across both platforms.
+<!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
+<!-- Excel:
+     H7=COUNT($D$2:$D$4164)
+     H8=COUNTIF($D$2:$D$4164, "<50")
+     H9=H8/H7 -->
+<!-- select count(1) from apps where platform='ios' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
+<!-- select count(1) from apps where platform='android' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
+<!-- Excel:
+     I7=COUNT($E$2:$E$4164)
+     I8=COUNTIF($E$2:$E$4164, "<10")
+     I9=I8/I7 -->
+<!-- select avg(c.host_count) from (select count(distinct host) host_count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c; -->
+
+TODO: tracking
+
 ![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022]. The trackers are coloured by the country they are based in.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
+
+```{=latex}
+\afterpage{%
+    \clearpage% Flush earlier floats (otherwise order might not be correct)
+    \begin{landscape}
+```
+
+![TODO](../graphs/apps_trackers_data_types_initial.pdf){#fig:results-tracker-data-initial}
+
+```{=latex}
+    \end{landscape}
+    \clearpage% Flush page
+}
+```
 
 * Percentage of traffic that Exodus classifies as tracking
 * Transmitted data
     * Indicators
     * Adapters
-
-<!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
-
-<!-- select count(1) from apps where platform='ios' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
-<!-- select count(1) from apps where platform='android' and not exists(select 1 from filtered_requests fr where fr.name=apps.name and fr.version=apps.version and fr.platform=apps.platform); -->
 
 ## Prevalence of Consent Dialogs
 

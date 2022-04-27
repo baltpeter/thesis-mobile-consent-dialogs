@@ -1,26 +1,26 @@
 platform,category,company,count
-android,android::Marketing,Google,148
-ios,ios::Marketing,Google,86
-ios,ios::Analytics,Google,46
-android,android::Analytics,Google,19
-ios,ios::Marketing,Facebook,10
-android,android::Marketing,Facebook,4
-ios,ios::Marketing,Adobe,28
-android,android::Marketing,Adobe,4
-ios,ios::Analytics,Snowplow,11
-ios,ios::Marketing,Yahoo,6
-android,android::Marketing,Yahoo,3
-ios,ios::Analytics,Trustpilot,1
-ios,ios::Analytics,Adobe,5
-android,android::Analytics,Adobe,2
-android,android::Marketing,openx.net,2
-ios,ios::Marketing,openx.net,2
-android,android::Marketing,Microsoft,6
-ios,ios::Marketing,Microsoft,7
-android,android::Marketing,Casale Media,10
-android,android::Marketing,Platform161,6
-android,android::Marketing,bidswitch.net,5
-android,android::Marketing,demdex.net,2
-android,android::Marketing,Blueconic.com,2
-android,android::Marketing,Everest Technologies,2
-android,android::Marketing,Rapleaf,2
+android,Marketing,Google,148
+ios,Marketing,Google,86
+ios,Analytics,Google,46
+android,Analytics,Google,19
+ios,Marketing,Facebook,10
+android,Marketing,Facebook,4
+ios,Marketing,Adobe,28
+android,Marketing,Adobe,4
+ios,Analytics,Snowplow,11
+ios,Marketing,Yahoo,6
+android,Marketing,Yahoo,3
+ios,Analytics,Trustpilot,1
+ios,Analytics,Adobe,5
+android,Analytics,Adobe,2
+android,Marketing,openx.net,2
+ios,Marketing,openx.net,2
+android,Marketing,Microsoft,6
+ios,Marketing,Microsoft,7
+android,Marketing,Casale Media,10
+android,Marketing,Platform161,6
+android,Marketing,bidswitch.net,5
+android,Marketing,demdex.net,2
+android,Marketing,Blueconic.com,2
+android,Marketing,Everest Technologies,2
+android,Marketing,Rapleaf,2

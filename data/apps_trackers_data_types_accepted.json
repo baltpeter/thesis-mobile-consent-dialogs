@@ -25,35 +25,6 @@
     },
     "ios::com.huawei.iosclone": {},
     "android::com.planner5d.planner5d": {
-        "adcolony": [
-            "app_id",
-            "app_name",
-            "app_version",
-            "architecture",
-            "battery_percentage",
-            "carrier",
-            "dark_mode",
-            "idfa",
-            "language",
-            "model",
-            "network_connection_type",
-            "orientation",
-            "os",
-            "other_uuids",
-            "screen_size",
-            "timezone"
-        ],
-        "<indicators>": [
-            "app_id",
-            "idfa",
-            "model"
-        ],
-        "firebase": [
-            "app_id",
-            "app_version",
-            "idfa",
-            "os"
-        ],
         "facebook": [
             "accelerometer",
             "app_id",
@@ -72,6 +43,11 @@
             "rooted",
             "rotation",
             "screen_size"
+        ],
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
         ],
         "vungle": [
             "app_id",
@@ -90,6 +66,24 @@
             "user_agent",
             "volume"
         ],
+        "adcolony": [
+            "app_id",
+            "app_name",
+            "app_version",
+            "architecture",
+            "battery_percentage",
+            "carrier",
+            "dark_mode",
+            "idfa",
+            "language",
+            "model",
+            "network_connection_type",
+            "orientation",
+            "os",
+            "other_uuids",
+            "screen_size",
+            "timezone"
+        ],
         "unity": [
             "app_id",
             "idfa",
@@ -99,6 +93,12 @@
             "os",
             "rooted",
             "screen_size"
+        ],
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfa",
+            "os"
         ]
     },
     "ios::de.md.meinmd": {
@@ -112,12 +112,6 @@
         ]
     },
     "android::com.nexstreaming.app.kinemasterfree": {
-        "firebase": [
-            "app_id",
-            "app_version",
-            "idfa",
-            "os"
-        ],
         "<indicators>": [
             "app_id"
         ],
@@ -138,6 +132,12 @@
             "rooted",
             "rotation",
             "screen_size"
+        ],
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfa",
+            "os"
         ]
     },
     "android::aplicacion.tiempo": {
@@ -205,21 +205,6 @@
     },
     "android::de.hafas.android.db": {},
     "android::com.ebay.kleinanzeigen": {
-        "ioam": [
-            "app_id",
-            "app_version",
-            "carrier",
-            "country",
-            "hashed_idfa",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "screen_size"
-        ],
-        "<indicators>": [
-            "app_id"
-        ],
         "facebook": [
             "accelerometer",
             "app_id",
@@ -243,6 +228,21 @@
             "app_version",
             "idfa",
             "os"
+        ],
+        "ioam": [
+            "app_id",
+            "app_version",
+            "carrier",
+            "country",
+            "hashed_idfa",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "screen_size"
+        ],
+        "<indicators>": [
+            "app_id"
         ]
     },
     "android::de.comventure.medpex": {
@@ -310,16 +310,6 @@
         ]
     },
     "ios::com.werneroi.polyjamer": {
-        "mopub": [
-            "app_id",
-            "app_version",
-            "carrier",
-            "idfv",
-            "model",
-            "os",
-            "screen_size",
-            "timezone"
-        ],
         "yandex": [
             "app_id",
             "app_version",
@@ -341,6 +331,16 @@
         "<indicators>": [
             "app_id",
             "location"
+        ],
+        "mopub": [
+            "app_id",
+            "app_version",
+            "carrier",
+            "idfv",
+            "model",
+            "os",
+            "screen_size",
+            "timezone"
         ]
     },
     "ios::de.inforoad.cleverTanken": {
@@ -378,12 +378,6 @@
         ]
     },
     "android::com.flightradar24free": {
-        "firebase": [
-            "app_id",
-            "app_version",
-            "idfa",
-            "os"
-        ],
         "<indicators>": [
             "app_id",
             "model"
@@ -413,6 +407,12 @@
             "model",
             "network_connection_type",
             "volume"
+        ],
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfa",
+            "os"
         ]
     },
     "android::com.nomad88.nomadmusic": {},
@@ -482,15 +482,15 @@
         ]
     },
     "ios::la.unum.unum-ios": {
+        "<indicators>": [
+            "app_id",
+            "location"
+        ],
         "firebase": [
             "app_id",
             "app_version",
             "idfv",
             "os"
-        ],
-        "<indicators>": [
-            "app_id",
-            "location"
         ]
     },
     "ios::com.signia.myeverything": {},
@@ -570,13 +570,6 @@
     "ios::com.deezer.Audiobooks": {},
     "ios::fonts.app": {},
     "ios::cn.danatech.pictureBird": {
-        "adjust": [
-            "app_id",
-            "app_version",
-            "idfv",
-            "model",
-            "os"
-        ],
         "apple": [
             "app_id",
             "other_uuids"
@@ -585,6 +578,13 @@
             "app_id",
             "app_version",
             "idfv",
+            "os"
+        ],
+        "adjust": [
+            "app_id",
+            "app_version",
+            "idfv",
+            "model",
             "os"
         ]
     },
@@ -643,14 +643,14 @@
         ]
     },
     "ios::com.lopofist.scanner": {
-        "<indicators>": [
-            "app_id"
-        ],
         "firebase": [
             "app_id",
             "app_version",
             "idfv",
             "os"
+        ],
+        "<indicators>": [
+            "app_id"
         ]
     },
     "ios::cn.danatech.xingseus": {
@@ -924,6 +924,9 @@
             "model",
             "os"
         ],
+        "<indicators>": [
+            "app_id"
+        ],
         "firebase": [
             "app_id",
             "app_version",
@@ -933,9 +936,6 @@
             "os",
             "other_uuids",
             "timezone"
-        ],
-        "<indicators>": [
-            "app_id"
         ],
         "apple": [
             "app_id",
@@ -1421,16 +1421,16 @@
     },
     "ios::com.sigmasport.Link2": {},
     "ios::de.mytoys.mytoys": {
-        "<indicators>": [
-            "app_id",
-            "idfa"
-        ],
         "adjust": [
             "app_id",
             "app_version",
             "idfv",
             "model",
             "os"
+        ],
+        "<indicators>": [
+            "app_id",
+            "idfa"
         ]
     },
     "ios::aiby.prowidget": {},
@@ -2184,13 +2184,6 @@
     "android::kr.jungrammer.randomchat": {},
     "ios::de.nrj.NRJDE": {},
     "android::com.timewarpscan.timewarpfilter.warpscan.slitscan.facescanner": {
-        "doubleclick": [
-            "app_name",
-            "language",
-            "model",
-            "network_connection_type",
-            "volume"
-        ],
         "facebook": [
             "accelerometer",
             "app_id",
@@ -2208,6 +2201,13 @@
             "rooted",
             "rotation",
             "screen_size"
+        ],
+        "doubleclick": [
+            "app_name",
+            "language",
+            "model",
+            "network_connection_type",
+            "volume"
         ]
     },
     "ios::com.mailjerry.app": {},
@@ -3078,6 +3078,12 @@
         ]
     },
     "ios::cn.danatech.pictureInsect": {
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfv",
+            "os"
+        ],
         "adjust": [
             "app_id",
             "app_version",
@@ -3088,12 +3094,6 @@
         "apple": [
             "app_id",
             "other_uuids"
-        ],
-        "firebase": [
-            "app_id",
-            "app_version",
-            "idfv",
-            "os"
         ]
     },
     "ios::de.suedkurier.skmobil": {
@@ -3208,6 +3208,10 @@
     },
     "ios::de.dfb.teampunkt": {},
     "android::com.getyourguide.android": {
+        "<indicators>": [
+            "app_id",
+            "model"
+        ],
         "adjust": [
             "app_id",
             "app_version",
@@ -3219,21 +3223,17 @@
             "other_uuids",
             "screen_size"
         ],
-        "<indicators>": [
+        "facebook": [
             "app_id",
-            "model"
+            "idfa",
+            "os",
+            "other_uuids"
         ],
         "firebase": [
             "app_id",
             "app_version",
             "idfa",
             "os"
-        ],
-        "facebook": [
-            "app_id",
-            "idfa",
-            "os",
-            "other_uuids"
         ]
     },
     "android::com.omdigitalsolutions.oishare": {
@@ -3414,75 +3414,6 @@
     },
     "ios::net.motortalk.ForumApp": {},
     "android::com.funcell.petsimulator": {
-        "<indicators>": [
-            "app_id",
-            "idfa",
-            "model"
-        ],
-        "facebook": [
-            "accelerometer",
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_usage",
-            "emulator",
-            "idfa",
-            "is_charging",
-            "language",
-            "model",
-            "os",
-            "other_uuids",
-            "ram_usage",
-            "rooted",
-            "rotation",
-            "screen_size"
-        ],
-        "rayjump": [
-            "app_id",
-            "app_version",
-            "language",
-            "model",
-            "orientation",
-            "os",
-            "screen_size",
-            "user_agent"
-        ],
-        "adcolony": [
-            "app_id",
-            "app_name",
-            "app_version",
-            "architecture",
-            "battery_percentage",
-            "carrier",
-            "dark_mode",
-            "idfa",
-            "language",
-            "model",
-            "network_connection_type",
-            "orientation",
-            "os",
-            "other_uuids",
-            "screen_size",
-            "timezone"
-        ],
-        "vungle": [
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "disk_usage",
-            "idfa",
-            "is_charging",
-            "language",
-            "model",
-            "network_connection_type",
-            "os",
-            "screen_size",
-            "timezone",
-            "user_agent",
-            "volume"
-        ],
         "firebase": [
             "app_id",
             "app_version",
@@ -3504,6 +3435,28 @@
             "timezone",
             "user_agent"
         ],
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ],
+        "vungle": [
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "idfa",
+            "is_charging",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "screen_size",
+            "timezone",
+            "user_agent",
+            "volume"
+        ],
         "unity": [
             "app_id",
             "app_version",
@@ -3523,6 +3476,43 @@
             "user_agent",
             "volume"
         ],
+        "adcolony": [
+            "app_id",
+            "app_name",
+            "app_version",
+            "architecture",
+            "battery_percentage",
+            "carrier",
+            "dark_mode",
+            "idfa",
+            "language",
+            "model",
+            "network_connection_type",
+            "orientation",
+            "os",
+            "other_uuids",
+            "screen_size",
+            "timezone"
+        ],
+        "facebook": [
+            "accelerometer",
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "disk_usage",
+            "emulator",
+            "idfa",
+            "is_charging",
+            "language",
+            "model",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "rotation",
+            "screen_size"
+        ],
         "supersonic": [
             "app_id",
             "app_version",
@@ -3537,11 +3527,27 @@
             "ram_usage",
             "rooted",
             "timezone"
+        ],
+        "rayjump": [
+            "app_id",
+            "app_version",
+            "language",
+            "model",
+            "orientation",
+            "os",
+            "screen_size",
+            "user_agent"
         ]
     },
     "ios::de.antenne.eple": {},
     "ios::com.holidaypirates.urlaubspiraten": {},
     "ios::com.nextepio.thermometre": {
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfv",
+            "os"
+        ],
         "<indicators>": [
             "app_id"
         ],
@@ -3554,12 +3560,6 @@
             "os",
             "rooted",
             "volume"
-        ],
-        "firebase": [
-            "app_id",
-            "app_version",
-            "idfv",
-            "os"
         ]
     },
     "android::com.lootboy.app": {
@@ -3605,9 +3605,6 @@
         ]
     },
     "ios::de.unister.abindenurlaub": {
-        "facebook": [
-            "os"
-        ],
         "adjust": [
             "app_id",
             "app_version",
@@ -3623,6 +3620,9 @@
             "app_id",
             "app_version",
             "idfv",
+            "os"
+        ],
+        "facebook": [
             "os"
         ]
     },
@@ -3793,6 +3793,11 @@
         ]
     },
     "android::io.cleanfox.android": {
+        "<indicators>": [
+            "app_id",
+            "idfa",
+            "model"
+        ],
         "adjust": [
             "app_id",
             "app_version",
@@ -3803,21 +3808,10 @@
             "os",
             "other_uuids",
             "screen_size"
-        ],
-        "<indicators>": [
-            "app_id",
-            "idfa",
-            "model"
         ]
     },
     "ios::com.ryanair.cheapflights": {},
     "android::com.lbrc.PeriodCalendar": {
-        "mopub": [
-            "app_id",
-            "app_version",
-            "model",
-            "os"
-        ],
         "facebook": [
             "accelerometer",
             "app_id",
@@ -3835,6 +3829,12 @@
             "rooted",
             "rotation",
             "screen_size"
+        ],
+        "mopub": [
+            "app_id",
+            "app_version",
+            "model",
+            "os"
         ],
         "firebase": [
             "app_id",
@@ -4075,26 +4075,6 @@
     },
     "ios::com.BreezoMeter.BreezoMeter": {},
     "ios::com.glority.everlens": {
-        "supersonic": [
-            "app_id",
-            "app_version",
-            "battery_percentage",
-            "carrier",
-            "idfa",
-            "idfv",
-            "language",
-            "model",
-            "network_connection_type",
-            "os",
-            "other_uuids",
-            "ram_usage",
-            "rooted",
-            "timezone"
-        ],
-        "<indicators>": [
-            "app_id",
-            "idfa"
-        ],
         "ironsource": [
             "app_id",
             "app_version",
@@ -4102,21 +4082,9 @@
             "network_connection_type",
             "os"
         ],
-        "doubleclick": [
-            "app_name",
-            "architecture",
-            "language",
-            "model",
-            "network_connection_type",
-            "os",
-            "rooted",
-            "volume"
-        ],
-        "firebase": [
+        "<indicators>": [
             "app_id",
-            "app_version",
-            "idfv",
-            "os"
+            "idfa"
         ],
         "rayjump": [
             "app_id",
@@ -4148,6 +4116,38 @@
             "timezone",
             "user_agent",
             "volume"
+        ],
+        "doubleclick": [
+            "app_name",
+            "architecture",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "rooted",
+            "volume"
+        ],
+        "supersonic": [
+            "app_id",
+            "app_version",
+            "battery_percentage",
+            "carrier",
+            "idfa",
+            "idfv",
+            "language",
+            "model",
+            "network_connection_type",
+            "os",
+            "other_uuids",
+            "ram_usage",
+            "rooted",
+            "timezone"
+        ],
+        "firebase": [
+            "app_id",
+            "app_version",
+            "idfv",
+            "os"
         ]
     },
     "ios::de.dfb-medien.fussball-de-2-0": {
