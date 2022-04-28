@@ -225,7 +225,9 @@ const computeRequestData = async () => {
     const exodus: { name: string; is_in_exodus: boolean; network_signature: string; category: string[] }[] = JSON.parse(
         await fs.readFile(join(data_dir, 'upstream/exodus-trackers.json'), 'utf-8')
     ).trackers;
-    const exodus_trackers = exodus.filter((r) => r.is_in_exodus && r.network_signature !== '');
+    const exodus_trackers = exodus
+        .filter((r) => r.is_in_exodus && r.network_signature !== '')
+        .map((t) => ({ ...t, network_regex: new RegExp(`${t.network_signature}$`, 'i') }));
 
     const tracker_counts: Record<string, number> = {};
     await Promise.all(
@@ -245,6 +247,7 @@ const computeRequestData = async () => {
 
     const apps = {
         all: await db.many('select * from apps;'),
+        initial: await db.many("select a.* from runs join apps a on a.id = runs.app where run_type='initial';"),
         accepted: await db.many("select a.* from runs join apps a on a.id = runs.app where run_type='accepted';"),
         rejected: await db.many("select a.* from runs join apps a on a.id = runs.app where run_type='rejected';"),
     };
@@ -260,6 +263,36 @@ const computeRequestData = async () => {
         rejected: await getRequests('rejected'),
     };
 
+    // Prevalence of Exodus-identified trackers in traffic
+    const getTrackerRequests = (reqs: Request[]) =>
+        reqs.filter((r) => exodus_trackers.some((t) => t.network_regex.test(r.host)));
+    const tracker_requests = {
+        all: getTrackerRequests(requests.all),
+        initial: getTrackerRequests(requests.initial),
+        accepted: getTrackerRequests(requests.accepted),
+        rejected: getTrackerRequests(requests.rejected),
+    };
+    console.log('Prevalence of Exodus-identified trackers in traffic:', {
+        all: expandWithPercentages(tracker_requests.all.length, requests.all.length),
+        initial: expandWithPercentages(tracker_requests.initial.length, requests.initial.length),
+        accepted: expandWithPercentages(tracker_requests.accepted.length, requests.accepted.length),
+        rejected: expandWithPercentages(tracker_requests.rejected.length, requests.rejected.length),
+    });
+    const apps_with_trackers = mapObject(tracker_requests, (type, reqs) => [
+        type,
+        reqs.reduce<Set<string>>((acc, r) => {
+            acc.add(r.name);
+            return acc;
+        }, new Set()).size,
+    ]);
+    console.log('Apps with at least one Exodus-identified tracker:', {
+        all: expandWithPercentages(apps_with_trackers.all, apps.all.length),
+        initial: expandWithPercentages(apps_with_trackers.initial, apps.initial.length),
+        accepted: expandWithPercentages(apps_with_trackers.accepted, apps.accepted.length),
+        rejected: expandWithPercentages(apps_with_trackers.rejected, apps.rejected.length),
+    });
+
+    // Data types transmitted to trackers
     const all_requests_with_adapter = requests.all.filter((r) => adapterForRequest(r));
     console.log(
         `Total requests: ${requests.all.length}, requests with adapter: ${
@@ -282,38 +315,46 @@ const computeRequestData = async () => {
         ram_free: 'ram_usage',
         width: 'screen_size',
         height: 'screen_size',
+        lat: 'location',
+        long: 'location',
     };
 
     const computeAppData = (run_type: keyof typeof requests) => {
-        const app_tracker_data: Record<string, Record<string, Set<string>>> = apps[
+        // Maps from platform::app_id to a map from tracker to a map from data type to whether the data is transmitted
+        // in conjunction with a unique ID (i.e. pseudonymously) or without (i.e. anonymously).
+        const app_tracker_data: Record<string, Record<string, Record<string, 'pseudonymously' | 'anonymously'>>> = apps[
             run_type === 'initial' ? 'all' : run_type
         ].reduce<Record<string, {}>>((acc, cur) => ({ ...acc, [`${cur.platform}::${cur.name}`]: {} }), {});
         for (const r of requests[run_type]) {
             const app = `${r.platform}::${r.name}`;
             const adapter_data = processRequest(r);
 
+            let data_types: string[];
+            let tracker: string;
+
             // One of our adapters was able to process the request.
             if (adapter_data) {
-                const data_types = Object.entries(adapter_data)
+                data_types = Object.entries(adapter_data)
                     .filter(([key]) => key !== 'tracker')
                     .flatMap(([_, d]) => Object.keys(d))
                     .map((t) => data_type_replacers[t] || t);
 
-                const tracker = adapter_data.tracker.name;
-
-                if (!app_tracker_data[app][tracker]) app_tracker_data[app][tracker] = new Set();
-                for (const data_type of data_types)
-                    app_tracker_data[app][tracker].add(['lat', 'long'].includes(data_type) ? 'location' : data_type);
+                tracker = adapter_data.tracker.name;
             }
             // None of our adapters could process the request, so we do indicator matching.
             else {
-                for (const [name, strings] of Object.entries({ ...indicators, app_id: [r.name] })) {
-                    if (requestHasIndicator(r, strings)) {
-                        if (!app_tracker_data[app]['<indicators>']) app_tracker_data[app]['<indicators>'] = new Set();
-                        app_tracker_data[app]['<indicators>'].add(name);
-                    }
-                }
+                data_types = Object.entries({ ...indicators, app_id: [r.name] })
+                    .filter(([_, strings]) => requestHasIndicator(r, strings))
+                    .map(([name]) => name);
+                tracker = '<indicators>';
             }
+
+            const is_pseudonymous = hasPseudonymousData(data_types);
+            if (!app_tracker_data[app][tracker]) app_tracker_data[app][tracker] = {};
+            for (const data_type of data_types)
+                app_tracker_data[app][tracker][data_type] = is_pseudonymous
+                    ? 'pseudonymously'
+                    : app_tracker_data[app][tracker][data_type] || 'anonymously';
         }
 
         return app_tracker_data;
@@ -325,12 +366,14 @@ const computeRequestData = async () => {
     };
 
     const appTransmitsPseudonymousData = (app: typeof app_tracker_data.initial[string]) =>
-        Object.values(app).some((s) => hasPseudonymousData(s));
+        Object.values(app)
+            .map((d) => Object.keys(d))
+            .some((s) => hasPseudonymousData(s));
 
     for (const run_type of Object.keys(app_tracker_data) as (keyof typeof app_tracker_data)[]) {
         await fs.writeFile(
             join(data_dir, `apps_trackers_data_types_${run_type}.json`),
-            jsonify_obj_with_sets(app_tracker_data[run_type])
+            JSON.stringify(app_tracker_data[run_type], null, 4)
         );
 
         const apps_with_id = Object.values(app_tracker_data[run_type]).filter((a) => appTransmitsPseudonymousData(a));
@@ -354,10 +397,11 @@ const computeRequestData = async () => {
 
         const csv_data = Object.entries(app_tracker_data[run_type]).flatMap(([app, data]) =>
             Object.entries(data).flatMap(([tracker, data_types]) =>
-                [...data_types].flatMap((data_type) => ({
+                [...Object.entries(data_types)].flatMap(([data_type, transmission_type]) => ({
                     app_id: app.split('::')[1],
                     tracker,
                     data_type,
+                    transmission_type,
                     platform: app.split('::')[0] as 'android' | 'ios',
                 }))
             )
@@ -365,7 +409,16 @@ const computeRequestData = async () => {
         await fs.writeFile(join(data_dir, `apps_trackers_data_types_${run_type}.csv`), Papa.unparse(csv_data));
 
         const csv_counts = csv_data.reduce<
-            Record<string, { tracker: string; data_type: string; platform: 'android' | 'ios'; count: number }>
+            Record<
+                string,
+                {
+                    tracker: string;
+                    data_type: string;
+                    platform: 'android' | 'ios';
+                    transmission_type: 'pseudonymously' | 'anonymously';
+                    count: number;
+                }
+            >
         >((acc, cur) => {
             const key = `${cur.platform}::${cur.tracker}::${cur.data_type}`;
             if (!acc[key])
@@ -373,6 +426,7 @@ const computeRequestData = async () => {
                     tracker: cur.tracker,
                     data_type: cur.data_type,
                     platform: cur.platform,
+                    transmission_type: cur.transmission_type,
                     count: 0,
                 };
             acc[key].count++;

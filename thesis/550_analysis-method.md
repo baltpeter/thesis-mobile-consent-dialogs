@@ -106,8 +106,6 @@ Even though only comparatively few apps implement the IAB TCF (cf. [@sec:cd-situ
 
 ### TODO: Cookies etc.
 
-* https://cookiepedia.co.uk/
-* https://cookiedatabase.org/
-* https://github.com/jkwakman/Open-Cookie-Database
+For that, we leveraged the Open Cookie Database [@kwakmanOpenCookieDatabase2022], a list of 710 cookies as of the time of writing, mapped to the platform they are set by and a category they can be attributed to, among other things.
 
 ## Privacy Labels {#sec:method-privacy-labels}

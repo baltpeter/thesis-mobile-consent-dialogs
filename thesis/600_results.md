@@ -5,11 +5,13 @@ In total, we successfully analysed 4388 apps with 2086 apps on Android and 2320 
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
 
+TODO: Make one color mean one thing across all plots.
+
 ## Network Traffic and Tracking
 
 ![Number of requests and unique hosts contacted per app without any user interaction. Three apps which did more than 1000 requests are omitted in this graph. Those are: `com.prequel.app` on Android with 2500 requests, and `com.audiomack.iphone` and `com.storycover` on iOS with 2383 and 1019 requests, respectively.](../graphs/requests_hosts_per_app.pdf){#fig:results-requests-hosts-per-app}
 
-[@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50% of apps did less than 23 requests and 75% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.27 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
+In total, we recorded 194817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50% of apps did less than 23 requests and 75% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.27 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
 53% of apps contacted less than 10 unique hosts, with 11.85 hosts on average across both platforms.
 <!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
 <!-- Excel:
@@ -24,9 +26,18 @@ select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.
      I9=I8/I7 -->
 <!-- select avg(c.host_count) from (select count(distinct host) host_count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c; -->
 
-TODO: tracking
+![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022] (without user interaction). The trackers are coloured by the country they are based in. We compiled the mapping from tracker to country by looking at the trackers' privacy policies. When a policy listed multiple establishments, we chose the country of the main one.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
 
-![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022]. The trackers are coloured by the country they are based in.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
+61700 (33.32%) of the requests that happened without user interaction were identified as going to trackers when compared against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35% and 31.29% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21% of apps sent traffic to Google trackers, and on iOS, 67.11% did. The remaining trackers were all only contacted by 10% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries. The latter trackers are based in Israel, Singapore, China, and Russia.
+<!-- select platform, count(distinct name) from filtered_requests where host ~
+      '2mdn\.net|\.google\.com|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|\.google\.com|google-analytics\.com|crashlytics\.com|2mdn\.net|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|firebase\.com|www\.googletagmanager\.com|www\.googletagservices\.com|app-measurement\.com|googlesyndication\.com'
+    group by platform; -->
+
+![Number of times that the observed data types were transmitted per app and tracker without any user interaction, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously).](../graphs/data_type_transmissions_initial.pdf){#fig:results-data-type-transmissions-initial}
+
+Looking at the data transmitted to trackers, 3201 apps (72.95%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Through our tracking requests adapters and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
+
+TODO: Clean up fig:results-tracker-data-initial.
 
 ```{=latex}
 \afterpage{%
@@ -34,7 +45,10 @@ TODO: tracking
     \begin{landscape}
 ```
 
-![TODO](../graphs/apps_trackers_data_types_initial.pdf){#fig:results-tracker-data-initial}
+![Observed transmissions of various types of data to trackers without interaction, grouped by platform. Each point represents a number of apps transmitting the respective row's data type to the tracker in the respective column, with the size of the point indicating how many apps performed this transmission at least once. The points are coloured according the apps' platform. \
+\
+The observations in the "\<indicators>" column came from string-matching plain and base64-encoded text in the requests not covered by a tracking request adapter.
+](../graphs/apps_trackers_data_types_initial.pdf){#fig:results-tracker-data-initial}
 
 ```{=latex}
     \end{landscape}
@@ -42,10 +56,12 @@ TODO: tracking
 }
 ```
 
-* Percentage of traffic that Exodus classifies as tracking
-* Transmitted data
-    * Indicators
-    * Adapters
+[@Fig:results-tracker-data-initial] further plots the observed data types against the trackers they were sent to, highlighting that some trackers are only active on one platform and others transmit different types of data depending on the platform. For example, we saw Facebook receiving significantly fewer data types on iOS compared to Android. Conversely, Google Firebase received more data types on iOS.  
+From this data, we can also infer that some trackers are more common on one platform. For example, we observed significantly more transmissions to AdColony on Android compared to iOS, while it is the other way around for ioam.de and ironSource.
+
+![Prevalence of cookies by various companies and which category that can be attributed to (across all runs) according to [@kwakmanOpenCookieDatabase2022]. Each point represents the number of times a cookie by the company in the respective row and belonging to the category in the respective column was set by an app to a different value, with the size of the point indicating how often the cookie was set. The points are coloured according the apps' platform.](../graphs/cookies.pdf){#fig:results-cookies}
+
+Finally, we also analysed the cookies that were set in the requests. The results are shown in [@Fig:results-cookies]. TODO: Total cookies/matched cookies. We only observed cookies from the *Analytics* and *Marketing* categories but none from the *Functional* and *Preferences* categories. Most cookies we saw were marketing cookies. We saw a more diverse set of companies setting cookies on Android than on iOS. Once again, Google was the most prevalent company on both platforms.
 
 ## Prevalence of Consent Dialogs
 
@@ -57,7 +73,7 @@ To gain insights into how different choices in the consent dialogs affect the tr
 <!-- select count(1) from runs where run_type='accepted'; -->
 <!-- select count(1) from runs where run_type='rejected'; -->
 
-Given the low number of apps for which we have traffic after rejecting, which would not be representative, we don't analyse the change in tracking after rejected. The likelihood of a re-identified device skewing the results is significantly lower for the accepted runs as those came immediately after the initial run without interaction, which should not have affected a potential server-side consent status.
+Given the low number of apps for which we have traffic after rejecting, which would not be representative, we don't analyse the change in tracking after rejected.
 
 <!-- select count(1) from filtered_requests where run_type = 'initial'; -->
 <!-- select count(1) from filtered_requests where run_type = 'accepted'; -->
@@ -68,6 +84,19 @@ For accepted runs: 181 of 330 apps (54.85 %) transmit pseudonymous data.
     -> Of those, 46 apps didn't transmit pseudonymous data initially.
 For rejected runs: 13 of 28 apps (46.43 %) transmit pseudonymous data.
     -> Of those, 1 apps didn't transmit pseudonymous data initially. -->
+
+<!-- Prevalence of Exodus-identified trackers in traffic: {
+  all: [ 64832, '33.28 %' ],
+  initial: [ 61700, '33.32 %' ],
+  accepted: [ 2980, '31.90 %' ],
+  rejected: [ 152, '47.06 %' ]
+}
+Apps with at least one Exodus-identified tracker: {
+  all: [ 3452, '78.67 %' ],
+  initial: [ 3426, '78.08 %' ],
+  accepted: [ 217, '65.76 %' ],
+  rejected: [ 17, '60.71 %' ]
+} -->
 
 ## Privacy Labels
 
