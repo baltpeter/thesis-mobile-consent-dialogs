@@ -360,6 +360,7 @@ const computeRequestData = async () => {
         return app_tracker_data;
     };
     const app_tracker_data = {
+        all: computeAppData('all'),
         initial: computeAppData('initial'),
         accepted: computeAppData('accepted'),
         rejected: computeAppData('rejected'),
@@ -370,13 +371,19 @@ const computeRequestData = async () => {
             .map((d) => Object.keys(d))
             .some((s) => hasPseudonymousData(s));
 
+    const dialog_apps = await db.many<{ app_key: string; has_violation: boolean }>(
+        "select concat(platform, '::', name) app_key, (cast(violations->>'stops_after_reject' as boolean) or cast(violations->>'ambiguous_accept_button' as boolean) or cast(violations->>'accept_button_without_reject_button' as boolean) or cast(violations->>'ambiguous_reject_button' as boolean) or cast(violations->>'accept_larger_than_reject' as boolean) or cast(violations->>'accept_color_highlight' as boolean)) has_violation from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where verdict = 'dialog' or verdict = 'maybe_dialog';"
+    );
     for (const run_type of Object.keys(app_tracker_data) as (keyof typeof app_tracker_data)[]) {
-        await fs.writeFile(
-            join(data_dir, `apps_trackers_data_types_${run_type}.json`),
-            JSON.stringify(app_tracker_data[run_type], null, 4)
-        );
+        if (run_type !== 'all')
+            await fs.writeFile(
+                join(data_dir, `apps_trackers_data_types_${run_type}.json`),
+                JSON.stringify(app_tracker_data[run_type], null, 4)
+            );
 
-        const apps_with_id = Object.values(app_tracker_data[run_type]).filter((a) => appTransmitsPseudonymousData(a));
+        const apps_with_id = Object.entries(app_tracker_data[run_type])
+            .filter(([_, d]) => appTransmitsPseudonymousData(d))
+            .map((r) => r[0]);
         console.log(
             `For ${run_type} runs: ${apps_with_id.length} of ${
                 Object.keys(app_tracker_data[run_type]).length
@@ -386,7 +393,7 @@ const computeRequestData = async () => {
             )}) transmit pseudonymous data.`
         );
 
-        if (run_type !== 'initial') {
+        if (!['all', 'initial'].includes(run_type)) {
             const new_apps = Object.entries(app_tracker_data[run_type]).filter(
                 ([app, tracker_data]) =>
                     appTransmitsPseudonymousData(tracker_data) &&
@@ -395,6 +402,27 @@ const computeRequestData = async () => {
             console.log(`    -> Of those, ${new_apps.length} apps didn't transmit pseudonymous data initially.`);
         }
 
+        const dialog_apps_transmitting_id = dialog_apps.filter(({ app_key }) => apps_with_id.includes(app_key));
+        console.log(
+            `    -> ${dialog_apps_transmitting_id.length} of the ${dialog_apps.length} apps with a dialog (${percentage(
+                dialog_apps_transmitting_id.length,
+                dialog_apps.length
+            )}) transmit pseudonymous data in this run.`
+        );
+        const dialog_apps_with_violation_transmitting_id = dialog_apps_transmitting_id.filter((d) => d.has_violation);
+        console.log(
+            `    -> ${
+                dialog_apps_with_violation_transmitting_id.length
+            } of the apps with a detected dialog violation (${percentage(
+                dialog_apps_with_violation_transmitting_id.length,
+                dialog_apps.length
+            )} of all dialogs; ${percentage(
+                dialog_apps_with_violation_transmitting_id.length,
+                dialog_apps.filter((d) => d.has_violation).length
+            )} of the violating dialogs) transmit pseudonymous data in this run.`
+        );
+
+        if (run_type === 'all') continue;
         const csv_data = Object.entries(app_tracker_data[run_type]).flatMap(([app, data]) =>
             Object.entries(data).flatMap(([tracker, data_types]) =>
                 [...Object.entries(data_types)].flatMap(([data_type, transmission_type]) => ({

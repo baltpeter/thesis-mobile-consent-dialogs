@@ -26,10 +26,34 @@
     },
     "ios::com.huawei.iosclone": {},
     "android::com.planner5d.planner5d": {
-        "<indicators>": {
+        "adcolony": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "os": "pseudonymously",
             "idfa": "pseudonymously",
+            "other_uuids": "pseudonymously",
+            "carrier": "pseudonymously",
+            "language": "pseudonymously",
             "model": "pseudonymously",
-            "app_id": "pseudonymously"
+            "battery_percentage": "pseudonymously",
+            "orientation": "pseudonymously",
+            "timezone": "pseudonymously",
+            "screen_size": "pseudonymously",
+            "network_connection_type": "pseudonymously",
+            "architecture": "pseudonymously",
+            "dark_mode": "pseudonymously",
+            "app_name": "pseudonymously"
+        },
+        "<indicators>": {
+            "model": "pseudonymously",
+            "app_id": "pseudonymously",
+            "idfa": "pseudonymously"
+        },
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfa": "pseudonymously",
+            "os": "pseudonymously"
         },
         "facebook": {
             "app_id": "pseudonymously",
@@ -67,24 +91,6 @@
             "app_id": "pseudonymously",
             "app_version": "pseudonymously"
         },
-        "adcolony": {
-            "idfa": "pseudonymously",
-            "carrier": "pseudonymously",
-            "screen_size": "pseudonymously",
-            "language": "pseudonymously",
-            "model": "pseudonymously",
-            "network_connection_type": "pseudonymously",
-            "os": "pseudonymously",
-            "architecture": "pseudonymously",
-            "battery_percentage": "pseudonymously",
-            "timezone": "pseudonymously",
-            "orientation": "pseudonymously",
-            "dark_mode": "pseudonymously",
-            "app_name": "pseudonymously",
-            "app_version": "pseudonymously",
-            "app_id": "pseudonymously",
-            "other_uuids": "pseudonymously"
-        },
         "unity": {
             "app_id": "pseudonymously",
             "model": "pseudonymously",
@@ -94,12 +100,6 @@
             "rooted": "pseudonymously",
             "os": "pseudonymously",
             "language": "pseudonymously"
-        },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
-            "os": "pseudonymously"
         }
     },
     "ios::de.md.meinmd": {
@@ -115,6 +115,12 @@
     "android::com.nexstreaming.app.kinemasterfree": {
         "<indicators>": {
             "app_id": "anonymously"
+        },
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfa": "pseudonymously",
+            "os": "pseudonymously"
         },
         "facebook": {
             "app_id": "pseudonymously",
@@ -133,24 +139,17 @@
             "language": "pseudonymously",
             "accelerometer": "pseudonymously",
             "rotation": "pseudonymously"
-        },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
-            "os": "pseudonymously"
         }
     },
     "android::aplicacion.tiempo": {
         "<indicators>": {
-            "model": "pseudonymously",
+            "app_id": "pseudonymously",
             "idfa": "pseudonymously",
-            "app_id": "pseudonymously"
+            "model": "pseudonymously"
         },
         "facebook": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
             "other_uuids": "pseudonymously",
             "model": "pseudonymously",
             "emulator": "pseudonymously",
@@ -162,9 +161,10 @@
             "battery_percentage": "pseudonymously",
             "ram_usage": "pseudonymously",
             "disk_usage": "pseudonymously",
+            "language": "pseudonymously",
+            "idfa": "pseudonymously",
             "accelerometer": "pseudonymously",
-            "rotation": "pseudonymously",
-            "language": "pseudonymously"
+            "rotation": "pseudonymously"
         }
     },
     "ios::com.iTankster.MagnifyGlassLite": {
@@ -211,6 +211,21 @@
         "<indicators>": {}
     },
     "android::com.ebay.kleinanzeigen": {
+        "<indicators>": {
+            "app_id": "anonymously"
+        },
+        "ioam": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "hashed_idfa": "pseudonymously",
+            "other_uuids": "pseudonymously",
+            "model": "pseudonymously",
+            "os": "pseudonymously",
+            "language": "pseudonymously",
+            "carrier": "pseudonymously",
+            "screen_size": "pseudonymously",
+            "country": "pseudonymously"
+        },
         "facebook": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -234,21 +249,6 @@
             "app_version": "pseudonymously",
             "idfa": "pseudonymously",
             "os": "pseudonymously"
-        },
-        "<indicators>": {
-            "app_id": "anonymously"
-        },
-        "ioam": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "hashed_idfa": "pseudonymously",
-            "other_uuids": "pseudonymously",
-            "model": "pseudonymously",
-            "os": "pseudonymously",
-            "language": "pseudonymously",
-            "carrier": "pseudonymously",
-            "screen_size": "pseudonymously",
-            "country": "pseudonymously"
         }
     },
     "android::de.comventure.medpex": {
@@ -316,6 +316,16 @@
         }
     },
     "ios::com.werneroi.polyjamer": {
+        "mopub": {
+            "app_version": "pseudonymously",
+            "app_id": "pseudonymously",
+            "idfv": "pseudonymously",
+            "os": "pseudonymously",
+            "model": "pseudonymously",
+            "timezone": "pseudonymously",
+            "carrier": "pseudonymously",
+            "screen_size": "pseudonymously"
+        },
         "yandex": {
             "idfa": "pseudonymously",
             "idfv": "pseudonymously",
@@ -337,19 +347,10 @@
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "mopub": {
-            "app_version": "pseudonymously",
-            "app_id": "pseudonymously",
-            "idfv": "pseudonymously",
-            "os": "pseudonymously",
-            "model": "pseudonymously",
-            "timezone": "pseudonymously",
-            "carrier": "pseudonymously",
-            "screen_size": "pseudonymously"
         }
     },
     "ios::de.inforoad.cleverTanken": {
+        "<indicators>": {},
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -360,7 +361,6 @@
             "model": "anonymously",
             "timezone": "anonymously"
         },
-        "<indicators>": {},
         "ioam": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -390,6 +390,12 @@
             "model": "anonymously",
             "app_id": "anonymously"
         },
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfa": "pseudonymously",
+            "os": "pseudonymously"
+        },
         "facebook": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -415,12 +421,6 @@
             "language": "anonymously",
             "network_connection_type": "anonymously",
             "app_name": "anonymously"
-        },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
-            "os": "pseudonymously"
         }
     },
     "android::com.nomad88.nomadmusic": {},
@@ -491,8 +491,8 @@
     },
     "ios::la.unum.unum-ios": {
         "<indicators>": {
-            "location": "anonymously",
-            "app_id": "anonymously"
+            "app_id": "anonymously",
+            "location": "anonymously"
         },
         "firebase": {
             "app_id": "pseudonymously",
@@ -522,21 +522,21 @@
     },
     "android::dj.mixer.music.pro.sound.effects": {
         "<indicators>": {
+            "model": "pseudonymously",
             "idfa": "pseudonymously",
-            "app_id": "pseudonymously",
-            "model": "pseudonymously"
+            "app_id": "pseudonymously"
         },
         "facebook": {
             "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
             "idfa": "pseudonymously",
             "other_uuids": "pseudonymously",
+            "os": "pseudonymously",
+            "app_version": "pseudonymously",
             "model": "pseudonymously",
             "emulator": "pseudonymously",
             "rooted": "pseudonymously",
             "carrier": "pseudonymously",
             "screen_size": "pseudonymously",
-            "os": "pseudonymously",
             "is_charging": "pseudonymously",
             "battery_percentage": "pseudonymously",
             "ram_usage": "pseudonymously",
@@ -584,6 +584,13 @@
         "<indicators>": {}
     },
     "ios::cn.danatech.pictureBird": {
+        "adjust": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfv": "pseudonymously",
+            "model": "pseudonymously",
+            "os": "pseudonymously"
+        },
         "<indicators>": {},
         "apple": {
             "other_uuids": "pseudonymously",
@@ -594,13 +601,6 @@
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "adjust": {
-            "app_version": "pseudonymously",
-            "idfv": "pseudonymously",
-            "model": "pseudonymously",
-            "os": "pseudonymously",
-            "app_id": "pseudonymously"
         }
     },
     "ios::de.nwzonline.em.epaper": {
@@ -683,16 +683,16 @@
     "android::com.voidmod.meinort": {},
     "ios::com.musicasto.app": {
         "<indicators>": {
-            "app_id": "anonymously",
-            "idfa": "pseudonymously"
+            "idfa": "pseudonymously",
+            "app_id": "anonymously"
         }
     },
     "ios::de.nebenan.nebenan": {
-        "facebook": {
-            "os": "anonymously"
-        },
         "<indicators>": {
             "app_id": "anonymously"
+        },
+        "facebook": {
+            "os": "anonymously"
         },
         "firebase": {
             "app_id": "pseudonymously",
@@ -817,8 +817,8 @@
     "ios::com.frontierdesign.videostar": {},
     "ios::co.rocket-apps.ios.fonts": {
         "<indicators>": {
-            "app_id": "pseudonymously",
-            "idfa": "pseudonymously"
+            "idfa": "pseudonymously",
+            "app_id": "pseudonymously"
         }
     },
     "android::com.gamma.scan": {
@@ -871,8 +871,8 @@
     "ios::bp.ft": {},
     "ios::health.sleep.sounds.tracker.alarm.calm": {
         "<indicators>": {
-            "app_id": "pseudonymously",
-            "idfa": "pseudonymously"
+            "idfa": "pseudonymously",
+            "app_id": "pseudonymously"
         },
         "ms_appcenter": {
             "app_id": "anonymously",
@@ -945,18 +945,18 @@
             "model": "pseudonymously",
             "os": "pseudonymously"
         },
-        "<indicators>": {
-            "app_id": "anonymously"
-        },
         "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "os": "pseudonymously",
-            "idfv": "pseudonymously",
             "language": "anonymously",
             "model": "anonymously",
+            "os": "pseudonymously",
             "timezone": "anonymously",
-            "other_uuids": "pseudonymously"
+            "other_uuids": "pseudonymously",
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfv": "pseudonymously"
+        },
+        "<indicators>": {
+            "app_id": "anonymously"
         },
         "apple": {
             "other_uuids": "pseudonymously",
@@ -972,15 +972,15 @@
         "<indicators>": {}
     },
     "ios::com.hometogo.hometogo": {
+        "<indicators>": {
+            "app_id": "anonymously"
+        },
         "adjust": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "idfv": "pseudonymously",
             "model": "pseudonymously",
             "os": "pseudonymously"
-        },
-        "<indicators>": {
-            "app_id": "anonymously"
         },
         "firebase": {
             "os": "pseudonymously",
@@ -1042,11 +1042,11 @@
             "app_id": "anonymously"
         },
         "firebase": {
-            "os": "pseudonymously",
-            "other_uuids": "pseudonymously",
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
-            "idfv": "pseudonymously"
+            "os": "pseudonymously",
+            "idfv": "pseudonymously",
+            "other_uuids": "pseudonymously"
         }
     },
     "ios::de.truffls.mobile": {
@@ -1201,14 +1201,14 @@
         }
     },
     "ios::io.cleanfox.ios": {
-        "<indicators>": {
-            "app_id": "anonymously"
-        },
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
+        },
+        "<indicators>": {
+            "app_id": "anonymously"
         }
     },
     "android::life.channel.accurate.local.weather.forecast": {
@@ -1460,11 +1460,11 @@
             "app_id": "anonymously"
         },
         "adjust": {
+            "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "idfv": "pseudonymously",
             "model": "pseudonymously",
-            "os": "pseudonymously",
-            "app_id": "pseudonymously"
+            "os": "pseudonymously"
         }
     },
     "ios::aiby.prowidget": {
@@ -1674,8 +1674,8 @@
     },
     "ios::com.dh3games.wouldyourather": {
         "<indicators>": {
-            "app_id": "pseudonymously",
-            "idfa": "pseudonymously"
+            "idfa": "pseudonymously",
+            "app_id": "pseudonymously"
         },
         "firebase": {
             "app_id": "pseudonymously",
@@ -1786,8 +1786,8 @@
     },
     "ios::com.myicon.themeiconchanger": {
         "<indicators>": {
-            "hashed_idfa": "pseudonymously",
             "app_id": "pseudonymously",
+            "hashed_idfa": "pseudonymously",
             "idfa": "pseudonymously"
         },
         "vungle": {
@@ -1956,14 +1956,14 @@
         }
     },
     "ios::com.impalastudios.pianofree": {
+        "<indicators>": {
+            "app_id": "anonymously"
+        },
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "<indicators>": {
-            "app_id": "anonymously"
         },
         "doubleclick": {
             "model": "anonymously",
@@ -2245,6 +2245,14 @@
         "<indicators>": {}
     },
     "android::com.timewarpscan.timewarpfilter.warpscan.slitscan.facescanner": {
+        "<indicators>": {},
+        "doubleclick": {
+            "model": "anonymously",
+            "volume": "anonymously",
+            "language": "anonymously",
+            "network_connection_type": "anonymously",
+            "app_name": "anonymously"
+        },
         "facebook": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -2262,14 +2270,6 @@
             "accelerometer": "pseudonymously",
             "rotation": "pseudonymously",
             "language": "pseudonymously"
-        },
-        "<indicators>": {},
-        "doubleclick": {
-            "model": "anonymously",
-            "volume": "anonymously",
-            "language": "anonymously",
-            "network_connection_type": "anonymously",
-            "app_name": "anonymously"
         }
     },
     "ios::com.mailjerry.app": {},
@@ -2925,20 +2925,20 @@
         }
     },
     "ios::tv.pluto.ios": {
+        "<indicators>": {
+            "app_id": "anonymously",
+            "local_ips": "anonymously",
+            "location": "anonymously"
+        },
+        "apple": {
+            "other_uuids": "pseudonymously",
+            "app_id": "pseudonymously"
+        },
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "<indicators>": {
-            "location": "anonymously",
-            "app_id": "anonymously",
-            "local_ips": "anonymously"
-        },
-        "apple": {
-            "other_uuids": "pseudonymously",
-            "app_id": "pseudonymously"
         }
     },
     "android::com.gismart.drum.pads.machine": {
@@ -3165,23 +3165,23 @@
         }
     },
     "ios::cn.danatech.pictureInsect": {
+        "adjust": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfv": "pseudonymously",
+            "model": "pseudonymously",
+            "os": "pseudonymously"
+        },
+        "apple": {
+            "other_uuids": "pseudonymously",
+            "app_id": "pseudonymously"
+        },
         "<indicators>": {},
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "adjust": {
-            "app_version": "pseudonymously",
-            "idfv": "pseudonymously",
-            "model": "pseudonymously",
-            "os": "pseudonymously",
-            "app_id": "pseudonymously"
-        },
-        "apple": {
-            "other_uuids": "pseudonymously",
-            "app_id": "pseudonymously"
         }
     },
     "ios::de.suedkurier.skmobil": {
@@ -3214,13 +3214,13 @@
         }
     },
     "android::com.dacia.mydacia.one.fr": {
+        "<indicators>": {},
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "idfa": "pseudonymously",
             "os": "pseudonymously"
-        },
-        "<indicators>": {}
+        }
     },
     "android::com.anuntis.fotocasa": {
         "<indicators>": {
@@ -3301,6 +3301,12 @@
         "<indicators>": {}
     },
     "android::com.getyourguide.android": {
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfa": "pseudonymously",
+            "os": "pseudonymously"
+        },
         "<indicators>": {
             "model": "anonymously",
             "app_id": "anonymously"
@@ -3320,12 +3326,6 @@
             "app_id": "pseudonymously",
             "idfa": "pseudonymously",
             "other_uuids": "pseudonymously",
-            "os": "pseudonymously"
-        },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
             "os": "pseudonymously"
         }
     },
@@ -3404,13 +3404,13 @@
         "<indicators>": {}
     },
     "ios::com.chrono24.Chrono24": {
+        "<indicators>": {},
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "<indicators>": {}
+        }
     },
     "ios::smartmobitools.Audio-Recorder": {
         "<indicators>": {
@@ -3443,9 +3443,9 @@
     "android::com.ilyabogdanovich.geotracker": {},
     "android::de.casamundo.casamundomobile": {
         "<indicators>": {
+            "app_id": "anonymously",
             "model": "pseudonymously",
-            "idfa": "pseudonymously",
-            "app_id": "anonymously"
+            "idfa": "pseudonymously"
         }
     },
     "android::net.zedge.android": {
@@ -3515,8 +3515,78 @@
     "android::com.funcell.petsimulator": {
         "<indicators>": {
             "app_id": "pseudonymously",
+            "idfa": "pseudonymously",
+            "model": "pseudonymously"
+        },
+        "facebook": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "other_uuids": "pseudonymously",
             "model": "pseudonymously",
-            "idfa": "pseudonymously"
+            "emulator": "pseudonymously",
+            "rooted": "pseudonymously",
+            "carrier": "pseudonymously",
+            "screen_size": "pseudonymously",
+            "os": "pseudonymously",
+            "is_charging": "pseudonymously",
+            "battery_percentage": "pseudonymously",
+            "ram_usage": "pseudonymously",
+            "disk_usage": "pseudonymously",
+            "language": "pseudonymously",
+            "idfa": "pseudonymously",
+            "accelerometer": "pseudonymously",
+            "rotation": "pseudonymously"
+        },
+        "rayjump": {
+            "os": "anonymously",
+            "orientation": "anonymously",
+            "model": "anonymously",
+            "language": "anonymously",
+            "user_agent": "anonymously",
+            "screen_size": "anonymously",
+            "app_id": "anonymously",
+            "app_version": "anonymously"
+        },
+        "adcolony": {
+            "idfa": "pseudonymously",
+            "carrier": "pseudonymously",
+            "screen_size": "pseudonymously",
+            "language": "pseudonymously",
+            "model": "pseudonymously",
+            "network_connection_type": "pseudonymously",
+            "os": "pseudonymously",
+            "architecture": "pseudonymously",
+            "battery_percentage": "pseudonymously",
+            "timezone": "pseudonymously",
+            "orientation": "pseudonymously",
+            "dark_mode": "pseudonymously",
+            "app_name": "pseudonymously",
+            "app_version": "pseudonymously",
+            "app_id": "pseudonymously",
+            "other_uuids": "pseudonymously"
+        },
+        "vungle": {
+            "idfa": "pseudonymously",
+            "model": "pseudonymously",
+            "os": "pseudonymously",
+            "carrier": "pseudonymously",
+            "screen_size": "pseudonymously",
+            "battery_percentage": "pseudonymously",
+            "is_charging": "pseudonymously",
+            "network_connection_type": "pseudonymously",
+            "language": "pseudonymously",
+            "timezone": "pseudonymously",
+            "volume": "pseudonymously",
+            "disk_usage": "pseudonymously",
+            "user_agent": "pseudonymously",
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously"
+        },
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "idfa": "pseudonymously",
+            "os": "pseudonymously"
         },
         "chartboost": {
             "app_id": "pseudonymously",
@@ -3532,23 +3602,6 @@
             "screen_size": "pseudonymously",
             "network_connection_type": "pseudonymously",
             "country": "pseudonymously"
-        },
-        "vungle": {
-            "model": "pseudonymously",
-            "os": "pseudonymously",
-            "carrier": "pseudonymously",
-            "screen_size": "pseudonymously",
-            "idfa": "pseudonymously",
-            "battery_percentage": "pseudonymously",
-            "is_charging": "pseudonymously",
-            "network_connection_type": "pseudonymously",
-            "language": "pseudonymously",
-            "timezone": "pseudonymously",
-            "volume": "pseudonymously",
-            "disk_usage": "pseudonymously",
-            "user_agent": "pseudonymously",
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously"
         },
         "unity": {
             "app_id": "pseudonymously",
@@ -3569,43 +3622,6 @@
             "user_agent": "anonymously",
             "country": "anonymously"
         },
-        "adcolony": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "os": "pseudonymously",
-            "idfa": "pseudonymously",
-            "other_uuids": "pseudonymously",
-            "carrier": "pseudonymously",
-            "language": "pseudonymously",
-            "model": "pseudonymously",
-            "battery_percentage": "pseudonymously",
-            "orientation": "pseudonymously",
-            "timezone": "pseudonymously",
-            "screen_size": "pseudonymously",
-            "network_connection_type": "pseudonymously",
-            "architecture": "pseudonymously",
-            "dark_mode": "pseudonymously",
-            "app_name": "pseudonymously"
-        },
-        "facebook": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
-            "other_uuids": "pseudonymously",
-            "model": "pseudonymously",
-            "emulator": "pseudonymously",
-            "rooted": "pseudonymously",
-            "carrier": "pseudonymously",
-            "screen_size": "pseudonymously",
-            "os": "pseudonymously",
-            "is_charging": "pseudonymously",
-            "battery_percentage": "pseudonymously",
-            "ram_usage": "pseudonymously",
-            "disk_usage": "pseudonymously",
-            "accelerometer": "pseudonymously",
-            "rotation": "pseudonymously",
-            "language": "pseudonymously"
-        },
         "supersonic": {
             "app_version": "pseudonymously",
             "app_id": "pseudonymously",
@@ -3620,22 +3636,6 @@
             "os": "pseudonymously",
             "model": "pseudonymously",
             "rooted": "pseudonymously"
-        },
-        "rayjump": {
-            "os": "anonymously",
-            "orientation": "anonymously",
-            "model": "anonymously",
-            "language": "anonymously",
-            "user_agent": "anonymously",
-            "screen_size": "anonymously",
-            "app_id": "anonymously",
-            "app_version": "anonymously"
-        },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "idfa": "pseudonymously",
-            "os": "pseudonymously"
         }
     },
     "ios::de.antenne.eple": {},
@@ -3646,12 +3646,6 @@
         "<indicators>": {
             "app_id": "anonymously"
         },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "os": "pseudonymously",
-            "idfv": "pseudonymously"
-        },
         "doubleclick": {
             "model": "anonymously",
             "os": "anonymously",
@@ -3661,6 +3655,12 @@
             "architecture": "anonymously",
             "rooted": "anonymously",
             "app_name": "anonymously"
+        },
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "os": "pseudonymously",
+            "idfv": "pseudonymously"
         }
     },
     "android::com.lootboy.app": {
@@ -3709,6 +3709,12 @@
         }
     },
     "ios::de.unister.abindenurlaub": {
+        "facebook": {
+            "os": "anonymously"
+        },
+        "<indicators>": {
+            "app_id": "anonymously"
+        },
         "adjust": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -3717,20 +3723,15 @@
             "model": "pseudonymously",
             "os": "pseudonymously"
         },
-        "<indicators>": {
-            "app_id": "anonymously"
-        },
         "firebase": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
             "os": "pseudonymously",
             "idfv": "pseudonymously"
-        },
-        "facebook": {
-            "os": "anonymously"
         }
     },
     "android::com.mxtech.videoplayer.ad": {
+        "<indicators>": {},
         "facebook": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -3748,8 +3749,7 @@
             "accelerometer": "pseudonymously",
             "rotation": "pseudonymously",
             "language": "pseudonymously"
-        },
-        "<indicators>": {}
+        }
     },
     "ios::com.futbin": {
         "firebase": {
@@ -3788,9 +3788,9 @@
     },
     "android::com.easybrain.make.music": {
         "<indicators>": {
-            "app_id": "pseudonymously",
             "model": "pseudonymously",
             "idfa": "pseudonymously",
+            "app_id": "pseudonymously",
             "location": "pseudonymously"
         },
         "vungle": {
@@ -3885,8 +3885,8 @@
     },
     "ios::com.collage.belka": {
         "<indicators>": {
-            "app_id": "anonymously",
-            "location": "anonymously"
+            "location": "anonymously",
+            "app_id": "anonymously"
         },
         "firebase": {
             "app_id": "pseudonymously",
@@ -4110,19 +4110,19 @@
         }
     },
     "ios::com.amberMobile.thermometerorange": {
-        "<indicators>": {
-            "idfa": "pseudonymously",
-            "local_ips": "pseudonymously"
-        },
         "firebase": {
+            "language": "anonymously",
+            "model": "anonymously",
             "os": "pseudonymously",
+            "timezone": "anonymously",
             "other_uuids": "pseudonymously",
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
-            "idfv": "pseudonymously",
-            "language": "anonymously",
-            "model": "anonymously",
-            "timezone": "anonymously"
+            "idfv": "pseudonymously"
+        },
+        "<indicators>": {
+            "idfa": "pseudonymously",
+            "local_ips": "pseudonymously"
         },
         "adjust": {
             "app_id": "pseudonymously",
@@ -4156,6 +4156,11 @@
         "<indicators>": {
             "idfa": "pseudonymously"
         },
+        "firebase": {
+            "app_id": "anonymously",
+            "app_version": "anonymously",
+            "os": "anonymously"
+        },
         "ioam": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -4176,11 +4181,6 @@
             "app_id": "pseudonymously",
             "language": "pseudonymously",
             "country": "pseudonymously"
-        },
-        "firebase": {
-            "app_id": "anonymously",
-            "app_version": "anonymously",
-            "os": "anonymously"
         }
     },
     "ios::de.docmorris.pharmacyapp": {
@@ -4190,6 +4190,26 @@
     },
     "ios::com.BreezoMeter.BreezoMeter": {},
     "ios::com.glority.everlens": {
+        "<indicators>": {
+            "app_id": "pseudonymously",
+            "idfa": "pseudonymously"
+        },
+        "supersonic": {
+            "app_version": "pseudonymously",
+            "app_id": "pseudonymously",
+            "carrier": "pseudonymously",
+            "timezone": "pseudonymously",
+            "idfa": "pseudonymously",
+            "idfv": "pseudonymously",
+            "other_uuids": "pseudonymously",
+            "language": "pseudonymously",
+            "battery_percentage": "pseudonymously",
+            "network_connection_type": "pseudonymously",
+            "ram_usage": "pseudonymously",
+            "os": "pseudonymously",
+            "model": "pseudonymously",
+            "rooted": "pseudonymously"
+        },
         "ironsource": {
             "model": "anonymously",
             "os": "anonymously",
@@ -4197,9 +4217,21 @@
             "app_id": "anonymously",
             "app_version": "anonymously"
         },
-        "<indicators>": {
-            "idfa": "pseudonymously",
-            "app_id": "pseudonymously"
+        "doubleclick": {
+            "model": "anonymously",
+            "os": "anonymously",
+            "volume": "anonymously",
+            "language": "anonymously",
+            "network_connection_type": "anonymously",
+            "architecture": "anonymously",
+            "rooted": "anonymously",
+            "app_name": "anonymously"
+        },
+        "firebase": {
+            "app_id": "pseudonymously",
+            "app_version": "pseudonymously",
+            "os": "pseudonymously",
+            "idfv": "pseudonymously"
         },
         "rayjump": {
             "os": "pseudonymously",
@@ -4231,38 +4263,6 @@
             "rooted": "anonymously",
             "user_agent": "anonymously",
             "country": "anonymously"
-        },
-        "doubleclick": {
-            "model": "anonymously",
-            "os": "anonymously",
-            "volume": "anonymously",
-            "language": "anonymously",
-            "network_connection_type": "anonymously",
-            "architecture": "anonymously",
-            "rooted": "anonymously",
-            "app_name": "anonymously"
-        },
-        "supersonic": {
-            "app_version": "pseudonymously",
-            "app_id": "pseudonymously",
-            "carrier": "pseudonymously",
-            "timezone": "pseudonymously",
-            "idfa": "pseudonymously",
-            "idfv": "pseudonymously",
-            "other_uuids": "pseudonymously",
-            "language": "pseudonymously",
-            "battery_percentage": "pseudonymously",
-            "network_connection_type": "pseudonymously",
-            "ram_usage": "pseudonymously",
-            "os": "pseudonymously",
-            "model": "pseudonymously",
-            "rooted": "pseudonymously"
-        },
-        "firebase": {
-            "app_id": "pseudonymously",
-            "app_version": "pseudonymously",
-            "os": "pseudonymously",
-            "idfv": "pseudonymously"
         }
     },
     "ios::de.dfb-medien.fussball-de-2-0": {

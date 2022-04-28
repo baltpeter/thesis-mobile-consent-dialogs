@@ -17,7 +17,7 @@ Link
 :   Some apps only contain a link to a privacy policy in a menu or the footer. While this can be enough to satisfy a controller's information obligations under Art. 12–14 GDPR, a link can obviously not be used to obtain consent from a user.
 
 Notice
-:   Some apps inform users that the app processes their data, not seldom claiming that the users agrees to this by continuing to use the app. The notices are often in the form of a banner or a short sentence tucked away under a form. As established in [@Sec:critera], consent in the context of data protection cannot be given through inaction, so apps may not assume consent based on only such a notice. It can however be used by the controller to meet their duty to inform the user of the processing.
+:   Some apps inform users that the app processes their data, not seldom claiming that the user agrees to this by continuing to use the app. The notices are often in the form of a banner or a short sentence tucked away under a form. As established in [@Sec:critera], consent in the context of data protection cannot be given through inaction, so apps may not assume consent based on only such a notice. It can however be used by the controller to meet their duty to inform the user of the processing.
 
 Dialog
 :   Finally, some apps not only inform the user about their data processing but actively solicit their consent through a button or a checkbox that needs to be clicked. This is the only way that apps can actually obtain valid consent under the GDPR.
@@ -55,11 +55,13 @@ We then click the first "accept" button we detected, preferring ones with a clea
 
 We repeat the same steps for the "reject" button analogously.
 
-## Violation Identification
+## Dark Pattern Identification
+
+TODO: Properly distinguish between violation and dark pattern here.
 
 TODO: Maybe include a sample screenshot for each violation?
 
-TODO: If we don't detect a violation in a CD, that doesn't mean that it is compliant. They only represent a minimum of compliance that can be reliably checked using automated methods. As such, our findings will only provide a lower bound in terms of violations but, conversely, an upper bound of compliance in mobile apps.
+TODO (probably at the end of the section): If we don't detect a violation in a CD, that doesn't mean that it is compliant. They only represent a minimum of compliance that can be reliably checked using automated methods. As such, our findings will only provide a lower bound in terms of violations but, conversely, an upper bound of compliance in mobile apps.
 
 We detect the following violations in apps determined to show a consent dialog:
 

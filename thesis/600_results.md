@@ -65,7 +65,62 @@ Finally, we also analysed the cookies that were set in the requests. The results
 
 ## Prevalence of Consent Dialogs
 
+------------------------------------------------------
+Classification    Detections   Detections   Detections
+                  on Android       on iOS     in total
+--------------- ------------ ------------ ------------
+dialog                   132          199          331
+                     (6.38%)      (8.58%)      (7.54%)
+
+maybe dialog              17           36           53
+                     (0.82%)      (1.55%)      (1.21%)
+
+notice                   103           82          185
+                     (4.98%)      (3.53%)      (4.22%)
+
+maybe notice               5            5           10
+                     (0.24%)      (0.22%)      (0.23%)
+
+link                     103          103          206
+                     (4.98%)      (4.44%)      (4.69%)
+
+neither                 1708         1895         3603
+                    (82.59%)     (81.68%)     (82.11%)
+------------------------------------------------------
+
+:   Number of apps where the different consent elements were detected by platform. The percentages are relative to all apps in the respective column. {#tbl:results-cd-prevalence}
+
+[@Tbl:results-cd-prevalence] lists the number of apps where our analysis detected a consent element. Across all apps, we detected a consent dialog in 384 apps (8.75%), a consent notice in 195 apps (4.44%), and a link to a privacy policy in 206 apps (4.69%). Thus, in total, 785 apps (17.89%) had one of the consent elements we detect.
+
+There appears to be little difference in the prevalence of the consent elements between platforms. Across all types, the relative counts differ by no more than 2.3%. We detected slightly more consent dialogs on iOS compared to Android, whereas we detected slightly more notices on Android. In total, we detected any consent element in 18.32% of apps on iOS compared to 17.41% on Android.
+
 ## Violations in Consent Dialogs
+
+```{=latex}
+\afterpage{%
+    \clearpage% Flush earlier floats (otherwise order might not be correct)
+    \begin{landscape}
+```
+
+![UpSet plot [@lexUpSetVisualizationIntersecting2014] showing the different combinations of dark patterns we have detected in consent dialogs. Note that not all combinations are possible. Most of the dark patterns refer to the "reject" button and thus of course cannot occur if there was no "reject" button to begin with.\
+\
+The upper violin plot illustrates the distribution of top chart positions among the apps in the respective set. If an app was listed in multiple top charts, we recorded its highest position.](../graphs/dialog_dark_patterns.pdf){#fig:results-dialog-dark-patterns}
+
+```{=latex}
+    \end{landscape}
+    \clearpage% Flush page
+}
+```
+
+Looking at the individual dark patterns, 43.2% of the dialogs did not have a "reject" button on the first layer. Ambiguous labels for the "accept" and "reject" buttons were also common with 37.5% and 32.8% of dialogs exhibiting them, respectively. "Accept" buttons were most commonly highlighted compared to "reject" buttons by colour with 31.2% of dialogs compared to only 10.7% of dialogs highlighting the "accept" button by size. Finally, 16 apps (4.2%) quit after refusing consent.
+
+[@Fig:results-dialog-dark-patterns] illustrates the observed combinations of dark patterns in consent dialogs and compares them against the apps' top chart positions. We most commonly observed "accept" buttons with an ambiguous label in combination with no "reject" button on the first layer (22.7% of dialogs). Consent dialogs also often have an ambiguous "reject" button and highlight the "accept" button by colour (14.3%). Both of those were was slightly more frequently the case for apps ranked highly in the top charts. Other than that, most dark patterns ocurred on their own and with no significant correlation to the apps' top chart position.
+
+In total, we have detected at least one dark pattern in 347 of the 384 apps with a dialog (90.36%). The share of dark patterns in dialogs is slightly higher on Android with 136 of 149 dialogs (91.28%) compared to 211 of 235 (89.79%) on iOS.
+
+On their own, the dark patterns we detect are not necessarily violations of data protection law. Using dark patterns in a consent dialog just results in the consent that is acquired through the dialog being invalid. As such, the actual violation that we can detect is the transmission of tracking data based on such invalid consent^[Though presenting the user with a consent dialog that uses dark patterns without ever actually requiring consent for any processing would arguably run afoul of the principle of lawfulness, fairness, and transparency set forth by Art. 5(1)(a) GDPR and thus be a violation in and of itself.].
+
+We found that 328 of the 384 apps with a dialog (85.42%) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59%) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have detected that 77.34% of the 384 dialogs we detected failed to acquire valid consent for the tracking that they perform.
 
 ## Effect of User Choices
 
@@ -80,10 +135,14 @@ Given the low number of apps for which we have traffic after rejecting, which wo
 <!-- select count(1) from filtered_requests where run_type = 'rejected'; -->
 
 <!-- For initial runs: 3201 of 4388 apps (72.95 %) transmit pseudonymous data.
+    -> 282 of the 384 apps with a dialog (73.44 %) transmit pseudonymous data in this run.
 For accepted runs: 181 of 330 apps (54.85 %) transmit pseudonymous data.
     -> Of those, 46 apps didn't transmit pseudonymous data initially.
+    -> 181 of the 384 apps with a dialog (47.14 %) transmit pseudonymous data in this run.
 For rejected runs: 13 of 28 apps (46.43 %) transmit pseudonymous data.
-    -> Of those, 1 apps didn't transmit pseudonymous data initially. -->
+    -> Of those, 1 apps didn't transmit pseudonymous data initially.
+    -> 13 of the 384 apps with a dialog (3.39 %) transmit pseudonymous data in this run.
+ -->
 
 <!-- Prevalence of Exodus-identified trackers in traffic: {
   all: [ 64832, '33.28 %' ],

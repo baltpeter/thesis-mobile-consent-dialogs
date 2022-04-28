@@ -103,9 +103,9 @@
     "android::com.mi.global.mimover": {},
     "android::cyberpunk.wallpaper.live.keyboard.sci.fi": {
         "<indicators>": {
+            "app_id": "pseudonymously",
             "model": "pseudonymously",
-            "idfa": "pseudonymously",
-            "app_id": "pseudonymously"
+            "idfa": "pseudonymously"
         }
     },
     "ios::com.hp.printer.control": {
@@ -143,7 +143,6 @@
         }
     },
     "android::de.cellular.ottohybrid": {
-        "<indicators>": {},
         "adjust": {
             "app_id": "pseudonymously",
             "app_version": "pseudonymously",
@@ -154,7 +153,8 @@
             "screen_size": "pseudonymously",
             "os": "pseudonymously",
             "country": "pseudonymously"
-        }
+        },
+        "<indicators>": {}
     },
     "ios::com.reo.link": {},
     "android::com.appxy.tinyscanner": {},
