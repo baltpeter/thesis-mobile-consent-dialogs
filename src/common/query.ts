@@ -320,7 +320,7 @@ export const privacy_types_schema = z.array(
 // data types.
 export const privacy_label_data_type_mapping = {
     'Email Address': ['apple_id'],
-    'Phone number': ['phone_number'],
+    'Phone Number': ['phone_number'],
     Health: ['health_data'],
     Location: ['lat', 'long', 'location'],
     Contacts: ['contacts'],

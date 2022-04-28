@@ -95,7 +95,7 @@ Reset app
     6. Start the app.
 
 Get app preferences
-:   This fetches the app's preferences from the operating system's per-app storage interfaces (`SharedPreferences` on Android, and `NSUserDefaults` on iOS) by injecting the Frida scripts described in [@sec:cd-situation-mobile-tcf] and converting their results to JSON.
+:   This fetches the app's preferences from the operating system's per-app storage interfaces (`SharedPreferences` on Android, and `NSUserDefaults` on iOS) by injecting the Frida scripts described in [@sec:cd-situation-mobile-tcf] and converting their results to JSON. The preferences contain the IAB TCF data.
 
 Get app version
 :   On Android, this returns an APK's version by running `aapt dump badging $apk_path`{.sh} and extracting the `versionName` field [@androidopensourceprojectcontributorsAAPT22020].
@@ -141,7 +141,7 @@ On iOS, the steps are:
 3. Adjust the device settings to keep background traffic to a minimum.
 4. Configure the machine mitmproxy is run on as the proxy and import mitmproxy's profile to trust its certificate authority [@ibanezInterceptingNetworkTraffic2019].
 
-### Honey Data
+### Honey Data {#sec:instrumentation-honey-data}
 
 On both platforms, we plant honey data, so we can detect if apps transmit this data. We use randomly generated values with sufficient entropy to make sure they can't appear in traffic by chance. We also read relevant device identifiers that apps may track.
 

@@ -583,7 +583,8 @@ const computePrivacyLabelData = async () => {
                 transmitted: TransmissionType;
                 matched_data_types: Set<string>;
             }>(
-                (acc, transmitted_data_types) => {
+                (acc, transmitted_data) => {
+                    const transmitted_data_types = Object.keys(transmitted_data);
                     const matched_data_types = our_data_types.filter((our_data_type) =>
                         transmitted_data_types.includes(our_data_type)
                     );

@@ -93,21 +93,71 @@ Ambiguous button labels
 App stops after refusing consent
 :   It needs to be possible to use an app without consenting (potentially with a reduced feature set), so an app may not quit after the user has refused their consent (cf. [@sec:criteria-circum]). To detect violations, we first ensure that the app is still running and in the foreground, then click the "reject" button, wait for ten seconds and record a violation if the app is not running and in the foreground anymore afterwards. In the case of multiple "reject" buttons, we click the first one, preferring a "reject" button with clear label, if available.
 
-## Analysis of IAB TCF data
-
-Even though only comparatively few apps implement the IAB TCF (cf. [@sec:cd-situation-mobile]), we nonetheless analyse the TCF data for those apps that do use it in addition to the approach described above to leverage the more detailed data.
-
 ## Tracking Content Extraction
 
-### Endpoint-Specific Adapters
+To extract and classify the tracking data that apps send from the recorded network traffic, we use a two-fold approach: We wrote a series of adapters for the most common trackers which understand the actual tracking protocol and can thus precisely extract the transmitted data. For those requests that are not matched by one of our adapters, we employ indicator matching to check for the presence of common data types. For each request, we decide whether the contained data is pseudonymous or anonymous. We consider the data in a request pseudonymous if the request contains at least one unique identifier for the device or user like the device's advertising ID (including the IDFV on iOS and hashed forms thereof) or the user's public IP address^[It is of course not technically possible for a server to handle a user's request without at least temporarily processing their IP address. We only consider cases where the IP address is literally included in the request body or path.]. Otherwise, we consider the data in the request anonymous.
 
-* Definition of "endpoint"
-* Developed 26 adapters that can extract data in a common format for a set of endpoints. Those are enough to process 17276 of 162350 (10.64 %) requests.
+In addition to that, we also analyse that cookies that are set in requests. For that, we leverage the Open Cookie Database [@kwakmanOpenCookieDatabase2022], a list of 710 cookies as of the time of writing, mapped to the platform they are set by and a category they can be attributed to, among other things.
+
+### Endpoint-Specific Tracking Request Adapters
+
+We noticed that there is a comparatively small number of tracking endpoints which make up a large portion of the app traffic. We developed 26 adapters than can extract the tracking data in a common schema that we can easily reason about for the most common endpoints. For our purposes, an endpoint is uniquely identified by the scheme, host and path without GET parameters.
+
+Each adapter consists of these parts:
+
+Endpoint URLs
+:   Each adapter has a list of endpoints that it works for. Endpoints can either be specified as simple strings or as regexes to accomodate for URLs with parameters in hostname or path.
+
+Match function
+:   Optionally, adapters can have an additional match function that is used to filter out requests to the same endpoint that the adapter cannot handle, e.g. based on the request method or body.
+
+Prepare function
+:   Tracking data can be included in the URL or request body. In addition, we have observed a variety of data formats and encodings used by trackers, sometimes even different ones for the same endpoint. The prepare function parses as much as possible of the raw request into a JavaScript object with plain text values.
+
+    Steps of the processing that needs to happen in the prepare function include: Parsing JSON or query strings, decoding Protobuf blobs, combining data from the body and GET parameters, and decoding base64 strings. Often, different formats and encodings are nested. For example, the bodies of requests to Supersonic can either be a plain JSON object or a base64 string that holds a GZIP which in turns holds the actual JSON object. Meanwhile, ironSource sends a base64-encoded JSON as a query string parameter. And some requests to Facebook have a query string as the body which holds a JSON with one property being an array of events that itself a JSON string, while others have a JSON object as the body that holds a JSON string of an array of objects where the actual data is query-string-encoded in each object's value.
+
+Extract function
+:   Finally, the extract function extracts the known data types from the prepared request and brings it into a unified schema. In many cases, one data type can be present in one of a list of properties, so we use the first one that actually holds data.
+
+    Sometimes, it is not obvious which data a property holds because it has no name or the name is not descriptive. In these cases, we looked at all instances of the respective property across all requests and only extracted the properties we were able to definitively identify. This means that we can once again only provide a lower bound on the data that is being transmitted.
 
 ### Indicator Matching in Network Traffic
 
-### TODO: Cookies etc.
+For the requests that cannot be handled by any of our endpoint-specific adapters, we perform indicator matching on the path and request body. We search for the Honey data values described in [@sec:instrumentation-honey-data].
 
-For that, we leveraged the Open Cookie Database [@kwakmanOpenCookieDatabase2022], a list of 710 cookies as of the time of writing, mapped to the platform they are set by and a category they can be attributed to, among other things.
+In addition to matching against the plain text, we also match base64-encoded values. This cannot be done by simply encoding the indicator value and matching the traffic against that. The actual base64 encoding of a value depends on its offset within the whole string that is being encoded as well as the string's length. We ported a PowerShell script [@holmesSearchingContentBase642017] that generates all possible ways a value can be base64-encoded and builds a regex for that to JavaScript^[We have published our port as a library: <https://github.com/baltpeter/base64-search>].
 
-## Privacy Labels {#sec:method-privacy-labels}
+## Apple Privacy Labels {#sec:method-privacy-labels}
+
+App developers on iOS are supposed to inform users about what data their apps process. Among other things, they need to declare the following two things [@appleinc.AppPrivacyDetails2021]:
+
+Types of data
+:   The privacy label needs to list the data types collected by the app, regardless of whether they are collected by the app developer themselves or by third-party companies. As of the time of writing, there are 32 possible data types across 14 categories. While the meaning of some data types is obvious, e.g. for "email address" and "phone number", others are not well defined and lack a clear description, e.g. "Other Data Types" which is simply described as "[a]ny other data types not mentioned".
+
+    The data types have to be sorted into "Data Linked to You", "Data Used to Track You", and "Data Not Linked to You". If an app doesn't collect any data, it can declare an empty "Data Not Collected" list.
+
+Purposes
+:   In addition, the privacy label needs to list the purposes that the data types are collected for. The possible values as of the time of writing are: "Third-Party Advertising", "Developer’s Advertising or Marketing", "Analytics", "Product Personalization", "App Functionality", and "Other Purposes".
+
+To analyse the privacy labels, for each app, we go through the privacy types and record a list of the data types and purposes declared in the label, distinguishing between ones declared as pseudonymous (i.e. with a privacy type of "Data Linked to You" or "Data Used to Track You") and anonymous (i.e. with a privacy type of "Data Not Linked to You"). 
+
+Then, we look at the detected tracking content as described in the previous section. We compare the data types that we observed being transmitted by the app against the data types declared in the label. As some of the possible data types in privacy labels are not clearly defined, we have created a mapping between them and the data types we detect, which can be seen in [@tbl:method-privacy-label-mapping]. We can only check a subset of the data types that can be declared. For each privacy label data type, we determine whether it was correctly declared, correctly not declared, wrongly declared as anonymous, wrongly undeclared, unnecessarily declared, or unnecessarily declared as pseudonymous. Of course, detections of unnecessarily declarations or a correct lacks of a declaration are only within the context of the traffic we recorded. It is possible that apps do in fact transmit this data but we did not observe that.
+
+| Privacy label data type | Our corresponding data types                                                                                                           |
+|-|--|
+| Email Address           | Apple ID email address                                                                                                                 |
+| Phone number            | Phone number                                                                                                                           |
+| Health                  | Apple Health honey data                                                                                                                |
+| Location                | Coordinates or address of device location                                                                                              |
+| Contacts                | Contacts honey data                                                                                                                    |
+| Emails or Text Messages | SMS honey data                                                                                                                         |
+| Other User Content      | Clipboard content, honey data in reminders, calendar, notes, and Apple Home                                                            |
+| Product Interaction     | Viewed pages in the app, whether the app is in the foreground                                                                          |
+| Performance Data        | RAM usage, disk usage, device uptime                                                                                                   |
+| Device ID               | IDFA, IDFV, hashed IDFA, hashed IDFV                                                                                                   |
+| Other Diagnostic Data   | Device root status, device emulator status, network connection type, signal strength, charging status, battery percentage, sensor data |
+| Other Data Types        | Device name, carrier, roaming status, local IP address(es), MAC address(es), BSSID, volume                                             |
+
+:   Mapping from data types that can appear in privacy labels [@appleinc.AppPrivacyDetails2021] to the data types that we detect and consider to be equivalent. Note that unlike Apple we do not distinguish between precise and coarse location. {#tbl:method-privacy-label-mapping}
+
+Finally, we look at the declared purposes. Here, we judge whether the app correctly declares the purposes "Analytics" and "Third-Party Advertising"/"Developer’s Advertising or Marketing". We do this by comparing the contacted hosts against the EasyList and EasyPrivacy adblock filter lists^[As EasyList and EasyPrivacy are meant for adblockers in browsers, they contain a lot more than hostnames, e.g. HTML element selectors. We can however only check the contacted domains and thus use the Firebog versions of both lists, which are meant for Pi-hole, a network-wide adblocker at the DNS level, and only contain hostnames [@wally3kBigBlocklistCollection2022]: <https://v.firebog.net/hosts/Easylist.txt> and <https://v.firebog.net/hosts/Easyprivacy.txt>] [@theeasylistauthorsEasyListOverview2021].
