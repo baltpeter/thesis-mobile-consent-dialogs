@@ -107,9 +107,6 @@ ms_appcenter,screen_size,ios,pseudonymously,130
 ms_appcenter,carrier,ios,pseudonymously,130
 ms_appcenter,other_uuids,ios,pseudonymously,80
 <indicators>,idfa,ios,pseudonymously,463
-mopub,app_id,android,pseudonymously,34
-mopub,app_version,android,pseudonymously,34
-mopub,other_uuids,android,pseudonymously,9
 onesignal,app_id,android,pseudonymously,88
 onesignal,idfa,android,pseudonymously,37
 onesignal,os,android,pseudonymously,88
@@ -117,6 +114,9 @@ onesignal,model,android,pseudonymously,88
 onesignal,carrier,android,pseudonymously,88
 onesignal,rooted,android,pseudonymously,88
 onesignal,language,android,pseudonymously,88
+mopub,app_id,android,pseudonymously,34
+mopub,app_version,android,pseudonymously,34
+mopub,other_uuids,android,pseudonymously,9
 apple,other_uuids,ios,pseudonymously,597
 apple,app_id,ios,pseudonymously,597
 adjust,app_id,ios,pseudonymously,240

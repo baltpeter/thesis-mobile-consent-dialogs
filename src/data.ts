@@ -283,14 +283,25 @@ const computeRequestData = async () => {
         reqs.reduce<Set<string>>((acc, r) => {
             acc.add(r.name);
             return acc;
-        }, new Set()).size,
+        }, new Set()),
     ]);
     console.log('Apps with at least one Exodus-identified tracker:', {
-        all: expandWithPercentages(apps_with_trackers.all, apps.all.length),
-        initial: expandWithPercentages(apps_with_trackers.initial, apps.initial.length),
-        accepted: expandWithPercentages(apps_with_trackers.accepted, apps.accepted.length),
-        rejected: expandWithPercentages(apps_with_trackers.rejected, apps.rejected.length),
+        all: expandWithPercentages(apps_with_trackers.all.size, apps.all.length),
+        initial: expandWithPercentages(apps_with_trackers.initial.size, apps.initial.length),
+        accepted: expandWithPercentages(apps_with_trackers.accepted.size, apps.accepted.length),
+        rejected: expandWithPercentages(apps_with_trackers.rejected.size, apps.rejected.length),
     });
+    console.log('Apps which previously did not have Exodus-identified tracker:', {
+        accepted: expandWithPercentages(
+            [...apps_with_trackers.accepted].filter((a) => !apps_with_trackers.initial.has(a)).length,
+            apps.accepted.length
+        ),
+        rejected: expandWithPercentages(
+            [...apps_with_trackers.rejected].filter((a) => !apps_with_trackers.initial.has(a)).length,
+            apps.rejected.length
+        ),
+    });
+    console.log();
 
     // Data types transmitted to trackers
     const all_requests_with_adapter = requests.all.filter((r) => adapterForRequest(r));

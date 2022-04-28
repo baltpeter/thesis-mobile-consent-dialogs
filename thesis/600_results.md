@@ -123,46 +123,28 @@ We found that 328 of the 384 apps with a dialog (85.42%) transmitted pseudonymou
 
 ## Effect of User Choices
 
-To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 330 apps after accepting and 28 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.
+To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 330 apps after accepting and 28 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.  
+We collected 185152 requests in the initial runs, 9342 requests in the accepted runs, and 323 requests in the rejected runs. Note that for the accepted and rejected runs, we only collected the traffic _after_ clicking the respective button. The initial traffic before any interaction was not recorded again in those runs.  
+Given the low number of apps for which we were able to collect traffic after rejecting, and the low number of corresponding requests, the results for those are most likely not representative.
 <!-- select count(1) from runs where run_type='accepted'; -->
 <!-- select count(1) from runs where run_type='rejected'; -->
-
-Given the low number of apps for which we have traffic after rejecting, which would not be representative, we don't analyse the change in tracking after rejected.
-
-TODO!
-
 <!-- select count(1) from filtered_requests where run_type = 'initial'; -->
 <!-- select count(1) from filtered_requests where run_type = 'accepted'; -->
 <!-- select count(1) from filtered_requests where run_type = 'rejected'; -->
 
-<!-- For initial runs: 3201 of 4388 apps (72.95 %) transmit pseudonymous data.
-    -> 282 of the 384 apps with a dialog (73.44 %) transmit pseudonymous data in this run.
-For accepted runs: 181 of 330 apps (54.85 %) transmit pseudonymous data.
-    -> Of those, 46 apps didn't transmit pseudonymous data initially.
-    -> 181 of the 384 apps with a dialog (47.14 %) transmit pseudonymous data in this run.
-For rejected runs: 13 of 28 apps (46.43 %) transmit pseudonymous data.
-    -> Of those, 1 apps didn't transmit pseudonymous data initially.
-    -> 13 of the 384 apps with a dialog (3.39 %) transmit pseudonymous data in this run.
- -->
+In the traffic before interaction, 33.32% of requests were identified as trackers by Exodus. In the traffic after accepting the dialogs, this percentage slightly dropped to 31.90%, while after rejecting, there was actually a higher percentage of the traffic that was identified as tracking with 47.06%. Meanwhile, 78.08% of apps contacted at least one Exodus-identified tracker in the initial runs. In the accepted runs, 25 additional apps (7.58% of the accepted apps) contacted a tracker that previously didn't. In the rejected runs, 16 of 28 apps (57.14%) continued contacting trackers, as did one additional app for the first time.
 
-<!-- Prevalence of Exodus-identified trackers in traffic: {
-  all: [ 64832, '33.28 %' ],
-  initial: [ 61700, '33.32 %' ],
-  accepted: [ 2980, '31.90 %' ],
-  rejected: [ 152, '47.06 %' ]
-}
-Apps with at least one Exodus-identified tracker: {
-  all: [ 3452, '78.67 %' ],
-  initial: [ 3426, '78.08 %' ],
-  accepted: [ 217, '65.76 %' ],
-  rejected: [ 17, '60.71 %' ]
-} -->
+Furthermore, in the initial runs, 3201 of the 4388 apps (72.95 %) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85%) continued transmitting pseudonymous data and one app started doing so for the first time.
+
+![Number of times that the observed data types were transmitted per app and tracker without after accepting the consent dialogs.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
+
+[@Fig:results-data-type-transmissions-accepted] lists how often each data type was transmitted per app and tracker after accepting. Comparing that to the transmissions without user interaction in [@fig:results-data-type-transmissions-initial] shows little difference in the data types that are transmitted to trackers after consent was given.
 
 ## Apple Privacy Labels
 
 112 of the 2481 apps on iOS (4.51%) had an empty privacy label. 182 of them (7.68%) claimed not to collect any data.
 
-![Evaluation of the correctness of data types and purposes in privacy labels on iOS. Remember that we can only definitively say when data _is_ collected but if we don't observe data being transmitted, it doesn't mean that it is never collected.](../graphs/privacy_labels.pdf){#fig:results-privacy-labels}
+![Evaluation of the correctness of data types and purposes in privacy labels on iOS. Remember that we can only definitively say when data _is_ collected but if we don't observe data being transmitted, it doesn't necessarily mean that it is never collected.](../graphs/privacy_labels.pdf){#fig:results-privacy-labels}
 
 [@Fig:results-privacy-labels] shows the comparison of the observed and declared data types and purposes. For most of the data types that we can check, we did not observe apps that incorrectly omitted them from their privacy label or misdeclared them as anonymous. Most notably, we saw 329 apps (13.26%) that transmitted the IDFA, IFDV, or a hashed version thereof without declaring that in their privacy label. Further, 155 apps (6.25%) claimed to collect such a device ID in a way that is not linked to the user, which seems like an obvious contradiction. 98 apps (3.95%) also transmitted the device's location but omitted that in their privacy label and a further 18 apps (0.73%) declared that they only collected the location anonymously even though we observed them linking it to unique identifier for the user or device.
 
