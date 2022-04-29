@@ -68,7 +68,7 @@ We detect the following violations in apps determined to show a consent dialog:
 Processing before consent
 :   Processing that can only rely on consent as a legal basis may of course only occur after consent has been given (cf. [@sec:criteria-gdpr]). As such, we consider any tracking that happens before we have interacted with a consent dialog or after we have refused consent a violation.
 
-    This also automatically applies to all apps performing without a consent dialog or with only a notice or privacy policy link.
+    This also automatically applies to all apps performing tracking without a consent dialog or with only a notice or privacy policy link.
 
 Ambiguous button labels
 :   If a consent dialog has an "accept" button, it needs to have a clear label that unambiguously communicates to the user that clicking the button will result in consent to the described processing (cf. [@sec:criteria-buttons]). To detect violations, we sort the button regexes (see [@sec:method-our-approach]) into clear (like "allow" or "consent") and ambiguous (like "okay" or "continue") ones and record a violation if the dialog has at least one ambiguous "accept" button but none with a clear label.
