@@ -1,11 +1,11 @@
 # Results
 
-In total, we successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42% and 93.51% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after launching with the certificate pinning bypass enabled. These apps are excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
+We successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42% and 93.51% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
 <!-- select count(1) from dialogs;
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
 
-TODO: Processed data behind graphs and tables also available in repo.
+To promote reproducability, the processed data behind all graphs is available in our GitHub repository.
 
 ## Network Traffic and Tracking
 
@@ -45,7 +45,7 @@ TODO: Clean up fig:results-tracker-data-initial.
     \begin{landscape}
 ```
 
-![Observed transmissions of various types of data to trackers without interaction, grouped by platform. Each point represents a number of apps transmitting the respective row's data type to the tracker in the respective column, with the size of the point indicating how many apps performed this transmission at least once. The points are coloured according the apps' platform. \
+![Observed transmissions of various types of data to trackers without interaction, grouped by platform. Each point represents a number of apps transmitting the respective row's data type to the tracker in the respective column, with the size of the point indicating how many apps performed this transmission at least once. The points are coloured according to the apps' platform.\
 \
 The observations in the "\<indicators>" column came from string-matching plain and base64-encoded text in the requests not covered by an endpoint-specific tracking request adapter.](../graphs/apps_trackers_data_types_initial.pdf){#fig:results-tracker-data-initial}
 
@@ -60,7 +60,7 @@ From this data, we can also infer that some trackers are more common on one plat
 
 ![Prevalence of cookies by various companies and which category that can be attributed to (across all runs) according to [@kwakmanOpenCookieDatabase2022]. Each point represents the number of times a cookie by the company in the respective row and belonging to the category in the respective column was set by an app to a different value, with the size of the point indicating how often the cookie was set. The points are coloured according the apps' platform.](../graphs/cookies.pdf){#fig:results-cookies}
 
-Finally, we also analysed the cookies that were set in the requests. The results are shown in [@Fig:results-cookies]. TODO: Total cookies/matched cookies. We only observed cookies from the *Analytics* and *Marketing* categories but none from the *Functional* and *Preferences* categories. Most cookies we saw were marketing cookies. We saw a more diverse set of companies setting cookies on Android than on iOS. Once again, Google was the most prevalent company on both platforms.
+Finally, we also analysed the cookies that were set in the requests against the Open Cookie Database. The results are shown in [@Fig:results-cookies]. We only observed cookies from the *Analytics* and *Marketing* categories but none from the *Functional* and *Preferences* categories. Most cookies we saw were marketing cookies. We saw a more diverse set of companies setting cookies on Android than on iOS. Once again, Google was the most prevalent company on both platforms.
 
 ## Prevalence of Consent Dialogs
 
@@ -119,13 +119,13 @@ In total, we have detected at least one dark pattern in 347 of the 384 apps with
 
 On their own, the dark patterns we detect are not necessarily violations of data protection law. Using dark patterns in a consent dialog just results in the consent that is acquired through the dialog being invalid. As such, the actual violation that we can detect is the transmission of tracking data based on such invalid consent^[Though presenting the user with a consent dialog that uses dark patterns without ever actually requiring consent for any processing would arguably run afoul of the principle of lawfulness, fairness, and transparency set forth by Art. 5(1)(a) GDPR and thus be a violation in and of itself.].
 
-We found that 328 of the 384 apps with a dialog (85.42%) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59%) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have detected that 77.34% of the 384 dialogs we detected failed to acquire valid consent for the tracking that they perform.
+We found that 328 of the 384 apps with a dialog (85.42%) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59%) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have identified that 77.34% of the 384 detected dialogs failed to acquire valid consent for the tracking that they perform.
 
 ## Effect of User Choices
 
 To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 330 apps after accepting and 28 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either didn't contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.  
 We collected 185152 requests in the initial runs, 9342 requests in the accepted runs, and 323 requests in the rejected runs. Note that for the accepted and rejected runs, we only collected the traffic _after_ clicking the respective button. The initial traffic before any interaction was not recorded again in those runs.  
-Given the low number of apps for which we were able to collect traffic after rejecting, and the low number of corresponding requests, the results for those are most likely not representative.
+Given the low number of apps for which we were able to collect traffic after rejecting and the low number of corresponding requests, the results for those are most likely not representative.
 <!-- select count(1) from runs where run_type='accepted'; -->
 <!-- select count(1) from runs where run_type='rejected'; -->
 <!-- select count(1) from filtered_requests where run_type = 'initial'; -->
@@ -136,7 +136,7 @@ In the traffic before interaction, 33.32% of requests were identified as tracker
 
 Furthermore, in the initial runs, 3201 of the 4388 apps (72.95 %) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85%) continued transmitting pseudonymous data and one app started doing so for the first time.
 
-![Number of times that the observed data types were transmitted per app and tracker without after accepting the consent dialogs.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
+![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
 
 [@Fig:results-data-type-transmissions-accepted] lists how often each data type was transmitted per app and tracker after accepting. Comparing that to the transmissions without user interaction in [@fig:results-data-type-transmissions-initial] shows little difference in the data types that are transmitted to trackers after consent was given.
 
@@ -170,7 +170,7 @@ The apps most often set the `IABTCF_gdprApplies` property, with 125 apps setting
 <!-- select * from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where prefs->'initial'->>'IABTCF_gdprApplies' not in ('0', '1'); -->
 <!-- select * from dialogs where prefs->'initial'->>'IABTCF_gdprApplies' != prefs->'accepted'->>'IABTCF_gdprApplies' or prefs->'initial'->>'IABTCF_gdprApplies' != prefs->'rejected'->>'IABTCF_gdprApplies' or prefs->'accepted'->>'IABTCF_gdprApplies' != prefs->'rejected'->>'IABTCF_gdprApplies'; -->
 
-`IABTCF_CmpSdkID` specifies which CMP is being used and is set by 111 apps, with 6 apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. In our dataset, [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far. TODO: The mapping from the numeric IDs happened using the [CMP list](https://cmplist.consensu.org/v2/cmp-list.json), all invalid CMP IDs were merged into a single group.
+`IABTCF_CmpSdkID` specifies which CMP is being used and is set by 111 apps, with 6 apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. In our dataset, [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far.
 
 ![Prevalence of CMP providers according to IAB TCF data.](../graphs/tcf_cmps.pdf){#fig:results-tcf-cmps}
 
@@ -223,7 +223,7 @@ Finally, using `IABTCF_TCString`, it is possible to determine the exact consent 
 
 :   Counts of vendors apps request consent for according to IAB TCF data. Only vendors requested by more than 45 apps are included. {#tbl:results-tcf-vendors}
 
-The TC string also encodes the language of the consent dialog. Of the 68 apps that initially store a TC string, 63 showed an English consent dialog (our devices were set to English), and 5 showed a dialog in German. Due to the small sample size of apps implementing the TCF we don't go into the remaining information TC strings hold (cf. [@sec:cd-tcf-web]).
+The TC string also encodes the language of the consent dialog. Of the 68 apps that initially store a TC string, 63 showed an English consent dialog (our devices were set to English), and 5 showed a dialog in German.
 
 There is also an older, deprecated TCF specification specifically for mobile apps, the *[Mobile In-App CMP API v1.0](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/b7164119d6b281ac0efb06cb9717e0793fc1f9d0/Mobile%20In-App%20Consent%20APIs%20v1.0%20Final.md)*, which uses `IABConsent` as the prefix for the saved preferences. Only 4 apps set preferences for this specification without also setting `IABTCF` preferences for the new TCF 2.0 specification. Of those, 3 only set `IABConsent_SubjectToGDPR` (with one wrongly determining the GDPR not to be applicable), disregarding empty properties. One app additionally set `IABConsent_CMPPresent` to `true` but didn't actually show a consent dialog.
 <!-- select * from dialogs where cast(prefs as text) ~* 'IABConsent' and not cast(prefs as text) ~* 'IABTCF'; -->
@@ -233,6 +233,8 @@ There is also an older, deprecated TCF specification specifically for mobile app
 For each app, we saved a screenshot immediately after all elements on screen had been analysed to allow us to validate the results afterwards. Apps can prevent screenshots from being taken [@androidopensourceprojectcontributorsWindowManagerLayoutParams2022], in these cases we were not able to take one. This was the case for  42 apps on Android and 50 apps on iOS.
 
 We manually validated the classification for a random set of 250 apps with screenshots. [@Tbl:results-verdict-validation] shows the results of this validation. Notably, we didn't encounter a single false positive, all classifications where either correct or our analysis missed the consent elements. 25 of the 250 classifications were false negatives.
+
+The discovered false negatives are expected and don't impact the validity of the detected violations. As explained in [@sec:cd-situation-consequences], our approach necessarily misses consent elements due to more detailed information to base an analysis on not being sufficiently available in mobile apps. Not detecting a consent dialog does not cause us to wrongly attribute violations to an app. In these cases, all detected tracking has happened without any user interaction. This means that the apps, regardless of whether a consent dialog is being shown on screen, cannot have obtained valid consent and thus have no legal basis for the tracking. We only perform detection of the other violations in apps where we detected a consent dialog.
 
 | Detected | Actual | Count |
 |----------|--------|-------|
@@ -244,10 +246,6 @@ We manually validated the classification for a random set of 250 apps with scree
 
 :   Counts of wrong classifications from manually validating a random set of 250 apps. {#tbl:results-verdict-validation}
 
-The discovered false negatives are expected and don't impact the validity of the detected violations. As explained in [@sec:cd-situation-consequences], our approach necessarily misses consent elements due to more detailed information to base an analysis on not being sufficiently available in mobile apps. Not detecting a consent dialog does not cause us to wrongly attribute violations to an app. In these cases, all detected tracking has happened without any user interaction. This means that the apps, regardless of whether a consent dialog is being shown on screen, cannot have obtained valid consent and thus have no legal basis for the tracking. We only perform detection of the other violations in apps where we detected a consent dialog.
-
-We also manually validated all cases where we detected the "accept" having a significantly different colour than the "reject" button, as our approach cannot determine which of the two is actually highlighted compared to the other. We were able to confirm that it is indeed the "accept" button that's highlighted in all cases.
+We also manually validated all cases where we detected the "accept" button having a significantly different colour than the "reject" button, as our approach cannot determine which of the two is actually highlighted compared to the other. We were able to confirm that it is indeed the "accept" button that's highlighted in all cases.
 
 Finally, we manually validated the remaining violations for 25 randomly selected apps. We found no false positives here, either. There was one app where the "accept" button was larger than the "reject" button but we didn't detect the violation.
-
-TODO: Compare with initial manual analysis.
