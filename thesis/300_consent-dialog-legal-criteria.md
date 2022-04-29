@@ -22,7 +22,7 @@ However, in actuality, most of these laws don't introduce their own conditions o
 
 This leaves the GDPR as the only law that defines applicable conditions for consent dialogs.
 
-Consent is one of the six possible legal bases for processing personal data from Art. 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking for example, see [@sec:bg-gdpr]), may thus only happen _after_ consent has been given and the controller needs to be able to demonstrate that consent has been given (Art. 7(1) GDPR).
+Consent is one of the six possible legal bases for processing personal data from Art. 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking), may thus only happen _after_ consent has been given and the controller needs to be able to demonstrate that consent has been given (Art. 7(1) GDPR).
 
 Consent itself is defined in Art. 4(11) GDPR, which lists a set of basic conditions an action needs to meet in order to be considered consent, with each of these being further specified by the recitals to the GDPR:
 
@@ -50,11 +50,11 @@ Art. 7 GDPR then lists a number of additional conditions for consent:
 
 In addition to that, the GDPR places even stricter conditions on consent for special categories of personal data (this includes, among other things, political opinions, biometric and genetic data, as well as data on a person's health and sex life, Art. 9 GDPR) and third-country transfers without an adequacy decision (Art. 49(1)(a) GDPR), requiring an express statement, separate for this specific purpose [@europeandataprotectionboardGuidelines0520202020].  
 Children under the age of 16 years cannot give consent themselves, it instead needs to be given or authorised by their legal guardians (Art. 8(1) GDPR).  
-We don't consider these cases in this thesis as we can't reliably detect them automatically.
+We don't consider either in this thesis as we can't reliably detect them automatically.
 
 ## DPA Recommendations
 
-Most of the criteria extracted directly from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in concrete cases and are also used in similar research [@nouwensDarkPatternsGDPR2020; @mattePurposesIABEurope2020a; @santosAreCookieBanners2020].
+Most of the criteria extracted directly from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in specific cases and are also used in similar research [@nouwensDarkPatternsGDPR2020; @mattePurposesIABEurope2020a; @santosAreCookieBanners2020].
 
 For this thesis, we searched all current publications regarding consent and adjacent topics from all German data protection authorities (which includes all state DPAs, as well as the national DPA), the German data protection conference ("Datenschutzkonferenz", a council of the German DPAs that develops unified recommendations), and the European Data Protection Board (an EU body tasked with ensuring consistent application of data protection law across the EU) for criteria on consent dialogs, resulting in the list presented below. Criteria that already directly follow from the text of the law are not included here again.
 

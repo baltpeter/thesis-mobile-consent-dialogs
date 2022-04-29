@@ -8,11 +8,9 @@ It makes sense to first take a look at consent dialogs on the web. Most prior re
 
 ### Consent Management Platforms
 
-Various companies offer so-called consent management platforms (CMPs), off-the-shelf solutions that website operators can embed into their site under the promise that they will ensure legal compliance for tracking and similar processing [@onetrustllc.OneTrustConsentManagement; @usercentricsgmbhWebsiteConsentManagement2022; @cookiebotCookiebotConsentManagement2020; @piwikprosaPiwikPROConsent2022]. Using a CMP means that individual websites don't have to implement consent dialogs themselves anymore. As such, CMPs are also conducive to research as one now only needs to handle a handful of CMPs instead of custom implementations on every website.
+Various companies offer *consent management platforms* (CMPs), off-the-shelf solutions that website operators can embed into their site under the promise that they will ensure legal compliance for tracking and similar processing [@onetrustllc.OneTrustConsentManagement; @usercentricsgmbhWebsiteConsentManagement2022; @cookiebotCookiebotConsentManagement2020; @piwikprosaPiwikPROConsent2022]. Using a CMP means that individual websites don't have to implement consent dialogs themselves anymore. As such, CMPs are also conducive to research as one now only needs to handle a handful of CMPs instead of custom implementations on every website.
 
 Theoretically, CMPs should also make it easier for websites to follow the law as the CMP is responsible for ensuring that processing that requires consent (like tracking or setting corresponding cookies) only happens after consent has been given by the user. However, most CMPs are highly configurable and allow the website operators to enable behaviour that violates the law; sometimes such settings are even the default [@noyb.euWeComplyGuideOneTrust2021].
-
-TODO: Maybe include examples from actual CMPs that can be configured wrongly?
 
 On the web, usage of CMPs is common. Recent research detected the use of CMPs on between 6&nbsp;% and 13&nbsp;% of European websites, depending on their Tranco rank [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020]. Ad tech company Kevel reports the presence of a CMP on 44&nbsp;% of the top 10k US sites for Q1 2022 [@kevelConsentManagementPlatform2022].
 
@@ -92,7 +90,7 @@ console.log(prefs.dictionaryRepresentation());
 
 In both cases, for automated analysis, the objects would still need to be converted from their respective platform-native representation to JSON but that step is omitted here for brevity.
 
-Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as the author is aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, we performed a simple analysis on 823 apps from a dataset of popular Android apps from November 2021: The apps were run in the Android emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Then, the screenshots were manually looked at to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
+Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as we are aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, we performed a simple analysis on 823 apps from a dataset of popular Android apps from November 2021: The apps were run in the Android emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Then, we manually looked at the screenshots to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
 
 181 of the 823 ($\sim 22$ %) apps displayed such a reference to data protection on screen after 5 seconds. However, only 21 of the 823 apps ($\sim 3$ %) had set a corresponding privacy-related preference (i.e. one with a key that includes `IABTCF` or `GDPR`). This suggests that the IAB TCF is not commonly implemented on mobile.
 
@@ -103,12 +101,12 @@ Even though it seems like mobile apps do not tend to make use of the TCF, it wou
 On Android, the Exodus privacy project does something similar. They also check for the presence of libraries in Android apps, they just look at tracking libraries instead of CMPs. They have published their approach [@exodusprivacyExodusStaticAnalysis2018]: Essentially, they run the `dexdump` tool on the APK file, which is the Android counterpart to the Linux `objdump` tool and can statically extract class and method names from an APK, among other things. They then compare the namespaces of the listed classes to a list of known tracker libraries.  
 The same approach can be used to detect CMPs. For example, the classes of Didomi CMP libary are in the `io/didomi` namespace. If we detect classes with this namespace in an app, we can assume that it uses the CMP^[Of course, this approach is very fuzzy. Even if an app includes a CMP library, that doesn't mean it actually uses it. In addition, it is possible that the list of namespaces we use is not strict enough and matches other non-CMP libraries. None of that is a problem for the purposes of this analysis, though. Its goal is only to provide an upper bound on the CMP usage in mobile apps and to evaluate whether it is viable at all to rely on CMP-specific code for this thesis.].
 
-On iOS, the author is not aware of any similar work. It is however possible to list the shared libraries in an IPA file using the `otool` command [@benaneeshAnswerHowSearch2016], where the lines starting with `@rpath` are the libraries included in the IPA (lines without this prefix are system libraries). The symbol table can be listed using the `nm` and `symbols` commands [@columboAnswerFindSize2015]. All of these tools only run on macOS.  
+On iOS, we are not aware of any similar work. It is however possible to list the shared libraries in an IPA file using the `otool` command [@benaneeshAnswerHowSearch2016], where the lines starting with `@rpath` are the libraries included in the IPA (lines without this prefix are system libraries). The symbol table can be listed using the `nm` and `symbols` commands [@columboAnswerFindSize2015]. All of these tools only run on macOS.  
 Nonetheless the required functionality can be replicated on any operating system: An IPA file is just a ZIP archive. All libraries included in an IPA are in subdirectories of `/Payload/<app name>.app/Frameworks`{.placeholders}. We simply list those directories and compare them against a list of CMP libraries.
 
 For this analysis, we compiled a list of identifiers for 18 CMPs (based on [@iabeuropeCMPList2021; @udonisTop14Consent2022; @instabugTopMobileApp2021]). For Android, we used the same dataset as in [@sec:cd-situation-mobile-tcf] but ran the analysis on all 3271 apps. For iOS, we used a dataset of 1001 apps from the App Store top charts from May 2021.
 
-We detected a potential CMP use in 234 of the 3271 Android apps ($\sim 7$ %) and 28 of the 1001 iOS apps ($\sim 3$ %). On Android, we also checked for the presence of IAB's TC string library (`com/iabtcf`). We detected that in 38 of the 3271 apps ($\sim 1$ %). This suggests that mobile apps don't commonly use off-the-shelf CMPs either, especially given that the simple analysis we performed is even an overapproximation.
+We detected a potential CMP use in 234 of the 3271 Android apps ($\sim 7$ %) and 28 of the 1001 iOS apps ($\sim 3$ %). We also checked for the presence of IAB's TC string library (`com/iabtcf`), which is only available for Android. We detected that in 38 of the 3271 apps ($\sim 1$ %). This suggests that mobile apps don't commonly use off-the-shelf CMPs either, especially given that the simple analysis we performed is even an overapproximation.
 
 ### Consequences for Analysis {#sec:cd-situation-consequences}
 
@@ -123,5 +121,4 @@ For the few consent dialogs that _do_ implement the TCF, we still extract the da
 
 TODO:
 
-* Explain OpenRTB?
-* DPA decision on TCF
+* Mention DPA decision on TCF

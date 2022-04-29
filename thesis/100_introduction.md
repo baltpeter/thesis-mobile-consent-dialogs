@@ -2,7 +2,7 @@
 
 > Your privacy is important to us!
 > 
-> The author uses cookies to improve his writing. By reading this thesis, you consent to the author's processing of your personal data for analytics purposes. To opt out of this processing, please stop reading now.
+> We use cookies to improve our writing. By reading this thesis, you consent to our processing of your personal data for analytics purposes. To opt out of this processing, please stop reading now.
 > 
 > [OK]
 

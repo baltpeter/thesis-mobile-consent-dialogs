@@ -1,8 +1,9 @@
 # Analysis Method {#sec:analysis-method}
 
-TODO: Source code available in same repository as instrumentation framework
+In this chapter, we present our method for detecting consent dialogs and violations in them, as well as how we extract the actual data being transmitted in the recorded traffic. TODO: General steps for analysis, maybe even as a diagram?
 
-TODO: General steps for analysis, maybe even as a diagram?
+The source code is available in the same repository as the device instrumentation framework.
+
 
 ## Consent Dialog Detection
 
@@ -57,13 +58,9 @@ We repeat the same steps for the "reject" button analogously.
 
 ## Dark Pattern Identification
 
-TODO: Properly distinguish between violation and dark pattern here.
+TODO: Maybe include a sample screenshot for some.
 
-TODO: Maybe include a sample screenshot for each violation?
-
-TODO (probably at the end of the section): If we don't detect a violation in a CD, that doesn't mean that it is compliant. They only represent a minimum of compliance that can be reliably checked using automated methods. As such, our findings will only provide a lower bound in terms of violations but, conversely, an upper bound of compliance in mobile apps.
-
-We detect the following violations in apps determined to show a consent dialog:
+We detect the following violations and dark patterns in apps determined to show a consent dialog:
 
 Processing before consent
 :   Processing that can only rely on consent as a legal basis may of course only occur after consent has been given (cf. [@sec:criteria-gdpr]). As such, we consider any tracking that happens before we have interacted with a consent dialog or after we have refused consent a violation.
@@ -81,7 +78,7 @@ Ambiguous button labels
 "Accept" button highlighted compared to "reject" button by size
 :   An app may not nudge a user into consenting by highlighting the "accept" button compared to the "reject" button, for example by making it bigger (cf. [@sec:criteria-design]). To detect violations, we look at the bounding rectangle of both buttons. We record a violation if the product of the "accept" button's width and height is at least 1.5 times bigger than that of the "reject" button. 
 
-    If there is more than one of each button, we can't know which ones to check against each other to detect whether one is highlighted. Thus, for each "accept" button, we only record a violation if _every_ "reject" button is highlighted compared to it. But it is enough if there is one "accept" button that is highlighted, not all of them need to be.
+    If there is more than one of each button, we can't know which ones to check against each other to detect whether one is highlighted. Thus, for each "reject" button, we only record a violation if _every_ "accept" button is highlighted compared to it. But it is enough if there is one "accept" button that is highlighted, not all of them need to be.
 
 "Accept" button highlighted compared to "reject" button by colour
 :   Similarly, a consent dialog may also not have an "accept" button that is more prominent than the "reject" button through its colour (cf. [@sec:criteria-design]). To detect violations, we take screenshots of both buttons (cropped to just the respective button's bounding rectangle). We then use the [`get-image-colors`](https://github.com/colorjs/get-image-colors) library to extract the most prominent colour from each screenshot using colour quantisation. Finally, we compute the two colours' deltaE CMC difference [@lindbloomDeltaCMC2017] using the [`chroma.js`](https://vis4.net/chromajs/) library and record a violation if it is more than 30. TODO: Figure of different colour differences for reference.
@@ -92,6 +89,8 @@ Ambiguous button labels
 
 App stops after refusing consent
 :   It needs to be possible to use an app without consenting (potentially with a reduced feature set), so an app may not quit after the user has refused their consent (cf. [@sec:criteria-circum]). To detect violations, we first ensure that the app is still running and in the foreground, then click the "reject" button, wait for ten seconds and record a violation if the app is not running and in the foreground anymore afterwards. In the case of multiple "reject" buttons, we click the first one, preferring a "reject" button with clear label, if available.
+
+Even if we don't detect a violation or dark pattern in a consent dialog, that doesn't mean that it is compliant. An absence of violations only represents a minimum of compliance that can be reliably checked using automated methods. As such, our findings will only provide a lower bound in terms of violations but, conversely, an upper bound of compliance in mobile apps.
 
 ## Tracking Content Extraction
 
