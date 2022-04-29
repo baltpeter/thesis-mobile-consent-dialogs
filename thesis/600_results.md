@@ -1,11 +1,11 @@
 # Results
 
-In total, we successfully analysed 4388 apps with 2086 apps on Android and 2320 apps on iOS, corresponding to 62.96% and 93.51% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1162 of the Android apps failed to launch or quit immediately after launching with the certificate pinning bypass enabled. These apps are excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
+In total, we successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42% and 93.51% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after launching with the certificate pinning bypass enabled. These apps are excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
 <!-- select count(1) from dialogs;
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
 
-TODO: Make one color mean one thing across all plots.
+TODO: Processed data behind graphs and tables also available in repo.
 
 ## Network Traffic and Tracking
 
