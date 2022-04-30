@@ -6,7 +6,7 @@ In this thesis, we only consider EU-wide and German sources of law, though DPAs 
 
 ## Conditions on Consent from the Law {#sec:criteria-gdpr}
 
-Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@Sec:legal-background]: the GPDR, the ePrivacy Directive (ePD), and its national implementation in Germany, the TTDSG.
+Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@Sec:legal-background]: the GDPR, the ePrivacy Directive (ePD), and its national implementation in Germany, the TTDSG.
 
 In addition, the GDPR has so-called opening clauses which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG ("Bundesdatenschutzgesetz"), which thus also needs to be considered.
 
@@ -50,7 +50,7 @@ We don't consider either in this thesis as we can't reliably detect them automat
 
 ## List of Criteria
 
-Most of the conditions extracted directly from the GPDR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in specific cases and are also used in similar research [@nouwensDarkPatternsGDPR2020; @mattePurposesIABEurope2020a; @santosAreCookieBanners2020].
+Most of the conditions extracted directly from the GDPR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in specific cases and are also used in similar research [@nouwensDarkPatternsGDPR2020; @mattePurposesIABEurope2020a; @santosAreCookieBanners2020].
 
 For this thesis, we searched all current publications regarding consent and adjacent topics from all German state data protection authorities, as well as the national DPA, the German data protection conference ("Datenschutzkonferenz", a council of the German DPAs that develops unified recommendations), and the European Data Protection Board (an EU body tasked with ensuring consistent application of data protection law across the EU) for criteria on consent dialogs. The list below consolidates the criteria from the GDPR and DPA recommendations. Where the criteria have already been confirmed by courts, we cite those rulings as well.
 

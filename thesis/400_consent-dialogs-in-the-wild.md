@@ -39,7 +39,7 @@ TC strings may only be created or changed by the CMP [@iabtechlabTransparencyCon
 Secondly, it defines mechanisms for the different parties to communicate. For that, the CMP must expose the following API commands through a the `__tcfapi(command, version, callback, parameter)`{.js} function on the `window`{.js} object [@iabtechlabConsentManagementPlatform2021]:
 
 * `getTCData`: to receive an object representing the parsed TC string
-* `ping`: to check whether the CMP has finished loading and whether it believes the GDPR applies in the context of this visit^[The TCF does not mandate how the CMP is supposed to determine whether the GPDR applies, it only mentions using the user's geolocation as one option. Vendors are required to adhere to the CMP's determination. [@iabtechlabConsentManagementPlatform2021] However, as explained in [@sec:bg-gdpr], the user's location alone is not necessarily sufficient for determining whether the GDPR applies.]
+* `ping`: to check whether the CMP has finished loading and whether it believes the GDPR applies in the context of this visit^[The TCF does not mandate how the CMP is supposed to determine whether the GDPR applies, it only mentions using the user's geolocation as one option. Vendors are required to adhere to the CMP's determination. [@iabtechlabConsentManagementPlatform2021] However, as explained in [@sec:bg-gdpr], the user's location alone is not necessarily sufficient for determining whether the GDPR applies.]
 * `addEventListener`: to register an event listener for, among other things, changes to the TC string
 * `removeEventListener`: to remove a registered event listener
 
@@ -116,6 +116,4 @@ For the few consent dialogs that _do_ implement the TCF, we still extract the da
 
 ---
 
-TODO:
-
-* Mention DPA decision on TCF
+TODO: Mention DPA decision on TCF

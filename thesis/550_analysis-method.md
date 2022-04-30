@@ -4,7 +4,6 @@ In this chapter, we present our method for detecting consent dialogs and violati
 
 The source code is available in the same repository as the device instrumentation framework.
 
-
 ## Consent Dialog Detection
 
 As it is not feasible to detect consent dialogs on mobile based on the IAB TCF framework or CMP library-specific adapters (see [@sec:cd-situation-mobile]), we need to use an approach that is based on common elements of consent dialogs. Looking at existing research for the web and disregarding TCF- and library-based approaches [@papadogiannakisUserTrackingPostcookie2021b; @matteCookieBannersRespect2020; @nouwensDarkPatternsGDPR2020; @noyb.euNoybAimsEnd2021], most approaches for consent dialog detection are purely manual [@sanchez-rolaCanOptOut2019; @trevisanYearsEUCookie2019a; @utzInformedConsentStudying2019a; @mehrnezhadCrossPlatformEvaluationPrivacy2020]. Some research relies on adblock filter lists like [*Easylist Cookies*](https://secure.fanboy.co.nz/fanboy-cookiemonster.txt) and [*I don't care about cookies*](https://www.i-dont-care-about-cookies.eu/abp/) to detect HTML elements belonging to consent dialogs based on their ID or class [@aertsCookieDialogsTheir2021; @eijkImpactUserLocation2019a]. These lists are _very_ broad, e.g. detecting any element with `CNIL` (the French data protection authority) or `Cookie` in its ID. Finally, privacy policy detection tends to be keyword-based [@libertAutomatedApproachAuditing2018; @degelingWeValueYour2019], matching on general terms like "policy" and "GDPR"^[See: <https://github.com/RUB-SysSec/we-value-your-privacy/blob/181cbffb62ce2dcc89ff9b467401093aa10f0cd8/privacy_wording.json>], or use natural language processing [@hosseiniUnifyingPrivacyPolicy2021].
@@ -41,12 +40,11 @@ One of those phrase regexes looks like this for example:
 ```
 
 This regex tries to anticipate all possible word choices for "privacy policy" that could come up. As explained, we leave out any words that aren't strictly necessary to classify a sentence as coming from a consent dialog. For our purposes, it isn't important whether a dialog says "You hereby confirm that you have read our aforementioned privacy policy." or simply "I have read the privacy policy." However, it is important that the "read" and "privacy policy" parts belong to a single statement and aren't parts of entirely separate sentences. Thus, we limit the number of characters that may occur between them and disallow periods between the parts.  
-The main criterion when compiling the regexes was to avoid false-positives under the assumption that it is better to provide an under-approximation of consent dialog prevalence than to wrongly detect other elements as consent dialogs. A full list of the regexes we used can be found in Appendix TODO.
+The main criterion when compiling the regexes was to avoid false-positives under the assumption that it is better to provide an under-approximation of consent dialog prevalence than to wrongly detect other elements as consent dialogs. A full list of the regexes we use can be found in [@Sec:appendix-detector-regexes].
 
 All text matching is done case-insensitively. We only consider visible elements. Button and privacy policy link texts additionally need to be at word boundaries, to avoid matching "acknowledge" as "no" for example.  
-Appium has no general way of distinguishing between buttons and other elements. Of course, a text element that happens to contain the word "no" shouldn't be detected as a reject button, either. Thus, we additionally only match buttons if their text is at most twice as long as the respective matcher.
-
-TODO: Negator regexes
+Appium has no general way of distinguishing between buttons and other elements. Of course, a text element that happens to contain the word "no" shouldn't be detected as a reject button, either. Thus, we additionally only match buttons if their text is at most twice as long as the respective matcher.  
+Finally, we need to make sure not to match an "I do not consent" button as an "accept" button. For that, we use a list of negator regexes containing words like "don't" and "refuse". An element that matches one of these negator regexes is never classified as an "accept" button. 
 
 ### Interaction with Consent Dialogs
 
@@ -57,8 +55,6 @@ We then click the first "accept" button we detected, preferring ones with a clea
 We repeat the same steps for the "reject" button analogously.
 
 ## Dark Pattern Identification
-
-TODO: Maybe include a sample screenshot for some.
 
 We detect the following violations and dark patterns in apps determined to show a consent dialog:
 

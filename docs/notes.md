@@ -830,17 +830,17 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
     * Will also be helpful for complaint generator.
     * Idea: While value matching works for data points we can control, this isn't possible for everything, e.g. OS (`android`, `ios`) or screen dimensions are way too generic to be matched that way.
 * [x] After CMP detection: Do violation detection next, then interaction.
-* [ ] Look for SDK indicators in prefs?
+* [ ] ~~Look for SDK indicators in prefs?~~
 * [x] Change geolocation.
 * [ ] ~~For button color highlight: Also compare with background.~~ Manually check all color highlight violations that ensure that it's not actually the negative button that is highlighted.
 * [x] Cert pinning bypass
 * [x] Honey data
 * [x] Python `requirements.txt`
 * [x] Verify app is still running after waiting.
-* [ ] Look at cookies and headers.
+* [x] Look at cookies and headers.
     * Same cookie values across different apps?
     * Compare with cookie DB?
-* [ ] Can we fix incorrect country detections (`US`)?
+* [ ] ~~Can we fix incorrect country detections (`US`)?~~
 * [x] Set device name.
 * [x] Record failures.
 * [x] For iOS:
@@ -874,8 +874,8 @@ select name, r.id, r.method, r.path, r.content, r.content_raw from apps
 
 * [x] Compile list of criteria for compliant consent dialogs, based on applicable legislation, court rulings, supervisory authority recommendations, and previous work.
 * [x] Extend existing analysis framework to allow extraction of elements on screen and interaction with apps.
-* [~] Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
-* [~] Identify consent dialogs as well as their frameworks and settings in apps. Compare results with research for the web.
-* [~] Identify violations in consent dialogs (dark patterns, nudging).
-* [~] Interact with consent dialogs and measure effect of the choices on the tracking going on.
-* [ ] Evaluate results and compare with privacy labels on iOS.
+* [x] Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
+* [x] Identify consent dialogs as well as their frameworks and settings in apps. Compare results with research for the web.
+* [x] Identify violations in consent dialogs (dark patterns, nudging).
+* [x] Interact with consent dialogs and measure effect of the choices on the tracking going on.
+* [x] Evaluate results and compare with privacy labels on iOS.

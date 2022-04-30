@@ -11,7 +11,7 @@ To record the apps' network traffic, we use [mitmproxy](https://mitmproxy.org/),
 
 We execute apps for one minute and record their traffic in the meantime. For that, we use a mitmproxy addon that stores the encountered requests, as well as their headers and cookies, in a PostgreSQL database. After the one minute timeout has expired, we check whether the app is still running and discard the results otherwise. This is necessary because some apps quit immediately after launch, either because they detected that the device we're using is rooted/jailbroken and they consider that a security problem (often the case for banking apps, for example), or because of problems with the certificate pinning bypass by Objection on Android (see [@sec:discussion-limitations]).
 
-Using mitmproxy, we can only record the whole device's network traffic and not an individual app's traffic. Both Android and iOS regularly send requests to Google and Apple respectively in the background, doing connectivity checks, time synchronisation, and their own tracking for example^[Apple at least provides a helpful list explaining most of the background requests: <https://support.apple.com/en-us/HT210060>]. We need to filter out this background noise. To do, we recorded the network traffic from idle devices for several days and created an SQL view to filter out all requests from these runs. For some endpoints, it is difficult or even impossible to figure out whether a request was caused by an app or by the OS, e.g. when both Android itself and apps use the same Google trackers. In those cases, we have opted to rather remove too much than too little traffic to avoid wrongly attributing OS traffic to apps. The full list of filters we employ can be seen in Appendix TODO.
+Using mitmproxy, we can only record the whole device's network traffic and not an individual app's traffic. Both Android and iOS regularly send requests to Google and Apple respectively in the background, doing connectivity checks, time synchronisation, and their own tracking for example^[Apple at least provides a helpful list explaining most of the background requests: <https://support.apple.com/en-us/HT210060>]. We need to filter out this background noise. To do, we recorded the network traffic from idle devices for several days and created an SQL view to filter out all requests from these runs. For some endpoints, it is difficult or even impossible to figure out whether a request was caused by an app or by the OS, e.g. when both Android itself and apps use the same Google trackers. In those cases, we have opted to rather remove too much than too little traffic to avoid wrongly attributing OS traffic to apps. The full list of filters we employ can be seen in Appendix [@sec:appendix-filtered-requests-sql].
 
 ## Device Management Automation {#sec:instrumentation-device}
 
@@ -45,7 +45,7 @@ Set app permissions
 
     On Android, we have already granted all runtime permissions through the `-g` flag to `adb install`. This does not, however, include so-called dangerous permissions like reading phone numbers or SMS messages. To grant those, we first obtain a list of dangerous permissions using `adb shell "pm list permissions -g -d -u"`{.sh} and then grant them individually using `adb shell "pm grant $appId $permissionId"`{.sh} [@latifAnswerListADB2020].
 
-    On iOS, there is no intended way to grant permissions other than through the GUI. We discovered that permission data is stored in the `access` table of the SQLite database at `/private/var/mobile/Library/TCC/TCC.db`. A list of possible permission IDs to set can be reconstructed from `/System/Library/PrivateFrameworks/TCC.framework/en.lproj/Localizable.strings`, a translation file for the *Transparency, Consent, and Control* framework [@johnsonDeepDiveMacOS2021]. Setting the `auth_value` column to `2` grants the permission, setting it to `0` denies it. A list of which permissions we set can be found in table TODO.
+    On iOS, there is no intended way to grant permissions other than through the GUI. We discovered that permission data is stored in the `access` table of the SQLite database at `/private/var/mobile/Library/TCC/TCC.db`. A list of possible permission IDs to set can be reconstructed from `/System/Library/PrivateFrameworks/TCC.framework/en.lproj/Localizable.strings`, a translation file for the *Transparency, Consent, and Control* framework [@johnsonDeepDiveMacOS2021]. Setting the `auth_value` column to `2` grants the permission, setting it to `0` denies it. A list of which permissions we set can be found in [@tbl:appendix-ios-permissions] in [@Sec:appendix-figures-tables].
 
     The location permission is not handled by that table. To grant an app access to the location, we inject the following Frida script into the settings application:
 
@@ -108,7 +108,7 @@ For reading and interacting with elements on the screen, we leverage [Appium](ht
 
 We disable several of Appium's features, namely automatically starting apps, waiting for their launch, and resetting, as those are intended for software testing and not flexible enough for the purposes of this thesis. Instead, we use our own platform APIs described in [@sec:instrumentation-device].
 
-The Appium docs previously mentioned that Appium does not work with jailbroken iOS devices, though we found that to be wrong^[We have submitted a correction and the docs have since been changed: <https://github.com/appium/appium/issues/16211>]. We were however not able to rely on Appium's automatic configuration for iOS and had to resort to using the fully manual configuration [@matsuoXCUITestRealDevices2021]. We additionally had to pass the `-allowProvisioningUpdates` flag to `xcodebuild`, which the docs previously didn't mention^[We have also submitted a correction that has since been incorporated for that: <https://github.com/appium/appium/issues/16212>, <https://github.com/appium/appium/pull/16215>]. This may be due to the fact that we are using a free Apple developer account. The full steps for setting up Appium for iOS can be found in Appendix TODO.
+The Appium docs previously mentioned that Appium does not work with jailbroken iOS devices, though we found that to be wrong^[We have submitted a correction and the docs have since been changed: <https://github.com/appium/appium/issues/16211>]. We were however not able to rely on Appium's automatic configuration for iOS and had to resort to using the fully manual configuration [@matsuoXCUITestRealDevices2021]. We additionally had to pass the `-allowProvisioningUpdates` flag to `xcodebuild`, which the docs previously didn't mention^[We have also submitted a correction that has since been incorporated for that: <https://github.com/appium/appium/issues/16212>, <https://github.com/appium/appium/pull/16215>]. This may be due to the fact that we are using a free Apple developer account.
 
 Further, we noticed that a persistent Appium server tends to break after a few runs on iOS. This can be mitigated by restarting the Appium server for each app, though that adds a bit of overhead. Nonetheless, after analysing a few hundred apps, the iPhone consistently got into a broken state where Appium couldn't communicate with the device anymore, and sometimes it wasn't possible to uninstall or start apps manually through the UI anymore, either. The Appium developers describe known issues with the underlying WebDriverAgent on real devices [@murchieREADMEMdAppiumxcuitestdriver2022]. We don't know whether these would also cause the problems we saw in iOS itself. Either way, they could be remedied by manually restarting the device, which then also required reapplying the jailbreak.
 
@@ -146,7 +146,32 @@ On iOS, the steps are:
 
 On both platforms, we plant honey data, so we can detect if apps transmit this data. We use randomly generated values with sufficient entropy to make sure they can't appear in traffic by chance. We also read relevant device identifiers that apps may track.
 
-Table TODO shows the honey data we use.
+Table [@tbl:instrumentation-honey-data] shows the honey data we use.
+
+| Value              | Kind                    | Notes        |
+|--------------------|-------------------------|--------------|
+| Contacts           | set manually            |              |
+| Location           | set through Appium      |              |
+| Messages           | set manually            |              |
+| Calls              | set manually            | Android only |
+| Clipboard          | set through Frida       |              |
+| Calendar           | set manually            | iOS only     |
+| Reminders          | set manually            | iOS only     |
+| Notes              | set manually            | iOS only     |
+| Health details     | set manually            | iOS only     |
+| Apple Home data    | set manually            | iOS only     |
+| WiFi SSID          | set manually            |              |
+| Device name        | set manually            |              |
+| Phone number       | set manually            | Android only |
+| Operating system   | device parameter        |              |
+| Device model       | device parameter        |              |
+| Serial number      | device parameter        |              |
+| MAC addresses      | device parameter        |              |
+| BSSID              | device parameter        |              |
+| Advertising ID     | set automatically by OS |              |
+| Local IP addresses | set automatically by OS |              |
+
+:   Overview of the Honey data we set on the devices. Most values are either manually placed on the device by us beforehand or already present on the system. We automatically set the location through Appium and seed the clipboard through Frida. Some values are only present on one of the platforms. {#tbl:instrumentation-honey-data}
 
 ## App Dataset
 

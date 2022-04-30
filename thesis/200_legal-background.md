@@ -29,7 +29,7 @@ According to the data protection authorities, lit. b) and f) can typically not b
 
 In any case and regardless of the type of processing and legal basis used, controllers need to comply with the general principles set forth in the GDPR. Notably, Article 5(1) GDPR requires that controllers adhere to the principles of data minimisation by only processing data to the extent necessary for the particular purpose (lit. c), and storage limitation by only keeping stored data in a form that permits the identification of data subjects for as long as is necessary (lit. e). This is further emphasised by Article 25(1) GDPR, which prescribes the principle of data protection by design and by default.
 
-As an EU law, the GDPR is binding for all companies in the EU. But its territorial scope, as defined in Article 3 GPDR, also includes companies outside the EU if they deliberately process the data of people in the EU related to the offering of goods and services or for the monitoring of their behaviour, as is the case for tracking [@munizschiebertTerritorialScopeGDPR2020].
+As an EU law, the GDPR is binding for all companies in the EU. But its territorial scope, as defined in Article 3 GDPR, also includes companies outside the EU if they deliberately process the data of people in the EU related to the offering of goods and services or for the monitoring of their behaviour, as is the case for tracking [@munizschiebertTerritorialScopeGDPR2020].
 
 ## Storing and Accessing Information on Terminal Equipment
 
