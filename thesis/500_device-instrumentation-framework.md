@@ -21,7 +21,7 @@ Ensure device
 :   On Android, this starts the emulator and waits for it to finish booting. For that, it reads the boot animation state using `adb -e shell getprop init.svc.bootanim`{.sh} and waits until that returns `stopped` [@sprynAutomatedAndroidEmulator2020].  
     We also run this command when the emulator has stopped responding (this seems to be caused by emulator bugs that happen with some apps). Thus, it first stops a potential previous running emulator before starting a new one.
 
-    On iOS, this is a no-op since we are using a physical device that we cannot start automatically as the jailbreak requires manual steps (in particular, putting the device into DFU mode). The iPhone has to be started and jailbroken before the analysis is run.
+    On iOS, this is a no-op since we are using a physical device that we cannot start automatically as the jailbreak requires manual steps (in particular, putting the device into DFU mode). The iPhone has to be started and jailbroken before the analysis is run (see [@sec:instrumentation-device-prep]).
 
 Reset device
 :   On Android, this uses the emulator's snapshot features [@androidopensourceprojectcontributorsStartEmulatorCommand2020] to restore the emulator into a clean state by loading a predefined snapshot.  
@@ -114,20 +114,20 @@ Further, we noticed that a persistent Appium server tends to break after a few r
 
 Finally, for some reason, we noticed that the first `findElements()` call in a session does not find elements inside webviews. As a workaround, we have to do an initial bogus `findElements()` call before any other ones and discard its results.
 
-## Device Preparation
+## Device Preparation {#sec:instrumentation-device-prep}
 
 For Android, Google has long offered an established emulator that is well supported by tooling. It is possible to install arbitrary apps into the emulator. Thus, we can utilise it for our analysis. We use Android 11 on the x86_64 architecture. This provides a good compromise between performance and compatibility, as the emulator provides hardware acceleration support for x86 [@androidopensourceprojectcontributorsConfigureHardwareAcceleration2021] and we can still run apps only compiled for ARM as the emulator is capable of translating ARM instructions to x86 [@hazardRunARMApps2020]. 
 
 While Apple also offers an iOS Simulator, it cannot run apps packaged for distribution as downloaded from the App Store [@InstallingIpaApp2021; @grgAnswerHowCan2013]. We would need to have the apps' source code to create a development build, which is not feasible. And even then, the iOS Simulator is much more locked down than the Android Emulator and doesn't allow us to access everything we would need for the analysis. There are a number of commercial providers that offer running native iOS apps like Appetize.io and RunThatApp but those only resell the iOS Simulator and thus aren't suitable either [@appetize.iollcUploadingApps2022; @runthatapp.cominc.RunThatAppFileSubmission2021].  
 As such, we need to use a real iPhone for the analysis. We are using an iPhone 7 that is running iOS 14.8. The choice of the iOS version is heavily constrained by two factors: jailbreak and device availability. As of the time of writing, the newest version of iOS is 15.4.1 but no jailbreak, which is necessary for the kinds of instrumentation we are doing, is available for iOS 15 yet [@emiylIPhone2022; @bouchardCoolStarConfirmsThat2022]. At the same time, Apple heavily restricts the versions that can be installed on an iPhone. It is currently only possible to upgrade to the very latest version, iOS 15.4.1, and no downgrades are possible at all^[It _is_ possible to downgrade to any version that one has backed up Apple's signatures, so-called SHSH blobs, for but those are tied to a specific device [@pj09FaqDowngrading2021].] [@danthemann15SHSH2022]. Thus, one has to resolve to buying used devices that happen to not have been upgraded yet by their previous owner. This makes choosing a particular version of iOS to base the analysis on practically impossible. The only requirement we were able to impose is a version of at least 14.5 (which introduced the App Tracking Transparency changes [@appleinc.IOS14Offers2021]) and lower than 15.0 (so a jailbreak is available).
 
-In the following, we give a high-level overview of the steps needed to prepare the device/emulator for instrumentation. See Appendix TODO for the full steps.
+In the following, we give an overview of the steps needed to prepare the device/emulator for instrumentation.
 
 ### Android
 
 On Android, the general device setup steps are:
 
-1. Install the mitmproxy certificate as a root certificate authority. On newer versions of Android, including Android 11, which we are using, this requires disabling *Android Verified Boot* (AVB) and *device-mapper-verity* (dm-verity), among other things [@joseAnswerAdbRemount2020; @ropnopConfiguringBurpSuite2018; @0x10f2cInterceptingTrafficAndroid2019].
+1. Install the mitmproxy certificate as a root certificate authority. On newer versions of Android, including Android 11, which we are using, this requires starting the emulator with the `-writable-system` flag, disabling *Android Verified Boot* (AVB) and *device-mapper-verity* (dm-verity), and copying the certificate to the `/system/etc/security/cacerts/` folder [@joseAnswerAdbRemount2020; @ropnopConfiguringBurpSuite2018; @0x10f2cInterceptingTrafficAndroid2019].
 2. Install Frida server 15.1.12.
 3. Uninstall unnecessary Google apps to avoid their background traffic.
 4. Disable Android's default captive portal checks [@yanAnswerCaptivePortal2017] to further reduce background noise. 
@@ -138,8 +138,9 @@ On iOS, the steps are:
 
 1. Jailbreak the device using checkra1n 0.12.4 beta.
 2. Install the following Cydia packages: [Activator](https://cydia.saurik.com/package/libactivator/), [SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2), [Frida](https://frida.re/docs/ios/#with-jailbreak), [Open](http://cydia.saurik.com/package/com.conradkramer.open/), [OpenSSH](https://cydia.saurik.com/package/openssh/), [sqlite3](http://apt.bingner.com/debs/1443.00/sqlite3_3.24.0-1_iphoneos-arm.deb).
-3. Adjust the device settings to keep background traffic to a minimum.
-4. Configure the machine mitmproxy is run on as the proxy and import mitmproxy's profile to trust its certificate authority [@ibanezInterceptingNetworkTraffic2019].
+3. Adjust the device settings to keep background traffic to a minimum, disabling background app refresh, automatic OS updates, iPhone analytics, and automatic app downloads and updates.
+4. Uninstall all unnecessary third-party apps to avoid their background traffic.
+5. Configure the machine mitmproxy is run on as the proxy and import mitmproxy's profile to trust its certificate authority [@ibanezInterceptingNetworkTraffic2019].
 
 ### Honey Data {#sec:instrumentation-honey-data}
 

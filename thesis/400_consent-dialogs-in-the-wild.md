@@ -92,7 +92,7 @@ In both cases, for automated analysis, the objects would still need to be conver
 
 Unlike on the web, no prior research on how common TCF usage is on mobile exists as far as we are aware. To gauge whether reading the TCF preferences is a viable approach for this thesis, we performed a simple analysis on 823 apps from a dataset of popular Android apps from November 2021: The apps were run in the Android emulator and left running for 5 seconds. Afterwards, a screenshot was taken and the `SharedPreferences` of the respective app were saved. Then, we manually looked at the screenshots to determine whether the app showed any reference to data protection (like a consent dialog, a privacy notice, or even just a link to a privacy policy).
 
-181 of the 823 ($\sim 22$ %) apps displayed such a reference to data protection on screen after 5 seconds. However, only 21 of the 823 apps ($\sim 3$ %) had set a corresponding privacy-related preference (i.e. one with a key that includes `IABTCF` or `GDPR`). This suggests that the IAB TCF is not commonly implemented on mobile.
+181 of the 823 (21.99&nbsp;%) apps displayed such a reference to data protection on screen after 5 seconds. However, only 21 of the 823 apps (2.55&nbsp;%) had set a corresponding privacy-related preference (i.e. one with a key that includes `IABTCF` or `GDPR`). This suggests that the IAB TCF is not commonly implemented on mobile.
 
 ### Use of CMPs
 
@@ -105,7 +105,7 @@ Nonetheless the required functionality can be replicated on any operating system
 
 For this analysis, we compiled a list of identifiers for 18 CMPs (based on [@iabeuropeCMPList2021; @udonisTop14Consent2022; @instabugTopMobileApp2021]). For Android, we used the same dataset as in [@sec:cd-situation-mobile-tcf] but ran the analysis on all 3271 apps. For iOS, we used a dataset of 1001 apps from the App Store top charts from May 2021.
 
-We detected a potential CMP use in 234 of the 3271 Android apps ($\sim 7$ %) and 28 of the 1001 iOS apps ($\sim 3$ %). We also checked for the presence of IAB's TC string library (`com/iabtcf`), which is only available for Android. We detected that in 38 of the 3271 apps ($\sim 1$ %). This suggests that mobile apps don't commonly use off-the-shelf CMPs either, especially given that the simple analysis we performed is even an overapproximation.
+We detected a potential CMP use in 234 of the 3271 Android apps (7.15&nbsp;%) and 28 of the 1001 iOS apps (2.8&nbsp;%). We also checked for the presence of IAB's TC string library (`com/iabtcf`), which is only available for Android. We detected that in 38 of the 3271 apps (1.16&nbsp;%). This suggests that mobile apps don't commonly use off-the-shelf CMPs either, especially given that the simple analysis we performed is even an overapproximation.
 
 ### Consequences for Analysis {#sec:cd-situation-consequences}
 

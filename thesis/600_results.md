@@ -1,6 +1,6 @@
 # Results
 
-We successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42% and 93.51% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
+We successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42&nbsp;% and 93.51&nbsp;% of the downloaded apps, respectively. On Android, the high number of apps we couldn't analyse is caused for the most part by problems with the certification pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
 <!-- select count(1) from dialogs;
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
@@ -11,8 +11,8 @@ To promote reproducability, the processed data behind all graphs is available in
 
 ![Number of requests and unique hosts contacted per app without any user interaction. Three apps which did more than 1000 requests are omitted in this graph. Those are: `com.prequel.app` on Android with 2500 requests, and `com.audiomack.iphone` and `com.storycover` on iOS with 2383 and 1019 requests, respectively.](../graphs/requests_hosts_per_app.pdf){#fig:results-requests-hosts-per-app}
 
-In total, we recorded 194817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50% of apps did less than 23 requests and 75% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.27 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
-53% of apps contacted less than 10 unique hosts, with 11.85 hosts on average across both platforms.
+In total, we recorded 194817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50&nbsp;% of apps did less than 23 requests and 75&nbsp;% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.27 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
+53&nbsp;% of apps contacted less than 10 unique hosts, with 11.85 hosts on average across both platforms.
 <!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
 <!-- Excel:
      H7=COUNT($D$2:$D$4164)
@@ -28,14 +28,14 @@ In total, we recorded 194817 requests after filtering out the operating systems'
 
 ![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022] (without user interaction). The trackers are coloured by the country they are based in. We compiled the mapping from tracker to country by looking at the trackers' privacy policies. When a policy listed multiple establishments, we chose the country of the main one.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
 
-61700 (33.32%) of the requests that happened without user interaction were identified as going to trackers when compared against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35% and 31.29% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21% of apps sent traffic to Google trackers, and on iOS, 67.11% did. The remaining trackers were all only contacted by 10% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries, namely Israel, Singapore, China, and Russia.
+61700 (33.32&nbsp;%) of the requests that happened without user interaction were identified as going to trackers when compared against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08&nbsp;% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35&nbsp;% and 31.29&nbsp;% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21&nbsp;% of apps sent traffic to Google trackers, and on iOS, 67.11&nbsp;% did. The remaining trackers were all only contacted by 10&nbsp;% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries, namely Israel, Singapore, China, and Russia.
 <!-- select platform, count(distinct name) from filtered_requests where host ~
       '2mdn\.net|\.google\.com|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|\.google\.com|google-analytics\.com|crashlytics\.com|2mdn\.net|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|firebase\.com|www\.googletagmanager\.com|www\.googletagservices\.com|app-measurement\.com|googlesyndication\.com'
     group by platform; -->
 
 ![Number of times that the observed data types were transmitted per app and tracker without any user interaction, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously).](../graphs/data_type_transmissions_initial.pdf){#fig:results-data-type-transmissions-initial}
 
-Looking at the data transmitted to trackers, 3201 apps (72.95%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20465 of 194817 requests (10.50%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
+Looking at the data transmitted to trackers, 3201 apps (72.95&nbsp;%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20465 of 194817 requests (10.50&nbsp;%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
 
 TODO: Clean up fig:results-tracker-data-initial.
 
@@ -64,34 +64,34 @@ Finally, we also analysed the cookies that were set in the requests against the 
 
 ## Prevalence of Consent Dialogs
 
-------------------------------------------------------
-Classification    Detections   Detections   Detections
-                  on Android       on iOS     in total
---------------- ------------ ------------ ------------
-dialog                   132          199          331
-                     (6.38%)      (8.58%)      (7.54%)
+---------------------------------------------------------
+Classification     Detections    Detections    Detections
+                   on Android        on iOS      in total
+--------------- ------------- ------------- -------------
+dialog                    132           199           331
+                     (6.38 %)      (8.58 %)      (7.54 %)
 
-maybe dialog              17           36           53
-                     (0.82%)      (1.55%)      (1.21%)
+maybe dialog               17            36            53
+                     (0.82 %)      (1.55 %)      (1.21 %)
 
-notice                   103           82          185
-                     (4.98%)      (3.53%)      (4.22%)
+notice                    103            82           185
+                     (4.98 %)      (3.53 %)      (4.22 %)
 
-maybe notice               5            5           10
-                     (0.24%)      (0.22%)      (0.23%)
+maybe notice                5             5            10
+                     (0.24 %)      (0.22 %)      (0.23 %)
 
-link                     103          103          206
-                     (4.98%)      (4.44%)      (4.69%)
+link                      103           103           206
+                     (4.98 %)      (4.44 %)      (4.69 %)
 
-neither                 1708         1895         3603
-                    (82.59%)     (81.68%)     (82.11%)
-------------------------------------------------------
+neither                  1708          1895          3603
+                    (82.59 %)     (81.68 %)     (82.11 %)
+---------------------------------------------------------
 
 :   Number of apps where the different consent elements were detected by platform. The percentages are relative to all apps in the respective column. {#tbl:results-cd-prevalence}
 
-[@Tbl:results-cd-prevalence] lists the number of apps where our analysis detected a consent element. Across all apps, we detected a consent dialog in 384 apps (8.75%), a consent notice in 195 apps (4.44%), and a link to a privacy policy in 206 apps (4.69%). Thus, in total, 785 apps (17.89%) had one of the consent elements we detect.
+[@Tbl:results-cd-prevalence] lists the number of apps where our analysis detected a consent element. Across all apps, we detected a consent dialog in 384 apps (8.75&nbsp;%), a consent notice in 195 apps (4.44&nbsp;%), and a link to a privacy policy in 206 apps (4.69&nbsp;%). Thus, in total, 785 apps (17.89&nbsp;%) had one of the consent elements we detect.
 
-There appears to be little difference in the prevalence of the consent elements between platforms. Across all types, the relative counts differ by no more than 2.3%. We detected slightly more consent dialogs on iOS compared to Android, whereas we detected slightly more notices on Android. In total, we detected any consent element in 18.32% of apps on iOS compared to 17.41% on Android.
+There appears to be little difference in the prevalence of the consent elements between platforms. Across all types, the relative counts differ by no more than 2.3&nbsp;%. We detected slightly more consent dialogs on iOS compared to Android, whereas we detected slightly more notices on Android. In total, we detected any consent element in 18.32&nbsp;% of apps on iOS compared to 17.41&nbsp;% on Android.
 
 ## Violations in Consent Dialogs
 
@@ -111,15 +111,15 @@ The upper violin plot illustrates the distribution of top chart positions among 
 }
 ```
 
-Looking at the individual dark patterns, 43.2% of the dialogs did not have a "reject" button on the first layer. Ambiguous labels for the "accept" and "reject" buttons were also common with 37.5% and 32.8% of dialogs exhibiting them, respectively. "Accept" buttons were most commonly highlighted compared to "reject" buttons by colour with 31.2% of dialogs compared to only 10.7% of dialogs highlighting the "accept" button by size. Finally, 16 apps (4.2%) quit after refusing consent.
+Looking at the individual dark patterns, 43.2&nbsp;% of the dialogs did not have a "reject" button on the first layer. Ambiguous labels for the "accept" and "reject" buttons were also common with 37.5&nbsp;% and 32.8&nbsp;% of dialogs exhibiting them, respectively. "Accept" buttons were most commonly highlighted compared to "reject" buttons by colour with 31.2&nbsp;% of dialogs compared to only 10.7&nbsp;% of dialogs highlighting the "accept" button by size. Finally, 16 apps (4.2&nbsp;%) quit after refusing consent.
 
-[@Fig:results-dialog-dark-patterns] illustrates the observed combinations of dark patterns in consent dialogs and compares them against the apps' top chart positions. We most commonly observed "accept" buttons with an ambiguous label in combination with no "reject" button on the first layer (22.7% of dialogs). Consent dialogs also often have an ambiguous "reject" button and highlight the "accept" button by colour (14.3%). Both of those were was slightly more frequently the case for apps ranked highly in the top charts. Other than that, most dark patterns ocurred on their own and with no significant correlation to the apps' top chart position.
+[@Fig:results-dialog-dark-patterns] illustrates the observed combinations of dark patterns in consent dialogs and compares them against the apps' top chart positions. We most commonly observed "accept" buttons with an ambiguous label in combination with no "reject" button on the first layer (22.7&nbsp;% of dialogs). Consent dialogs also often have an ambiguous "reject" button and highlight the "accept" button by colour (14.3&nbsp;%). Both of those were was slightly more frequently the case for apps ranked highly in the top charts. Other than that, most dark patterns ocurred on their own and with no significant correlation to the apps' top chart position.
 
-In total, we have detected at least one dark pattern in 347 of the 384 apps with a dialog (90.36%). The share of dark patterns in dialogs is slightly higher on Android with 136 of 149 dialogs (91.28%) compared to 211 of 235 (89.79%) on iOS.
+In total, we have detected at least one dark pattern in 347 of the 384 apps with a dialog (90.36&nbsp;%). The share of dark patterns in dialogs is slightly higher on Android with 136 of 149 dialogs (91.28&nbsp;%) compared to 211 of 235 (89.79&nbsp;%) on iOS.
 
 On their own, the dark patterns we detect are not necessarily violations of data protection law. Using dark patterns in a consent dialog just results in the consent that is acquired through the dialog being invalid. As such, the actual violation that we can detect is the transmission of tracking data based on such invalid consent^[Though presenting the user with a consent dialog that uses dark patterns without ever actually requiring consent for any processing would arguably run afoul of the principle of lawfulness, fairness, and transparency set forth by Article 5(1)(a) GDPR and thus be a violation in and of itself.].
 
-We found that 328 of the 384 apps with a dialog (85.42%) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59%) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have identified that 77.34% of the 384 detected dialogs failed to acquire valid consent for the tracking that they perform.
+We found that 328 of the 384 apps with a dialog (85.42&nbsp;%) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59&nbsp;%) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have identified that 77.34&nbsp;% of the 384 detected dialogs failed to acquire valid consent for the tracking that they perform.
 
 ## Effect of User Choices
 
@@ -132,9 +132,9 @@ Given the low number of apps for which we were able to collect traffic after rej
 <!-- select count(1) from filtered_requests where run_type = 'accepted'; -->
 <!-- select count(1) from filtered_requests where run_type = 'rejected'; -->
 
-In the traffic before interaction, 33.32% of requests were identified as trackers by Exodus. In the traffic after accepting the dialogs, this percentage slightly dropped to 31.90%, while after rejecting, there was actually a higher percentage of the traffic that was identified as tracking with 47.06%. Meanwhile, 78.08% of apps contacted at least one Exodus-identified tracker in the initial runs. In the accepted runs, 25 additional apps (7.58% of the accepted apps) contacted a tracker that previously didn't. In the rejected runs, 16 of 28 apps (57.14%) continued contacting trackers, as did one additional app for the first time.
+In the traffic before interaction, 33.32&nbsp;% of requests were identified as trackers by Exodus. In the traffic after accepting the dialogs, this percentage slightly dropped to 31.90&nbsp;%, while after rejecting, there was actually a higher percentage of the traffic that was identified as tracking with 47.06&nbsp;%. Meanwhile, 78.08&nbsp;% of apps contacted at least one Exodus-identified tracker in the initial runs. In the accepted runs, 25 additional apps (7.58&nbsp;% of the accepted apps) contacted a tracker that previously didn't. In the rejected runs, 16 of 28 apps (57.14&nbsp;%) continued contacting trackers, as did one additional app for the first time.
 
-Furthermore, in the initial runs, 3201 of the 4388 apps (72.95 %) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85%) continued transmitting pseudonymous data and one app started doing so for the first time.
+Furthermore, in the initial runs, 3201 of the 4388 apps (72.95&nbsp;%) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44&nbsp;%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85&nbsp;%) continued transmitting pseudonymous data and one app started doing so for the first time.
 
 ![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
 
@@ -142,13 +142,13 @@ Furthermore, in the initial runs, 3201 of the 4388 apps (72.95 %) transmitted ps
 
 ## Apple Privacy Labels
 
-112 of the 2481 apps on iOS (4.51%) had an empty privacy label. 182 of them (7.68%) claimed not to collect any data.
+112 of the 2481 apps on iOS (4.51&nbsp;%) had an empty privacy label. 182 of them (7.68&nbsp;%) claimed not to collect any data.
 
 ![Evaluation of the correctness of data types and purposes in privacy labels on iOS. Remember that we can only definitively say when data _is_ collected but if we don't observe data being transmitted, it doesn't necessarily mean that it is never collected.](../graphs/privacy_labels.pdf){#fig:results-privacy-labels}
 
-[@Fig:results-privacy-labels] shows the comparison of the observed and declared data types and purposes. For most of the data types that we can check, we did not observe apps that incorrectly omitted them from their privacy label or misdeclared them as anonymous. Most notably, we saw 329 apps (13.26%) that transmitted the IDFA, IFDV, or a hashed version thereof without declaring that in their privacy label. Further, 155 apps (6.25%) claimed to collect such a device ID in a way that is not linked to the user, which seems like an obvious contradiction. 98 apps (3.95%) also transmitted the device's location but omitted that in their privacy label and a further 18 apps (0.73%) declared that they only collected the location anonymously even though we observed them linking it to unique identifier for the user or device.
+[@Fig:results-privacy-labels] shows the comparison of the observed and declared data types and purposes. For most of the data types that we can check, we did not observe apps that incorrectly omitted them from their privacy label or misdeclared them as anonymous. Most notably, we saw 329 apps (13.26&nbsp;%) that transmitted the IDFA, IFDV, or a hashed version thereof without declaring that in their privacy label. Further, 155 apps (6.25&nbsp;%) claimed to collect such a device ID in a way that is not linked to the user, which seems like an obvious contradiction. 98 apps (3.95&nbsp;%) also transmitted the device's location but omitted that in their privacy label and a further 18 apps (0.73&nbsp;%) declared that they only collected the location anonymously even though we observed them linking it to unique identifier for the user or device.
 
-In terms of the purposes, most apps correctly declared whether they used ads and tracking. 118 (4.76%) and 92 apps (3.71%) wrongly claimed not to use ads and tracking respectively despite doing so after all.
+In terms of the purposes, most apps correctly declared whether they used ads and tracking. 118 (4.76&nbsp;%) and 92 apps (3.71&nbsp;%) wrongly claimed not to use ads and tracking respectively despite doing so after all.
 
 ## IAB TCF data
 
