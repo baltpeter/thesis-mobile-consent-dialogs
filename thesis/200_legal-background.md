@@ -6,7 +6,7 @@ In this chapter, we introduce the legal framework that regulates data protection
 
 The primary law for data protection in the EU is the General Data Protection Regulation (GDPR), which went into force in 2018 and mandates a data protection framework that is consistent across the whole EU and also more strict than previous laws in this area. As an EU regulation, it is applicable law in all EU member states without them needing to implement it in their national laws.
 
-The GDPR deals with the "processing" of "personal data" (Art. 2(1) GDPR). These legal terms are defined in Art. 4 GDPR:
+The GDPR deals with the *processing* of *personal data* (Art. 2(1) GDPR). These legal terms are defined in Art. 4 GDPR:
 
 > (1) ‘personal data’ means any information relating to an identified or identifiable natural person […]; [i.e.] one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or […] the physical, physiological, genetic, mental, economic, cultural or social identity […]
 
@@ -15,7 +15,7 @@ The GDPR deals with the "processing" of "personal data" (Art. 2(1) GDPR). These 
 Both terms are explicitly very broad. In essence, any data that can somehow be connected to a natural person (the *data subject*) and that a company or other organisation (the *controller*) deals with in some way is covered by the GDPR. This even applies to pseudonymous data (Recital 26(2) GDPR), i.e. data that can only be attributed to a person using additional, separately kept information (Art. 5(4) GDPR). Examples for data that can pseudonymously be linked to a person include user IDs and IP addresses. A user ID alone cannot identify a person. But that ID in combination with the database that stores the corresponding user information certainly can. Similarly, most companies will not be able to trace back an IP address to a person on their own. But in combination with the customer data held by the person's ISP, which can potentially be obtained through a court order in many jurisdictions, this is possible [@PatrickBreyerBundesrepublik2016].  
 Conversely, data that cannot be linked to person, even when consulting additional information sources, is called anonymous data and does not fall under the GDPR (Recital 26(5) GDPR). This can include the settings of an application or aggregate statistical data. However, genuine anonymisation that cannot ever be reversed is hard to impossible to achieve. In many cases, even a handful of seemingly benign data points are enough to uniquely identify a person [@rocherEstimatingSuccessReidentifications2019]. Similarly, fingerprinting can often uniquely identify a device using its settings [@lschatzkinCoverYourTracks2021]. The GDPR requires taking that into consideration before classifying data as anonymous [@blairEDataGuideGDPR2019]. And even anonymous data can become personal data if linked with other personal data like a user ID.
 
-Under the GDPR, processing personal data is generally prohibited unless there is a valid legal basis in the law for it. A conclusive list of those is defined in Art. 6(1)(a–f) GDPR. A processing of personal data can only lawful if it fulfills one of these conditions:
+Under the GDPR, processing personal data is generally prohibited unless there is a valid legal basis in the law for it. A conclusive list of those is defined in Art. 6(1)(a–f) GDPR. A processing of personal data can only be lawful if it fulfills one of these conditions:
 
 a) The data subject has given their consent.
 b) The processing is necessary for performing a contract that the data subject is a party to.
@@ -25,9 +25,9 @@ e) The processing is necessary for an official task in the public interest, usua
 f) The processing is necessary for a legitimate interest of the controller, given it outweighs the data subject's interests and fundamental rights.
 
 In the context of tracking or other processing typically performed by apps, lit. c), d), and e) are obviously not applicable except in rare exceptions [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021]. The GDPR itself doesn't answer which of the remaining three can be used. For that, one can look to the *data protection authorities* (DPAs). Those are public authorities in each member state tasked with enforcing the GDPR in their respective jurisdiction (Art. 51 GDPR). They publish their interpretation of unclear aspects of the law like this in recommendations. While those recommendations are not legally binding in and of themselves, the DPAs can issue sanctions (including fines) to companies who don't follow them (Art. 58 GDPR).  
-According to the data protection authorities, lit. b) and f) can typically not be used as a legal basis for tracking [@europeandataprotectionboardGuidelines2019Processing2019; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022; @konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021].
+According to the data protection authorities, lit. b) and f) can typically not be used as a legal basis for tracking [@europeandataprotectionboardGuidelines2019Processing2019; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022; @konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021]. That leaves only consent as a potential legal basis for tracking.
 
-That leaves only consent as a potential legal basis for tracking and the GDPR has high conditions for what is considered valid consent. We will deal with this in detail in [@sec:critera].
+In any case and regardless of the type of processing and legal basis used, controllers need to comply with the general principles set forth in the GDPR. Notably, Art. 5(1) GDPR requires that controllers adhere to the principles of data minimisation by only processing data to the extent necessary for the particular purpose (lit. c), and storage limitation by only keeping stored data in a form that permits the identification of data subjects for as long as is necessary (lit. e). This is further emphasised by Art. 25(1) GDPR, which prescribes the principle of data protection by design and by default.
 
 As an EU law, the GDPR is binding for all companies in the EU. But its territorial scope, as defined in Art. 3 GPDR, also includes companies outside the EU if they deliberately process the data of people in the EU related to the offering of goods and services or for the monitoring of their behaviour, as is the case for tracking [@munizschiebertTerritorialScopeGDPR2020].
 
@@ -43,7 +43,7 @@ Unlike the GDPR, Art. 5(3) ePD doesn't deal with data protection but protects th
 
 Also unlike the GDPR, Art. 5(3) ePD does not provide multiple possible legal bases that could apply. There are only two options: Either the reading or storing falls under the exception of being strictly necessary (a clause that has to be interpreted narrowly, with for example tracking and advertising not being strictly necessary despite many publishers' insistence [@article29dataprotectionworkingpartyOpinion0420122012]), or it requires prior informed consent by the user.
 
-For a long time, Germany had not actually properly implemented Art. 5(3) ePD into national law. § 15(3) TMG instead directly contradicted it, allowing an opt-out mechanism for cookies [@hesselForceDecember20212021]. In its October 2019 Planet49 decision, the European Court of Justice ruled that § 15(3) TMG had to be interpreted in line with Art. 5(3) ePD, even against the explicit wording of that provision [@BundesverbandVerbraucherzentralenUnd2019; @schremsCJEUC673172022].
+For a long time, Germany had not actually properly implemented Art. 5(3) ePD into national law. The national implementation in § 15(3) TMG ("Telemediengesetz") instead directly contradicted the ePD, allowing an opt-out mechanism for cookies [@hesselForceDecember20212021]. In its October 2019 Planet49 decision, the European Court of Justice ruled that § 15(3) TMG had to be interpreted in line with Art. 5(3) ePD, even against the explicit wording of that provision [@BundesverbandVerbraucherzentralenUnd2019; @schremsCJEUC673172022].
 
 This finally resulted in Germany changing the law. Since December 2021, Germany implements Art. 5(3) ePD through the "Gesetz zur Regelung des Datenschutzes und des Schutzes der Privatsphäre in der Telekommunikation und bei Telemedien" (TTDSG). In particular, § 25 TTDSG defines privacy protections for terminal equipment. § 25(1) TTDSG mandates that information may only be stored on or accessed from a user's terminal equipment if the user has given consent based on clear and comprehensive information, which is to be provided in accordance with the GDPR. § 25(2) TTDSG then provides two exceptions from that rule, namely if (1) the sole purpose of the storing or access is to carry out the transmission of a communication over a public telecommunications network, or if (2) it is necessary to provide a telemedia service that is explicitly requested by the user.
 
@@ -60,11 +60,12 @@ Previously, there was also such an adequacy decision for the United States (wher
 
 Thus, legal data transfers to the US are now significantly harder or even impossible in many cases and at the very least least require additional safeguards by the controller [@europeandataprotectionboardRecommendations0120202021a; @blocherDSBAustria202102022; @faCNILFranceGoogle2022; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergOrientierungshilfeWasJetzt2021].
 
----
+## Consequences for Apps
 
-TODO:
+In summary, we have seen that apps need the user's consent for tracking. If the tracking data includes device identifiers like the advertising ID, the transmitted data becomes pseudonymous and thus personal data that falls under the GDPR. And while anonymous data is not covered by the GDPR, if it was accessed from the user's device without being strictly technically necessary, it falls under Art. 5(3) ePD.
 
-* Art. 5 GDPR
-* Consent dialogs (maybe merge into something else)
-    * Art. 25 GDPR
-* Consent notices (don't have much of an effect, other than maybe Art. 13/14 GDPR)
+To obtain this consent, apps can make use of consent dialogs that prompt the user to agree to the use of their data for certain purposes. However, there are high conditions for what is considered valid consent. We will discuss these criteria in detail in the next chapter. Consent dialogs need to meet them, otherwise the supposed consent they collect is invalid, meaning that it cannot be used as a legal basis. If an app still performs tracking under these circumstances, it is in violation of applicable law.
+
+Mere notices that only inform the user of the processing going on without actually giving them a choice in the matter cannot obtain the user's consent on the other hand. They can only be used by a controller to fulfil their information obligations under Art. 12–14 GDPR.
+
+Finally, transfers of data to the US are very difficult to implement in a legal way in the current absence of an adequacy decision but the automatic verification of that is beyond the scope of this thesis.

@@ -4,7 +4,7 @@ In this chapter, we explore how consent dialogs are actually implemented in the 
 
 ## Situation on the Web
 
-It makes sense to first take a look at consent dialogs on the web. Most prior research on the topic focusses exclusively on the web.
+It makes sense to first take a look at consent dialogs on the web. Most prior research [@utzInformedConsentStudying2019a; @eijkImpactUserLocation2019a; @matteCookieBannersRespect2020; @nouwensDarkPatternsGDPR2020] on the topic focusses exclusively on the web.
 
 ### Consent Management Platforms
 
@@ -55,7 +55,7 @@ While not the TCF's intended purpose, the fact that the CMP data can be easily r
 
 ## Situation on Mobile {#sec:cd-situation-mobile}
 
-If the situation were similar on mobile and apps also commonly implemented the TCF or at least used a limited number of CMPs, this would make the desired analysis easy. This section will now look at whether that's the case. (TODO: This is terrible, reword!)
+In this section, we look at whether mobile apps also commonly implement the TCF or at least use a limited number of CMPs, which would make the desired analysis easy.
 
 ### Use of IAB TCF {#sec:cd-situation-mobile-tcf}
 
@@ -98,8 +98,7 @@ Unlike on the web, no prior research on how common TCF usage is on mobile exists
 
 Even though it seems like mobile apps do not tend to make use of the TCF, it would still possible that they use off-the-shelf CMPs that just don't implement the TCF. To find out whether that is actually the case, we ran a simple static analysis to detect the presence of common CMP libraries in Android and iOS apps.
 
-On Android, the Exodus privacy project does something similar. They also check for the presence of libraries in Android apps, they just look at tracking libraries instead of CMPs. They have published their approach [@exodusprivacyExodusStaticAnalysis2018]: Essentially, they run the `dexdump` tool on the APK file, which is the Android counterpart to the Linux `objdump` tool and can statically extract class and method names from an APK, among other things. They then compare the namespaces of the listed classes to a list of known tracker libraries.  
-The same approach can be used to detect CMPs. For example, the classes of Didomi CMP libary are in the `io/didomi` namespace. If we detect classes with this namespace in an app, we can assume that it uses the CMP^[Of course, this approach is very fuzzy. Even if an app includes a CMP library, that doesn't mean it actually uses it. In addition, it is possible that the list of namespaces we use is not strict enough and matches other non-CMP libraries. None of that is a problem for the purposes of this analysis, though. Its goal is only to provide an upper bound on the CMP usage in mobile apps and to evaluate whether it is viable at all to rely on CMP-specific code for this thesis.].
+On Android, we use the same approach that Exodus uses for checking for the presence of tracking libraries [@exodusprivacyExodusStaticAnalysis2018]. We run the `dexdump` tool on the APK file, which is the Android counterpart to the Linux `objdump` tool and can statically extract class and method names from an APK, among other things. Then we compare the namespaces of the listed classes to a list of CMP libraries. For example, the classes of Didomi CMP libary are in the `io/didomi` namespace. If we detect classes with this namespace in an app, we can assume that it uses the CMP^[Of course, this approach is very fuzzy. Even if an app includes a CMP library, that doesn't mean it actually uses it. In addition, it is possible that the list of namespaces we use is not strict enough and matches other non-CMP libraries. None of that is a problem for the purposes of this analysis, though. Its goal is only to provide an upper bound on the CMP usage in mobile apps and to evaluate whether it is viable at all to rely on CMP-specific code for this thesis.].
 
 On iOS, we are not aware of any similar work. It is however possible to list the shared libraries in an IPA file using the `otool` command [@benaneeshAnswerHowSearch2016], where the lines starting with `@rpath` are the libraries included in the IPA (lines without this prefix are system libraries). The symbol table can be listed using the `nm` and `symbols` commands [@columboAnswerFindSize2015]. All of these tools only run on macOS.  
 Nonetheless the required functionality can be replicated on any operating system: An IPA file is just a ZIP archive. All libraries included in an IPA are in subdirectories of `/Payload/<app name>.app/Frameworks`{.placeholders}. We simply list those directories and compare them against a list of CMP libraries.
@@ -110,9 +109,7 @@ We detected a potential CMP use in 234 of the 3271 Android apps ($\sim 7$ %) and
 
 ### Consequences for Analysis {#sec:cd-situation-consequences}
 
-The TCF would have provided a standardized and machine-readable way to detect the presence of a CMP in an app, read the settings of CMPs, and even interact with them. As such, this would of course have been the preferred approach for the analysis in this thesis. In the absence of that, had we found that there is a limited number of off-the-shelf CMP solutions commonly used by apps, it would have still been possible to write custom adapters for these CMPs that rely on the internal implementions^[For example, during testing we found that the Didomi and OneTrust CMPs also store consent information in the OS per-app storage interfaces.] or characteristics of how they design their consent dialogs.
-
-As established in this section, neither of those is the case. As such, we need to use a much more general approach that detects and works with any kind of CMP, regardless of implementation details. This in turn means a loss in the amount of details we can extract from CMPs as we have to expect a large amount of completely different implementations. It also means that we will likely miss some consent dialogs.  
+As established in this section, we can neither rely on the TCF, which would have provided a standardized and machine-readable way to detect the presence of a CMP in an app, read the settings of CMPs, and even interact with them, nor on custom adapters for the internal implementions and dialog design characteristics of a limited number of off-the-shelf CMP solutions. As such, we need to use a much more general approach that detects and works with any kind of CMP, regardless of implementation details. This in turn necessarily means a loss in the amount of details we can extract from CMPs as we have to expect a large amount of completely different implementations. It also means that we will likely miss some consent dialogs.  
 The details of the method we use for the analysis are described in [@Sec:analysis-method].
 
 For the few consent dialogs that _do_ implement the TCF, we still extract the data from `NSUserDefaults` or `SharedPreferences` and perform an analysis on that.

@@ -41,7 +41,7 @@ Install or uninstall app
     On iOS, we use the `ideviceinstaller --install`{.sh} and `ideviceinstaller --uninstall`{.sh} commands which are part of [libimobiledevice](https://libimobiledevice.org/), an open source cross-platform library for interacting with iOS devices.
 
 Set app permissions
-:   As we want to find out all data apps would transmit if given the opportunity, we need to give them all permissions. Granting an operating system permission can also not be considered consent under the GDPR or ePD.
+:   As we want to find out all data apps would transmit if given the opportunity, we need to give them all permissions. Granting an operating system permission only refers to the local device access the apps have and not to data protection, thus it cannot be considered consent under the GDPR or ePD.
 
     On Android, we have already granted all runtime permissions through the `-g` flag to `adb install`. This does not, however, include so-called dangerous permissions like reading phone numbers or SMS messages. To grant those, we first obtain a list of dangerous permissions using `adb shell "pm list permissions -g -d -u"`{.sh} and then grant them individually using `adb shell "pm grant $appId $permissionId"`{.sh} [@latifAnswerListADB2020].
 
