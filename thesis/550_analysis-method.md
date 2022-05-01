@@ -1,6 +1,6 @@
 # Analysis Method {#sec:analysis-method}
 
-In this chapter, we present our method for detecting consent dialogs and violations in them, as well as how we extract the actual data being transmitted in the recorded traffic. TODO: General steps for analysis, maybe even as a diagram?
+In this chapter, we present our method for detecting consent dialogs and violations in them, as well as how we extract the actual data being transmitted in the recorded traffic
 
 The source code is available in the same repository as the device instrumentation framework.
 
@@ -77,11 +77,27 @@ Ambiguous button labels
     If there is more than one of each button, we cannot know which ones to check against each other to detect whether one is highlighted. Thus, for an "accept" button, we only record a violation it is highlighted compared to _every_ "reject" button. But it is enough if there is one "accept" button that is highlighted, not all of them need to be.
 
 "Accept" button highlighted compared to "reject" button by colour
-:   Similarly, a consent dialog may also not have an "accept" button that is more prominent than the "reject" button through its colour (cf. [@sec:criteria-design]). To detect violations, we take screenshots of both buttons (cropped to just the respective button's bounding rectangle). We then use the [`get-image-colors`](https://github.com/colorjs/get-image-colors) library to extract the most prominent colour from each screenshot using colour quantisation. Finally, we compute the two colours' deltaE CMC difference, a numeric measure for the "distance" between two colours, [@lindbloomDeltaCMC2017] using the [`chroma.js`](https://vis4.net/chromajs/) library and record a violation if it is more than 30. TODO: Figure of different colour differences for reference.
+:   Similarly, a consent dialog may also not have an "accept" button that is more prominent than the "reject" button through its colour (cf. [@sec:criteria-design]). To detect violations, we take screenshots of both buttons (cropped to just the respective button's bounding rectangle). We then use the [`get-image-colors`](https://github.com/colorjs/get-image-colors) library to extract the most prominent colour from each screenshot using colour quantisation. Finally, we compute the two colours' deltaE CMC difference, a numeric measure for the "distance" between two colours, [@lindbloomDeltaCMC2017] using the [`chroma.js`](https://vis4.net/chromajs/) library and record a violation if it is more than 30. See [@tbl:method-deltae] for a reference of different colour differences in buttons encountered.
 
     This of course does not guarantee that it's the "accept" and not the "reject" button that's highlighted. To ensure that, we would have to also compare the button colour against the background colour. Unfortunately, Appium doesn't have the capability to extract the background colour and trying to guess which pixels to screenshot to get just the button background without catching other elements would be too error-prone. Thus, we manually review all detected violations of this type.
     
     In the case of more than one of each button type, we proceed exactly as described for the previous violation.
+
+\hypertarget{tbl:method-deltae}{}
+\begin{longtable}[]{p{6cm}rr}
+\caption{\label{tbl:method-deltae}Comparison of various button combinations and the deltaE CMC difference between their most prominent colours. All buttons are adapted from real designs we encountered.}\tabularnewline
+\toprule
+Buttons & Most prominent colours & deltaE \\
+\midrule
+\endfirsthead
+\includegraphics[valign=m,padding=0 0.5ex]{../graphs/color-difference-3.pdf} & \texttt{\#229ccb}, \texttt{\#005aaa} & 26.12 \\
+\includegraphics[valign=m,padding=0 0.5ex]{../graphs/color-difference-2.pdf} & \texttt{\#ececec}, \texttt{\#000000} & 64.64 \\
+\includegraphics[valign=m,padding=0 0.5ex]{../graphs/color-difference-6.pdf} & \texttt{\#32363f}, \texttt{\#2c70d9} & 68.10 \\
+\includegraphics[valign=m,padding=0 0.5ex]{../graphs/color-difference-4.pdf} & \texttt{\#ffffff}, \texttt{\#84bc33} & 113.36 \\
+\includegraphics[valign=m,padding=0 0.5ex]{../graphs/color-difference-1.pdf} & \texttt{\#ffffff}, \texttt{\#f4f200} & 146.07 \\
+\includegraphics[valign=m,padding=0 0.5ex]{../graphs/color-difference-5.pdf} & \texttt{\#ffffff}, \texttt{\#dd0000} & 151.51 \\
+\bottomrule
+\end{longtable}
 
 App stops after refusing consent
 :   It needs to be possible to use an app without consenting (potentially with a reduced feature set), so an app may not quit after the user has refused their consent (cf. [@sec:criteria-circum]). To detect violations, we first ensure that the app is still running and in the foreground, then click the "reject" button, wait for ten seconds and record a violation if the app is not running and in the foreground anymore afterwards. In the case of multiple "reject" buttons, we click the first one, preferring a "reject" button with clear label, if available.

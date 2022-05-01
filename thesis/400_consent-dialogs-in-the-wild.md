@@ -21,8 +21,6 @@ Websites often use third-party scripts from many different vendors for all kinds
 IAB Europe, an association that represents the interests of the digital advertising and marketing industry in Europe [@iabeuropeUs2021], maintains the Transparency & Consent Framework (TCF), a standard that defines a common interface for CMPs and third-party scripts to communicate. It defines how websites should store consent and legitimate interest records, as well as conditions on how to prompt the user for consent and inform them through consent dialogs. For that, IAB Europe maintains a list of purposes and vendors the website can ask users to consent to. The first version, v1.1^[Version 1.0 was never published.], was launched in April 2018, shortly before the GDPR went into force, and in August 2019, a revised v2.0 was published, with v1.1 now being deprecated [@iabeuropeTCFTransparencyConsent2021].  
 Most CMPs implement the TCF [@onetrustllc.OneTrustPreferenceChoiceCMP2022; @usercentricsgmbhTCFExplainedMost2020; @iubendas.r.lCompleteGuideIubenda2020; @cookiebotIABTransparencyConsent2022].
 
-TODO: Figure that illustrates how TCF works
-
 The TCF distinguishes between the publisher (the entity running the website), the CMP (the entity providing the CMP—this can also be a publisher's in-house CMP if it is registered with IAB Europe), and vendors (the third-parties embedded in the publisher's website, e.g. ad or tracking providers). Both CMPs and vendors need to register with IAB Europe, for which there is an annual fee of 1,500 € [@iabeuropeJoinTCF2021].
 
 On a technical level, the TCF mainly regulates two aspects. For one, it mandates that CMPs store consent records in the so-called TC string, which encodes^[IAB Europe offers a JavaScript library (<https://github.com/InteractiveAdvertisingBureau/iabtcf-es>) and an online tool (<https://iabtcf.com>) to decode and encode TC strings.] the following information [@iabtechlabTransparencyConsentString2022]:
@@ -36,20 +34,15 @@ On a technical level, the TCF mainly regulates two aspects. For one, it mandates
 
 TC strings may only be created or changed by the CMP [@iabtechlabTransparencyConsentString2022], and the CMP is free to choose where and how to store the TC string [@iabtechlabIABEuropeTransparency2021].
 
-Secondly, it defines mechanisms for the different parties to communicate. For that, the CMP must expose the following API commands through the `__tcfapi(command, version, callback, parameter)`{.js} function on the `window`{.js} object [@iabtechlabConsentManagementPlatform2021]:
-
-* `getTCData`: to receive an object representing the parsed TC string
-* `ping`: to check whether the CMP has finished loading and whether it believes the GDPR applies in the context of this visit^[The TCF does not mandate how the CMP is supposed to determine whether the GDPR applies, it only mentions using the user's geolocation as one option. Vendors are required to adhere to the CMP's determination. [@iabtechlabConsentManagementPlatform2021] However, as explained in [@sec:bg-gdpr], the user's location alone is not necessarily sufficient for determining whether the GDPR applies.]
-* `addEventListener`: to register an event listener for, among other things, changes to the TC string
-* `removeEventListener`: to remove a registered event listener
+Secondly, it defines mechanisms for the different parties to communicate. For that, the CMP must expose API commands through the `__tcfapi(command, version, callback, parameter)`{.js} function on the `window`{.js} object [@iabtechlabConsentManagementPlatform2021], most notably a command to receive an object representing the parsed TC string, one to check whether the CMP has finished loading and whether it believes the GDPR applies in the context of this visit^[The TCF does not mandate how the CMP is supposed to determine whether the GDPR applies, it only mentions using the user's geolocation as one option. Vendors are required to adhere to the CMP's determination. [@iabtechlabConsentManagementPlatform2021] However, as explained in [@sec:bg-gdpr], the user's location alone is not necessarily sufficient for determining whether the GDPR applies.], and another one to register an event listener for changes to the TC string.
 
 If script then wants to start processing, it has to [@iabtechlabConsentManagementPlatform2021]:
 
 1. Determine whether a CMP is loaded on the page by checking for the presence of the `__tcfapi()`{.js} function. If no CMP is loaded, it has to assume that there is no consent or legitimate interest.
 
    If the script is loaded in an iframe instead of directly on the page (common for ads), it can use a `postMessage()` API for the same purpose.
-2. Request the TC data through the `getTCData` command, and check whether a legal basis for the desired processing is available. Only if that's the case may it start processing.
-3. Subscribe to change events through the `addEventListener` command to notice if the user withdrew their consent for example and then stop processing accordingly.
+2. Request the TC data, and check whether a legal basis for the desired processing is available. Only if that's the case may it start processing.
+3. Subscribe to change events to notice if the user withdrew their consent for example and then stop processing accordingly.
 
 While not the TCF's intended purpose, the fact that the CMP data can be easily read programmatically through the API that has to be provided has also enabled research on consent dialogs on the web [@hilsPrivacyPreferenceSignals2021; @matteCookieBannersRespect2020; @aertsCookieDialogsTheir2021], and is even used by consumer protection organizations to automatically find violations in popular websites to pursue legal action against [@noyb.euNoybAimsEnd2021].
 
