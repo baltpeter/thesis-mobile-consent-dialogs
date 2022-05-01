@@ -33,11 +33,9 @@ In total, we recorded 194817 requests after filtering out the operating systems'
       '2mdn\.net|\.google\.com|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|\.google\.com|google-analytics\.com|crashlytics\.com|2mdn\.net|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|firebase\.com|www\.googletagmanager\.com|www\.googletagservices\.com|app-measurement\.com|googlesyndication\.com'
     group by platform; -->
 
-![Number of times that the observed data types were transmitted per app and tracker without any user interaction, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously).](../graphs/data_type_transmissions_initial.pdf){#fig:results-data-type-transmissions-initial}
+![Number of times that the observed data types were transmitted per app and tracker without any user interaction, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously). Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_initial.pdf){#fig:results-data-type-transmissions-initial}
 
 Looking at the data transmitted to trackers, 3201 apps (72.95&nbsp;%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20465 of 194817 requests (10.50&nbsp;%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
-
-TODO: Clean up fig:results-tracker-data-initial.
 
 ```{=latex}
 \afterpage{%
@@ -45,7 +43,7 @@ TODO: Clean up fig:results-tracker-data-initial.
     \begin{landscape}
 ```
 
-![Observed transmissions of various types of data to trackers without interaction, grouped by platform. Each point represents a number of apps transmitting the respective row's data type to the tracker in the respective column, with the size of the point indicating how many apps performed this transmission at least once. The points are coloured according to the apps' platform.\
+![Observed transmissions of various types of data to trackers without interaction, grouped by platform. Note that we are also using the term "IDFA" for the Android advertising ID here. Each point represents a number of apps transmitting the respective row's data type to the tracker in the respective column, with the size of the point indicating how many apps performed this transmission at least once. The points are coloured according to the apps' platform.\
 \
 The observations in the "\<indicators>" column came from string-matching plain and base64-encoded text in the requests not covered by an endpoint-specific tracking request adapter.](../graphs/apps_trackers_data_types_initial.pdf){#fig:results-tracker-data-initial}
 
@@ -58,7 +56,7 @@ The observations in the "\<indicators>" column came from string-matching plain a
 [@Fig:results-tracker-data-initial] further plots the observed data types against the trackers they were sent to, highlighting that some trackers are only active on one platform and others transmit different types of data depending on the platform. For example, we saw Facebook receiving significantly fewer data types on iOS compared to Android. Conversely, Google Firebase received more data types on iOS.  
 From this data, we can also infer that some trackers are more common on one platform. For example, we observed significantly more transmissions to AdColony on Android compared to iOS, while it is the other way around for ioam.de and ironSource.
 
-![Prevalence of cookies by various companies and which category that can be attributed to (across all runs) according to [@kwakmanOpenCookieDatabase2022]. Each point represents the number of times a cookie by the company in the respective row and belonging to the category in the respective column was set by an app to a different value, with the size of the point indicating how often the cookie was set. The points are coloured according the apps' platform.](../graphs/cookies.pdf){#fig:results-cookies}
+![Prevalence of cookies by various companies and which category they can be attributed to (across all runs) according to [@kwakmanOpenCookieDatabase2022]. Each point represents the number of times a cookie by the company in the respective row and belonging to the category in the respective column was set by an app to a different value, with the size of the point indicating how often the cookie was set. The points are coloured according the apps' platform.](../graphs/cookies.pdf){#fig:results-cookies}
 
 Finally, we also analysed the cookies that were set in the requests against the Open Cookie Database. The results are shown in [@Fig:results-cookies]. We only observed cookies from the *Analytics* and *Marketing* categories but none from the *Functional* and *Preferences* categories. Most cookies we saw were marketing cookies. We saw a more diverse set of companies setting cookies on Android than on iOS. Once again, Google was the most prevalent company on both platforms.
 
@@ -136,7 +134,7 @@ In the traffic before interaction, 33.32&nbsp;% of requests were identified as t
 
 Furthermore, in the initial runs, 3201 of the 4388 apps (72.95&nbsp;%) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44&nbsp;%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85&nbsp;%) continued transmitting pseudonymous data and one app started doing so for the first time.
 
-![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
+![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs. Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
 
 [@Fig:results-data-type-transmissions-accepted] lists how often each data type was transmitted per app and tracker after accepting. Comparing that to the transmissions without user interaction in [@fig:results-data-type-transmissions-initial] shows little difference in the data types that are transmitted to trackers after consent was given.
 

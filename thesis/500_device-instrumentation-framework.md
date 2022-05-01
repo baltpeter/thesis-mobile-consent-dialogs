@@ -229,7 +229,7 @@ We retrieved the top charts of the iOS App Store on March 22, 2022. Counting all
 
 ### App Acquisition
 
-The download process on Android is already well documented and implemented in various tools (TODO: cite), so we omit a description of it here and only describe the existing tool we use. This is not the case on iOS however, so that is explained in detail.
+The download process on Android is already well known and implemented in various tools^[Examples include: <https://github.com/ClaudiuGeorgiu/PlaystoreDownloader>, <https://github.com/onyxbits/raccoon4>, <https://github.com/89z/googleplay>, <https://github.com/rehmatworks/gplaydl>, and <https://github.com/matlink/gplaycli>], so we omit a description of it here and only describe the existing tool we use. This is not the case on iOS however, so that is explained in detail.
 
 #### Android
 
@@ -254,7 +254,7 @@ These days, it is still possible to download IPA files using [Apple Configurator
 
 Thus, none of these methods provide a reliable way to download large amounts of iOS apps as needed for this thesis. Finally, [IPATool](https://github.com/majd/ipatool) is the only command line tool we are aware of for downloading IPA files but it was previously also only able to download already purchased apps as it used the same Apple Configurator endpoints. Based on extensive reverse-engineering the other described tools through network analysis, we were able to extend IPATool to also support purchasing new apps and thus use IPATool for this analysis. We contributed our changes back to IPATool^[See this pull request: <https://github.com/majd/ipatool/pull/51>] and they are already part of a [new release of the software](https://github.com/majd/ipatool/releases/tag/v1.1.0).
 
-With our changes, the flow for downloading apps through IPATool now looks like this (the requests are incomplete here for brevity, for a more detailed breakdown of the full requests see Appendix TODO) [@alfhailyMajdIpatool1b65463007b7e5a160d1c83e32d92f4e18cde6da2022]:
+With our changes, the flow for downloading apps through IPATool now looks like this (the requests are incomplete here for brevity) [@alfhailyMajdIpatool1b65463007b7e5a160d1c83e32d92f4e18cde6da2022]:
 
 1. IPATool first requests the app metadata to find out the numerical app ID for the given bundle ID:
 
