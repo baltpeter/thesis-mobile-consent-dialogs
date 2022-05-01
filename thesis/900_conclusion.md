@@ -2,7 +2,7 @@
 
 In this thesis, we explored the implementation consent dialogs in mobile apps. We looked at the legal framework that regulates data protection in mobile apps, identifying the GDPR and ePD as the primary laws which limit the processing that apps can perform and which mandate that apps need the user's informed consent in order to legally perform tracking.
 
-We then established the strict criteria for a legally compliant consent dialog stemming from the GDPR, which prohibit dark patterns and nudging, e.g. prioritising the "accept" button, using vague purpose descriptions like "to improve user experience", making it harder to refuse consent than accept it, and preselecting puposes. Any consent dialog that violates even just one of these criteria cannot capture valid consent, leaving the app without a legal basis for the data processing.
+We then established the strict criteria for a legally compliant consent dialog stemming from the GDPR, which prohibit dark patterns and nudging, e.g. prioritising the "accept" button, using vague purpose descriptions like "to improve user experience", making it harder to refuse consent than accept it, and preselecting purposes. Any consent dialog that violates even just one of these criteria cannot capture valid consent, leaving the app without a legal basis for the data processing.
 
 Looking at consent dialogs in the wild, we found that while websites commonly make use of the IAB TCF standard to implement consent dialogs, this is not the case on mobile, with only around 3&nbsp;% of apps adhering to the TCF. Similarly, apps less frequently use off-the-shelf CMP solutions compared to the web.
 

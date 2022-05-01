@@ -166,8 +166,6 @@ or
   and not requests.path ~ '/v1/projects/chime-sdk/installations'
 )
 
--- On Android, plenty of system apps also transmit to app-measurement.com. This way, we
--- only filter out those caused by our current app.
 and not (requests.host = 'app-measurement.com'
          and not encode(requests.content_raw, 'escape') 
            like concat('%', apps.name, '%'));

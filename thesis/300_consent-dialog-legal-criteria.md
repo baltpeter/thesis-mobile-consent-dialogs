@@ -10,7 +10,7 @@ Any law that restricts the data processing done in apps in any way can in princi
 
 In addition, the GDPR has so-called opening clauses which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG ("Bundesdatenschutzgesetz"), which thus also needs to be considered.
 
-However, in actuality, most of these laws don't introduce their own conditions on consent:
+However, in actuality, most of these laws do not introduce their own conditions on consent:
 
 * Article 5(3) ePD delegates to Directive 95/46/EC for how consent has to be implemented. This directive was the predecessor to the GDPR, and has been replaced by it. According to Article 94(2) GDPR, all references to this repealed directive in previous legislation shall be construed as references to the GDPR.
 * § 25(1) TTDSG delegates directly to the GDPR for how consent has to be implemented.
@@ -35,7 +35,7 @@ unambiguous
 :   Consent is *unambiguous* if the request for it is “clear, concise and not unnecessarily disruptive to the use of the service for which it is provided” (Recital 32 GDPR).
 
 statement or clear affirmative action
-:   Silence, pre-ticked boxes, or inactivity do not constitute consent (Recital 32 GDPR). Instead, it has to be given by a statement which “which clearly indicates […] the data subject’s acceptance of the proposed processing”, like ticking a checkbox.
+:   Silence, pre-ticked boxes, or inactivity do not constitute consent (Recital 32 GDPR). Instead, it has to be given by a statement “which clearly indicates […] the data subject’s acceptance of the proposed processing”, like ticking a checkbox.
 
 Article 7 GDPR then lists a number of additional conditions for consent:
 
@@ -46,7 +46,7 @@ Article 7 GDPR then lists a number of additional conditions for consent:
 
 In addition to that, the GDPR places even stricter conditions on consent for special categories of personal data (this includes, among other things, political opinions, biometric and genetic data, as well as data on a person's health and sex life, Article 9 GDPR) and third-country transfers without an adequacy decision (Article 49(1)(a) GDPR), requiring an express statement, separate for this specific purpose [@europeandataprotectionboardGuidelines0520202020].  
 Children under the age of 16 years cannot give consent themselves, it instead needs to be given or authorised by their legal guardians (Article 8(1) GDPR).  
-We don't consider either in this thesis as we can't reliably detect them automatically.
+We don't consider either in this thesis as we cannot reliably detect them automatically.
 
 ## List of Criteria
 
