@@ -1,0 +1,8 @@
+{
+    "languageToolLinter.languageTool.ignoredWordsInWorkspace": ["cmps", "dialog", "dialogs", "dpas", "epd", "idfv"],
+    "languageToolLinter.languageTool.disabledRules": "OXFORD_SPELLING_Z_NOT_S",
+    "languageToolLinter.languageTool.language": "auto",
+    "languageToolLinter.languageTool.motherTongue": "de-DE",
+    "languageToolLinter.languageTool.preferredVariants": "en-GB",
+    "languageToolLinter.lintOnOpen": true
+}

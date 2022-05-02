@@ -344,7 +344,7 @@ In an effort to circumvent these legal problems, websites and mobile apps alike 
 
 And the legal requirements for consent are high. Consent needs to be given by a “clear affirmative act” (Recital 32 to the GDPR) and different purposes require individual consent (Art. 7(2) GDPR). The CJEU's [*Planet49* ruling](https://curia.europa.eu/juris/document/document.jsf?docid=218462&doclang=en) further confirmed that pre-ticked checkboxes in cookie banners do not constitute valid consent, even when no personal data is processed.
 
-Conversely, consent dialogs are often also shown where they aren't actually needed. In cases where the processing of certain data is necessary for the website or app to function, both the GDPR and ePD give alternate legal bases that do not require consent from the user (Art. 6(1)(f) GPDR, Art. 5(3) ePD).
+Conversely, consent dialogs are often also shown where they aren't actually needed. In cases where the processing of certain data is necessary for the website or app to function, both the GDPR and ePD give alternate legal bases that do not require consent from the user (Art. 6(1)(f) GDPR, Art. 5(3) ePD).
 
 \subsection*{Related Work}
 

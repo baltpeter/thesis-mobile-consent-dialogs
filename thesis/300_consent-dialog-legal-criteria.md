@@ -2,7 +2,7 @@
 
 Before starting to look at actual consent dialogs in the wild, in this chapter we present a list of criteria a consent dialog needs to meet in order to be legally compliant. For this purpose, we consider two main legal sources: criteria which are set in actual law, and therefore legally binding, and criteria from recommendations of the data protection authorities (DPAs), which are not directly legally binding but rather echo the DPAs' interpretation of the law. Some of the criteria from the DPAs have already been confirmed by court rulings.
 
-In this thesis, we only consider EU-wide and German sources of law, though DPAs from other EU countries have also issued similar guidance and/or decisions (cf. e.g. [ @commissionnationaledelinformatiqueetdeslibertesRefuserCookiesDoit2021; @commissionnationaledelinformatiqueetdeslibertesCookiesAutresTraceurs2020; @roseDatatilsynetDenmark202143101252021; @faCNILFranceSAN20210232022]).
+In this thesis, we only consider EU-wide and German sources of law, though DPAs from other EU countries have also issued similar guidance and/or decisions (cf. e.g. [@commissionnationaledelinformatiqueetdeslibertesRefuserCookiesDoit2021; @commissionnationaledelinformatiqueetdeslibertesCookiesAutresTraceurs2020; @roseDatatilsynetDenmark202143101252021; @faCNILFranceSAN20210232022]).
 
 ## Conditions on Consent from the Law {#sec:criteria-gdpr}
 
@@ -18,7 +18,7 @@ However, in actuality, most of these laws do not introduce their own conditions 
 
 This leaves the GDPR as the only law that defines applicable conditions for consent dialogs.
 
-Consent is one of the six possible legal bases for processing personal data from Article 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking), may thus only happen _after_ consent has been given and the controller needs to be able to demonstrate that consent has been given (Article 7(1) GDPR).
+Consent is one of the six possible legal bases for processing personal data from Article 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking), may thus only happen _after_ consent has been given, and the controller needs to be able to demonstrate that consent has been given (Article 7(1) GDPR).
 
 Consent itself is defined in Article 4(11) GDPR, which lists a set of basic conditions an action needs to meet in order to be considered consent, with each of these being further specified by the recitals to the GDPR:
 
