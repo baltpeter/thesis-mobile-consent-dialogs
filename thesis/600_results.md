@@ -1,6 +1,6 @@
 # Results
 
-We successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42&nbsp;% and 93.51&nbsp;% of the downloaded apps, respectively. On Android, the high number of apps we could not analyse is caused for the most part by problems with the certificate pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
+We successfully analysed 4,388 apps with 2,068 apps on Android and 2,320 apps on iOS, corresponding to 62.42&nbsp;% and 93.51&nbsp;% of the downloaded apps, respectively. On Android, the high number of apps we could not analyse is caused for the most part by problems with the certificate pinning bypass through objection. 1,049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
 <!-- select count(1) from dialogs;
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
@@ -13,11 +13,11 @@ To promote reproducability, the processed data behind all graphs is available in
 \hypertarget{fig:results-requests-hosts-per-app}{%
 \centering
 \includegraphics{../graphs/requests_hosts_per_app.pdf}
-\caption{Number of requests and unique hosts contacted per app without any user interaction. Three apps with more than 1000 requests are omitted in this graph: \texttt{com.prequel.app} on Android with 2500 requests, and \texttt{com.audiomack.iphone} and \texttt{com.storycover} on iOS with 2383 and 1019 requests, respectively.}\label{fig:results-requests-hosts-per-app}
+\caption{Number of requests and unique hosts contacted per app without any user interaction. Three apps with more than 1,000 requests are omitted in this graph: \texttt{com.prequel.app} on Android with 2,500 requests, and \texttt{com.audiomack.iphone} and \texttt{com.storycover} on iOS with 2,383 and 1,019 requests, respectively.}\label{fig:results-requests-hosts-per-app}
 }
 \end{figure}
 
-In total, we recorded 194817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50&nbsp;% of apps did less than 23 requests and 75&nbsp;% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.66 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
+In total, we recorded 194,817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50&nbsp;% of apps did less than 23 requests and 75&nbsp;% of apps did less than 50 requests but there were also some outliers with up to 2,500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.66 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
 53&nbsp;% of apps contacted less than 10 unique hosts, with 11.85 hosts on average across both platforms.
 <!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
 <!-- Excel:
@@ -47,14 +47,14 @@ one.}\label{fig:results-exodus-tracker-counts}
 }
 \end{figure}
 
-61700 (33.32&nbsp;%) of the requests that happened without user interaction were identified as going to trackers when we compared their hostnames against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08&nbsp;% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35&nbsp;% and 31.29&nbsp;% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21&nbsp;% of apps sent traffic to Google trackers, and on iOS, 67.11&nbsp;% did. The remaining trackers were all only contacted by 10&nbsp;% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries, namely Israel, Singapore, China, and Russia.
+61,700 (33.32&nbsp;%) of the requests that happened without user interaction were identified as going to trackers when we compared their hostnames against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08&nbsp;% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35&nbsp;% and 31.29&nbsp;% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21&nbsp;% of apps sent traffic to Google trackers, and on iOS, 67.11&nbsp;% did. The remaining trackers were all only contacted by 10&nbsp;% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries, namely Israel, Singapore, China, and Russia.
 <!-- select platform, count(distinct name) from filtered_requests where host ~
       '2mdn\.net|\.google\.com|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|\.google\.com|google-analytics\.com|crashlytics\.com|2mdn\.net|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|firebase\.com|www\.googletagmanager\.com|www\.googletagservices\.com|app-measurement\.com|googlesyndication\.com'
     group by platform; -->
 
 ![Number of times that the observed data types were transmitted per app and tracker without any user interaction, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously). Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_initial.pdf){#fig:results-data-type-transmissions-initial}
 
-Looking at the data transmitted to trackers, 3201 apps (72.95&nbsp;%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20465 of 194817 requests (10.50&nbsp;%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
+Looking at the data transmitted to trackers, 3,201 apps (72.95&nbsp;%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20,465 of 194,817 requests (10.50&nbsp;%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
 
 ```{=latex}
 \afterpage{%
@@ -100,7 +100,7 @@ maybe notice                5             5            10
 link                      103           103           206
                      (4.98 %)      (4.44 %)      (4.69 %)
 
-neither                  1708          1895          3603
+neither                 1,708         1,895         3,603
                     (82.59 %)     (81.68 %)     (82.11 %)
 ---------------------------------------------------------
 
@@ -141,7 +141,7 @@ We found that 328 of the 384 apps with a dialog (85.42&nbsp;%) transmitted pseud
 ## Effect of User Choices
 
 To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 330 apps after accepting and 28 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either did not contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.  
-We collected 185152 requests in the initial runs, 9342 requests in the accepted runs, and 323 requests in the rejected runs. Note that for the accepted and rejected runs, we only collected the traffic _after_ clicking the respective button. The initial traffic before any interaction was not recorded again in those runs to only capture the change in traffic after interaction.  
+We collected 185,152 requests in the initial runs, 9,342 requests in the accepted runs, and 323 requests in the rejected runs. Note that for the accepted and rejected runs, we only collected the traffic _after_ clicking the respective button. The initial traffic before any interaction was not recorded again in those runs to only capture the change in traffic after interaction.  
 Given the low number of apps for which we were able to collect traffic after rejecting and the low number of corresponding requests, the results for those are most likely not representative.
 <!-- select count(1) from runs where run_type='accepted'; -->
 <!-- select count(1) from runs where run_type='rejected'; -->
@@ -151,7 +151,7 @@ Given the low number of apps for which we were able to collect traffic after rej
 
 In the traffic before interaction, 33.32&nbsp;% of requests were identified as trackers by Exodus. In the traffic after accepting the dialogs, this percentage slightly dropped to 31.90&nbsp;%, while after rejecting, there was actually a higher percentage of the traffic that was identified as tracking with 47.06&nbsp;%. Meanwhile, 78.08&nbsp;% of apps contacted at least one Exodus-identified tracker in the initial runs. In the accepted runs, 25 additional apps (7.58&nbsp;% of the accepted apps) contacted a tracker that previously didn't. In the rejected runs, 16 of 28 apps (57.14&nbsp;%) continued contacting trackers, as did one additional app for the first time.
 
-Furthermore, in the initial runs, 3201 of the 4388 apps (72.95&nbsp;%) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44&nbsp;%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85&nbsp;%) continued transmitting pseudonymous data and one app started doing so for the first time.
+Furthermore, in the initial runs, 3,201 of the 4,388 apps (72.95&nbsp;%) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44&nbsp;%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85&nbsp;%) continued transmitting pseudonymous data and one app started doing so for the first time.
 
 ![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously). Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
 
@@ -159,7 +159,7 @@ Furthermore, in the initial runs, 3201 of the 4388 apps (72.95&nbsp;%) transmitt
 
 ## Apple Privacy Labels
 
-112 of the 2481 apps on iOS (4.51&nbsp;%) had an empty privacy label. 182 of them (7.68&nbsp;%) claimed not to collect any data.
+112 of the 2,481 apps on iOS (4.51&nbsp;%) had an empty privacy label. 182 of them (7.68&nbsp;%) claimed not to collect any data.
 
 ![Evaluation of the correctness of data types and purposes in privacy labels on iOS. Remember that we can only definitively say when data _is_ collected but if we don't observe data being transmitted, it does not necessarily mean that it is never collected.](../graphs/privacy_labels.pdf){#fig:results-privacy-labels}
 

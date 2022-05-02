@@ -201,7 +201,7 @@ Knowing that, we were able to write a scraper that extracts the top free apps pe
 3. Continues scrolling to the bottom of the page until it doesn't get larger anymore (to defeat infinite scrolling as results are loaded dynamically using JavaScript^[It would probably be possible to use the underlying network requests to extract the top list data directly without scraping but those requests are heavily obfuscated.]).
 4. Extracts ID, name and top list position for each app on the page.
 
-We scraped the top apps on Google Play on March 22, 2022. Counting all results, we found 6970 apps in total, with 6817 apps remaining after deduplication. For this analysis, we restrict our dataset to the top 100 apps per category. For that, we found 3500 apps in total, with 3421 apps remaining after deduplication.
+We scraped the top apps on Google Play on March 22, 2022. Counting all results, we found 6,970 apps in total, with 6,817 apps remaining after deduplication. For this analysis, we restrict our dataset to the top 100 apps per category. For that, we found 3,500 apps in total, with 3,421 apps remaining after deduplication.
 
 #### iOS {#sec:app-selection-ios}
 
@@ -226,7 +226,7 @@ The endpoint's response format changes depending on the platform set. When setti
 
 In this result, `$.storePlatformData.lockup.results` then has a list of the respective top apps and their associated metadata. However, this list only contains 84 results. To get the full list of 200 apps, one has to use `$.pageData.segmentedControl.segments[0].pageData.selectedChart.adamIds` instead, which is a list of the numerical app IDs without metadata.
 
-We retrieved the top charts of the iOS App Store on March 22, 2022. Counting all results, we found 5205 apps in total, with 4968 apps remaining after deduplication. Again restricting our dataset to the top 100 apps per category, we found 2605 apps in total^[One category, "Catalogues", only has five apps in its top charts, which explains the count not being divisible by 100.], with 2486 apps remaining after deduplication.
+We retrieved the top charts of the iOS App Store on March 22, 2022. Counting all results, we found 5,205 apps in total, with 4,968 apps remaining after deduplication. Again restricting our dataset to the top 100 apps per category, we found 2,605 apps in total^[One category, "Catalogues", only has five apps in its top charts, which explains the count not being divisible by 100.], with 2,486 apps remaining after deduplication.
 
 ### App Acquisition
 

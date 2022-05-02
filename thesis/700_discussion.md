@@ -5,7 +5,7 @@
 Here, we compare our results with the findings from previous research for the web to gauge the differences between the two platforms.
 
 Prevalence of consent elements
-:   Eijk et al. found 40.2&nbsp;% of 1500 from the top 100 websites across multiple countries having any consent dialog or notice in 2019 [@eijkImpactUserLocation2019a], and Sanchez-Rola et al. report around 50&nbsp;% in 2000 websites the same year [@sanchez-rolaCanOptOut2019], while Mehrnezhad reports 91&nbsp;% in the top 116 EU websites in 2020 [@mehrnezhadCrossPlatformEvaluationPrivacy2020].  
+:   Eijk et al. found 40.2&nbsp;% of 1,500 from the top 100 websites across multiple countries having any consent dialog or notice in 2019 [@eijkImpactUserLocation2019a], and Sanchez-Rola et al. report around 50&nbsp;% in 2,000 websites the same year [@sanchez-rolaCanOptOut2019], while Mehrnezhad reports 91&nbsp;% in the top 116 EU websites in 2020 [@mehrnezhadCrossPlatformEvaluationPrivacy2020].  
     Meanwhile, we found 17.89&nbsp;% of all apps having a dialog, notice, or link. Even taking into account our observed false negatives and disregarding the result by Mehrnezhad as an outlier likely influenced by the significantly smaller sample size, these numbers are noticably higher than our results, suggesting that consent elements are less common on mobile than on the web.
 
     Some research also looked at CMP providers according to IAB TCF data. Matte et al. found Quantcast, OneTrust, Didomi, and Sourcepoint being the most common CMPs in 2020 [@matteCookieBannersRespect2020], while Aerts encountered Didomi, Sourcepoint, LiveRamp, and OneTrust most frequently in Belgian, Dutch, and French sites in 2021 [@aertsCookieDialogsTheir2021].  
