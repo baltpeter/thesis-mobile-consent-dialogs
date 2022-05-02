@@ -78,6 +78,14 @@
       </else>
     </choose>
   </macro>
+  <!-- Ugly hack: Zotero resets the date in legal cases if a URL is inserted, so we need to hijack "accessed" for that. -->
+  <macro name="issued_legal_case">
+    <date variable="accessed">
+      <date-part name="day" form="numeric-leading-zeros" suffix="-"/>
+      <date-part name="month" form="short" suffix="-" strip-periods="true"/>
+      <date-part name="year" form="long"/>
+    </date>
+  </macro>
   <macro name="author">
     <names variable="author">
       <name and="text" et-al-min="7" et-al-use-first="1" initialize-with=". "/>
@@ -114,9 +122,12 @@
   </macro>
   <macro name="title">
     <choose>
-      <if type="bill book graphic legal_case legislation motion_picture song" match="any">
+      <if type="bill book graphic legislation motion_picture song" match="any">
         <text variable="title" font-style="italic"/>
       </if>
+      <else-if type="legal_case">
+        <text variable="title"/>
+      </else-if>
       <else>
         <text variable="title" quotes="true"/>
       </else>
@@ -183,6 +194,16 @@
       </if>
     </choose>
   </macro>
+  <!-- Ugly hack: Zotero resets the date in legal cases if a URL is inserted, so we need to hijack "accessed" for that. -->
+  <macro name="access_legal_case">
+    <choose>
+      <if variable="URL">
+        <group delimiter=". ">
+          <text variable="URL"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
   <macro name="page">
     <group>
       <label variable="page" form="short" suffix=" "/>
@@ -204,6 +225,9 @@
   </macro>
   <macro name="doi">
     <text variable="DOI" prefix="doi: "/>
+  </macro>
+  <macro name="ecli">
+    <text variable="number" />
   </macro>
   <!-- Citation -->
   <citation collapse="citation-number">
@@ -279,6 +303,14 @@
             <text variable="number"/>
             <text macro="issued"/>
           </else-if>
+          <else-if type="legal_case">
+            <group delimiter=", ">
+              <text variable="authority"/>
+              <text macro="title"/>
+              <text macro="issued_legal_case"/>
+              <text macro="ecli"/>
+            </group>
+          </else-if>
           <!-- Generic/Fallback Formats -->
           <else-if type="bill book graphic legal_case legislation motion_picture report song" match="any">
             <group delimiter=", " suffix=". ">
@@ -331,7 +363,14 @@
           </else>
         </choose>
       </group>
-      <text macro="access"/>
+      <choose>
+        <if type="legal_case">
+          <text macro="access_legal_case"/>
+        </if>
+        <else>
+          <text macro="access"/>
+        </else>
+      </choose>
     </layout>
   </bibliography>
 </style>
