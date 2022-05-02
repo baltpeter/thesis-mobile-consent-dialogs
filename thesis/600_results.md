@@ -122,7 +122,7 @@ We found that 328 of the 384 apps with a dialog (85.42&nbsp;%) transmitted pseud
 ## Effect of User Choices
 
 To gain insights into how different choices in the consent dialogs affect the tracking going on, we collected the app's network traffic, distinguishing between the initial run without any user input, and the runs after accepting and rejecting the dialog if present. We collected traffic for 330 apps after accepting and 28 apps after rejecting. The latter number might seem low but can be explained by the fact that most dialogs we found either did not contain a first-layer "reject" button at all or only had one with an ambiguous label and we only clicked ones with a clear label.  
-We collected 185152 requests in the initial runs, 9342 requests in the accepted runs, and 323 requests in the rejected runs. Note that for the accepted and rejected runs, we only collected the traffic _after_ clicking the respective button. The initial traffic before any interaction was not recorded again in those runs.  
+We collected 185152 requests in the initial runs, 9342 requests in the accepted runs, and 323 requests in the rejected runs. Note that for the accepted and rejected runs, we only collected the traffic _after_ clicking the respective button. The initial traffic before any interaction was not recorded again in those runs to only capture the change in traffic after interaction.  
 Given the low number of apps for which we were able to collect traffic after rejecting and the low number of corresponding requests, the results for those are most likely not representative.
 <!-- select count(1) from runs where run_type='accepted'; -->
 <!-- select count(1) from runs where run_type='rejected'; -->
@@ -134,7 +134,7 @@ In the traffic before interaction, 33.32&nbsp;% of requests were identified as t
 
 Furthermore, in the initial runs, 3201 of the 4388 apps (72.95&nbsp;%) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44&nbsp;%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85&nbsp;%) continued transmitting pseudonymous data and one app started doing so for the first time.
 
-![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs. Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
+![Number of times that the observed data types were transmitted per app and tracker after accepting the consent dialogs, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously). Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_accepted.pdf){#fig:results-data-type-transmissions-accepted}
 
 [@Fig:results-data-type-transmissions-accepted] lists how often each data type was transmitted per app and tracker after accepting. Comparing that to the transmissions without user interaction in [@fig:results-data-type-transmissions-initial] shows little difference in the data types that are transmitted to trackers after consent was given.
 

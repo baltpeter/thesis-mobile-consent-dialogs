@@ -19,7 +19,7 @@ On the web, usage of CMPs is common. Recent research detected the use of CMPs on
 Websites often use third-party scripts from many different vendors for all kinds of purposes, including advertising and tracking. Many of these require consent (see [@Sec:legal-background]). How do websites make sure that the scripts only start processing after consent has been given? Without a common framework, either each CMP would have to implement custom handlers for each possible third-party script or each third-party script would need to know how to communicate with all possible CMPs.
 
 IAB Europe, an association that represents the interests of the digital advertising and marketing industry in Europe [@iabeuropeUs2021], maintains the Transparency & Consent Framework (TCF), a standard that defines a common interface for CMPs and third-party scripts to communicate. It defines how websites should store consent and legitimate interest records, as well as conditions on how to prompt the user for consent and inform them through consent dialogs. For that, IAB Europe maintains a list of purposes and vendors the website can ask users to consent to. The first version, v1.1^[Version 1.0 was never published.], was launched in April 2018, shortly before the GDPR went into force, and in August 2019, a revised v2.0 was published, with v1.1 now being deprecated [@iabeuropeTCFTransparencyConsent2021].  
-Most CMPs implement the TCF [@onetrustllc.OneTrustPreferenceChoiceCMP2022; @usercentricsgmbhTCFExplainedMost2020; @iubendas.r.lCompleteGuideIubenda2020; @cookiebotIABTransparencyConsent2022].
+Most CMPs implement the TCF [@onetrustllc.OneTrustPreferenceChoiceCMP2022; @usercentricsgmbhTCFExplainedMost2020; @iubendas.r.lCompleteGuideIubenda2020; @cookiebotIABTransparencyConsent2022]. Note that in February 2022, the Belgian Gegevensbeschermingsautoriteit found the TCF to violate the GDPR in a joint decision with other DPAs but gave the IAB a grace period of six months to implement the necessary changes [@gegevensbeschermingsautoriteitlitigationchamberDecision2120222022].
 
 The TCF distinguishes between the publisher (the entity running the website), the CMP (the entity providing the CMP—this can also be a publisher's in-house CMP if it is registered with IAB Europe), and vendors (the third-parties embedded in the publisher's website, e.g. ad or tracking providers). Both CMPs and vendors need to register with IAB Europe, for which there is an annual fee of 1,500 € [@iabeuropeJoinTCF2021].
 
@@ -106,7 +106,3 @@ As established in this section, we can neither rely on the TCF, which would have
 The details of the method we use for the analysis are described in [@Sec:analysis-method].
 
 For the few consent dialogs that _do_ implement the TCF, we still extract the data from `NSUserDefaults` or `SharedPreferences` and perform an analysis on that.
-
----
-
-TODO: Mention DPA decision on TCF

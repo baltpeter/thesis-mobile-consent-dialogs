@@ -1,6 +1,6 @@
 # Device Instrumentation Framework
 
-We developed a framework for automated instrumentation of Android and iOS apps for this analysis, using an emulator on Android and a physical device on iOS. The framework can manage (install, run, and uninstall) apps, set app permissions and extract app preferences, collect the device network traffic (including HTTPS and certificate-pinned traffic) while an app is running, as well as analyse and interact with elements displayed on screen. It builds on and extends previous work on data protection in mobile apps that we conducted and participated in (TODO: cite).  
+We developed a framework for automated instrumentation of Android and iOS apps for this analysis, using an emulator on Android and a physical device on iOS. The framework can manage (install, run, and uninstall) apps, set app permissions and extract app preferences, collect the device network traffic (including HTTPS and certificate-pinned traffic) while an app is running, as well as analyse and interact with elements displayed on screen. It builds on and extends previous work on data protection in mobile apps that we conducted and participated in [@altpeterTheyTrackAutomated2021; @altpeterIOSWatchingYou2021].  
 The framework is written in TypeScript running on Node.js. The full source code is available on GitHub: TODO
 
 We also present an approach to extract top chart data from the Play Store on Android and App Store on iOS, as well as download the corresponding apps.
