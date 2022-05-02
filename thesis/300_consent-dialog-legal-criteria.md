@@ -8,7 +8,7 @@ In this thesis, we only consider EU-wide and German sources of law, though DPAs 
 
 Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@Sec:legal-background]: the GDPR, the ePrivacy Directive (ePD), and its national implementation in Germany, the TTDSG.
 
-In addition, the GDPR has so-called opening clauses which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG ("Bundesdatenschutzgesetz"), which thus also needs to be considered.
+In addition, the GDPR has *opening clauses*, which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG ("Bundesdatenschutzgesetz"), which thus also needs to be considered.
 
 However, in actuality, most of these laws do not introduce their own conditions on consent:
 

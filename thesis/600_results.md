@@ -1,6 +1,6 @@
 # Results
 
-We successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42&nbsp;% and 93.51&nbsp;% of the downloaded apps, respectively. On Android, the high number of apps we could not analyse is caused for the most part by problems with the certification pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
+We successfully analysed 4388 apps with 2068 apps on Android and 2320 apps on iOS, corresponding to 62.42&nbsp;% and 93.51&nbsp;% of the downloaded apps, respectively. On Android, the high number of apps we could not analyse is caused for the most part by problems with the certificate pinning bypass through objection. 1049 of the Android apps failed to launch or quit immediately after being launched through objection. These apps were excluded from the analysis. We discuss this further in [@sec:discussion-limitations]. On iOS, only 65 apps failed to launch and 18 apps could not be installed because they require a newer version of iOS than we can use. The remaining failures on both platforms were mostly due to Appium or Frida commands failing even after multiple retries. 
 <!-- select count(1) from dialogs;
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'android';
 select count(1) from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where a.platform = 'ios'; -->
@@ -9,9 +9,15 @@ To promote reproducability, the processed data behind all graphs is available in
 
 ## Network Traffic and Tracking
 
-![Number of requests and unique hosts contacted per app without any user interaction. Three apps which did more than 1000 requests are omitted in this graph. Those are: `com.prequel.app` on Android with 2500 requests, and `com.audiomack.iphone` and `com.storycover` on iOS with 2383 and 1019 requests, respectively.](../graphs/requests_hosts_per_app.pdf){#fig:results-requests-hosts-per-app}
+\begin{figure}[h]
+\hypertarget{fig:results-requests-hosts-per-app}{%
+\centering
+\includegraphics{../graphs/requests_hosts_per_app.pdf}
+\caption{Number of requests and unique hosts contacted per app without any user interaction. Three apps with more than 1000 requests are omitted in this graph: \texttt{com.prequel.app} on Android with 2500 requests, and \texttt{com.audiomack.iphone} and \texttt{com.storycover} on iOS with 2383 and 1019 requests, respectively.}\label{fig:results-requests-hosts-per-app}
+}
+\end{figure}
 
-In total, we recorded 194817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50&nbsp;% of apps did less than 23 requests and 75&nbsp;% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.27 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
+In total, we recorded 194817 requests after filtering out the operating systems' background traffic. [@Fig:results-requests-hosts-per-app] illustrates the amount of requests and unique hosts per app in the initial run before we interacted with the apps. 50&nbsp;% of apps did less than 23 requests and 75&nbsp;% of apps did less than 50 requests but there were also some outliers with up to 2500 requests from a single app and 19 apps doing more than 500 requests. On average, apps on Android did 44.27 requests and apps on iOS did 44.66 requests. There were 65 apps on Android and 158 apps on iOS with no requests at all.  
 53&nbsp;% of apps contacted less than 10 unique hosts, with 11.85 hosts on average across both platforms.
 <!-- select c.platform, avg(c.count) from (select count(1) count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c group by c.platform; -->
 <!-- Excel:
@@ -26,9 +32,22 @@ In total, we recorded 194817 requests after filtering out the operating systems'
      I9=I8/I7 -->
 <!-- select avg(c.host_count) from (select count(distinct host) host_count, platform from filtered_requests where run_type='initial' group by name, version, platform) as c; -->
 
-![Number of apps that sent requests to the 25 most common trackers in our dataset according to Exodus [@exoduscontributorsExodusTrackerInvestigation2022] (without user interaction). The trackers are coloured by the country they are based in. We compiled the mapping from tracker to country by looking at the trackers' privacy policies. When a policy listed multiple establishments, we chose the country of the main one.](../graphs/exodus_tracker_counts.pdf){#fig:results-exodus-tracker-counts}
+\begin{figure}[H]
+\hypertarget{fig:results-exodus-tracker-counts}{%
+\centering
+\includegraphics{../graphs/exodus_tracker_counts.pdf}
+\caption{Number of apps that sent requests to the 25 most common
+trackers in our dataset according to Exodus
+\protect\hyperlink{ref-exoduscontributorsExodusTrackerInvestigation2022}{{[}149{]}}
+(without user interaction). The trackers are coloured by the country
+they are based in. We compiled the mapping from tracker to country by
+looking at the trackers' privacy policies. When a policy listed multiple
+establishments, we chose the country of the main
+one.}\label{fig:results-exodus-tracker-counts}
+}
+\end{figure}
 
-61700 (33.32&nbsp;%) of the requests that happened without user interaction were identified as going to trackers when compared against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08&nbsp;% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35&nbsp;% and 31.29&nbsp;% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21&nbsp;% of apps sent traffic to Google trackers, and on iOS, 67.11&nbsp;% did. The remaining trackers were all only contacted by 10&nbsp;% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries, namely Israel, Singapore, China, and Russia.
+61700 (33.32&nbsp;%) of the requests that happened without user interaction were identified as going to trackers when we compared their hostnames against the Exodus tracker database [@exoduscontributorsExodusTrackerInvestigation2022], with 78.08&nbsp;% of apps making at least one request to a tracker. [@Fig:results-exodus-tracker-counts] shows the 25 most common tracker companies that we encountered. Google and Facebook were the most common tracker companies by far, receiving traffic from 70.35&nbsp;% and 31.29&nbsp;% of apps, respectively. Notably, Google's trackers were the most common across Android _and_ iOS. On Android, 81.21&nbsp;% of apps sent traffic to Google trackers, and on iOS, 67.11&nbsp;% did. The remaining trackers were all only contacted by 10&nbsp;% or less of the apps. The majority of the contacted trackers are in the US, with only six of the 25 most common trackers being based in different countries, namely Israel, Singapore, China, and Russia.
 <!-- select platform, count(distinct name) from filtered_requests where host ~
       '2mdn\.net|\.google\.com|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|\.google\.com|google-analytics\.com|crashlytics\.com|2mdn\.net|dmtry\.com|doubleclick\.com|doubleclick\.net|mng-ads\.com|firebase\.com|www\.googletagmanager\.com|www\.googletagservices\.com|app-measurement\.com|googlesyndication\.com'
     group by platform; -->
@@ -89,7 +108,7 @@ neither                  1708          1895          3603
 
 [@Tbl:results-cd-prevalence] lists the number of apps where our analysis detected a consent element. Across all apps, we detected a consent dialog in 384 apps (8.75&nbsp;%), a consent notice in 195 apps (4.44&nbsp;%), and a link to a privacy policy in 206 apps (4.69&nbsp;%). Thus, in total, 785 apps (17.89&nbsp;%) had one of the consent elements we detect.
 
-There appears to be little difference in the prevalence of the consent elements between platforms. Across all types, the relative counts differ by no more than 2.3&nbsp;%. We detected slightly more consent dialogs on iOS compared to Android, whereas we detected slightly more notices on Android. In total, we detected any consent element in 18.32&nbsp;% of apps on iOS compared to 17.41&nbsp;% on Android.
+There appears to be little difference in the prevalence of the consent elements between platforms. Across all types, the relative counts differ by no more than 2.3 percentage points. We detected slightly more consent dialogs on iOS compared to Android, whereas we detected slightly more notices on Android. In total, we detected any consent element in 18.32&nbsp;% of apps on iOS compared to 17.41&nbsp;% on Android.
 
 ## Violations in Consent Dialogs
 
@@ -115,7 +134,7 @@ Looking at the individual dark patterns, 43.2&nbsp;% of the dialogs did not have
 
 In total, we have detected at least one dark pattern in 347 of the 384 apps with a dialog (90.36&nbsp;%). The share of dark patterns in dialogs is slightly higher on Android with 136 of 149 dialogs (91.28&nbsp;%) compared to 211 of 235 (89.79&nbsp;%) on iOS.
 
-On their own, the dark patterns we detect are not necessarily violations of data protection law. Using dark patterns in a consent dialog just results in the consent that is acquired through the dialog being invalid. As such, the actual violation that we can detect is the transmission of tracking data based on such invalid consent^[Though presenting the user with a consent dialog that uses dark patterns without ever actually requiring consent for any processing would arguably run afoul of the principle of lawfulness, fairness, and transparency set forth by Article 5(1)(a) GDPR and thus be a violation in and of itself.].
+On their own, the dark patterns we detect are not necessarily violations of data protection law. Using dark patterns in a consent dialog just results in the consent acquired through it being invalid. As such, the actual violation that we can detect is the transmission of tracking data based on such invalid consent^[Though presenting the user with a consent dialog that uses dark patterns without ever actually requiring consent for any processing would arguably run afoul of the principle of lawfulness, fairness, and transparency set forth by Article 5(1)(a) GDPR and thus be a violation in and of itself.].
 
 We found that 328 of the 384 apps with a dialog (85.42&nbsp;%) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59&nbsp;%) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have identified that 77.34&nbsp;% of the 384 detected dialogs failed to acquire valid consent for the tracking that they perform.
 
@@ -156,7 +175,7 @@ Conversely, 282 apps were detected as showing a dialog but have not saved `IABTC
 <!-- select * from dialogs where cast(prefs as text) ~* 'IABTCF' and not (verdict = 'dialog' or verdict = 'maybe_dialog'); -->
 <!-- select * from dialogs where not cast(prefs as text) ~* 'IABTCF' and (verdict = 'dialog' or verdict = 'maybe_dialog'); -->
 
-24 apps only saved `IABTCF` preferences after accepting or rejecting the dialog but not initially, the remaining 138 saved them even without any interaction with the consent dialog.
+24 apps only saved `IABTCF` preferences after accepting or rejecting the dialog, but not initially, the remaining 138 saved them even without any interaction with the consent dialog.
 <!-- select count(1) from dialogs where prefs->>'initial' ~* 'IABTCF'; -->
 <!-- select count(1) from dialogs where not prefs->>'initial' ~* 'IABTCF' and (prefs->>'accepted' ~* 'IABTCF' or prefs->>'rejected' ~* 'IABTCF'); -->
 
@@ -168,9 +187,9 @@ The apps most often set the `IABTCF_gdprApplies` property, with 125 apps setting
 <!-- select * from dialogs join runs r on r.id = dialogs.run join apps a on a.id = r.app where prefs->'initial'->>'IABTCF_gdprApplies' not in ('0', '1'); -->
 <!-- select * from dialogs where prefs->'initial'->>'IABTCF_gdprApplies' != prefs->'accepted'->>'IABTCF_gdprApplies' or prefs->'initial'->>'IABTCF_gdprApplies' != prefs->'rejected'->>'IABTCF_gdprApplies' or prefs->'accepted'->>'IABTCF_gdprApplies' != prefs->'rejected'->>'IABTCF_gdprApplies'; -->
 
-`IABTCF_CmpSdkID` specifies which CMP is being used and is set by 111 apps, with six apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. In our dataset, [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far.
-
 ![Prevalence of CMP providers according to IAB TCF data.](../graphs/tcf_cmps.pdf){#fig:results-tcf-cmps}
+
+`IABTCF_CmpSdkID` specifies which CMP is being used and is set by 111 apps, with six apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. In our dataset, [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far.
 
 `IABTCF_PublisherCC` specifies the app publisher's country. 62 apps are from Germany according to this, for 22 the CMP didn't know the country, seven are from the US, five from the Netherlands, and three from Spain. The following countries are represented once: France, Hong Kong, Luxembourg, Japan, United Kingdom, and Australia.
 <!-- select upper(coalesce(prefs->'initial'->>'IABTCF_PublisherCC', prefs->'accepted'->>'IABTCF_PublisherCC', prefs->'rejected'->>'IABTCF_PublisherCC')) val, count(1) from dialogs group by val order by count(1) desc; -->
@@ -230,10 +249,6 @@ There is also an older, deprecated TCF specification specifically for mobile app
 
 For each app, we saved a screenshot immediately after all elements on screen had been analysed to allow us to validate the results afterwards. Apps can prevent screenshots from being taken [@androidopensourceprojectcontributorsWindowManagerLayoutParams2022], in these cases we were not able to take one. This was the case for 42 apps on Android and 50 apps on iOS.
 
-We manually validated the classification for a random set of 250 apps with screenshots. [@Tbl:results-verdict-validation] shows the results of this validation. Notably, we did not encounter a single false positive (meaning detecting something as a consent element that isn't actually one). All classifications where either correct or our analysis missed the consent elements. 25 of the 250 classifications were false negatives.
-
-The discovered false negatives are expected and do not impact the validity of the detected violations. As explained in [@sec:cd-situation-consequences], our approach necessarily misses consent elements due to more detailed information to base an analysis on not being sufficiently available in mobile apps. Not detecting a consent dialog does not cause us to wrongly attribute violations to an app. In these cases, all detected tracking has happened without any user interaction. This means that the apps, regardless of whether a consent dialog is being shown on screen, cannot have obtained valid consent and thus have no legal basis for the tracking. We only perform detection of the other violations in apps where we detected a consent dialog.
-
 | Detected | Actual | Count |
 |----------|--------|-------|
 | neither  | link   | 1     |
@@ -243,6 +258,10 @@ The discovered false negatives are expected and do not impact the validity of th
 | link     | dialog | 5     |
 
 :   Counts of wrong classifications from manually validating a random set of 250 apps. {#tbl:results-verdict-validation}
+
+We manually validated the classification for a random set of 250 apps with screenshots. [@Tbl:results-verdict-validation] shows the results of this validation. Notably, we did not encounter a single false positive (meaning detecting something as a consent element that isn't actually one). All classifications were either correct or our analysis missed the consent elements. 25 of the 250 classifications were false negatives.
+
+The discovered false negatives are expected and do not impact the validity of the detected violations. As explained in [@sec:cd-situation-consequences], our approach necessarily misses consent elements due to more detailed information to base an analysis on not being sufficiently available in mobile apps. Not detecting a consent dialog does not cause us to wrongly attribute violations to an app. In these cases, all detected tracking has happened without any user interaction. This means that the apps, regardless of whether a consent dialog is being shown on screen, cannot have obtained valid consent and thus have no legal basis for the tracking. We only perform detection of the other violations in apps where we detected a consent dialog.
 
 We also manually validated all cases where we detected the "accept" button having a significantly different colour than the "reject" button, as our approach cannot determine which of the two is actually highlighted compared to the other. We were able to confirm that it is indeed the "accept" button that is highlighted in all cases.
 
