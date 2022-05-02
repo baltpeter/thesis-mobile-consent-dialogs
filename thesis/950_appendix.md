@@ -328,3 +328,55 @@ The following keywords are worth half a point:
 /wirksame(r|n) Rechtsbehelf/, /(Standort|Geo)-?daten/, 'Drittländer', 'IP-Adresse',
 'Aktivitätsdaten', 'Einwilligung', 'Datenschutz', 'Privatsphäre', /verarbeit(en|ung)/
 ```
+
+## Thesis Proposal
+
+The following exposé was submitted as the proposal for this master's thesis. It served as the task definition.
+
+\subsection*{Introduction and Motivation}
+
+Previous research has shown that automated data collection in the background is common in both Android and iOS apps. A large portion of apps transmits telemetry data about device details (model, settings, battery status, etc.), sensor data, events (which pages are opened and buttons are clicked), or even the geolocation and which data is entered in the app. Often, this data is sent to third-party companies and linked to the device's *Advertising ID* that allows those companies to track users across multiple apps.
+
+These practices are troubling from a data protection standpoint, especially since the *General Data Protection Regulation* (GDPR) that mandates strict legal guidelines for such data collection went into force in 2018. According to the GDPR, any processing of personal data (meaning any data that can somehow be linked to a natural person, including pseudonymously) needs to have one of six possible legal bases (Art. 6(1) GDPR). According to the supervisory authorities, which are responsible for enforcing the GDPR in the EU, usually informed consent is the only applicable legal basis for tracking^[<https://www.datenschutzkonferenz-online.de/media/ah/201804_ah_positionsbestimmung_tmg.pdf>].  
+This is further amplified by the *ePrivacy Directive* (ePD), which mandates even stricter information, consent, and opt-out requirements for accessing information stored on a user's device and applies even when no personal data is processed (Art. 5(3) ePD), and the European Court of Justice's (CJEU) [*Schrems II* ruling](https://curia.europa.eu/juris/document/document.jsf?docid=228677&doclang=en), which invalidated the *Privacy Shield* adequacy decision that data transfers to the US were usually based on.
+
+In an effort to circumvent these legal problems, websites and mobile apps alike tend to use *consent dialogs*, which are supposed to inform the user about the processing that is taking place and to either get their consent or allow them to opt out. But these consent dialogs give rise to new legal and technical questions themselves. Research into cookie banners on the web showed that nudging and dark patterns meant to coerce the user into giving consent and discouraging them from opting out are common^[<https://noyb.eu/en/noyb-aims-end-cookie-banner-terror-and-issues-more-500-gdpr-complaints>, <https://dl.acm.org/doi/abs/10.1145/3442381.3450056>, <https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9152617>]. Many websites also start tracking before the user has made a choice in the consent dialog or continue tracking even after they have opted out^[<https://www.sciendo.com/article/10.2478/popets-2019-0023>].
+
+And the legal requirements for consent are high. Consent needs to be given by a “clear affirmative act” (Recital 32 to the GDPR) and different purposes require individual consent (Art. 7(2) GDPR). The CJEU's [*Planet49* ruling](https://curia.europa.eu/juris/document/document.jsf?docid=218462&doclang=en) further confirmed that pre-ticked checkboxes in cookie banners do not constitute valid consent, even when no personal data is processed.
+
+Conversely, consent dialogs are often also shown where they aren't actually needed. In cases where the processing of certain data is necessary for the website or app to function, both the GDPR and ePD give alternate legal bases that do not require consent from the user (Art. 6(1)(f) GPDR, Art. 5(3) ePD).
+
+\subsection*{Related Work}
+
+Prior research into consent dialogs in the wild has so far been almost exclusively limited to the web. Utz et al. manually looked at screenshots of 1000 cookie dialogs on websites and identified eight variables in which they differ in 2019^[<https://www.researchgate.net/profile/Martin-Degeling/publication/334965379_Uninformed_Consent_Studying_GDPR_Consent_Notices_in_the_Field/links/5d638e6c458515d610253bb1/Uninformed-Consent-Studying-GDPR-Consent-Notices-in-the-Field.pdf>]. In 2020, Matte et al. crawled 1426 websites with cookie banners that implement the *Transparency & Consent Framework* by IAB Europe, an industry self-regulation organization, which allowed them to automatically extract data on suspected violations.
+
+Hu et al. (2019) studied the effect the introduction of the GDPR had on cookie usage across the web^[<https://dl.acm.org/doi/abs/10.1145/3292522.3326039>] and Eijk et al. (2019) compared the impact of the user's location (in particular inside and outside the EU) on the cookie notices they were shown^[<https://pure.tudelft.nl/ws/files/57080768/vaneijk_conpro19.pdf>].
+
+There are also various user studies that explore how different consent dialog designs and wordings influence the user's decisions, touching on dark patterns and nudging, for example^[<https://arxiv.org/pdf/1908.10048.pdf>, <https://dl.acm.org/doi/abs/10.1145/1753326.1753689>].
+
+More generally, for privacy violations on Android, two 2019 studies by Liu et al.^[<https://ieeexplore.ieee.org/abstract/document/8660581>] and He et al.^[<https://www.sciencedirect.com/science/article/abs/pii/S2214212618304356>] detected privacy leaks from third-party libraries based on static and dynamic analysis. Two 2016 studies by Slavin et al.^[<https://dl.acm.org/doi/abs/10.1145/2884781.2884855>] and Yu et al.^[<https://ieeexplore.ieee.org/abstract/document/7579770>] compared apps' privacy policies with the tracking code used in them based on text analysis.  
+On iOS, research into privacy violations by apps, is scarce and outdated. A 2011 paper by Egele et al. explored using static analysis on app binaries to detect privacy leaks^[<http://www.syssec-project.eu/m/page-media/3/egele-ndss11.pdf>] and a 2015 paper by Dehling et al. crawled app store pages of health apps^[<https://mhealth.jmir.org/2015/1/e8/PDF>].
+
+\subsection*{Goals}
+
+Given the lack of research into consent dialogs on mobile devices, this thesis will study consent dialogs on Android and iOS in an automated and dynamic manner, analysing a large number of apps from both platforms.
+
+In the first step, different consent dialog types and frameworks (*Consent Management Platforms*, CMPs), as well as their settings will be identified in the apps. For the identified dialogs, the listed options (consent for which processing is requested?, which third-party tracking companies are used?) will be extracted. These findings will then be compared to the existing research for the web.
+
+In the second step, the collected data will be used to identify violations by the apps. For this, a list of criteria for a legally compliant consent dialog will be compiled and the discovered consent dialogs will be checked against that. This will include nudging and dark patterns, like pre-ticked checkboxes, overly prioritizing the “Accept all” button, only giving the user the option to agree to the entire processing without the ability to opt out of individual purposes, etc.  
+Additionally, the effect of the user's choice in the consent dialog will also be measured. For this, first, any tracking before consent is given will be identified. Then, different approaches for interacting with consent dialogs will be evaluated. The best scaling one will be used to conduct a post-consent study, checking the difference in tracking between the user giving or denying consent, as well as any more granular options the consent dialogs may offer.  
+Where conclusive violations against the law are found, the app's publisher will be notified of the findings and given the ability to rectify them. Where this doesn't happen after some period of time, complaints will be filed with the supervisory authorities.
+
+The results from the analysis will also be compared to the *privacy labels* on iOS, which require apps to self-label the affected categories of data being processed and the purposes for the processing in the App Store.
+
+The thesis will build on existing research into tracking on Android and iOS without user interaction that the author has participated in. The existing system will be extended to allow for extracting information displayed by the apps and interacting with them. In addition, the system for identifying tracking, which currently only looks at the domains, will be improved to also factor in the actual data and any identifiers being transmitted.
+
+\subsection*{Research Tasks}
+
+* Compile list of criteria for compliant consent dialogs, based on applicable legislation, court rulings, supervisory authority recommendations, and previous work.
+* Extend existing analysis framework to allow extraction of elements on screen and interaction with apps.
+* Extend existing analysis framework for better identification of tracking, based on looking at actual transmitted data.
+* Identify consent dialogs as well as their frameworks and settings in apps. Compare results with research for the web.
+* Identify violations in consent dialogs (dark patterns, nudging).
+* Interact with consent dialogs and measure effect of the choices on the tracking going on.
+* Evaluate results and compare with privacy labels on iOS.
