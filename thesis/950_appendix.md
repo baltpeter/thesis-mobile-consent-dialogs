@@ -225,6 +225,8 @@ We use the following regexes and strings to find ambiguous "reject" buttons:
 'überspringen'
 ```
 
+\newpage
+
 The following negator regexes and strings prevent an element from being classified as an affirmative button:
 
 ```js

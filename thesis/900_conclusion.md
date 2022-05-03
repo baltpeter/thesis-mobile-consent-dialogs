@@ -1,6 +1,6 @@
 # Conclusion
 
-In this thesis, we explored the implementation of consent dialogs in mobile apps. We looked at the legal framework that regulates data protection in mobile apps, identifying the GDPR and ePD as the primary laws which limit the processing that apps can perform and which mandate that apps need the user's informed consent in order to legally perform tracking.
+In this thesis, we explored the implementation of consent dialogs in mobile apps. We looked at the legal framework that regulates data protection in mobile apps, identifying the GDPR and ePD as the primary laws which limit the processing that apps can perform and mandate that apps need the user's informed consent in order to legally perform tracking.
 
 We then established the strict criteria for a legally compliant consent dialog stemming from the GDPR, which prohibit dark patterns and nudging, e.g. prioritising the "accept" button, using vague purpose descriptions like "to improve user experience", making it harder to refuse consent than accept it, and preselecting purposes. Any consent dialog that violates even just one of these criteria cannot capture valid consent, leaving the app without a legal basis for the data processing.
 
@@ -21,7 +21,7 @@ The analysis presented in this thesis gave a first snapshot into consent dialogs
 
 We encountered limitations restricting us to presenting lower bounds, and subsequent work should tackle the challenges identified in the previous chapter. The certificate pinning bypass problems on Android are especially unfortunate and force us to exclude a significant amount of apps from analysis. Improving certificate pinning bypasses could also benefit research into other subjects on mobile. In addition, there are hopefully more reliable ways to inspect app elements and extract more details about consent dialogs.
 
-Going further, we only interacted with the consent dialogs, which means that the vast majority of app functionality is left untouched by us. App interaction beyond consent dialogs for data protection research could not rely on naive monkey testing but would need to be context-aware to avoid acidentally granting unwanted consent.
+Going further, we only interacted with consent dialogs, which means that the vast majority of app functionality is left untouched by us. App interaction beyond consent dialogs for data protection research could not rely on naive monkey testing but would need to be context-aware to avoid acidentally granting unwanted consent.
 
 Finally and orthogonal to our research, until enforcement catches up with the law and progress in tracking technology, defenses against tracking in general and metadata extraction in particular are needed to preserve users' privacy.
 

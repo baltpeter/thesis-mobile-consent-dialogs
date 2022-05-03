@@ -54,7 +54,7 @@ one.}\label{fig:results-exodus-tracker-counts}
 
 ![Number of times that the observed data types were transmitted per app and tracker without any user interaction, grouped by whether they were transmitted linked to a unique device ID (i.e. pseudonymously) or without identifiers for the device (i.e. anonymously). Note that we are also using the term "IDFA" for the Android advertising ID here.](../graphs/data_type_transmissions_initial.pdf){#fig:results-data-type-transmissions-initial}
 
-Looking at the data transmitted to trackers, 3,201 apps (72.95&nbsp;%) sent a request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20,465 of 194,817 requests (10.50&nbsp;%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
+Looking at the data transmitted to trackers, 3,201 apps (72.95&nbsp;%) sent at least one request containing a unique device identifier like the advertising ID, IDFV, or another UUID in the initial run, making all other data included in those requests pseudonymous and thus personal data that falls under the GDPR. Our 26 endpoint-specific tracking request adapters were enough to process 20,465 of 194,817 requests (10.50&nbsp;%). Using those and indicator matching on the requests not covered by an adapter, we also observed a wide array of other data types being transmitted to trackers, including for example the location, jailbreak status, volume, battery percentage, sensor data, and disk usage. [@Fig:results-data-type-transmissions-initial] lists how often each data type was transmitted per app and tracker. Indeed, even benign data types like the operating system or phone model are linked to the specific user and device through unique IDs in most cases.
 
 ```{=latex}
 \afterpage{%
@@ -81,28 +81,28 @@ Finally, we also analysed the cookies that were set in the requests against the 
 
 ## Prevalence of Consent Dialogs
 
----------------------------------------------------------
-Classification     Detections    Detections    Detections
-                   on Android        on iOS      in total
---------------- ------------- ------------- -------------
-dialog                    132           199           331
-                     (6.38 %)      (8.58 %)      (7.54 %)
+--------------------------------------------------------------
+Classification        Detections     Detections     Detections
+                      on Android         on iOS       in total
+--------------- ---------------- -------------- --------------
+dialog                       132            199            331
+                        (6.38 %)       (8.58 %)       (7.54 %)
 
-maybe dialog               17            36            53
-                     (0.82 %)      (1.55 %)      (1.21 %)
+maybe dialog                  17             36             53
+                        (0.82 %)       (1.55 %)       (1.21 %)
 
-notice                    103            82           185
-                     (4.98 %)      (3.53 %)      (4.22 %)
+notice                       103             82            185
+                        (4.98 %)       (3.53 %)       (4.22 %)
 
-maybe notice                5             5            10
-                     (0.24 %)      (0.22 %)      (0.23 %)
+maybe notice                   5              5             10
+                        (0.24 %)       (0.22 %)       (0.23 %)
 
-link                      103           103           206
-                     (4.98 %)      (4.44 %)      (4.69 %)
+link                         103            103            206
+                        (4.98 %)       (4.44 %)       (4.69 %)
 
-neither                 1,708         1,895         3,603
-                    (82.59 %)     (81.68 %)     (82.11 %)
----------------------------------------------------------
+neither                    1,708          1,895          3,603
+                       (82.59 %)      (81.68 %)      (82.11 %)
+--------------------------------------------------------------
 
 :   Number of apps where the different consent elements were detected by platform. The percentages are relative to all apps in the respective column. {#tbl:results-cd-prevalence}
 
@@ -128,9 +128,9 @@ The upper violin plot illustrates the distribution of top chart positions among 
 }
 ```
 
-Looking at the individual dark patterns, 43.2&nbsp;% of the dialogs did not have a "reject" button on the first layer. Ambiguous labels for the "accept" and "reject" buttons were also common with 37.5&nbsp;% and 32.8&nbsp;% of dialogs exhibiting them, respectively. "Accept" buttons were most commonly highlighted compared to "reject" buttons by colour with 31.2&nbsp;% of dialogs compared to only 10.7&nbsp;% of dialogs highlighting the "accept" button by size. Finally, 16 apps (4.2&nbsp;%) quit after refusing consent.
+Looking at the individual dark patterns, 43.2&nbsp;% of the dialogs did not have a "reject" button on the first layer. Ambiguous labels for the "accept" and "reject" buttons were also common with 37.5&nbsp;% and 32.8&nbsp;% of dialogs exhibiting them, respectively. "Accept" buttons were most commonly highlighted compared to "reject" buttons by colour with 31.2&nbsp;% of dialogs, compared to only 10.7&nbsp;% of dialogs highlighting the "accept" button by size. Finally, 16 apps (4.2&nbsp;%) quit after refusing consent.
 
-[@Fig:results-dialog-dark-patterns] illustrates the observed combinations of dark patterns in consent dialogs and compares them against the apps' top chart positions. We most commonly observed "accept" buttons with an ambiguous label in combination with no "reject" button on the first layer (22.7&nbsp;% of dialogs). Consent dialogs also often have an ambiguous "reject" button and highlight the "accept" button by colour (14.3&nbsp;%). Both of those were slightly more frequently the case for apps ranked highly in the top charts. Other than that, most dark patterns occurred on their own and with no significant correlation to the apps' top chart position.
+[@Fig:results-dialog-dark-patterns] illustrates the observed combinations of dark patterns in consent dialogs and compares them against the apps' top chart positions. We most commonly observed "accept" buttons with an ambiguous label in combination with no "reject" button on the first layer (22.7&nbsp;% of dialogs). Consent dialogs also often have an ambiguous "reject" button and highlight the "accept" button by colour (14.3&nbsp;%). Both of those were slightly more frequently the case for apps ranked highly in the top charts. Other than that, most of the dark patterns occurred on their own and with no significant correlation to the apps' top chart position.
 
 In total, we have detected at least one dark pattern in 347 of the 384 apps with a dialog (90.36&nbsp;%). The share of dark patterns in dialogs is slightly higher on Android with 136 of 149 dialogs (91.28&nbsp;%) compared to 211 of 235 (89.79&nbsp;%) on iOS.
 
@@ -149,7 +149,7 @@ Given the low number of apps for which we were able to collect traffic after rej
 <!-- select count(1) from filtered_requests where run_type = 'accepted'; -->
 <!-- select count(1) from filtered_requests where run_type = 'rejected'; -->
 
-In the traffic before interaction, 33.32&nbsp;% of requests were identified as trackers by Exodus. In the traffic after accepting the dialogs, this percentage slightly dropped to 31.90&nbsp;%, while after rejecting, there was actually a higher percentage of the traffic that was identified as tracking with 47.06&nbsp;%. Meanwhile, 78.08&nbsp;% of apps contacted at least one Exodus-identified tracker in the initial runs. In the accepted runs, 25 additional apps (7.58&nbsp;% of the accepted apps) contacted a tracker that previously didn't. In the rejected runs, 16 of 28 apps (57.14&nbsp;%) continued contacting trackers, as did one additional app for the first time.
+In the traffic before interaction, 33.32&nbsp;% of requests were identified as trackers by Exodus. In the traffic after accepting the dialogs, this percentage slightly dropped to 31.90&nbsp;%, while after rejecting, there was actually a higher percentage of the traffic that was identified as tracking with 47.06&nbsp;%. Meanwhile, 78.08&nbsp;% of apps contacted at least one Exodus-identified tracker in the initial runs. In the accepted runs, 25 additional apps (7.58&nbsp;% of the accepted apps) contacted a tracker that previously didn't. In the rejected runs, 16 of 28 apps (57.14&nbsp;%) continued contacting trackers, and one additional app did for the first time.
 
 Furthermore, in the initial runs, 3,201 of the 4,388 apps (72.95&nbsp;%) transmitted pseudonymous data. Of the 384 apps with a detected dialog, 282 (73.44&nbsp;%) already transmitted pseudonymous data before receiving a consent choice. In the accepted runs, 46 additional apps started transmitting pseudonymous data. In the rejected runs, 12 of 28 apps (42.85&nbsp;%) continued transmitting pseudonymous data and one app started doing so for the first time.
 
@@ -163,9 +163,9 @@ Furthermore, in the initial runs, 3,201 of the 4,388 apps (72.95&nbsp;%) transmi
 
 ![Evaluation of the correctness of data types and purposes in privacy labels on iOS. Remember that we can only definitively say when data _is_ collected but if we don't observe data being transmitted, it does not necessarily mean that it is never collected.](../graphs/privacy_labels.pdf){#fig:results-privacy-labels}
 
-[@Fig:results-privacy-labels] shows the comparison of the observed and declared data types and purposes. For most of the data types that we can check, we did not observe apps that incorrectly omitted them from their privacy label or misdeclared them as anonymous. Most notably, we saw 329 apps (13.26&nbsp;%) that transmitted the IDFA, IDFV, or a hashed version thereof without declaring that in their privacy label. Further, 155 apps (6.25&nbsp;%) claimed to collect such a device ID in a way that is not linked to the user, which seems like an obvious contradiction. 98 apps (3.95&nbsp;%) also transmitted the device's location but omitted that in their privacy label and a further 18 apps (0.73&nbsp;%) declared that they only collected the location anonymously even though we observed them linking it to unique identifier for the user or device.
+[@Fig:results-privacy-labels] shows the comparison of the observed and declared data types and purposes. For most of the data types that we can check, we did not observe apps that incorrectly omitted them from their privacy label or misdeclared them as anonymous. Most notably, we saw 329 apps (13.26&nbsp;%) that transmitted the IDFA, IDFV, or a hashed version thereof without declaring that in their privacy label. Further, 155 apps (6.25&nbsp;%) claimed to collect such a device ID in a way that is not linked to the user, which seems like an obvious contradiction. 98 apps (3.95&nbsp;%) also transmitted the device's location but omitted that in their privacy label and a further 18 apps (0.73&nbsp;%) declared that they only collected the location anonymously even though we observed them linking it to a unique identifier for the user or device.
 
-In terms of the purposes, most apps correctly declared whether they used ads and tracking. 118 (4.76&nbsp;%) and 92 apps (3.71&nbsp;%) wrongly claimed not to use ads and tracking respectively despite doing so after all.
+In terms of the purposes, most apps correctly declared whether they used ads and tracking. 118 (4.76&nbsp;%) and 92 apps (3.71&nbsp;%) wrongly claimed not to use ads and tracking, respectively, despite doing so after all.
 
 ## IAB TCF data
 
@@ -175,11 +175,11 @@ Conversely, 282 apps were detected as showing a dialog but have not saved `IABTC
 <!-- select * from dialogs where cast(prefs as text) ~* 'IABTCF' and not (verdict = 'dialog' or verdict = 'maybe_dialog'); -->
 <!-- select * from dialogs where not cast(prefs as text) ~* 'IABTCF' and (verdict = 'dialog' or verdict = 'maybe_dialog'); -->
 
-24 apps only saved `IABTCF` preferences after accepting or rejecting the dialog, but not initially, the remaining 138 saved them even without any interaction with the consent dialog.
+24 apps only saved `IABTCF` preferences after accepting or rejecting the dialog but not initially, the remaining 138 saved them even without any interaction with the consent dialog.
 <!-- select count(1) from dialogs where prefs->>'initial' ~* 'IABTCF'; -->
 <!-- select count(1) from dialogs where not prefs->>'initial' ~* 'IABTCF' and (prefs->>'accepted' ~* 'IABTCF' or prefs->>'rejected' ~* 'IABTCF'); -->
 
-The apps most often set the `IABTCF_gdprApplies` property, with 125 apps setting the property initially and another 27 only setting it after accepting the dialog and one app setting it only after rejecting. In total, 145 apps determine the GDPR to be applicable, 6 apps (incorrectly) determine it not to be, and 2 apps set non-spec-compliant values^[The values in question are `-5828135500133229487` and `-6437494263561806870`, with both apps being on iOS coming from the same vendor (`de.prosiebensat1digital.sat1` and `de.prosiebensat1digital.prosieben`). All other `IABTCF` properties these two apps set were either empty or also nonsensical.]. None of the apps changed their determination after accepting or rejecting the dialog.
+The apps most often set the `IABTCF_gdprApplies` property, with 125 apps setting the property initially, another 27 only setting it after accepting the dialog, and one app setting it only after rejecting. In total, 145 apps determine the GDPR to be applicable, 6 apps (incorrectly) determine it not to be, and 2 apps set non-spec-compliant values^[The values in question are `-5828135500133229487` and `-6437494263561806870`, with both apps being on iOS coming from the same vendor (`de.prosiebensat1digital.sat1` and `de.prosiebensat1digital.prosieben`). All other `IABTCF` properties these two apps set were either empty or also nonsensical.]. None of the apps changed their determination after accepting or rejecting the dialog.
 <!-- select coalesce(prefs->'initial'->'IABTCF_gdprApplies', prefs->'accepted'->'IABTCF_gdprApplies', prefs->'rejected'->'IABTCF_gdprApplies') val, count(1) from dialogs group by val order by count(1) desc; -->
 <!-- select * from dialogs where not prefs->'initial' ? 'IABTCF_gdprApplies' and (prefs->'accepted' ? 'IABTCF_gdprApplies' or prefs->'rejected' ? 'IABTCF_gdprApplies'); -->
 <!-- select * from dialogs where not prefs->'initial' ? 'IABTCF_gdprApplies' and (prefs->'rejected' ? 'IABTCF_gdprApplies'); -->
@@ -191,7 +191,7 @@ The apps most often set the `IABTCF_gdprApplies` property, with 125 apps setting
 
 `IABTCF_CmpSdkID` specifies which CMP is being used and is set by 111 apps, with six apps specifying an invalid value. [@Fig:results-tcf-cmps] shows the distribution of the different CMP providers. In our dataset, [Sourcepoint](https://www.sourcepoint.com/cmp/) and [Google's Funding Choices](https://blog.google/products/admanager/helping-publishers-manage-consent-funding-choices/) are the most used CMPs by far.
 
-`IABTCF_PublisherCC` specifies the app publisher's country. 62 apps are from Germany according to this, for 22 the CMP didn't know the country, seven are from the US, five from the Netherlands, and three from Spain. The following countries are represented once: France, Hong Kong, Luxembourg, Japan, United Kingdom, and Australia.
+`IABTCF_PublisherCC` specifies the app publisher's country. 62 apps are from Germany according to this, for 22 the CMP didn't know the country, seven are from the US, five from the Netherlands, and three from Spain. The following countries are each represented once: France, Hong Kong, Luxembourg, Japan, United Kingdom, and Australia.
 <!-- select upper(coalesce(prefs->'initial'->>'IABTCF_PublisherCC', prefs->'accepted'->>'IABTCF_PublisherCC', prefs->'rejected'->>'IABTCF_PublisherCC')) val, count(1) from dialogs group by val order by count(1) desc; -->
 
 Finally, using `IABTCF_TCString`, it is possible to determine the exact consent state the apps are saving. We have collected the accepted state for 60 apps. The TCF allows apps to request consent for ten different purposes like "Store and/or access information on a device" or "Measure ad performance". Most apps store consent for all ten purposes, with an average of 9.10 and a median of 10. Apps can also request consent for vendors, with 860 possible vendors on the [global vendor list](https://vendor-list.consensu.org/v2/archives/vendor-list-v139.json) as of the time of writing. The average for the amount of stored vendor consents is 361.75, the median is 158. All possible vendors were requested by at least seven apps. [@Tbl:results-tcf-vendors] lists the vendors that more than 45 apps stored consent for.
@@ -238,11 +238,11 @@ Finally, using `IABTCF_TCString`, it is possible to determine the exact consent 
 | Adobe Audience Manager, Adobe Experience Platform | 46    |
 | Online Solution                                   | 46    |
 
-:   Counts of vendors apps request consent for according to IAB TCF data. Only vendors requested by more than 45 apps are included. {#tbl:results-tcf-vendors}
+:   Counts of vendors apps saved consent for according to IAB TCF data. Only vendors requested by more than 45 apps are included. {#tbl:results-tcf-vendors}
 
 The TC string also encodes the language of the consent dialog. Of the 68 apps that initially store a TC string, 63 showed an English consent dialog (our devices were set to English), and five showed a dialog in German.
 
-There is also an older, deprecated TCF specification specifically for mobile apps, the *[Mobile In-App CMP API v1.0](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/b7164119d6b281ac0efb06cb9717e0793fc1f9d0/Mobile%20In-App%20Consent%20APIs%20v1.0%20Final.md)*, which uses `IABConsent` as the prefix for the saved preferences. Only four apps set preferences for this specification without also setting `IABTCF` preferences for the new TCF 2.0 specification. Of those, three only set `IABConsent_SubjectToGDPR` (with one wrongly determining the GDPR not to be applicable), disregarding empty properties. One app additionally set `IABConsent_CMPPresent` to `true` but did not actually show a consent dialog.
+There is also an older, deprecated TCF specification specifically for mobile apps, the [*Mobile In-App CMP API v1.0*](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/b7164119d6b281ac0efb06cb9717e0793fc1f9d0/Mobile%20In-App%20Consent%20APIs%20v1.0%20Final.md), which uses `IABConsent` as the prefix for the saved preferences. Only four apps set preferences for this specification without also setting `IABTCF` preferences for the new TCF 2.0 specification. Of those, three only set `IABConsent_SubjectToGDPR` (with one wrongly determining the GDPR not to be applicable), disregarding empty properties. One app additionally set `IABConsent_CMPPresent` to `true` but did not actually show a consent dialog.
 <!-- select * from dialogs where cast(prefs as text) ~* 'IABConsent' and not cast(prefs as text) ~* 'IABTCF'; -->
 
 ## Validation

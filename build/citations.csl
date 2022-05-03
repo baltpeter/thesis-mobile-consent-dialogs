@@ -212,14 +212,7 @@
   </macro>
   <macro name="citation-locator">
     <group delimiter=" ">
-      <choose>
-        <if locator="page">
-          <label variable="locator" form="short"/>
-        </if>
-        <else>
-          <label variable="locator" form="short" text-case="capitalize-first"/>
-        </else>
-      </choose>
+      <label variable="locator" form="short"/>
       <text variable="locator"/>
     </group>
   </macro>
@@ -234,8 +227,8 @@
     <sort>
       <key variable="citation-number"/>
     </sort>
-    <layout delimiter=", ">
-      <group prefix="[" suffix="]" delimiter=", ">
+    <layout prefix="[" suffix="]" delimiter="; ">
+      <group delimiter=", ">
         <text variable="citation-number"/>
         <text macro="citation-locator"/>
       </group>

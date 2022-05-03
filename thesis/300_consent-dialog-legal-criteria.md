@@ -1,14 +1,14 @@
 # Criteria for Compliant Consent Dialogs {#sec:critera}
 
-Before starting to look at actual consent dialogs in the wild, in this chapter we present a list of criteria a consent dialog needs to meet in order to be legally compliant. For this purpose, we consider two main legal sources: criteria which are set in actual law, and therefore legally binding, and criteria from recommendations of the data protection authorities (DPAs), which are not directly legally binding but rather echo the DPAs' interpretation of the law. Some of the criteria from the DPAs have already been confirmed by court rulings.
+Before we start to look at actual consent dialogs in the wild, in this chapter, we present a list of criteria a consent dialog needs to meet in order to be legally compliant. For this purpose, we consider two main legal sources: criteria which are set in actual law, and therefore legally binding, and criteria from recommendations of the data protection authorities (DPAs), which are not directly legally binding but rather echo the DPAs' interpretation of the law. Some of the criteria from the DPAs have also already been confirmed by court rulings.
 
 In this thesis, we only consider EU-wide and German sources of law, though DPAs from other EU countries have also issued similar guidance and/or decisions (cf. e.g. [@commissionnationaledelinformatiqueetdeslibertesRefuserCookiesDoit2021; @commissionnationaledelinformatiqueetdeslibertesCookiesAutresTraceurs2020; @roseDatatilsynetDenmark202143101252021; @faCNILFranceSAN20210232022]).
 
 ## Conditions on Consent from the Law {#sec:criteria-gdpr}
 
-Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@Sec:legal-background]: the GDPR, the ePrivacy Directive (ePD), and its national implementation in Germany, the TTDSG.
+Any law that restricts the data processing done in apps in any way can in principle introduce criteria on how to obtain consent, and thus has to be considered here. This most obviously includes all laws already discussed in [@Sec:legal-background]: the GDPR, the ePD, and its national implementation in Germany, the TTDSG.
 
-In addition, the GDPR has *opening clauses*, which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG ("Bundesdatenschutzgesetz"), which thus also needs to be considered.
+In addition, the GDPR has *opening clauses*, which allow the member states to introduce national laws that diverge from the GDPR in limited aspects. Germany has made use of these opening clauses in the BDSG (*Bundesdatenschutzgesetz*), which thus also needs to be considered.
 
 However, in actuality, most of these laws do not introduce their own conditions on consent:
 
@@ -20,10 +20,10 @@ This leaves the GDPR as the only law that defines applicable conditions for cons
 
 Consent is one of the six possible legal bases for processing personal data from Article 6(1) GDPR. Unsurprisingly, processing that can only rely on consent as a legal basis (like tracking), may thus only happen _after_ consent has been given, and the controller needs to be able to demonstrate that consent has been given (Article 7(1) GDPR).
 
-Consent itself is defined in Article 4(11) GDPR, which lists a set of basic conditions an action needs to meet in order to be considered consent, with each of these being further specified by the recitals to the GDPR:
+Consent itself is defined in Article 4(11) GDPR, which lists a set of basic conditions an action needs to meet in order to be considered consent, with each being further specified by the recitals to the GDPR:
 
 freely given
-:   Consent is not *freely given* if there is a clear imbalance between the data subject and the controller, particularly in the case of public authorities (Recital 43 GDPR). The data subject needs to have a genuine and free choice to refuse (or later withdraw) consent without detriment (Recital 42 GDPR). The provision of a contract or service cannot require a data subject's consent if such consent is not necessary for the performance thereof (Article 7(4) GDPR, Recital 43 GDPR).
+:   Consent is not *freely given* if there is a clear imbalance between the data subject and the controller, particularly in the case of public authorities (Recital 43 GDPR). The data subject needs to have a genuine and free choice to refuse (or later withdraw) consent without detriment (Recital 42 GDPR). The provision of a contract or service cannot require a data subject's consent if such consent is not necessary for the performance thereof (Article 7(4) GDPR; Recital 43 GDPR).
 
 specific
 :   For consent to be *specific*, separate consent should be asked for different processing purposes (Recital 32 GDPR).
@@ -46,13 +46,13 @@ Article 7 GDPR then lists a number of additional conditions for consent:
 
 In addition to that, the GDPR places even stricter conditions on consent for special categories of personal data (this includes, among other things, political opinions, biometric and genetic data, as well as data on a person's health and sex life, Article 9 GDPR) and third-country transfers without an adequacy decision (Article 49(1)(a) GDPR), requiring an express statement, separate for this specific purpose [@europeandataprotectionboardGuidelines0520202020].  
 Children under the age of 16 years cannot give consent themselves, it instead needs to be given or authorised by their legal guardians (Article 8(1) GDPR).  
-We don't consider either in this thesis as we cannot reliably detect them automatically.
+We do not consider either in this thesis as we cannot reliably detect them automatically.
 
 ## List of Criteria
 
 Most of the conditions extracted directly from the GDPR are somewhat vague, making them both hard for companies to implement and difficult to check for automatically, as planned for this thesis. To alleviate this issue, the data protection authorities publish recommendations which detail their interpretation of the law and provide specific guidelines on how to follow them. In most cases, these specific guidelines are better suited for verification in specific cases and are also used in similar research [@nouwensDarkPatternsGDPR2020; @mattePurposesIABEurope2020; @santosAreCookieBanners2020].
 
-For this thesis, we searched all current publications regarding consent and adjacent topics from all German state data protection authorities, as well as the national DPA, the German data protection conference ("Datenschutzkonferenz", a council of the German DPAs that develops unified recommendations), and the European Data Protection Board (an EU body tasked with ensuring consistent application of data protection law across the EU) for criteria on consent dialogs. The list below consolidates the criteria from the GDPR and DPA recommendations. Where the criteria have already been confirmed by courts, we cite those rulings as well.
+For this thesis, we have searched all current publications regarding consent and adjacent topics from all German state data protection authorities, as well as the national DPA, the German data protection conference (*Datenschutzkonferenz*, a council of the German DPAs that develops unified recommendations), and the European Data Protection Board (an EU body tasked with ensuring consistent application of data protection law across the EU) for criteria on consent dialogs. The list below consolidates the criteria from the GDPR and DPA recommendations. Where the criteria have already been confirmed by courts, we cite those rulings as well.
 
 It should be emphasised that *any* violation against even a single one of these criteria results in all data processing based on that supposed consent being illegal.
 
@@ -87,7 +87,7 @@ It should be emphasised that *any* violation against even a single one of these 
 
 * Refusing consent has to be possible through inaction or with the same number of clicks as consenting [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @bayerischeslandesamtfurdatenschutzaufsichtPressemitteilungLanderubergreifendePrufung2021; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.3].
 * A button with the text "Okay" does not sufficiently convey that clicking it is supposed to agree to the consent dialog, and thus does not result in valid consent [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. B.1.3.12.1].
-* It is not possible to receive consent on a page that doesn't include all necessary details (e.g. if they are hidden behind another link, or on a deeper page in the consent flow) [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
+* It is not possible to receive consent on a page that doesn't include all necessary details (e.g. if they are hidden behind another link, or on a page deeper in the consent flow) [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 14; @dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
 * It needs to be possible to only consent to adequate subpurposes and/or recipients (Recital 32 GDPR) [@konferenzderunabhangigendatenschutzaufsichtsbehordendesbundesundderlanderOrientierungshilfeAufsichtsbehordenFur2021, p. 16; @europeandataprotectionboardGuidelines0520202020, para. 42; @derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2].
 * No purposes may be pre-selected (Recital 32 GDPR) [@derlandesbeauftragtefurdendatenschutzunddieinformationsfreiheitbaden-wurttembergFAQCookiesUnd2022, no. A.4.2; @BundesverbandVerbraucherzentralenUnd1970; @blocherLGRostock7622021].
 * Clicking an "Accept all" button may not toggle additional, previously unselected purposes [@dielandesbeauftragtefurdendatenschutzniedersachsenHandreichungDatenschutzkonformeEinwilligungen2020].
