@@ -13,8 +13,8 @@
     * summary slide?
 * criteria (not full list)
     * Clear affirmative action (no tracking before consent)
-    * Unambiguous labels necessary (no "okay")
     * Refusing needs to be as easy as accepting (if there is a first-layer "accept", "reject" also needs to be present)
+    * Unambiguous labels necessary (no "okay")
     * "Accept" not highlighted compared to "reject" (by size or color)
     * consent cannot be mandatory (app can't stop after refusing consent)
 * on the web, we know that a worrying amount of dialogs violates these criteria
@@ -43,19 +43,19 @@
         * in total, 785 apps (17.89 %) had one of the consent elements we detect
 
     * UpSet plot (drop tiny sets)
-        * later show top chart position
     * In total, we have detected at least one dark pattern in 347 of the 384 apps with a dialog (90.36 %). The share of dark patterns in dialogs is slightly higher on Android with 136 of 149 dialogs (91.28 %) compared to 211 of 235 (89.79 %) on iOS.
     * Not violations on their own! Only results in obtained consent being invalid. Actual violation if tracking based on that supposed consent.
     * We found that 328 of the 384 apps with a dialog (85.42 %) transmitted pseudonymous data in any of our runs. Further, 297 of the 347 apps with a detected dark pattern in their dialog (85.59 %) transmitted pseudonymous data in any of our runs. Taking that into consideration, we have identified that 77.34 % of the 384 detected dialogs failed to acquire valid consent for the tracking that they perform.
+* Validation
 * effect of user choices
     * interact with discovered buttons
     * to analyse transmitted data: as request data is often obfuscated and ridiculously nested, we use 26 adapters for common tracking endpoints (already cover more than 10% of all traffic!)
         * for everything else: indicator matching of honey data
 * user choice results
-    * Even before interaction, 33.32 % of requests were identified as going to trackers according to Exodus, with 78.08 % of apps making at least one request to a tracker.
-    * fig of most common trackers
     * 72.95 % of apps transmitted unique device ID without interaction
+    * Even before interaction, 33.32 % of requests were identified as going to trackers according to Exodus, with 78.08 % of apps making at least one request to a tracker.
     * fig of data types (explain pseudo and ano definition)
+    * fig of most common trackers
     * fig of types vs. trackers
 
     * collected traffic for 330 apps (9,342 requests) after accepting, 28 apps (323 requests) after rejecting (due to the low number of dialogs which even _have_ a "reject" button we could click). Thus results for rejected runs not representative.
@@ -66,14 +66,13 @@
     * 112 of the 2,481 apps on iOS (4.51 %) had an empty privacy label. 182 of them (7.68 %) claimed not to collect any data.
     * we can only check a subset of declared types and purposes, also ambiguity in definitions
     * fig of privacy labels
-* TODO: very quick rundown of IAB TCF data
-* TODO: validation
-* TODO: Short conclusion and future work
+* Short conclusion and future work
 
 ---
 
-TODO:
+Appendix:
 
-* Requests/hosts figure?
-* Cookies figure?
-* Limitations?
+* Requests/hosts figure
+* Cookies figure
+* TCF data
+* Limitations
